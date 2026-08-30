@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sealed_eval_promotion.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "handoff_id",
+    "issuer",
+    "manifest_sha256",
+    "public_verification_sha256",
+    "private_verification_sha256",
+    "executed_at",
+    "adjudicated_at",
+    "run",
+    "artifacts",
+    "status",
+    "signature"
+  ],
+  "properties": {
+    "schema_version": {"const": "sealed-eval-promotion-v1"},
+    "handoff_id": {"type": "string", "minLength": 8},
+    "issuer": {"type": "string", "minLength": 1},
+    "manifest_sha256": {"$ref": "#/$defs/sha256"},
+    "public_verification_sha256": {"$ref": "#/$defs/sha256"},
+    "private_verification_sha256": {"$ref": "#/$defs/sha256"},
+    "executed_at": {"type": "string", "format": "date-time"},
+    "adjudicated_at": {"type": "string", "format": "date-time"},
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fingerprint",
+        "provider_request_ids",
+        "code_revision",
+        "case_count",
+        "response_count",
+        "complete_case_ids_sha256",
+        "full_manifest_order",
+        "filters_applied",
+        "checkpoint_fingerprint_verified"
+      ],
+      "properties": {
+        "fingerprint": {"$ref": "#/$defs/sha256"},
+        "provider_request_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "code_revision": {"type": "string", "minLength": 7},
+        "case_count": {"type": "integer", "minimum": 1},
+        "response_count": {"type": "integer", "minimum": 1},
+        "complete_case_ids_sha256": {"$ref": "#/$defs/sha256"},
+        "full_manifest_order": {"const": true},
+        "filters_applied": {"const": false},
+        "checkpoint_fingerprint_verified": {"const": true}
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["public_report", "private_scores", "response_trace"],
+      "properties": {
+        "public_report": {"$ref": "#/$defs/privateFile"},
+        "private_scores": {"$ref": "#/$defs/privateFile"},
+        "response_trace": {"$ref": "#/$defs/privateFile"}
+      }
+    },
+    "status": {"const": "promoted"},
+    "signature": {"$ref": "#/$defs/signature"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "privateFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sha256", "size_bytes"],
+      "properties": {
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "size_bytes": {"type": "integer", "minimum": 1}
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "key_id", "value"],
+      "properties": {
+        "algorithm": {"const": "hmac-sha256-v2"},
+        "key_id": {"type": "string", "minLength": 1},
+        "value": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

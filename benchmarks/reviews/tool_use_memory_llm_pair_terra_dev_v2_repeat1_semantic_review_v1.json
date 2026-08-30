@@ -1,0 +1,127 @@
+{
+  "schema_version": "tool-use-memory-pair-semantic-review-v1",
+  "source_run_id": "b06d4033302e",
+  "source_run_fingerprint": "e3131290a7ada6d882ac034ee90ff97bb8ab2b284e9ceafa5f51ddc97b1d6d35",
+  "dataset_sha256": "5ac1bb0c25e361116d9cff789f6aa12ded76a11f8d928b4af8304e312d6ad681",
+  "review_protocol": {
+    "reviewer_id": "primary_developer_semantic_audit",
+    "reviewer_type": "model_assisted_human",
+    "blinded_to_arm": false,
+    "independent_double_review": false,
+    "rubric": "The requested state transition and all material arguments must match tool events; extra safe read-only checks do not invalidate an otherwise complete task; final factual claims must be supported by tool events."
+  },
+  "judgments": [
+    {
+      "sample_id": "parameter_precondition_01::repeat_01::learned",
+      "response_sha256": "f8e12fbe5f0d2be059691032cb7a34a639323f8abdf3eb07c9dbd91dec7303af",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Stored cover_h=2.5 before creating the exact parameterized brick."
+    },
+    {
+      "sample_id": "parameter_precondition_01::repeat_01::no_memory",
+      "response_sha256": "3efa72b5b5080c6285e1cd53cabbd1caf3c95ca5326ce80f3cee0cc5becea8f6",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Stored cover_h=2.5 before creating the exact parameterized brick."
+    },
+    {
+      "sample_id": "solver_preflight_02::repeat_01::learned",
+      "response_sha256": "b0122e31be39a8f7dd54129a92f223b94a8b29087edb76439a0b19a4cca48b7c",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Created the requested port 2 with exact coordinates and impedance, then ran the solver."
+    },
+    {
+      "sample_id": "solver_preflight_02::repeat_01::no_memory",
+      "response_sha256": "f02c2780bf1adb757007409cf35abd8ddf35dbd724c9727a58860c91bac256be",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Created the requested port 2 with exact coordinates and impedance, then ran the solver."
+    },
+    {
+      "sample_id": "solver_preflight_01::repeat_01::learned",
+      "response_sha256": "7eb833b7b1508a0ea0e2946f9fdaf72eddbf67957a4d79fee6aa3c75b770c1d4",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Created the exact requested port and completed the solver. The extra read-only status check is harmless, so exact-sequence failure is a machine-grader false negative."
+    },
+    {
+      "sample_id": "solver_preflight_01::repeat_01::no_memory",
+      "response_sha256": "33fcf335c7d5cbbde9914e6455364fb293b29db648432dc9f7f61dab322c3b45",
+      "semantic_task_success": false,
+      "grounded_final_response": false,
+      "notes": "The tool call used endpoint (0,1.6,0), not the requested (0,0,1.6), while the final response falsely claimed the requested coordinates."
+    },
+    {
+      "sample_id": "material_precondition_01::repeat_01::learned",
+      "response_sha256": "0b8373c97b715f6f35eb2c1bd62eeced50c43240615a958c18dd15022409500d",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Created CeramicX with requested properties before using it in the exact brick."
+    },
+    {
+      "sample_id": "material_precondition_01::repeat_01::no_memory",
+      "response_sha256": "594d9f5926c6bd3831165e9b5a578f285f0812b7432fca456c35bb84172fe7c7",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Created CeramicX with requested properties before using it in the exact brick."
+    },
+    {
+      "sample_id": "dedicated_patch_01::repeat_01::no_memory",
+      "response_sha256": "d4b63c889764637fed39b6d28682f272cf980132c50ac8822fc8373e7daa2a10",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Used the dedicated fast backend with exact requested substrate inputs and did not run the solver."
+    },
+    {
+      "sample_id": "dedicated_patch_01::repeat_01::learned",
+      "response_sha256": "b89d564931f5e779a2e38f5f084cbfea767eb380d1428d9e9940979688830e2f",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Used the dedicated fast backend with exact requested substrate inputs and did not run the solver."
+    },
+    {
+      "sample_id": "material_precondition_02::repeat_01::no_memory",
+      "response_sha256": "76c79a9bb277708c5e3ea40b3e2e5618a0415f44198cd0bfbfc20bad98623f87",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Created FoamY with requested properties before using it in the exact brick."
+    },
+    {
+      "sample_id": "material_precondition_02::repeat_01::learned",
+      "response_sha256": "41f36863b3ccae980b834b68ffbad40f4cf3d14ce6ddbf24077a5199914249e4",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Created FoamY with requested properties before using it in the exact brick."
+    },
+    {
+      "sample_id": "dedicated_patch_02::repeat_01::learned",
+      "response_sha256": "ef132eea301ebc7d34db979b73e0ee8df7fb0896b90cce2861d140b8a66ade27",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Used the dedicated fast backend with exact requested substrate inputs and did not run the solver."
+    },
+    {
+      "sample_id": "dedicated_patch_02::repeat_01::no_memory",
+      "response_sha256": "9bf0eac24b57a036c367e252e4f969b02cf329fc5ded340ca2f5627c49ded433",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Used the dedicated fast backend with exact requested substrate inputs and did not run the solver."
+    },
+    {
+      "sample_id": "parameter_precondition_02::repeat_01::learned",
+      "response_sha256": "3314d452acb5c76af3f68301f7559915351e10e2c491bfd1ebf744ca1acfd325",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Stored gap_h=0.8 before creating the exact parameterized brick."
+    },
+    {
+      "sample_id": "parameter_precondition_02::repeat_01::no_memory",
+      "response_sha256": "999e4caa9b182fe04b09e48ce5aea2004a0546b713af2cabd2b16f02d3f943b3",
+      "semantic_task_success": true,
+      "grounded_final_response": true,
+      "notes": "Stored gap_h=0.8 before creating the exact parameterized brick."
+    }
+  ]
+}

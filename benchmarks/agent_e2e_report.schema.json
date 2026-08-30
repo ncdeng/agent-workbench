@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "agent-e2e-report-v1",
+  "title": "CST Agent E2E Ablation Report",
+  "type": "object",
+  "required": ["schema_version", "run", "groups", "comparisons", "threshold_results", "limitations"],
+  "properties": {
+    "schema_version": {"const": "agent-e2e-report-v1"},
+    "run": {
+      "type": "object",
+      "required": ["run_id", "dataset_id", "dataset_split", "dataset_role", "dataset_sha256", "manifest_verified", "evaluation_scope", "release_eligible", "provider", "model", "agent_brain", "harness_identity", "case_count", "seed_control"],
+      "properties": {
+        "run_id": {"type": "string"},
+        "dataset_id": {"type": "string"},
+        "dataset_split": {"type": "string"},
+        "dataset_role": {"type": "string"},
+        "dataset_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "manifest_path": {"type": ["string", "null"]},
+        "manifest_sha256": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "manifest_verified": {"type": "boolean"},
+        "evaluation_scope": {
+          "enum": ["development_regression", "filtered_debug", "full_frozen_evaluation"]
+        },
+        "release_eligible": {"type": "boolean"},
+        "provider": {"enum": ["deterministic_proxy", "openai_compatible"]},
+        "model": {"type": "string"},
+        "agent_brain": {"enum": ["native", "pi"]},
+        "harness_identity": {
+          "type": "object",
+          "required": ["agent_brain", "files", "combined_sha256"],
+          "properties": {
+            "agent_brain": {"enum": ["native", "pi"]},
+            "files": {"type": "object", "minProperties": 3},
+            "combined_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          }
+        },
+        "case_count": {"type": "integer", "minimum": 1},
+        "sample_count": {"type": "integer", "minimum": 1},
+        "repeat_count": {"type": "integer", "minimum": 1},
+        "filters": {"type": "object"},
+        "seed_control": {
+          "type": "object",
+          "required": ["python_random_per_case", "provider_sampling_seed", "note"]
+        },
+        "large_artifact_root": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "groups": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"$ref": "#/$defs/group"}
+    },
+    "comparisons": {"type": "object"},
+    "threshold_results": {"type": "array", "items": {"type": "object"}},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "group": {
+      "type": "object",
+      "required": ["config", "path_proof", "family_metrics", "metrics", "cases"],
+      "properties": {
+        "config": {
+          "type": "object",
+          "required": ["memory", "context", "planner", "recovery", "tool_use_memory"]
+        },
+        "path_proof": {"type": "object"},
+        "family_metrics": {"type": "object"},
+        "error_taxonomy": {"type": "object"},
+        "metrics": {
+          "type": "object",
+          "required": [
+            "task_success_rate",
+            "strict_grounded_success_rate",
+            "constraint_adherence_rate",
+            "hard_constraint_case_rate",
+            "exact_tool_sequence_match_rate",
+            "first_tool_accuracy",
+            "tool_selection_accuracy",
+            "invalid_call_rate",
+            "recovery_rate",
+            "tokens",
+            "latency_ms",
+            "groundedness",
+            "planner"
+          ],
+          "properties": {
+            "task_success_rate": {"type": "number", "minimum": 0, "maximum": 1},
+            "strict_grounded_success_rate": {"type": "number", "minimum": 0, "maximum": 1},
+            "constraint_adherence_rate": {"type": "number", "minimum": 0, "maximum": 1},
+            "hard_constraint_case_rate": {"type": "number", "minimum": 0, "maximum": 1},
+            "exact_tool_sequence_match_rate": {"type": "number", "minimum": 0, "maximum": 1},
+            "first_tool_accuracy": {"type": "number", "minimum": 0, "maximum": 1},
+            "tool_selection_accuracy": {"type": "number", "minimum": 0, "maximum": 1},
+            "invalid_call_rate": {"type": "number", "minimum": 0, "maximum": 1},
+            "recovery_rate": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+            "tokens": {"type": "object"},
+            "latency_ms": {"type": "object"},
+            "repeat_stability": {"type": "object"},
+            "groundedness": {"type": "object"},
+            "planner": {"type": "object"},
+            "confidence_intervals": {"type": "object"}
+          }
+        },
+        "cases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "case_id",
+              "valid",
+              "task_success",
+              "execution_success",
+              "strict_grounded_success",
+              "tool_calls",
+              "tool_sequence_valid",
+              "first_tool_valid",
+              "invalid_calls",
+              "constraint_checks",
+              "grounding_checks",
+              "token_usage",
+              "latency_ms",
+              "final_response",
+              "errors"
+            ],
+            "properties": {
+              "final_response_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

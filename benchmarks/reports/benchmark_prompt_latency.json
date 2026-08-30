@@ -1,0 +1,905 @@
+{
+  "prompt": "帮我创建一个中心频率为18.8GHz的矩形微带贴片天线，基板用RO4350B，Dk=3.48，Df=0.0037，厚度0.51mm，导体用铜，厚度1盎司",
+  "connect": {
+    "duration_sec": 5.184,
+    "success": true,
+    "message": "已连接到 CST 工程（cst.interface，安静模式）",
+    "project_path": "C:\\Users\\Deng\\AppData\\Local\\Temp\\CSTDE1\\Temp\\DE11\\Untitled_0.cst"
+  },
+  "chat": {
+    "duration_sec": 308.954,
+    "ok": true,
+    "error": "",
+    "had_tool_failure": true,
+    "reply_preview": "已为你完成 **18.8 GHz 矩形微带贴片天线**建模与单次仿真（CST 2025），采用你指定参数：\n\n- 基板：**RO4350B**（εr=3.48，tanδ=0.0037，h=0.51 mm）\n- 导体：**Copper (annealed)**，厚度 **1 oz = 0.035 mm**\n- 馈电方式：**microstrip line feed**（已建立真实馈线并在馈线输入端对地加离散端口）\n- 边界：六面 **expanded open**\n- 频率范围：14–24 GHz\n\n### 当前几何（mm）\n- Patch：W = 5.328，L = 4.060  \n- Feed line：W = 1.10，L = 3.00  \n- Substrate / Ground：11.328 × 10.060\n\n### 仿真结果（S11）\n- 已读取 `S1,1`\n- 在 14–24 GHz 内最小值约 **-2.71 dB**（匹配较差，尚未谐振到理想状态）\n\n如果你要，我下一步可以进入**优化模式**（按规则每次只微调一个参数≤10%，优先调馈线/馈点，再调 patch_L）帮你把 18.8 GHz 附近的 S11 压到更低。"
+  },
+  "token_stats": {
+    "prompt": 122330,
+    "completion": 8504,
+    "calls": 13,
+    "total": 130834,
+    "cost_usd": 1.4784
+  },
+  "tool_event_count": 54,
+  "tool_events": [
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "set_units",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: set units"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: substrate_h=0.51"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: f0=18.8"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: er=3.48"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: tand=0.0037"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: c0=299792458"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: patch_W=(c0/(2*f0*1e9))*sqrt(2/(er+1))*1000"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: eeff=(er+1)/2+(er-1)/2*(1/sqrt(1+12*substrate_h/patch_W))"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: deltaL=0.412*substrate_h*((eeff+0.3)*(patch_W/substrate_h+0.264))/((eeff-0.258)*(patch_W/substrate_h+0.8))"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: Leff=(c0/(2*f0*1e9))/sqrt(eeff)*1000"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: patch_L=Leff-2*deltaL"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: feed_W=1.1"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: feed_L=6.0"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: sub_margin=3.0"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: sub_L=patch_L+2*sub_margin"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: sub_W=patch_W+2*sub_margin"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: ground_L=sub_L"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: ground_W=sub_W"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: copper_t=0.035"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: patch_ymin=-patch_L/2"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: patch_ymax=patch_L/2"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: patch_xmin=-patch_W/2"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: patch_xmax=patch_W/2"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: feed_xmin=-feed_W/2"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: feed_xmax=feed_W/2"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: feed_ymin=patch_ymin-feed_L"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: feed_ymax=patch_ymin"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: port_y=feed_ymin"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "create_material",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define material: RO4350B"
+    },
+    {
+      "phase": "2_几何建模",
+      "tool_name": "create_brick",
+      "success": false,
+      "message": "An error occurred while trying to execute add_to_history:\n(&H8000ffff) Unable to evaluate expression:\n\"-ground_W/2\"\n(.Create)",
+      "description": "原语: define brick: Antenna:Ground"
+    },
+    {
+      "phase": "2_几何建模",
+      "tool_name": "create_brick",
+      "success": false,
+      "message": "An error occurred while trying to execute add_to_history:\n(&H8000ffff) Unable to evaluate expression:\n\"-sub_W/2\"\n(.Create)",
+      "description": "原语: define brick: Antenna:Substrate"
+    },
+    {
+      "phase": "2_几何建模",
+      "tool_name": "create_brick",
+      "success": false,
+      "message": "An error occurred while trying to execute add_to_history:\n(&H8000ffff) Unable to evaluate expression:\n\"patch_xmin\"\n(.Create)",
+      "description": "原语: define brick: Antenna:Patch"
+    },
+    {
+      "phase": "2_几何建模",
+      "tool_name": "create_brick",
+      "success": false,
+      "message": "An error occurred while trying to execute add_to_history:\n(&H8000ffff) Unable to evaluate expression:\n\"feed_ymin\"\n(.Create)",
+      "description": "原语: define brick: Antenna:FeedLine"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: f0=18.8"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: substrate_h=0.51"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: copper_t=0.035"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: patch_W=5.328"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: patch_L=4.060"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: feed_W=1.10"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: feed_L=3.00"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: sub_margin=3.00"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: sub_W=11.328"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: sub_L=10.060"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: ground_W=11.328"
+    },
+    {
+      "phase": "1_环境与材料",
+      "tool_name": "store_parameter",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define parameter: ground_L=10.060"
+    },
+    {
+      "phase": "2_几何建模",
+      "tool_name": "create_brick",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define brick: Antenna:Ground"
+    },
+    {
+      "phase": "2_几何建模",
+      "tool_name": "create_brick",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define brick: Antenna:Substrate"
+    },
+    {
+      "phase": "2_几何建模",
+      "tool_name": "create_brick",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define brick: Antenna:Patch"
+    },
+    {
+      "phase": "2_几何建模",
+      "tool_name": "create_brick",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define brick: Antenna:FeedLine"
+    },
+    {
+      "phase": "3_边界与端口",
+      "tool_name": "create_discrete_port",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: define port: 1"
+    },
+    {
+      "phase": "3_边界与端口",
+      "tool_name": "set_frequency_range",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: set frequency range"
+    },
+    {
+      "phase": "3_边界与端口",
+      "tool_name": "set_boundary",
+      "success": true,
+      "message": "VBA 已在 CST 中执行",
+      "description": "原语: set boundary"
+    },
+    {
+      "phase": "4_运行仿真",
+      "tool_name": "run_solver",
+      "success": true,
+      "message": "求解器已完成（原生 API）",
+      "description": "原语: run solver"
+    },
+    {
+      "phase": "5_读取结果",
+      "tool_name": "get_s_parameter",
+      "success": true,
+      "message": "已读取: 1D Results\\S-Parameters\\S1,1",
+      "description": "读取 S1,1"
+    }
+  ],
+  "tool_timings": [
+    {
+      "tool_name": "set_units",
+      "duration_sec": 0.953,
+      "arguments": {
+        "geometry": "mm",
+        "frequency": "GHz",
+        "time": "ns"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.004,
+      "arguments": {
+        "name": "substrate_h",
+        "value": "0.51"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.936,
+      "arguments": {
+        "name": "f0",
+        "value": "18.8"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.954,
+      "arguments": {
+        "name": "er",
+        "value": "3.48"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.932,
+      "arguments": {
+        "name": "tand",
+        "value": "0.0037"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.933,
+      "arguments": {
+        "name": "c0",
+        "value": "299792458"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.992,
+      "arguments": {
+        "name": "patch_W",
+        "value": "(c0/(2*f0*1e9))*sqrt(2/(er+1))*1000"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.013,
+      "arguments": {
+        "name": "eeff",
+        "value": "(er+1)/2+(er-1)/2*(1/sqrt(1+12*substrate_h/patch_W))"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.991,
+      "arguments": {
+        "name": "deltaL",
+        "value": "0.412*substrate_h*((eeff+0.3)*(patch_W/substrate_h+0.264))/((eeff-0.258)*(patch_W/substrate_h+0.8))"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.013,
+      "arguments": {
+        "name": "Leff",
+        "value": "(c0/(2*f0*1e9))/sqrt(eeff)*1000"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.05,
+      "arguments": {
+        "name": "patch_L",
+        "value": "Leff-2*deltaL"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.004,
+      "arguments": {
+        "name": "feed_W",
+        "value": "1.1"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.008,
+      "arguments": {
+        "name": "feed_L",
+        "value": "6.0"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.073,
+      "arguments": {
+        "name": "sub_margin",
+        "value": "3.0"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.997,
+      "arguments": {
+        "name": "sub_L",
+        "value": "patch_L+2*sub_margin"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.997,
+      "arguments": {
+        "name": "sub_W",
+        "value": "patch_W+2*sub_margin"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.117,
+      "arguments": {
+        "name": "ground_L",
+        "value": "sub_L"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.058,
+      "arguments": {
+        "name": "ground_W",
+        "value": "sub_W"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.061,
+      "arguments": {
+        "name": "copper_t",
+        "value": "0.035"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.058,
+      "arguments": {
+        "name": "patch_ymin",
+        "value": "-patch_L/2"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.121,
+      "arguments": {
+        "name": "patch_ymax",
+        "value": "patch_L/2"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.061,
+      "arguments": {
+        "name": "patch_xmin",
+        "value": "-patch_W/2"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.073,
+      "arguments": {
+        "name": "patch_xmax",
+        "value": "patch_W/2"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.065,
+      "arguments": {
+        "name": "feed_xmin",
+        "value": "-feed_W/2"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.061,
+      "arguments": {
+        "name": "feed_xmax",
+        "value": "feed_W/2"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.071,
+      "arguments": {
+        "name": "feed_ymin",
+        "value": "patch_ymin-feed_L"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.116,
+      "arguments": {
+        "name": "feed_ymax",
+        "value": "patch_ymin"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.064,
+      "arguments": {
+        "name": "port_y",
+        "value": "feed_ymin"
+      }
+    },
+    {
+      "tool_name": "create_material",
+      "duration_sec": 1.01,
+      "arguments": {
+        "name": "RO4350B",
+        "epsilon": 3.48,
+        "mue": 1,
+        "tand": 0.0037,
+        "tand_freq": 10
+      }
+    },
+    {
+      "tool_name": "create_brick",
+      "duration_sec": 0.989,
+      "arguments": {
+        "name": "Ground",
+        "component": "Antenna",
+        "material": "Copper (annealed)",
+        "xmin": "-ground_W/2",
+        "xmax": "ground_W/2",
+        "ymin": "-ground_L/2",
+        "ymax": "ground_L/2",
+        "zmin": "0",
+        "zmax": "copper_t"
+      }
+    },
+    {
+      "tool_name": "create_brick",
+      "duration_sec": 0.937,
+      "arguments": {
+        "name": "Substrate",
+        "component": "Antenna",
+        "material": "RO4350B",
+        "xmin": "-sub_W/2",
+        "xmax": "sub_W/2",
+        "ymin": "-sub_L/2",
+        "ymax": "sub_L/2",
+        "zmin": "copper_t",
+        "zmax": "copper_t+substrate_h"
+      }
+    },
+    {
+      "tool_name": "create_brick",
+      "duration_sec": 0.929,
+      "arguments": {
+        "name": "Patch",
+        "component": "Antenna",
+        "material": "Copper (annealed)",
+        "xmin": "patch_xmin",
+        "xmax": "patch_xmax",
+        "ymin": "patch_ymin",
+        "ymax": "patch_ymax",
+        "zmin": "copper_t+substrate_h",
+        "zmax": "copper_t+substrate_h+copper_t"
+      }
+    },
+    {
+      "tool_name": "create_brick",
+      "duration_sec": 0.933,
+      "arguments": {
+        "name": "FeedLine",
+        "component": "Antenna",
+        "material": "Copper (annealed)",
+        "xmin": "feed_xmin",
+        "xmax": "feed_xmax",
+        "ymin": "feed_ymin",
+        "ymax": "feed_ymax",
+        "zmin": "copper_t+substrate_h",
+        "zmax": "copper_t+substrate_h+copper_t"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.994,
+      "arguments": {
+        "name": "f0",
+        "value": "18.8"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.932,
+      "arguments": {
+        "name": "substrate_h",
+        "value": "0.51"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.951,
+      "arguments": {
+        "name": "copper_t",
+        "value": "0.035"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.12,
+      "arguments": {
+        "name": "patch_W",
+        "value": "5.328"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.01,
+      "arguments": {
+        "name": "patch_L",
+        "value": "4.060"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.999,
+      "arguments": {
+        "name": "feed_W",
+        "value": "1.10"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.005,
+      "arguments": {
+        "name": "feed_L",
+        "value": "3.00"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.987,
+      "arguments": {
+        "name": "sub_margin",
+        "value": "3.00"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.997,
+      "arguments": {
+        "name": "sub_W",
+        "value": "11.328"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.062,
+      "arguments": {
+        "name": "sub_L",
+        "value": "10.060"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 0.993,
+      "arguments": {
+        "name": "ground_W",
+        "value": "11.328"
+      }
+    },
+    {
+      "tool_name": "store_parameter",
+      "duration_sec": 1.005,
+      "arguments": {
+        "name": "ground_L",
+        "value": "10.060"
+      }
+    },
+    {
+      "tool_name": "create_brick",
+      "duration_sec": 0.941,
+      "arguments": {
+        "name": "Ground",
+        "component": "Antenna",
+        "material": "Copper (annealed)",
+        "xmin": "-5.664",
+        "xmax": "5.664",
+        "ymin": "-5.03",
+        "ymax": "5.03",
+        "zmin": "0",
+        "zmax": "0.035"
+      }
+    },
+    {
+      "tool_name": "create_brick",
+      "duration_sec": 0.934,
+      "arguments": {
+        "name": "Substrate",
+        "component": "Antenna",
+        "material": "RO4350B",
+        "xmin": "-5.664",
+        "xmax": "5.664",
+        "ymin": "-5.03",
+        "ymax": "5.03",
+        "zmin": "0.035",
+        "zmax": "0.545"
+      }
+    },
+    {
+      "tool_name": "create_brick",
+      "duration_sec": 0.928,
+      "arguments": {
+        "name": "Patch",
+        "component": "Antenna",
+        "material": "Copper (annealed)",
+        "xmin": "-2.664",
+        "xmax": "2.664",
+        "ymin": "-2.03",
+        "ymax": "2.03",
+        "zmin": "0.545",
+        "zmax": "0.58"
+      }
+    },
+    {
+      "tool_name": "create_brick",
+      "duration_sec": 0.935,
+      "arguments": {
+        "name": "FeedLine",
+        "component": "Antenna",
+        "material": "Copper (annealed)",
+        "xmin": "-0.55",
+        "xmax": "0.55",
+        "ymin": "-5.03",
+        "ymax": "-2.03",
+        "zmin": "0.545",
+        "zmax": "0.58"
+      }
+    },
+    {
+      "tool_name": "create_discrete_port",
+      "duration_sec": 0.943,
+      "arguments": {
+        "port_number": 1,
+        "p1_x": "0",
+        "p1_y": "-5.03",
+        "p1_z": "0.035",
+        "p2_x": "0",
+        "p2_y": "-5.03",
+        "p2_z": "0.58",
+        "impedance": "50"
+      }
+    },
+    {
+      "tool_name": "set_frequency_range",
+      "duration_sec": 1.454,
+      "arguments": {
+        "fmin": "14",
+        "fmax": "24"
+      }
+    },
+    {
+      "tool_name": "set_boundary",
+      "duration_sec": 0.872,
+      "arguments": {
+        "xmin": "expanded open",
+        "xmax": "expanded open",
+        "ymin": "expanded open",
+        "ymax": "expanded open",
+        "zmin": "expanded open",
+        "zmax": "expanded open"
+      }
+    },
+    {
+      "tool_name": "run_solver",
+      "duration_sec": 17.493,
+      "arguments": {}
+    },
+    {
+      "tool_name": "get_s_parameter",
+      "duration_sec": 0.013,
+      "arguments": {
+        "port_i": 1,
+        "port_j": 1
+      }
+    }
+  ]
+}

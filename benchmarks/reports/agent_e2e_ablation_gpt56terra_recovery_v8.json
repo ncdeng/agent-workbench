@@ -1,0 +1,1118 @@
+{
+  "schema_version": "agent-e2e-report-v1",
+  "run": {
+    "run_id": "99b58f224b49",
+    "timestamp_utc": "2026-08-10T01:54:48.333076+00:00",
+    "dataset_id": "cst-agent-e2e-fake-cst-v2",
+    "dataset_split": "development_regression",
+    "dataset_role": "development_regression",
+    "dataset_frozen_at": "2026-08-10T00:00:00+08:00",
+    "annotation_policy": "Developer-authored regression oracles. Tool and recovery constraints are machine checked; response facts use lexical alternatives and require separate claim-level review for semantic claims.",
+    "generation_provenance": {
+      "authoring_method": "developer_authored_and_iterated",
+      "model_outputs_used_to_edit_oracles": true,
+      "blinded": false
+    },
+    "dataset_path": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\agent_e2e_cases.json",
+    "dataset_sha256": "9127d1b9bfc4868977ca36ae7ce0ff8bffb146c60ec158efcef24136034ba9c0",
+    "code_revision": "b7f3744503e72c83f76f2b857ee0dbf2a97c89d2",
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "provider": "openai_compatible",
+    "model": "gpt-5.6-terra",
+    "case_count": 2,
+    "seed_control": {
+      "python_random_per_case": true,
+      "provider_sampling_seed": false,
+      "note": "The case seed controls local Python randomness only; the OpenAI-compatible provider is not claimed deterministic."
+    },
+    "groups": [
+      "full",
+      "no_recovery"
+    ],
+    "large_artifact_root": "D:\\cst_agent_rag_data\\agent_eval\\artifacts\\99b58f224b49",
+    "secrets_recorded": false
+  },
+  "groups": {
+    "full": {
+      "config": {
+        "memory": true,
+        "context": true,
+        "planner": true,
+        "recovery": true,
+        "tool_use_memory": true
+      },
+      "path_proof": {
+        "planner_call_count": 3,
+        "planner_fallback_count": 0,
+        "memory_recall_count": 0,
+        "recovery_attempt_count": 2,
+        "tool_memory_recall_count": 0,
+        "context_budget_event_count": 5,
+        "invalid_ablation_cases": []
+      },
+      "family_metrics": {
+        "scenario_family": {
+          "multi_turn_recovery": {
+            "case_count": 1,
+            "task_success_rate": 1.0,
+            "strict_grounded_success_rate": 1.0,
+            "hard_constraint_case_rate": 1.0,
+            "invalid_call_rate": 0.0
+          },
+          "mutating_probe_recovery": {
+            "case_count": 1,
+            "task_success_rate": 1.0,
+            "strict_grounded_success_rate": 1.0,
+            "hard_constraint_case_rate": 1.0,
+            "invalid_call_rate": 0.0
+          }
+        },
+        "design_family": {
+          "no_design": {
+            "case_count": 2,
+            "task_success_rate": 1.0,
+            "strict_grounded_success_rate": 1.0,
+            "hard_constraint_case_rate": 1.0,
+            "invalid_call_rate": 0.0
+          }
+        },
+        "failure_family": {
+          "disconnect": {
+            "case_count": 2,
+            "task_success_rate": 1.0,
+            "strict_grounded_success_rate": 1.0,
+            "hard_constraint_case_rate": 1.0,
+            "invalid_call_rate": 0.0
+          }
+        }
+      },
+      "metrics": {
+        "task_success_rate": 1.0,
+        "strict_grounded_success_rate": 1.0,
+        "constraint_adherence_rate": 1.0,
+        "hard_constraint_case_rate": 1.0,
+        "exact_tool_sequence_match_rate": 1.0,
+        "first_tool_accuracy": 1.0,
+        "tool_selection_accuracy": 1.0,
+        "invalid_call_rate": 0.0,
+        "recovery_rate": 1.0,
+        "planner": {
+          "call_count": 3,
+          "fallback_count": 0,
+          "fallback_rate": 0.0
+        },
+        "tokens": {
+          "prompt_mean": 7234.5,
+          "completion_mean": 577.5,
+          "total_mean": 7812.0,
+          "total_p95": 9987.0,
+          "estimated": false
+        },
+        "latency_ms": {
+          "mean": 41168.4605,
+          "median": 41168.4605,
+          "p95": 44912.876
+        },
+        "groundedness": {
+          "claim_precision": null,
+          "required_fact_recall": 1.0,
+          "lexical_fact_match_rate": 1.0,
+          "matching_method": "case_authored_lexical_alternatives"
+        }
+      },
+      "cases": [
+        {
+          "case_id": "recovery_disconnect_01",
+          "category": "recovery",
+          "scenario_family": "mutating_probe_recovery",
+          "design_family": "no_design",
+          "failure_family": "disconnect",
+          "seed": 21004,
+          "valid": true,
+          "task_success": true,
+          "execution_success": true,
+          "strict_grounded_success": true,
+          "constraint_checks": [
+            {
+              "name": "allowed_tools",
+              "passed": true
+            },
+            {
+              "name": "required_tools_all",
+              "passed": true
+            },
+            {
+              "name": "valid_tool_sequence",
+              "passed": true
+            },
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "execute_vba_script"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "execute_vba_script",
+              "success": true,
+              "message": "fake VBA 已在重连后执行",
+              "description": "执行无副作用的 VBA 连通性探针，仅验证 VBA 命令通道可调用。",
+              "error_type": "cst_connection",
+              "recovery_result": {
+                "action_name": "reconnect_cst",
+                "recovered": true,
+                "message": "CST reconnected",
+                "details": {
+                  "method": "connect",
+                  "outcome": {
+                    "success": true,
+                    "message": "fake reconnected",
+                    "project_file": "D:\\cst_agent_rag_data\\agent_eval\\artifacts\\99b58f224b49\\full\\recovery_disconnect_01\\fake_project.cst"
+                  },
+                  "project_path": "D:\\cst_agent_rag_data\\agent_eval\\artifacts\\99b58f224b49\\full\\recovery_disconnect_01\\fake_project.cst"
+                },
+                "retry_tool": "execute_vba_script",
+                "retry_arguments": {
+                  "description": "执行无副作用的 VBA 连通性探针，仅验证 VBA 命令通道可调用。",
+                  "vba_code": "Sub Main()\n    Dim probeValue As Long\n    probeValue = 1\nEnd Sub"
+                },
+                "retry_success": true,
+                "retry_message": "fake VBA 已在重连后执行",
+                "retry_tool_event_id": "call_POGINlDL7lXVjy1lqHh9o07S"
+              }
+            }
+          ],
+          "tool_sequence_valid": true,
+          "first_tool_valid": true,
+          "invalid_calls": [],
+          "recovery_events": [
+            {
+              "action_name": "reconnect_cst",
+              "recovered": true,
+              "message": "CST reconnected",
+              "details": {
+                "method": "connect",
+                "outcome": {
+                  "success": true,
+                  "message": "fake reconnected",
+                  "project_file": "D:\\cst_agent_rag_data\\agent_eval\\artifacts\\99b58f224b49\\full\\recovery_disconnect_01\\fake_project.cst"
+                },
+                "project_path": "D:\\cst_agent_rag_data\\agent_eval\\artifacts\\99b58f224b49\\full\\recovery_disconnect_01\\fake_project.cst"
+              },
+              "retry_tool": "execute_vba_script",
+              "retry_arguments": {
+                "description": "执行无副作用的 VBA 连通性探针，仅验证 VBA 命令通道可调用。",
+                "vba_code": "Sub Main()\n    Dim probeValue As Long\n    probeValue = 1\nEnd Sub"
+              },
+              "retry_success": true,
+              "retry_message": "fake VBA 已在重连后执行",
+              "retry_tool_event_id": "call_POGINlDL7lXVjy1lqHh9o07S"
+            }
+          ],
+          "recovery_success": true,
+          "token_usage": {
+            "prompt": 5158,
+            "completion": 479,
+            "total": 5637,
+            "calls": 3
+          },
+          "latency_ms": 44912.876,
+          "grounding_checks": [
+            {
+              "fact": "response mentions connection recovery and successful probe",
+              "supported": true,
+              "condition_matches": [
+                true,
+                true
+              ]
+            }
+          ],
+          "final_response": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n已执行无副作用的 VBA 连通性探针；连接已恢复后重试成功，VBA 命令通道当前可用。",
+          "all_responses": [
+            "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n已执行无副作用的 VBA 连通性探针；连接已恢复后重试成功，VBA 命令通道当前可用。"
+          ],
+          "trace_run_id": "7917837a98a7",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 1,
+            "planner_fallback_count": 0,
+            "executor_call_count": 3,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": null,
+            "recovery_attempt_count": 1,
+            "recovery_attempts": {
+              "reconnect_cst": 1
+            },
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 2
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": false,
+              "call_kind": "auxiliary",
+              "response_content": "[\"VBA execute side-effect-free connectivity probe and retry after connection restored\",\"CST Studio Suite VBA connection interrupted restore connection retry command\"]",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 121,
+                "completion_tokens": 117,
+                "total_tokens": 238
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\n  \"intent_kind\": \"direct_action\",\n  \"user_goal\": \"执行无副作用的 VBA 连通性探针，并在连接中断后恢复连接重试。\",\n  \"constraints\": [\n    \"执行一段无副作用的 VBA 连通性探针\",\n    \"如果连接中断，恢复连接后重试\"\n  ],\n  \"steps\": [\n    {\n      \"step_id\": \"execute_connectivity_probe\",\n      \"kind\": \"tool\",\n      \"title\": \"执行 VBA 连通性探针\",\n      \"expected_output\": \"VBA 探针成功执行并确认 CST 连接可用；若首次因连接中断失败，运行时恢复连接后重试。\",\n      \"allowed_tools\": [\n        \"execute_vba_script\"\n      ]\n    },\n    {\n      \"step_id\": \"respond_completion\",\n      \"kind\": \"respond\",\n      \"title\": \"反馈探针执行结果\",\n      \"expected_output\": \"向用户报告 VBA 连通性探针是否执行成功及重试情况。\",\n      \"allowed_tools\": []\n    }\n  ],\n  \"stop_condition\": \"VBA 连通性探针执行成功，或在连接恢复重试后仍无法完成并报告失败原因。\",\n  \"stop_conditions\": [\n    \"task_complete\",\n    \"stagnation_limit\"\n  ]\n}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1125,
+                "completion_tokens": 287,
+                "total_tokens": 1412
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "execute_vba_script"
+              ],
+              "usage": {
+                "prompt_tokens": 1931,
+                "completion_tokens": 156,
+                "total_tokens": 2087
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已执行无副作用的 VBA 连通性探针；连接已恢复后重试成功，VBA 命令通道当前可用。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2102,
+                "completion_tokens": 36,
+                "total_tokens": 2138
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "recovery_with_context_01",
+          "category": "recovery",
+          "scenario_family": "multi_turn_recovery",
+          "design_family": "no_design",
+          "failure_family": "disconnect",
+          "seed": 21009,
+          "valid": true,
+          "task_success": true,
+          "execution_success": true,
+          "strict_grounded_success": true,
+          "constraint_checks": [
+            {
+              "name": "allowed_tools",
+              "passed": true
+            },
+            {
+              "name": "required_tools_all",
+              "passed": true
+            },
+            {
+              "name": "valid_tool_sequence",
+              "passed": true
+            },
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "execute_vba_script"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "execute_vba_script",
+              "success": true,
+              "message": "fake contextual VBA executed after reconnect",
+              "description": "REC-11：执行空 VBA 宏作为无副作用的 CST 连通性探针；不修改模型且不运行求解器。",
+              "error_type": "cst_connection",
+              "recovery_result": {
+                "action_name": "reconnect_cst",
+                "recovered": true,
+                "message": "CST reconnected",
+                "details": {
+                  "method": "connect",
+                  "outcome": {
+                    "success": true,
+                    "message": "fake reconnected",
+                    "project_file": "D:\\cst_agent_rag_data\\agent_eval\\artifacts\\99b58f224b49\\full\\recovery_with_context_01\\fake_project.cst"
+                  },
+                  "project_path": "D:\\cst_agent_rag_data\\agent_eval\\artifacts\\99b58f224b49\\full\\recovery_with_context_01\\fake_project.cst"
+                },
+                "retry_tool": "execute_vba_script",
+                "retry_arguments": {
+                  "description": "REC-11：执行空 VBA 宏作为无副作用的 CST 连通性探针；不修改模型且不运行求解器。",
+                  "vba_code": "Sub Main()\n    ' REC-11 connectivity probe: intentionally no model edits and no solver call.\nEnd Sub"
+                },
+                "retry_success": true,
+                "retry_message": "fake contextual VBA executed after reconnect",
+                "retry_tool_event_id": "call_22FTvegnJpu1i11ebEWa4TOD"
+              }
+            }
+          ],
+          "tool_sequence_valid": true,
+          "first_tool_valid": true,
+          "invalid_calls": [],
+          "recovery_events": [
+            {
+              "action_name": "reconnect_cst",
+              "recovered": true,
+              "message": "CST reconnected",
+              "details": {
+                "method": "connect",
+                "outcome": {
+                  "success": true,
+                  "message": "fake reconnected",
+                  "project_file": "D:\\cst_agent_rag_data\\agent_eval\\artifacts\\99b58f224b49\\full\\recovery_with_context_01\\fake_project.cst"
+                },
+                "project_path": "D:\\cst_agent_rag_data\\agent_eval\\artifacts\\99b58f224b49\\full\\recovery_with_context_01\\fake_project.cst"
+              },
+              "retry_tool": "execute_vba_script",
+              "retry_arguments": {
+                "description": "REC-11：执行空 VBA 宏作为无副作用的 CST 连通性探针；不修改模型且不运行求解器。",
+                "vba_code": "Sub Main()\n    ' REC-11 connectivity probe: intentionally no model edits and no solver call.\nEnd Sub"
+              },
+              "retry_success": true,
+              "retry_message": "fake contextual VBA executed after reconnect",
+              "retry_tool_event_id": "call_22FTvegnJpu1i11ebEWa4TOD"
+            }
+          ],
+          "recovery_success": true,
+          "token_usage": {
+            "prompt": 9311,
+            "completion": 676,
+            "total": 9987,
+            "calls": 5
+          },
+          "latency_ms": 37424.045,
+          "grounding_checks": [
+            {
+              "fact": "REC-11",
+              "supported": true
+            },
+            {
+              "fact": "response mentions connection recovery and successful probe",
+              "supported": true,
+              "condition_matches": [
+                true,
+                true
+              ]
+            }
+          ],
+          "final_response": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n演练编号 **REC-11**：无副作用 VBA 连通性探针已完成；连接已恢复后执行成功。全过程未运行求解器，未修改模型。",
+          "all_responses": [
+            "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n已记录恢复演练编号：**REC-11**。  \n本次演练期间将**不执行任何求解器运行操作**。",
+            "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n演练编号 **REC-11**：无副作用 VBA 连通性探针已完成；连接已恢复后执行成功。全过程未运行求解器，未修改模型。"
+          ],
+          "trace_run_id": "96ccd29c0996",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 2,
+            "planner_fallback_count": 0,
+            "executor_call_count": 5,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": true,
+            "recovery_attempt_count": 1,
+            "recovery_attempts": {
+              "reconnect_cst": 1
+            },
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 3
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": false,
+              "call_kind": "auxiliary",
+              "response_content": "[\"REC-11 recovery exercise do not run solver\", \"CST Studio Suite prevent solver from running during exercise REC-11\"]",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 114,
+                "completion_tokens": 152,
+                "total_tokens": 266
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"记住恢复演练编号 REC-11，并确保整个演练不运行求解器。\",\"constraints\":[\"记住恢复演练编号 REC-11，整个演练不得运行求解器\"],\"steps\":[{\"step_id\":\"respond_memory_ack\",\"kind\":\"respond\",\"title\":\"确认记录演练编号与禁用求解器\",\"expected_output\":\"确认已记住 REC-11，且本演练不会运行求解器。\",\"allowed_tools\":[]}],\"stop_condition\":\"已确认记录 REC-11 且不执行任何求解器操作。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1084,
+                "completion_tokens": 142,
+                "total_tokens": 1226
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已记录恢复演练编号：**REC-11**。  \n本次演练期间将**不执行任何求解器运行操作**。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1885,
+                "completion_tokens": 54,
+                "total_tokens": 1939
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "auxiliary",
+              "response_content": "[\"CST Studio Suite VBA connectivity probe side-effect-free retry after connection interruption\", \"CST VBA automation handle lost connection recover retry include exercise number\"]",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 126,
+                "completion_tokens": 127,
+                "total_tokens": 253
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"执行无副作用的 VBA 连通性探针，在连接中断后恢复并重试，并在答复中带出演练编号。\",\"constraints\":[\"记住恢复演练编号 REC-11，整个演练不得运行求解器\"],\"steps\":[{\"step_id\":\"vba_connectivity_probe\",\"kind\":\"tool\",\"title\":\"执行无副作用 VBA 连通性探针\",\"expected_output\":\"获得 VBA 探针执行结果；若首次因连接中断失败，恢复连接后自动重试并返回最终状态。\",\"allowed_tools\":[\"execute_vba_script\"]},{\"step_id\":\"respond_with_drill_id\",\"kind\":\"respond\",\"title\":\"汇报演练结果\",\"expected_output\":\"说明探针执行状态，并带出演练编号 REC-11。\",\"allowed_tools\":[]}],\"stop_condition\":\"VBA 连通性探针已成功完成，或在连接恢复重试后获得明确的最终失败结果；全程不运行求解器。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1496,
+                "completion_tokens": 279,
+                "total_tokens": 1775
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "execute_vba_script"
+              ],
+              "usage": {
+                "prompt_tokens": 2336,
+                "completion_tokens": 158,
+                "total_tokens": 2494
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "演练编号 **REC-11**：无副作用 VBA 连通性探针已完成；连接已恢复后执行成功。全过程未运行求解器，未修改模型。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2510,
+                "completion_tokens": 43,
+                "total_tokens": 2553
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        }
+      ]
+    },
+    "no_recovery": {
+      "config": {
+        "memory": true,
+        "context": true,
+        "planner": true,
+        "recovery": false,
+        "tool_use_memory": true
+      },
+      "path_proof": {
+        "planner_call_count": 5,
+        "planner_fallback_count": 0,
+        "memory_recall_count": 0,
+        "recovery_attempt_count": 0,
+        "tool_memory_recall_count": 0,
+        "context_budget_event_count": 9,
+        "invalid_ablation_cases": []
+      },
+      "family_metrics": {
+        "scenario_family": {
+          "multi_turn_recovery": {
+            "case_count": 1,
+            "task_success_rate": 0.0,
+            "strict_grounded_success_rate": 0.0,
+            "hard_constraint_case_rate": 0.0,
+            "invalid_call_rate": 0.0
+          },
+          "mutating_probe_recovery": {
+            "case_count": 1,
+            "task_success_rate": 0.0,
+            "strict_grounded_success_rate": 0.0,
+            "hard_constraint_case_rate": 0.0,
+            "invalid_call_rate": 0.0
+          }
+        },
+        "design_family": {
+          "no_design": {
+            "case_count": 2,
+            "task_success_rate": 0.0,
+            "strict_grounded_success_rate": 0.0,
+            "hard_constraint_case_rate": 0.0,
+            "invalid_call_rate": 0.0
+          }
+        },
+        "failure_family": {
+          "disconnect": {
+            "case_count": 2,
+            "task_success_rate": 0.0,
+            "strict_grounded_success_rate": 0.0,
+            "hard_constraint_case_rate": 0.0,
+            "invalid_call_rate": 0.0
+          }
+        }
+      },
+      "metrics": {
+        "task_success_rate": 0.0,
+        "strict_grounded_success_rate": 0.0,
+        "constraint_adherence_rate": 0.8,
+        "hard_constraint_case_rate": 0.0,
+        "exact_tool_sequence_match_rate": 0.0,
+        "first_tool_accuracy": 1.0,
+        "tool_selection_accuracy": 0.0,
+        "invalid_call_rate": 0.0,
+        "recovery_rate": 0.0,
+        "planner": {
+          "call_count": 5,
+          "fallback_count": 0,
+          "fallback_rate": 0.0
+        },
+        "tokens": {
+          "prompt_mean": 12361.0,
+          "completion_mean": 870.5,
+          "total_mean": 13231.5,
+          "total_p95": 16059.0,
+          "estimated": false
+        },
+        "latency_ms": {
+          "mean": 36886.0275,
+          "median": 36886.0275,
+          "p95": 47551.431
+        },
+        "groundedness": {
+          "claim_precision": null,
+          "required_fact_recall": 0.3333333333333333,
+          "lexical_fact_match_rate": 0.3333333333333333,
+          "matching_method": "case_authored_lexical_alternatives"
+        }
+      },
+      "cases": [
+        {
+          "case_id": "recovery_disconnect_01",
+          "category": "recovery",
+          "scenario_family": "mutating_probe_recovery",
+          "design_family": "no_design",
+          "failure_family": "disconnect",
+          "seed": 21004,
+          "valid": true,
+          "task_success": false,
+          "execution_success": false,
+          "strict_grounded_success": false,
+          "constraint_checks": [
+            {
+              "name": "allowed_tools",
+              "passed": true
+            },
+            {
+              "name": "required_tools_all",
+              "passed": true
+            },
+            {
+              "name": "valid_tool_sequence",
+              "passed": false
+            },
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "execute_vba_script",
+            "execute_vba_script"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "execute_vba_script",
+              "success": false,
+              "message": "CST is not connected",
+              "description": "执行空的 VBA 主过程，用于验证 CST VBA 执行通道连通性，不修改模型。",
+              "error_type": "cst_connection",
+              "recovery_result": {
+                "recovered": false,
+                "reason": "no recovery engine attached"
+              }
+            },
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "execute_vba_script",
+              "success": true,
+              "message": "fake VBA 已在重连后执行",
+              "description": "再次执行空 VBA 主过程，复核 CST VBA 执行通道是否已恢复；不修改模型。"
+            }
+          ],
+          "tool_sequence_valid": false,
+          "first_tool_valid": true,
+          "invalid_calls": [],
+          "recovery_events": [
+            {
+              "recovered": false,
+              "reason": "no recovery engine attached"
+            }
+          ],
+          "recovery_success": false,
+          "token_usage": {
+            "prompt": 9820,
+            "completion": 584,
+            "total": 10404,
+            "calls": 5
+          },
+          "latency_ms": 26220.624,
+          "grounding_checks": [
+            {
+              "fact": "response mentions connection recovery and successful probe",
+              "supported": false,
+              "condition_matches": [
+                true,
+                false
+              ]
+            }
+          ],
+          "final_response": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n无副作用的 VBA 连通性探针已在重连后成功执行。CST VBA 执行通道当前可用，未对模型作任何修改。",
+          "all_responses": [
+            "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n无副作用的 VBA 连通性探针已在重连后成功执行。CST VBA 执行通道当前可用，未对模型作任何修改。"
+          ],
+          "trace_run_id": "5073c589bb6b",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 2,
+            "planner_fallback_count": 0,
+            "executor_call_count": 4,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": null,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 4
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"执行一段无副作用的 VBA 连通性探针，并在连接中断后恢复连接重试。\",\"constraints\":[\"执行一段无副作用的 VBA 连通性探针\",\"如果连接中断，恢复连接后重试\"],\"steps\":[{\"step_id\":\"step_1\",\"kind\":\"tool\",\"title\":\"执行无副作用 VBA 连通性探针\",\"expected_output\":\"VBA 探针成功执行；若首次因连接中断失败，运行时恢复连接后自动重试并返回执行结果。\",\"allowed_tools\":[\"execute_vba_script\"]},{\"step_id\":\"step_2\",\"kind\":\"respond\",\"title\":\"反馈探针执行结果\",\"expected_output\":\"向用户说明 VBA 连通性探针是否成功执行及重试情况。\",\"allowed_tools\":[]}],\"stop_condition\":\"VBA 连通性探针已成功执行，或在连接恢复重试后获得明确失败结果。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1127,
+                "completion_tokens": 218,
+                "total_tokens": 1345
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "execute_vba_script"
+              ],
+              "usage": {
+                "prompt_tokens": 1927,
+                "completion_tokens": 105,
+                "total_tokens": 2032
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已执行无副作用的 VBA 连通性探针，但返回 **“CST is not connected”**，当前 CST 会话未连接。\n\n我无法通过现有接口主动恢复 CST 连接；请先在本地重新连接/启动 CST 会话。连接恢复后，我可以立即重新执行同一段空 VBA 探针验证连通性。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2140,
+                "completion_tokens": 113,
+                "total_tokens": 2253
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"执行无副作用的 VBA 连通性探针，并在连接中断后恢复连接重试。\",\"constraints\":[\"如果连接中断，恢复连接后重试。\"],\"steps\":[{\"step_id\":\"run_connectivity_probe\",\"kind\":\"tool\",\"title\":\"执行 VBA 连通性探针\",\"expected_output\":\"探针成功执行；若首次因连接中断失败，运行时恢复连接后重试完成。\",\"allowed_tools\":[\"execute_vba_script\"]},{\"step_id\":\"respond_completion\",\"kind\":\"respond\",\"title\":\"报告探针结果\",\"expected_output\":\"向用户说明 VBA 连通性探针的执行结果。\",\"allowed_tools\":[]}],\"stop_condition\":\"VBA 连通性探针成功执行，或在恢复重试后仍无法执行并报告失败原因。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1141,
+                "completion_tokens": 189,
+                "total_tokens": 1330
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "execute_vba_script"
+              ],
+              "usage": {
+                "prompt_tokens": 2255,
+                "completion_tokens": 107,
+                "total_tokens": 2362
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "无副作用的 VBA 连通性探针已在重连后成功执行。CST VBA 执行通道当前可用，未对模型作任何修改。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2371,
+                "completion_tokens": 41,
+                "total_tokens": 2412
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "recovery_with_context_01",
+          "category": "recovery",
+          "scenario_family": "multi_turn_recovery",
+          "design_family": "no_design",
+          "failure_family": "disconnect",
+          "seed": 21009,
+          "valid": true,
+          "task_success": false,
+          "execution_success": false,
+          "strict_grounded_success": false,
+          "constraint_checks": [
+            {
+              "name": "allowed_tools",
+              "passed": true
+            },
+            {
+              "name": "required_tools_all",
+              "passed": true
+            },
+            {
+              "name": "valid_tool_sequence",
+              "passed": false
+            },
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "execute_vba_script",
+            "execute_vba_script"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "execute_vba_script",
+              "success": false,
+              "message": "CST is not connected",
+              "description": "执行 REC-11 无副作用 VBA 连通性探针：仅在宏内部进行变量赋值，不修改模型且不运行求解器。",
+              "error_type": "cst_connection",
+              "recovery_result": {
+                "recovered": false,
+                "reason": "no recovery engine attached"
+              }
+            },
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "execute_vba_script",
+              "success": true,
+              "message": "fake contextual VBA executed after reconnect",
+              "description": "REC-11 恢复后重试无副作用 VBA 连通性探针：仅执行局部变量赋值，不修改模型且不运行求解器。"
+            }
+          ],
+          "tool_sequence_valid": false,
+          "first_tool_valid": true,
+          "invalid_calls": [],
+          "recovery_events": [
+            {
+              "recovered": false,
+              "reason": "no recovery engine attached"
+            }
+          ],
+          "recovery_success": false,
+          "token_usage": {
+            "prompt": 14902,
+            "completion": 1157,
+            "total": 16059,
+            "calls": 7
+          },
+          "latency_ms": 47551.431,
+          "grounding_checks": [
+            {
+              "fact": "REC-11",
+              "supported": true
+            },
+            {
+              "fact": "response mentions connection recovery and successful probe",
+              "supported": false,
+              "condition_matches": [
+                false,
+                false
+              ]
+            }
+          ],
+          "final_response": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n**REC-11 恢复演练完成。**\n\n首次探针因 CST 连接中断失败；恢复后已按要求重试无副作用 VBA 连通性探针，执行成功。  \n本次探针仅进行了 VBA 局部变量赋值，**未修改模型，且全程未运行求解器**。",
+          "all_responses": [
+            "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n已记录恢复演练编号：**REC-11**。  \n整个演练期间将**不运行求解器**。",
+            "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n**REC-11 恢复演练完成。**\n\n首次探针因 CST 连接中断失败；恢复后已按要求重试无副作用 VBA 连通性探针，执行成功。  \n本次探针仅进行了 VBA 局部变量赋值，**未修改模型，且全程未运行求解器**。"
+          ],
+          "trace_run_id": "391f7231d506",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 3,
+            "planner_fallback_count": 0,
+            "executor_call_count": 5,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": true,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 5
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"chat_task\",\"user_goal\":\"记住恢复演练编号 REC-11，并确保整个演练不运行求解器。\",\"constraints\":[\"记住恢复演练编号 REC-11，整个演练不得运行求解器\"],\"steps\":[{\"step_id\":\"respond_memory_ack\",\"kind\":\"respond\",\"title\":\"确认演练约束\",\"expected_output\":\"确认已记录 REC-11，且演练期间不会运行求解器。\",\"allowed_tools\":[]}],\"stop_condition\":\"已确认记录演练编号及不运行求解器的约束。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1086,
+                "completion_tokens": 135,
+                "total_tokens": 1221
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已记录恢复演练编号：**REC-11**。  \n整个演练期间将**不运行求解器**。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1879,
+                "completion_tokens": 54,
+                "total_tokens": 1933
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\n  \"intent_kind\": \"direct_action\",\n  \"user_goal\": \"执行无副作用 VBA 连通性探针，断连后恢复重试，并在答复中带出演练编号。\",\n  \"constraints\": [\n    \"记住恢复演练编号 REC-11\",\n    \"整个演练不得运行求解器\",\n    \"若连接中断则恢复后重试\",\n    \"在答复中带出演练编号\"\n  ],\n  \"steps\": [\n    {\n      \"step_id\": \"run_vba_connectivity_probe\",\n      \"kind\": \"tool\",\n      \"title\": \"执行无副作用 VBA 连通性探针\",\n      \"expected_output\": \"探针执行结果；如发生连接中断，恢复连接后自动重试的结果。\",\n      \"allowed_tools\": [\n        \"execute_vba_script\"\n      ]\n    },\n    {\n      \"step_id\": \"report_probe_result\",\n      \"kind\": \"respond\",\n      \"title\": \"汇报演练结果\",\n      \"expected_output\": \"说明连通性探针结果，并带出演练编号 REC-11，确认未运行求解器。\",\n      \"allowed_tools\": []\n    }\n  ],\n  \"stop_condition\": \"无副作用 VBA 连通性探针已成功执行，或恢复重试后获得最终失败结果并完成 REC-11 汇报；全程未运行求解器。\",\n  \"stop_conditions\": [\n    \"task_complete\",\n    \"stagnation_limit\",\n    \"max_round_limit\"\n  ]\n}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1490,
+                "completion_tokens": 441,
+                "total_tokens": 1931
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "execute_vba_script"
+              ],
+              "usage": {
+                "prompt_tokens": 2356,
+                "completion_tokens": 189,
+                "total_tokens": 2545
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "**REC-11 恢复演练记录**\n\n无副作用 VBA 连通性探针执行失败：**CST is not connected**。  \n当前没有可用的 CST 重连/恢复接口，因此无法完成恢复后重试。\n\n已遵守演练约束：**未运行求解器，未修改模型。**",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2580,
+                "completion_tokens": 117,
+                "total_tokens": 2697
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\n  \"intent_kind\": \"direct_action\",\n  \"user_goal\": \"执行无副作用 VBA 连通性探针，在连接中断时恢复后重试，并在答复中带出演练编号 REC-11。\",\n  \"constraints\": [\n    \"若连接中断则恢复后重试\",\n    \"整个演练不得运行求解器\",\n    \"在答复中带出演练编号\"\n  ],\n  \"steps\": [\n    {\n      \"step_id\": \"run_connectivity_probe\",\n      \"kind\": \"tool\",\n      \"title\": \"执行无副作用 VBA 连通性探针\",\n      \"expected_output\": \"获得 VBA 探针执行结果；若连接中断，运行时恢复连接后重试该探针。\",\n      \"allowed_tools\": [\n        \"execute_vba_script\"\n      ]\n    },\n    {\n      \"step_id\": \"read_probe_result\",\n      \"kind\": \"read_result\",\n      \"title\": \"读取探针执行结果\",\n      \"expected_output\": \"确认连通性探针的成功、失败或恢复重试状态。\",\n      \"allowed_tools\": [\n        \"recall_tool_result\"\n      ]\n    },\n    {\n      \"step_id\": \"report_drill_status\",\n      \"kind\": \"respond\",\n      \"title\": \"汇报演练结果\",\n      \"expected_output\": \"说明探针结果及恢复重试情况，并带出演练编号 REC-11，且确认未运行求解器。\",\n      \"allowed_tools\": []\n    }\n  ],\n  \"stop_condition\": \"VBA 连通性探针已得到最终结果并完成带 REC-11 的答复；全过程未运行求解器。\",\n  \"stop_conditions\": [\n    \"task_complete\",\n    \"stagnation_limit\",\n    \"max_round_limit\"\n  ]\n}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1515,
+                "completion_tokens": 486,
+                "total_tokens": 2001
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "execute_vba_script"
+              ],
+              "usage": {
+                "prompt_tokens": 2689,
+                "completion_tokens": 144,
+                "total_tokens": 2833
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "**REC-11 恢复演练完成。**\n\n首次探针因 CST 连接中断失败；恢复后已按要求重试无副作用 VBA 连通性探针，执行成功。  \n本次探针仅进行了 VBA 局部变量赋值，**未修改模型，且全程未运行求解器**。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2822,
+                "completion_tokens": 77,
+                "total_tokens": 2899
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        }
+      ]
+    }
+  },
+  "comparisons": {
+    "no_recovery_vs_full": {
+      "task_success_delta": -1.0,
+      "strict_grounded_success_delta": -1.0,
+      "full_wins": 2,
+      "full_losses": 0,
+      "ties": 0,
+      "strict_full_wins": 2,
+      "strict_full_losses": 0,
+      "strict_ties": 0
+    }
+  },
+  "threshold_results": [
+    {
+      "name": "full_task_success_rate",
+      "passed": true,
+      "value": 1.0,
+      "threshold": ">= 0.8"
+    },
+    {
+      "name": "full_hard_constraint_case_rate",
+      "passed": true,
+      "value": 1.0,
+      "threshold": "== 1.0"
+    },
+    {
+      "name": "full_exact_tool_sequence_match_rate",
+      "passed": true,
+      "value": 1.0,
+      "threshold": ">= 0.8"
+    },
+    {
+      "name": "full_invalid_call_rate",
+      "passed": true,
+      "value": 0.0,
+      "threshold": "<= 0.1"
+    },
+    {
+      "name": "full_lexical_required_fact_recall",
+      "passed": true,
+      "value": 1.0,
+      "threshold": ">= 0.9"
+    },
+    {
+      "name": "full_planner_fallback_count",
+      "passed": true,
+      "value": 0,
+      "threshold": "== 0"
+    },
+    {
+      "name": "full_ablation_path_valid",
+      "passed": true,
+      "value": [],
+      "threshold": "empty"
+    },
+    {
+      "name": "full_recovery_rate",
+      "passed": true,
+      "value": 1.0,
+      "threshold": "== 1.0"
+    },
+    {
+      "name": "full_path_valid",
+      "passed": true,
+      "value": [],
+      "threshold": "empty"
+    },
+    {
+      "name": "no_recovery_path_valid",
+      "passed": true,
+      "value": [],
+      "threshold": "empty"
+    }
+  ],
+  "limitations": [
+    "Fake CST validates orchestration and recovery contracts, not CST electromagnetic fidelity.",
+    "The deterministic provider is a mechanism smoke test, bypasses RAG retrieval, uses lexical memory fallback, and must not be cited as LLM quality evidence.",
+    "2 development_regression cases are not a statistically powered benchmark.",
+    "Required-fact recall uses case-authored lexical alternatives; task_success reports execution success separately, while strict_grounded_success additionally requires lexical fact matches.",
+    "Claim precision and semantic entailment remain unevaluated until a blinded manual or calibrated claim-level review is attached.",
+    "The development_regression split and its lexical oracle were iterated during development; it is not a blinded held-out set."
+  ]
+}

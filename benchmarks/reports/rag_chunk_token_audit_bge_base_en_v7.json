@@ -1,0 +1,44 @@
+{
+  "index": {
+    "available": true,
+    "healthy": true,
+    "count": 13242,
+    "error": "",
+    "persist_dir": "D:\\cst_agent_rag_data\\chromadb_v7_bge_base_en",
+    "collection": "cst_official_docs_bge_base_en_v1",
+    "schema_version": 4,
+    "embedding_provider": "local",
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "embedding_query_instruction": "Represent this sentence for searching relevant passages: ",
+    "document_language": "en",
+    "query_expansion": "english_corpus_contract_v1",
+    "multi_query_fusion": "max_cosine",
+    "status": "ready",
+    "stored_schema_version": 4,
+    "stored_embedding_provider": "local",
+    "stored_embedding_model": "BAAI/bge-base-en-v1.5",
+    "stored_embedding_query_instruction": "Represent this sentence for searching relevant passages: ",
+    "stored_document_language": "en",
+    "stored_query_expansion": "english_corpus_contract_v1",
+    "stored_multi_query_fusion": "max_cosine"
+  },
+  "documents": 13242,
+  "tokenizer": "BAAI/bge-base-en-v1.5",
+  "model_token_limit": 512,
+  "token_length": {
+    "mean": 242.03,
+    "p50": 240,
+    "p95": 416,
+    "p99": 494,
+    "max": 806
+  },
+  "character_length": {
+    "mean": 1014.23,
+    "p50": 1143,
+    "p95": 1264,
+    "p99": 1284,
+    "max": 1316
+  },
+  "over_token_limit": 113,
+  "over_token_limit_rate": 0.00853345416100287
+}

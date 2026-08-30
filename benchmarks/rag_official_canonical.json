@@ -1,0 +1,129 @@
+{
+  "schema_version": "rag-official-canonical-v1",
+  "dataset": {
+    "path": "benchmarks/rag_official_docs_heldout_v1.json",
+    "role": "held_out_v1",
+    "sha256": "356c81af399842624c1c5607b35da426ab9791f10ead224fc917ac25d7d77ed2",
+    "case_count": 30,
+    "case_ids": [
+      "ho01_floquet_boundary_settings",
+      "ho02_farfield_source",
+      "ho03_cylindrical_nearfield_scan",
+      "ho04_export_touchstone_3d",
+      "ho05_tdr_from_sparameters",
+      "ho06_extract_material_touchstone",
+      "ho07_legacy_sparameter_goal",
+      "ho08_optimizer_goals",
+      "ho09_optimizer_algorithm_settings",
+      "ho10_hf_thermal_setup",
+      "ho11_import_thermal_losses",
+      "ho12_thermal_solver_parameters",
+      "ho13_tetrahedral_eigenmode_specials",
+      "ho14_adaptive_surface_mesh",
+      "ho15_stationary_current_sources",
+      "ho16_des_export_touchstone",
+      "ho17_parameter_list_window",
+      "ho18_touchstone_format",
+      "ho19_sparameter_task_excitations",
+      "ho20_em_thermal_task",
+      "ho21_des_optimizer_algorithm",
+      "ho22_vba_brick",
+      "ho23_vba_cylinder",
+      "ho24_vba_transform",
+      "ho25_vba_fdsolver",
+      "ho26_vba_eigenmodesolver",
+      "ho27_vba_monitor",
+      "ho28_vba_floquetport",
+      "ho29_vba_touchstone_export",
+      "ho30_filter_eigenmode_analysis"
+    ],
+    "frozen_at": "2026-08-09",
+    "blinded": false,
+    "annotation_policy": "relevance 3=direct, 2=substantive alternative, 1=background only, 0=irrelevant hard negative"
+  },
+  "index_contract": {
+    "corpus": "CST Studio Suite 2025 Online Help",
+    "collection": "cst_official_docs_bge_base_en_v1",
+    "schema_version": 4,
+    "chunk_count": 13242,
+    "embedding_provider": "local",
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "embedding_query_instruction": "Represent this sentence for searching relevant passages:",
+    "document_language": "en",
+    "query_expansion": "english_corpus_contract_v1",
+    "multi_query_fusion": "max_cosine"
+  },
+  "presets": {
+    "heldout_v1_dense_top3": {
+      "cases": "benchmarks/rag_official_docs_heldout_v1.json",
+      "query_field": "reference_english_query",
+      "retrieval_mode": "dense",
+      "top_k": 3,
+      "warmup_query": "How do I configure a CST solver?",
+      "source_dedup": false,
+      "rerank": {
+        "enabled": false
+      }
+    },
+    "heldout_v1_minilm_top3": {
+      "cases": "benchmarks/rag_official_docs_heldout_v1.json",
+      "query_field": "reference_english_query",
+      "retrieval_mode": "production",
+      "top_k": 3,
+      "warmup_query": "How do I configure a CST solver?",
+      "source_dedup": true,
+      "rerank": {
+        "enabled": true,
+        "model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+        "candidate_k": 20,
+        "batch_size": 16
+      }
+    },
+    "heldout_v1_bge_reranker_base_top3": {
+      "cases": "benchmarks/rag_official_docs_heldout_v1.json",
+      "query_field": "reference_english_query",
+      "retrieval_mode": "production",
+      "top_k": 3,
+      "warmup_query": "How do I configure a CST solver?",
+      "source_dedup": true,
+      "rerank": {
+        "enabled": true,
+        "model": "BAAI/bge-reranker-base",
+        "candidate_k": 20,
+        "batch_size": 16
+      }
+    }
+  },
+  "reports": {
+    "heldout_v1_dense_top3": {
+      "path": "benchmarks/reports/rag_official_docs_heldout_v1_dense_top3.json",
+      "historical_metrics": {
+        "recall_at_3": 0.9,
+        "mrr": 0.75,
+        "ndcg_at_3": 0.7537677440305013,
+        "latency_p95_ms": 55.65
+      }
+    },
+    "heldout_v1_minilm_top3": {
+      "path": "benchmarks/reports/rag_official_docs_heldout_v1_minilm_top3.json",
+      "historical_metrics": {
+        "recall_at_3": 0.9666666666666667,
+        "mrr": 0.7944444444444444,
+        "ndcg_at_3": 0.8170481229092295,
+        "latency_p95_ms": 742.03
+      }
+    },
+    "heldout_v1_bge_reranker_base_top3": {
+      "path": "benchmarks/reports/rag_official_docs_heldout_v1_bge_reranker_base_top3.json",
+      "historical_metrics": {
+        "recall_at_3": 0.9666666666666667,
+        "mrr": 0.7722222222222223,
+        "ndcg_at_3": 0.7989880265264727,
+        "latency_p95_ms": 4145.02
+      }
+    }
+  },
+  "superseded_policy": {
+    "rule": "A report whose dataset SHA or preset identity differs from this registry is historical and must not be combined with canonical metrics. SHA proves byte identity, not blinded authoring."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "tool-use-memory-pair-manifest-v1",
+  "dataset_id": "tool_use_memory_llm_pair_dev_v1",
+  "dataset_sha256": "767554cc1d66a9473659ed156dade03422208f39c07b3d8282fa79b027abba4a",
+  "case_count": 6,
+  "case_ids": [
+    "status_audit_01",
+    "status_audit_02",
+    "status_audit_03",
+    "status_audit_04",
+    "status_audit_05",
+    "status_audit_06"
+  ],
+  "split": "development_regression",
+  "role": "developer_visible_pilot",
+  "blinded": false,
+  "limitations": [
+    "A matching SHA proves byte identity, not blinded authoring or unseen generalization.",
+    "All six cases belong to one known failure family and are retained as a null pilot."
+  ]
+}

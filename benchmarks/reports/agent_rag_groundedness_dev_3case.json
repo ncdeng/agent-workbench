@@ -1,0 +1,323 @@
+{
+  "dataset_role": "held_out_agent_subset",
+  "cases": 3,
+  "case_ids": [
+    "waveguide_port_zh",
+    "waveguide_port_en",
+    "broadband_farfield_monitor_mixed"
+  ],
+  "agent_model": "gpt-5.5",
+  "judge_model": "gpt-5.5",
+  "rag": {
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "reranker_model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "candidate_k": 20,
+    "final_k": 3
+  },
+  "success_rate": 1.0,
+  "retrieval_recall_at_3": 1.0,
+  "citation_presence_rate": 1.0,
+  "citation_precision": 1.0,
+  "provenance_completeness": 1.0,
+  "trace_rag_completeness": 1.0,
+  "groundedness_score": 0.6966666666666667,
+  "answer_relevance_score": 0.9,
+  "unsupported_claim_rate": 0.3076923076923077,
+  "latency_ms": {
+    "mean": 36705.65,
+    "p95": 57256.47
+  },
+  "results": [
+    {
+      "id": "waveguide_port_zh",
+      "language": "zh",
+      "category": "port",
+      "query": "在 Filter Designer 3D 中如何定义波导端口？",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n在 **CST Filter Designer 3D** 中，“波导端口”通常不是像 3D 全波求解器里那样手动画一个端口面，而是通过 **Port Waveguide** 这类预定义端口模型/组件来定义。该模型本身代表一个 waveguide port，并带有可用于与 Line Waveguide 或 Resonator Waveguide 的 anchor 对齐拼接的 anchors。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]\n\n定义时主要需要设置以下关键几何参数：\n\n1. **波导宽度 Width**  \n   用来指定矩形波导的宽边尺寸。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]\n\n2. **波导高度 Height**  \n   用来指定矩形波导的窄边尺寸。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]\n\n3. **波导接入段长度 Length of waveguide access**  \n   用来定义端口前的波导接入段长度，也就是端口与后续滤波器结构之间的过渡/接入波导长度。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]\n\n4. **通过 anchor 与后续结构连接**  \n   Port Waveguide 模型中定义了 anchors，可用于吸附到 Line Waveguide 的 anchor，从而构建波导滤波器组件装配。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]\n\n如果使用的是 **Port Waveguide Inductive**，还会额外涉及感性膜片/iris 相关参数，例如：\n\n- 波导宽度；\n- 波导高度；\n- 波导接入段长度；\n- iris wall thickness；\n- iris width，用于调节耦合强度。[source=Filter_Designer_3D/example/port_waveguide_inductive.htm, chunk=0]\n\n在结构生成方面，官方示例说明其背景材料被定义为理想导体，并且边界条件设置为 electric，用于形成波导端口模型环境。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]\n\n简化理解就是：\n\n> 在 Filter Designer 3D 中，波导端口通过选择/插入 **Port Waveguide** 组件来定义；然后设置波导的 **宽度、高度、接入段长度**，再利用组件的 **anchor** 与滤波器中的波导或谐振腔结构连接。对于带感性耦合的端口，还需要设置 iris 的宽度和厚度等耦合参数。",
+      "ok": true,
+      "latency_ms": 57256.47,
+      "retrieved_sources": [
+        "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+        "Filter_Designer_3D/example/port_waveguide.htm",
+        "Filter_Designer_3D/example/port_siw_microstrip.htm"
+      ],
+      "retrieved_chunks": [
+        0,
+        0,
+        0
+      ],
+      "retrieval_relevant": true,
+      "rerank_applied": true,
+      "citations": [
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "valid_citations": [
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "citation_present": true,
+      "citation_precision": 1.0,
+      "provenance_complete": true,
+      "trace_rag_complete": true,
+      "trace_run_id": "e752fbd0041e",
+      "agent_tokens": {
+        "prompt": 5145,
+        "completion": 823,
+        "calls": 2,
+        "total": 5968,
+        "cost_usd": 0.0761
+      },
+      "judge": {
+        "claim_count": 16,
+        "supported_claim_count": 10,
+        "unsupported_claim_count": 6,
+        "groundedness_score": 0.63,
+        "answer_relevance_score": 0.9,
+        "citation_entailment": false,
+        "unsupported_claims": [
+          "CST 未连接、工具调用将在离线模式下运行",
+          "波导端口通常不是像 3D 全波求解器里那样手动画端口面",
+          "Port Waveguide 是通过选择/插入预定义端口模型/组件来定义",
+          "Width 是矩形波导的宽边尺寸",
+          "Height 是矩形波导的窄边尺寸",
+          "接入段长度是端口与后续滤波器结构之间的过渡/接入波导长度"
+        ],
+        "reason": "证据直接说明 Port Waveguide/Port Waveguide Inductive 表示 waveguide port，具有可吸附到 Line Waveguide 或 Resonator Waveguide 的 anchors，并列出 width、height、waveguide access length、iris wall thickness、iris width 及其耦合调节作用，也支持理想导体背景和 electric 边界条件。答案总体相关，但包含未由证据支持的离线模式说明、与全波求解器手动画端口面的比较、UI 选择/插入说法，以及 width/height 对应矩形波导宽边/窄边等扩展解释；部分带引用的句子也包含这些未被引用证据蕴含的内容。",
+        "judge_tokens": 2517
+      }
+    },
+    {
+      "id": "waveguide_port_en",
+      "language": "en",
+      "category": "port",
+      "query": "How is a waveguide port defined in Filter Designer 3D?",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n在 **CST Filter Designer 3D** 中，**Waveguide Port（波导端口）**本质上是一个用于连接滤波器波导结构的端口模型，它表示一段波导端口结构，可通过预定义的 **anchor（锚点）** 与其他波导部件的锚点对齐/吸附，从而组装波导滤波器结构。官方示例中说明，Port Waveguide 可与 **Line Waveguide** 的 anchor 连接，用于构建 waveguide filter assembly。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]\n\n它通常由几个关键几何参数定义：**waveguide width（波导宽度）**、**waveguide height（波导高度）**以及 **waveguide access length（波导接入段长度）**。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]  \n如果是 **Port Waveguide Inductive（感性波导端口）**，还会包含 **iris wall thickness（膜片/虹膜壁厚）** 和 **iris width（虹膜宽度）** 等参数，其中 iris width 可用于调谐结构响应。[source=Filter_Designer_3D/example/port_waveguide_inductive.htm, chunk=0]\n\n在滤波器装配中，Waveguide Port 的作用不是简单的数值激励点，而是作为一个带有物理波导截面和接入长度的端口模块，用来和通用波导段、谐振器波导等模块通过 anchor 连接，形成完整的波导滤波器装配。[source=Filter_Designer_3D/example/line_waveguide.htm, chunk=0]  \n\n官方示例还提到，在这种波导端口模型的结构生成中，背景材料被定义为理想导体，边界条件设置为 electric，用于形成波导端口/波导滤波器模型的封闭金属边界环境。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]\n\n简而言之：**Filter Designer 3D 里的 waveguide port 是一个参数化的波导端口组件，由波导宽度、高度和接入长度等参数定义，并通过 anchor 与其他波导组件拼接，用于构建和激励波导滤波器装配。**",
+      "ok": true,
+      "latency_ms": 23571.1,
+      "retrieved_sources": [
+        "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+        "Filter_Designer_3D/example/port_waveguide.htm",
+        "Filter_Designer_3D/example/line_waveguide.htm"
+      ],
+      "retrieved_chunks": [
+        0,
+        0,
+        0
+      ],
+      "retrieval_relevant": true,
+      "rerank_applied": true,
+      "citations": [
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/line_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "valid_citations": [
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/line_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "citation_present": true,
+      "citation_precision": 1.0,
+      "provenance_complete": true,
+      "trace_rag_complete": true,
+      "trace_run_id": "b11018893f4c",
+      "agent_tokens": {
+        "prompt": 5243,
+        "completion": 814,
+        "calls": 2,
+        "total": 6057,
+        "cost_usd": 0.0769
+      },
+      "judge": {
+        "claim_count": 12,
+        "supported_claim_count": 9,
+        "unsupported_claim_count": 3,
+        "groundedness_score": 0.75,
+        "answer_relevance_score": 0.9,
+        "citation_entailment": false,
+        "unsupported_claims": [
+          "CST is not connected and tool calls will run in offline mode",
+          "A Waveguide Port is not simply a numerical excitation point",
+          "The Waveguide Port is used to excite the waveguide filter assembly"
+        ],
+        "reason": "The core definition is supported: the evidence says the model represents a waveguide port, has anchors that snap to Line Waveguide or Resonator Waveguide anchors, and is defined by waveguide width, height, and access length; the inductive variant adds iris wall thickness and iris width. However, several statements go beyond the evidence, especially the offline-mode note, the contrast with a numerical excitation point, and the claim that the component is used to excite the assembly.",
+        "judge_tokens": 2306
+      }
+    },
+    {
+      "id": "broadband_farfield_monitor_mixed",
+      "language": "mixed",
+      "category": "postprocess",
+      "query": "broadband farfield monitors 怎么批量创建？",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n在 CST 里批量创建 **Broadband Farfield Monitors**，通常用官方预置宏完成：\n\n### 1. 菜单路径\n\n进入：\n\n**Macros → VBA Macros → Solver → Monitors and Probes → Broadband Field Monitors**\n\n这个宏的作用是：在指定频率范围内，按等间隔批量定义多个 **farfield monitors**；每个 farfield monitor 都会在 Navigation Tree 中生成一个独立条目。[source=3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm, chunk=0]\n\n---\n\n### 2. 典型设置方式\n\n在宏窗口中一般需要填写：\n\n- 起始频率，例如 `24 GHz`\n- 终止频率，例如 `30 GHz`\n- 监视器数量，或频率步进\n- monitor 类型选择 **Farfield**\n- 命名规则，例如 `farfield_24GHz`, `farfield_25GHz` 等\n\n宏会自动生成多个远场监视器，例如：\n\n```text\nfarfield (f=24)\nfarfield (f=25)\nfarfield (f=26)\n...\nfarfield (f=30)\n```\n\n这些监视器会分别出现在 CST 的结果树 / Navigation Tree 中。[source=3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm, chunk=0]\n\n---\n\n### 3. 可以重复运行，不会覆盖旧 monitor\n\n这个宏可以多次执行，而且不会覆盖之前已经定义的远场监视器。因此你可以先创建一组 `24–30 GHz` 的远场监视器，之后再追加一组 `30–40 GHz` 的远场监视器。[source=3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm, chunk=0]\n\n---\n\n### 4. 和 1D broadband farfield 结果模板的关系\n\n如果你后续想得到“随频率变化的某个远场指标”，比如：\n\n- realized gain vs frequency\n- directivity vs frequency\n- axial ratio vs frequency\n- theta/phi 某方向上的增益 vs frequency\n\n可以再使用：\n\n**Post Processing → Tools → Result Templates → 1D / Farfield (broadband)**\n\n这个模板可以把用户选择的一个远场结果值作为频率函数进行宽带存储；但它要求你已经定义了多个 farfield monitors，而这些 monitors 就可以通过上面的 **Broadband Field Monitors** 宏方便地批量生成。[source=3D/common_preloadedmacro/common_preloadedmacro_1d_farfield_(broadband).htm, chunk=0]\n\n---\n\n### 5. 注意事项\n\n远场方向图必须在仿真前设置 farfield monitor；如果仿真前没有创建，求解结束后通常不会自动生成可用的远场方向图结果。监视器频率一般应覆盖你的目标谐振频率或工作带宽。  \n\n例如做一个 28 GHz 贴片天线，可以设置：\n\n```text\nStart frequency: 26 GHz\nStop frequency: 30 GHz\nStep: 0.5 GHz\nMonitor type: Farfield\n```\n\n这样会得到 26、26.5、27、27.5、28、28.5、29、29.5、30 GHz 等多个远场监视器。",
+      "ok": true,
+      "latency_ms": 29289.38,
+      "retrieved_sources": [
+        "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_1d_farfield_(broadband).htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_preloaded_macros_overview.htm"
+      ],
+      "retrieved_chunks": [
+        0,
+        0,
+        2
+      ],
+      "retrieval_relevant": true,
+      "rerank_applied": true,
+      "citations": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_1d_farfield_(broadband).htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "valid_citations": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_1d_farfield_(broadband).htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "citation_present": true,
+      "citation_precision": 1.0,
+      "provenance_complete": true,
+      "trace_rag_complete": true,
+      "trace_run_id": "6ba88294ec6d",
+      "agent_tokens": {
+        "prompt": 5116,
+        "completion": 1116,
+        "calls": 2,
+        "total": 6232,
+        "cost_usd": 0.0846
+      },
+      "judge": {
+        "claim_count": 24,
+        "supported_claim_count": 17,
+        "unsupported_claim_count": 7,
+        "groundedness_score": 0.71,
+        "answer_relevance_score": 0.9,
+        "citation_entailment": false,
+        "unsupported_claims": [
+          "CST is not connected and tool calls will run in offline mode",
+          "The macro setting can specify monitor quantity rather than frequency distance",
+          "The macro provides a naming-rule field such as farfield_24GHz",
+          "The macro automatically generates monitor names like farfield (f=24)",
+          "The 1D broadband farfield template specifically supports realized gain, directivity, axial ratio, and theta/phi directional gain examples",
+          "Farfield monitors must be created before simulation or usable farfield patterns usually cannot be generated afterward",
+          "Monitor frequencies should cover the target resonance frequency or operating bandwidth"
+        ],
+        "reason": "The core answer is supported: the cited CST help states the menu path, that the macro creates multiple equally spaced farfield monitors over a frequency range, adds Navigation Tree entries, can be applied multiple times without overwriting, and that the 1D Farfield broadband template stores a chosen farfield result versus frequency and requires multiple farfield monitors. However, several UI details, naming behavior, offline-mode statement, post-simulation warning, and recommended frequency-selection guidance are not directly supported by the supplied evidence.",
+        "judge_tokens": 3065
+      }
+    }
+  ]
+}

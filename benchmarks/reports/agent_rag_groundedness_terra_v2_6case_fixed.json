@@ -1,0 +1,1306 @@
+{
+  "schema_version": "agent-rag-groundedness-report-v2",
+  "run_id": "rag-groundedness-1786356874-5234bf4550",
+  "generated_at": "2026-08-10T10:14:33.935184+00:00",
+  "code_revision": "b7f3744503e72c83f76f2b857ee0dbf2a97c89d2",
+  "execution_contract": {
+    "selected_case_ids": [
+      "ho01_floquet_boundary_settings",
+      "ho02_farfield_source",
+      "ho03_cylindrical_nearfield_scan",
+      "ho04_export_touchstone_3d",
+      "ho05_tdr_from_sparameters",
+      "ho06_extract_material_touchstone"
+    ],
+    "agent_model": "gpt-5.6-terra",
+    "judge_model": "gpt-5.6-terra",
+    "judge_prompt_version": "rag-claim-judge-v2",
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "reranker_model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "candidate_k": 20,
+    "final_k": 3,
+    "code_revision": "b7f3744503e72c83f76f2b857ee0dbf2a97c89d2",
+    "worktree_dirty": true,
+    "runner_sha256": "1960dca3e07a090f44a9f36bb157a48ebe57bf936ed995c0c332b91b0266e970",
+    "judge_template_sha256": "b68674b03f143d0dfcc3835e43f72616f279a8bd6e3d16a3ae774ba553636dfd"
+  },
+  "execution_contract_sha256": "5234bf4550d938161bda87496fbd17ffb74c14acef613c04547a0a7c7c245dd6",
+  "dataset": {
+    "path": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\rag_official_docs_heldout_v1.json",
+    "sha256": "356c81af399842624c1c5607b35da426ab9791f10ead224fc917ac25d7d77ed2",
+    "role": "held_out_v1",
+    "case_count": 30,
+    "blinded": false,
+    "identity_scope": "byte_identity_only_not_independent_blinding"
+  },
+  "selection_policy": {
+    "method": "fixed_prefix_per_language",
+    "per_language": 2,
+    "developer_visible": true,
+    "release_eligible": false
+  },
+  "selected_cases_sha256": "fd87c0a3c40b831f57bccbb976a5dc43677dea1d1260aa0101381a5dd8afada9",
+  "dataset_role": "held_out_agent_subset",
+  "cases": 6,
+  "case_ids": [
+    "ho01_floquet_boundary_settings",
+    "ho02_farfield_source",
+    "ho03_cylindrical_nearfield_scan",
+    "ho04_export_touchstone_3d",
+    "ho05_tdr_from_sparameters",
+    "ho06_extract_material_touchstone"
+  ],
+  "agent_model": "gpt-5.6-terra",
+  "judge_model": "gpt-5.6-terra",
+  "rag": {
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "reranker_model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "candidate_k": 20,
+    "final_k": 3
+  },
+  "success_rate": 0.3333333333333333,
+  "retrieval_recall_at_3": 1.0,
+  "citation_presence_rate": 1.0,
+  "citation_precision": 1.0,
+  "provenance_completeness": 1.0,
+  "trace_rag_completeness": 1.0,
+  "groundedness_score": 0.7083333333333333,
+  "answer_relevance_score": 0.905,
+  "unsupported_claim_rate": 0.28,
+  "latency_ms": {
+    "mean": 67722.24,
+    "p95": 177768.32
+  },
+  "results": [
+    {
+      "id": "ho01_floquet_boundary_settings",
+      "language": "zh",
+      "category": "boundary",
+      "query": "Floquet 边界里如何设置扫描角度、模式数和极化？",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n在 CST 的 Floquet 边界/端口设置中，可按以下思路配置：\n\n1. **扫描角度（Scan Angle）**  \n   扫描角决定入射波或阵列主波束相对结构法线的倾斜方向，通常以 **θ（俯仰/离法线角）** 与 **φ（方位角）** 表示。改变扫描角后，Floquet 模式的横向相位关系会相应变化。  \n   对于斜入射，Floquet 端口模式会保证反射波沿光学反射方向记录，而透射波保持与入射波相同的传播方向。[source=EXP_HF/examplesoverview/fss__simulation_of_resonator_array.htm, chunk=7]\n\n2. **模式数（Number of Floquet Modes）**  \n   在 Floquet Port 的 **Details** 中，通过 *Floquet modes* 列表选择需要计算的模式数量。官方建议：**至少应包含全部传播模（propagating modes）**；否则可能遗漏可传播的反射、透射或衍射能量通道。[source=3D/special_solvopt/special_solvopt_floquet_special.htm, chunk=1]  \n   实务上，若结构周期较小且频率较低，通常先关注基模；当频率升高、周期增大或出现高阶衍射时，应增加模式数，直到所有传播模均被纳入。关于具体应选多少个模式，当前检索片段未给出固定数值或自动判据。\n\n3. **极化（Polarization）**  \n   Floquet 基模通常对应线极化的 **TE(0,0)** 与 **TM(0,0)**。极化一般会随扫描方位角 φ 隐式变化。[source=VBA_3D/special_vbaports/floquetport_object.htm, chunk=2]  \n   如果启用 `SetPolarizationIndependentOfScanAnglePhi(..., True)`，CST 会对 TE(0,0) 和 TM(0,0) 基模做线性组合，使得到的第一模式极化不再随扫描方位角 φ 改变。[source=VBA_3D/special_vbaports/floquetport_object.htm, chunk=2]  \n   文档还指出，可激励左旋/右旋圆极化波（LCP/RCP），以替代线极化的 TE(0,0)、TM(0,0) 模式。[source=VBA_3D/special_vbaports/floquetport_object.htm, chunk=2]\n\n简要建议：先设定目标 θ、φ；在模式列表中确保所有传播模被包含；线极化分析时采用 TE/TM 基模，若需要固定相对于全局坐标的极化方向，可考虑启用“极化独立于 φ 扫描角”的设置。",
+      "answer_sha256": "bf6df0f1d04683a8c516c90b0211e80c14f47c01b87a0e311373650214dcecc0",
+      "evidence": [
+        {
+          "source_path": "VBA_3D/special_vbaports/floquetport_object.htm",
+          "chunk_idx": "2",
+          "text": "CST Official Help | VBA 3D special vbaports floquetport object\nft and right circularly polarized waves (LCP, RCP) will be excited instead of the linearly polarized TE(0,0) and TM(0,0) modes.\n\nSetPolarizationIndependentOfScanAnglePhi ( double value , bool flag )\n\nThe polarization of the Floquet modes is usually given implicitly as a function of the scan angle phi. If the flag is set to True , the fundamental modes TE(0,0) and TM(0,0) will be linearily combined such that the resulting first mode's polarization is aligned to the given value (in degrees, with respect to the u-axis of the port, as for waveguide ports.)\n\nSetDialogFrequency ( double value )\n\nThe sorting of the Floquet modes (e.g. by decreasing beta) depends on frequency as well as the scan angles theta and phi. As the modes should not change their order while a frequency sweep is performed, the frequency at which the modes are sorted needs to be fixed by calling this method. Pass an empty string to sort the modes at the uppermost frequency. Calling this method affects all Floquet ports.\n\nSetDialogMediaFactor ( double value )"
+        },
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_floquet_special.htm",
+          "chunk_idx": "1",
+          "text": "CST Official Help | 3D special solvopt special solvopt floquet special\nulation. Please make sure that at least all propagating modes are taken into account. The list of Floquet modes in the Floquet modes frame of the Details>> can be used to choose the number of modes.\n\nDistance to reference plane: Specifies the distance to your reference plane, which is then used during the simulation to obtain the correct phase information for the S-parameters (phase deembedding.) Positive values move the reference plane outwards , negative inwards. The deembedding for Floquet ports can only be set before the calculation.\n\nPolarization independent of scan angle phi: The polarization of the Floquet modes is usually given implicitly as a function of the scan angle phi. If the checkbox is activated, the fundamental modes TE(0,0) and TM(0,0) will be linearly combined such that the resulting first mode's polarization is aligned to the given polarization angle (in degrees, with respect to the u-axis of the port, as for waveguide ports.) This polarization value can only be set before the calculation. It applies to all Floquet ports if both Zmin and Zmax exist."
+        },
+        {
+          "source_path": "EXP_HF/examplesoverview/fss__simulation_of_resonator_array.htm",
+          "chunk_idx": "7",
+          "text": "CST Official Help | EXP HF examplesoverview fss simulation of resonator array\nty of the FSS are freely configurable.\n\nA plane wave travelling along the negative z-axis will be stimulated at the upper xy plane (the Floquet port Zmax), so that we have chosen the option Inward .\n\nFor off-normal incident angles the Floquet port modes ensure that the reflected wave is recorded in the direction of optical reflection, while the transmission is in the same direction as the incident wave. This is elucidated by the figure below.\n\nIncident and transmitted directions are automatically set by the Floquet modes.\n\nThe periodicity can also be specified, as in this example, by setting the size of the substrate to the desired periodicity, then checking the Fit unit cell to bounding box checkbox.\n\nUnit cell boundary conditions can be set to fit the bounding box."
+        }
+      ],
+      "evidence_sha256": "897491921082d1b977bfc5c372c83e74a0a58f4baba1ab742a2e46e3939d3778",
+      "retrieved_sources": [
+        "VBA_3D/special_vbaports/floquetport_object.htm",
+        "3D/special_solvopt/special_solvopt_floquet_special.htm",
+        "EXP_HF/examplesoverview/fss__simulation_of_resonator_array.htm"
+      ],
+      "retrieved_chunks": [
+        2,
+        1,
+        7
+      ],
+      "citations": [
+        {
+          "source_path": "EXP_HF/examplesoverview/fss__simulation_of_resonator_array.htm",
+          "chunk_idx": "7"
+        },
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_floquet_special.htm",
+          "chunk_idx": "1"
+        },
+        {
+          "source_path": "VBA_3D/special_vbaports/floquetport_object.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "VBA_3D/special_vbaports/floquetport_object.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "VBA_3D/special_vbaports/floquetport_object.htm",
+          "chunk_idx": "2"
+        }
+      ],
+      "trace_run_id": "895d24d44dd9",
+      "ok": false,
+      "error_stage": "judge_validation",
+      "error": "JudgeResponseValidationError: judge supported_claim_count does not match claim verdicts",
+      "latency_ms": 99163.01,
+      "judge_validation_failure": {
+        "prompt_version": "rag-claim-judge-v2",
+        "prompt_sha256": "a5a79340324c12e30bcdfcb63b0c4d987574c82cf4969ca0e3c5da556b1c61fb",
+        "raw_response": "{\"claim_count\":12,\"supported_claim_count\":8,\"unsupported_claim_count\":4,\"groundedness_score\":0.6666666666666666,\"answer_relevance_score\":0.95,\"citation_entailment\":false,\"claims\":[{\"text\":\"扫描角通常以θ（俯仰/离法线角）和φ（方位角）表示。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"所给证据提到扫描角θ和φ，但未直接定义二者分别为俯仰/离法线角和方位角。\"},{\"text\":\"改变扫描角会使Floquet模式的横向相位关系相应变化。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"证据未直接说明横向相位关系随扫描角变化。\"},{\"text\":\"斜入射时，Floquet端口模式会使反射波按光学反射方向记录，而透射波方向与入射波相同。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"EXP_HF/examplesoverview/fss__simulation_of_resonator_array.htm\",\"chunk_idx\":\"7\"}],\"reason\":\"证据明确说明非正入射时反射按光学反射方向记录，透射方向与入射方向相同。\"},{\"text\":\"可通过Floquet Port的Details中的Floquet modes列表选择模式数量。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/special_solvopt/special_solvopt_floquet_special.htm\",\"chunk_idx\":\"1\"}],\"reason\":\"证据明确说明Details中的Floquet modes列表可用于选择模式数。\"},{\"text\":\"应至少纳入全部传播模。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/special_solvopt/special_solvopt_floquet_special.htm\",\"chunk_idx\":\"1\"}],\"reason\":\"证据明确要求至少考虑所有传播模。\"},{\"text\":\"若未纳入全部传播模，可能遗漏可传播的反射、透射或衍射能量通道。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"证据要求考虑全部传播模，但未直接列出遗漏反射、透射或衍射能量通道这一后果。\"},{\"text\":\"当结构周期较小且频率较低时，通常先关注基模。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"所给证据没有提供周期、频率与优先选取基模之间的规则。\"},{\"text\":\"频率升高、周期增大或出现高阶衍射时应增加模式数。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"证据未直接给出这些条件与增加模式数之间的判据。\"},{\"text\":\"Floquet基模TE(0,0)和TM(0,0)为线极化模式。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"VBA_3D/special_vbaports/floquetport_object.htm\",\"chunk_idx\":\"2\"}],\"reason\":\"证据将TE(0,0)和TM(0,0)称为线极化模式，并称其为fundamental modes。\"},{\"text\":\"Floquet模式的极化通常隐式地随扫描方位角φ变化。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"VBA_3D/special_vbaports/floquetport_object.htm\",\"chunk_idx\":\"2\"}],\"reason\":\"证据明确说明Floquet模式极化通常隐式地是扫描角phi的函数。\"},{\"text\":\"启用SetPolarizationIndependentOfScanAnglePhi(..., True)会线性组合TE(0,0)和TM(0,0)，使第一模式的极化不随扫描方位角φ改变。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"VBA_3D/special_vbaports/floquetport_object.htm\",\"chunk_idx\":\"2\"}],\"reason\":\"证据明确说明flag为True时会线性组合两个基模，使第一模式极化对准给定角度，而非由phi隐式决定。\"},{\"text\":\"可激励左旋/右旋圆极化波（LCP/RCP）来替代线极化的TE(0,0)和TM(0,0)模式。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"VBA_3D/special_vbaports/floquetport_object.htm\",\"chunk_idx\":\"2\"}],\"reason\":\"证据明确说明会激励LCP和RCP，而不是线极化TE(0,0)和TM(0,0)模式。\"}],\"reason\":\"回答直接覆盖了扫描角、模式数和极化设置。模式列表、传播模要求以及极化相关描述有证据支持；θ/φ的具体角度定义、横向相位关系及按频率/周期选择模式数的经验规则未被所给片段直接支持。\"}",
+        "raw_response_sha256": "9fde65f557ed362a48c8adfc202b30d2420eabe12cc86c9f67268181f18a8b4f",
+        "parsed_response": {
+          "claim_count": 12,
+          "supported_claim_count": 8,
+          "unsupported_claim_count": 4,
+          "groundedness_score": 0.6666666666666666,
+          "answer_relevance_score": 0.95,
+          "citation_entailment": false,
+          "claims": [
+            {
+              "text": "扫描角通常以θ（俯仰/离法线角）和φ（方位角）表示。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "所给证据提到扫描角θ和φ，但未直接定义二者分别为俯仰/离法线角和方位角。"
+            },
+            {
+              "text": "改变扫描角会使Floquet模式的横向相位关系相应变化。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "证据未直接说明横向相位关系随扫描角变化。"
+            },
+            {
+              "text": "斜入射时，Floquet端口模式会使反射波按光学反射方向记录，而透射波方向与入射波相同。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "EXP_HF/examplesoverview/fss__simulation_of_resonator_array.htm",
+                  "chunk_idx": "7"
+                }
+              ],
+              "reason": "证据明确说明非正入射时反射按光学反射方向记录，透射方向与入射方向相同。"
+            },
+            {
+              "text": "可通过Floquet Port的Details中的Floquet modes列表选择模式数量。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/special_solvopt/special_solvopt_floquet_special.htm",
+                  "chunk_idx": "1"
+                }
+              ],
+              "reason": "证据明确说明Details中的Floquet modes列表可用于选择模式数。"
+            },
+            {
+              "text": "应至少纳入全部传播模。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/special_solvopt/special_solvopt_floquet_special.htm",
+                  "chunk_idx": "1"
+                }
+              ],
+              "reason": "证据明确要求至少考虑所有传播模。"
+            },
+            {
+              "text": "若未纳入全部传播模，可能遗漏可传播的反射、透射或衍射能量通道。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "证据要求考虑全部传播模，但未直接列出遗漏反射、透射或衍射能量通道这一后果。"
+            },
+            {
+              "text": "当结构周期较小且频率较低时，通常先关注基模。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "所给证据没有提供周期、频率与优先选取基模之间的规则。"
+            },
+            {
+              "text": "频率升高、周期增大或出现高阶衍射时应增加模式数。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "证据未直接给出这些条件与增加模式数之间的判据。"
+            },
+            {
+              "text": "Floquet基模TE(0,0)和TM(0,0)为线极化模式。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "VBA_3D/special_vbaports/floquetport_object.htm",
+                  "chunk_idx": "2"
+                }
+              ],
+              "reason": "证据将TE(0,0)和TM(0,0)称为线极化模式，并称其为fundamental modes。"
+            },
+            {
+              "text": "Floquet模式的极化通常隐式地随扫描方位角φ变化。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "VBA_3D/special_vbaports/floquetport_object.htm",
+                  "chunk_idx": "2"
+                }
+              ],
+              "reason": "证据明确说明Floquet模式极化通常隐式地是扫描角phi的函数。"
+            },
+            {
+              "text": "启用SetPolarizationIndependentOfScanAnglePhi(..., True)会线性组合TE(0,0)和TM(0,0)，使第一模式的极化不随扫描方位角φ改变。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "VBA_3D/special_vbaports/floquetport_object.htm",
+                  "chunk_idx": "2"
+                }
+              ],
+              "reason": "证据明确说明flag为True时会线性组合两个基模，使第一模式极化对准给定角度，而非由phi隐式决定。"
+            },
+            {
+              "text": "可激励左旋/右旋圆极化波（LCP/RCP）来替代线极化的TE(0,0)和TM(0,0)模式。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "VBA_3D/special_vbaports/floquetport_object.htm",
+                  "chunk_idx": "2"
+                }
+              ],
+              "reason": "证据明确说明会激励LCP和RCP，而不是线极化TE(0,0)和TM(0,0)模式。"
+            }
+          ],
+          "reason": "回答直接覆盖了扫描角、模式数和极化设置。模式列表、传播模要求以及极化相关描述有证据支持；θ/φ的具体角度定义、横向相位关系及按频率/周期选择模式数的经验规则未被所给片段直接支持。"
+        }
+      }
+    },
+    {
+      "id": "ho02_farfield_source",
+      "language": "en",
+      "category": "source",
+      "query": "How do I define a farfield source from imported radiation data?",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n可通过 CST 的 **FarfieldSource Object** 将“导入的远场数据”定义为一次仿真的激励源；该对象用于把远场作为 source 来激励单次仿真。 [source=VBA_3D/special_vbaports/farfieldsource_object.htm, chunk=0]\n\n基本定义思路如下：\n\n1. **先准备或导入远场辐射数据**  \n   CST 支持导入 farfield，用于基于已有天线方向图开展后续模型分析。官方示例用途包括：评估反射盘的影响、通过 farfield array tool 创建远场阵列，以及评估接收天线的有效性。 [source=3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm, chunk=0]\n\n2. **创建 Farfield Source 并命名**  \n   通过 `FarfieldSource` 对象定义该源，并用 `Name(string name)` 为远场源指定名称。 [source=VBA_3D/special_vbaports/farfieldsource_object.htm, chunk=0]\n\n3. **为导入数据分配唯一 ID**  \n   该对象需要关联导入远场数据的唯一标识符。若多个远场源由同一份导入数据经变换、复制而来，它们会共享同一个 ID；可使用 `GetNextId` 获取新的可用 ID。 [source=VBA_3D/special_vbaports/farfieldsource_object.htm, chunk=0]\n\n4. **将其作为本次仿真的场源运行**  \n   定义完成后，该 farfield source 作为仿真激励运行。此类源用于单次仿真。 [source=VBA_3D/special_vbaports/farfieldsource_object.htm, chunk=0]\n\n概念上，它适合“已有发射天线远场数据，现将其作为入射场照射另一个结构”的情形，例如导入喇叭天线的方向图后，研究其对反射器或接收天线的作用。 [source=3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm, chunk=0]\n\n当前提供的官方片段未覆盖具体的 GUI 菜单路径、支持的导入文件格式，以及 `FarfieldSource` 对象中用于指定文件、频率、位置、旋转或幅相设置的完整 VBA 方法；这些细节需要查阅该对象的完整 API 页面或 CST GUI 对应帮助。",
+      "answer_sha256": "7c99a9522197fa83d695d0cce5f5f4524452f4522a4781274a488701fc720440",
+      "evidence": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm",
+          "chunk_idx": "0",
+          "text": "CST Official Help | 3D common preloadedmacro common preloadedmacro analytical farfield source\nAnalytical Farfield Source\n\nHome: Macros > VBA Macros > Solver > Sources\n\nTo model and measure the characteristics of an antenna, it can be useful to import a farfield. This allows for determining the effect of a reflector disk, creating a farfield array using the farfield array tool, or measuring the effectiveness of a receiver antenna. Normally, importing a farfield requires a user to either create an antenna and export the farfield, or write a txt document in the proper format with the correct values. The farfield generator macro allows the user to create a farfield defined by a series of equations. This means an antenna radiation pattern can be simulated without building or simulating the antenna itself. Basic ideal antenna farfields are preloaded options and can be created by selecting the antenna pattern from the dropdown menu.\n\nWhen a preloaded farfield source is selected, input boxes for parameter values of the antenna is created. These values have preset defaults based on suggested values, but they can be changed to match the desired characteristics."
+        },
+        {
+          "source_path": "VBA_3D/special_vbaports/farfieldsource_object.htm",
+          "chunk_idx": "0",
+          "text": "CST Official Help | VBA 3D special vbaports farfieldsource object\nFarfieldSource Object\n\nUse this object to define a farfield as a source for the simulation. The field source can be used to excite a single simulation.\n\nName ( string name )\n\nSets the name of the farfield source.\n\nSets a unique identifier for the imported farfield source data. Therefore farfield sources pointing to the same imported data (e.g. created via transform and copy) share the same id. Please use GetNextId to retrieve a free id.\n\nSetPosition ( double x, double y, double z )\n\nSpecifies the position for the point source.\n\nSetPhi0XYZ ( double x, double y, double z )\n\nSetTheta0XYZ ( double x, double y, double z )\n\nSet new origin vectors in global cartesian coordinates for the x'-axis and z'axis. The x'axis defines the new start of the angle phi, the z'-axis defines the new start of the angle theta. Therefore SetPhi0 is used to set the new x'-axis, SetTheta0 to set the new z'-axis. The resulting vectors will be normalized to 1. The x'-axis will be orthogonalized to the z'-axis. Please make sure that the axes are not parallel and that the vectors do not have zero length. The y'-axis will be determined automatically."
+        },
+        {
+          "source_path": "3D/special_overview/special_overview_plane_wave_overview.htm",
+          "chunk_idx": "15",
+          "text": "CST Official Help | 3D special overview special overview plane wave overview\nthe accepted and radiated power in the imprint model differ. This is similar to the stimulated and accepted powers of a transmisson line: They agree only for a termination with a matched impedance.\n\nThe following illustration shows a farfield source imported from another simulation project (circular horn antenna from the component library). The smaller figure on the left shows a schematic representation for the imported farfield data of the source displayed when selecting the farfield source item in the folder Farfield Sources in the navigation tree. This schematic representation includes the orientation and shape of the farfield radiated in free space. The larger figure on the right shows the detailed farfield data of the imported source displayed when selecting the Farfield entry below the farfield source item in the navigation tree. Via the farfield plot ribbon similar plotting functionalities are available as for farfield monitor results. For more information about the plot properties for farfield plots, please refer to this site or this . More information about the farfield calculation can be found here ."
+        }
+      ],
+      "evidence_sha256": "34a51343a085e68b275697b6aa3199e04736407daa81ca5a44eba5c46728ef5d",
+      "retrieved_sources": [
+        "3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm",
+        "VBA_3D/special_vbaports/farfieldsource_object.htm",
+        "3D/special_overview/special_overview_plane_wave_overview.htm"
+      ],
+      "retrieved_chunks": [
+        0,
+        0,
+        15
+      ],
+      "citations": [
+        {
+          "source_path": "VBA_3D/special_vbaports/farfieldsource_object.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "VBA_3D/special_vbaports/farfieldsource_object.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "VBA_3D/special_vbaports/farfieldsource_object.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "VBA_3D/special_vbaports/farfieldsource_object.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "trace_run_id": "df0945ab84c7",
+      "ok": false,
+      "error_stage": "judge_validation",
+      "error": "JudgeResponseValidationError: judge claim 1 references evidence outside the supplied Top-3",
+      "latency_ms": 55631.29,
+      "judge_validation_failure": {
+        "prompt_version": "rag-claim-judge-v2",
+        "prompt_sha256": "e2bb7e3ea7172f1c3410634d42e192f4feb99dfebda876de846306e2acbaf988",
+        "raw_response": "{\"claim_count\":9,\"supported_claim_count\":8,\"unsupported_claim_count\":1,\"groundedness_score\":0.8888888888888888,\"answer_relevance_score\":0.85,\"citation_entailment\":true,\"claims\":[{\"text\":\"FarfieldSource 对象可将远场定义为仿真的场源，并可激励单次仿真。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"VBA_3D/special_vbaports/farfieldsource_object.htm\",\"chunk_idx\":0}],\"reason\":\"证据明确说明该对象用于将 farfield 定义为仿真 source，且可激励 single simulation。\"},{\"text\":\"CST 可导入远场数据以分析反射盘的影响。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm\",\"chunk_idx\":0}],\"reason\":\"证据直接列出 determining the effect of a reflector disk。\"},{\"text\":\"CST 可利用导入远场数据通过 farfield array tool 创建远场阵列。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm\",\"chunk_idx\":0}],\"reason\":\"证据直接说明可 creating a farfield array using the farfield array tool。\"},{\"text\":\"CST 可利用导入远场数据评估接收天线的有效性。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm\",\"chunk_idx\":0}],\"reason\":\"证据直接说明可 measuring the effectiveness of a receiver antenna。\"},{\"text\":\"FarfieldSource 的 Name(string name) 方法可设置远场源名称。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"VBA_3D/special_vbaports/farfieldsource_object.htm\",\"chunk_idx\":0}],\"reason\":\"证据明确说明 Name 设置 farfield source 的名称。\"},{\"text\":\"FarfieldSource 要为导入远场源数据设置唯一标识符；指向相同导入数据的源会共享该 ID，且可用 GetNextId 获取空闲 ID。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"VBA_3D/special_vbaports/farfieldsource_object.htm\",\"chunk_idx\":0}],\"reason\":\"证据明确说明唯一标识符、共享 ID 的情形及 GetNextId 的用途。\"},{\"text\":\"导入的远场源可用于已有天线方向图的后续结构分析，例如研究反射器或接收天线。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm\",\"chunk_idx\":0},{\"source_path\":\"3D/special_overview/special_overview_plane_wave_overview.htm\",\"chunk_idx\":15}],\"reason\":\"证据支持导入远场用于反射盘和接收天线分析，并展示了从另一工程导入圆锥喇叭远场源的示例。\"},{\"text\":\"提供的片段没有给出具体 GUI 菜单路径、支持的导入文件格式或完整 API。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm\",\"chunk_idx\":0},{\"source_path\":\"VBA_3D/special_vbaports/farfieldsource_object.htm\",\"chunk_idx\":0}],\"reason\":\"所给片段仅提供宏位置、部分对象方法和概述，未给出 GUI 导入路径、文件格式清单或完整 API。\"},{\"text\":\"所给片段未覆盖用于指定位置或旋转的 VBA 方法。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"证据实际列出了 SetPosition、SetPhi0XYZ 和 SetTheta0XYZ，因此该表述不成立。\"}],\"reason\":\"答案的大部分操作性与用途说明均有引文直接支持；但其称片段未覆盖位置或旋转相关 VBA 方法，与所给 FarfieldSource API 片段相矛盾。\"}",
+        "raw_response_sha256": "348c2270117b2c2a348692d17e305754bc26966573350dbfefafae54a7f778d1",
+        "parsed_response": {
+          "claim_count": 9,
+          "supported_claim_count": 8,
+          "unsupported_claim_count": 1,
+          "groundedness_score": 0.8888888888888888,
+          "answer_relevance_score": 0.85,
+          "citation_entailment": true,
+          "claims": [
+            {
+              "text": "FarfieldSource 对象可将远场定义为仿真的场源，并可激励单次仿真。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "VBA_3D/special_vbaports/farfieldsource_object.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "证据明确说明该对象用于将 farfield 定义为仿真 source，且可激励 single simulation。"
+            },
+            {
+              "text": "CST 可导入远场数据以分析反射盘的影响。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "证据直接列出 determining the effect of a reflector disk。"
+            },
+            {
+              "text": "CST 可利用导入远场数据通过 farfield array tool 创建远场阵列。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "证据直接说明可 creating a farfield array using the farfield array tool。"
+            },
+            {
+              "text": "CST 可利用导入远场数据评估接收天线的有效性。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "证据直接说明可 measuring the effectiveness of a receiver antenna。"
+            },
+            {
+              "text": "FarfieldSource 的 Name(string name) 方法可设置远场源名称。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "VBA_3D/special_vbaports/farfieldsource_object.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "证据明确说明 Name 设置 farfield source 的名称。"
+            },
+            {
+              "text": "FarfieldSource 要为导入远场源数据设置唯一标识符；指向相同导入数据的源会共享该 ID，且可用 GetNextId 获取空闲 ID。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "VBA_3D/special_vbaports/farfieldsource_object.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "证据明确说明唯一标识符、共享 ID 的情形及 GetNextId 的用途。"
+            },
+            {
+              "text": "导入的远场源可用于已有天线方向图的后续结构分析，例如研究反射器或接收天线。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm",
+                  "chunk_idx": 0
+                },
+                {
+                  "source_path": "3D/special_overview/special_overview_plane_wave_overview.htm",
+                  "chunk_idx": 15
+                }
+              ],
+              "reason": "证据支持导入远场用于反射盘和接收天线分析，并展示了从另一工程导入圆锥喇叭远场源的示例。"
+            },
+            {
+              "text": "提供的片段没有给出具体 GUI 菜单路径、支持的导入文件格式或完整 API。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm",
+                  "chunk_idx": 0
+                },
+                {
+                  "source_path": "VBA_3D/special_vbaports/farfieldsource_object.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "所给片段仅提供宏位置、部分对象方法和概述，未给出 GUI 导入路径、文件格式清单或完整 API。"
+            },
+            {
+              "text": "所给片段未覆盖用于指定位置或旋转的 VBA 方法。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "证据实际列出了 SetPosition、SetPhi0XYZ 和 SetTheta0XYZ，因此该表述不成立。"
+            }
+          ],
+          "reason": "答案的大部分操作性与用途说明均有引文直接支持；但其称片段未覆盖位置或旋转相关 VBA 方法，与所给 FarfieldSource API 片段相矛盾。"
+        }
+      }
+    },
+    {
+      "id": "ho03_cylindrical_nearfield_scan",
+      "language": "mixed",
+      "category": "postprocess",
+      "query": "cylindrical nearfield scan 要怎样设置采样圆柱和场计算？",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\nCylindrical Nearfield Scan 是基于**已完成仿真的 farfield monitor 结果**，在仿真体积外的参数化圆柱面上计算电场近场的后处理功能；因此必须先在求解前定义合适的 farfield monitor。计算后会生成 2D 和 3D 两类圆柱扫描结果。 [source=VBA_3D/special_vbapostproc/special_vbapostproc_nearfieldscan_object.htm, chunk=0]\n\n可按以下几何量设置采样圆柱：\n\n1. **Cylinder axis（圆柱轴线）**  \n   定义扫描圆柱的轴向/中心轴方向。圆柱表面将围绕该轴线展开扫描。 [source=3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm, chunk=2]\n\n2. **x-Axis Vector（x 轴向量）**  \n   用于设定圆柱坐标中 φ 角的起始参考轴，即决定角度扫描从圆柱周向的哪个方向开始。 [source=3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm, chunk=2]\n\n3. **Radius（半径）**  \n   填写圆柱采样面的半径，单位为 **m**。该半径决定近场计算面与模型之间的径向距离。 [source=3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm, chunk=2]\n\n4. **Height（高度）**  \n   填写圆柱采样面的高度，单位为 **m**。 [source=3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm, chunk=2]\n\n5. **Angle Stepsize（角度步长）**  \n   设置周向角度采样步长，单位为 **degree**。 [source=3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm, chunk=2]\n\n6. **结果名称**  \n   Cylinder Scan 的结果名称会显示在 Navigation Tree 中；若关闭自动命名，可手动指定标签。对应 farfield 结果的激励字符串会自动附加到结果名称中。 [source=3D/special_postpr/special_postpr_nearfieldscan.htm, chunk=0]\n\n建议的设置逻辑是：先根据待观察区域确定圆柱的**轴向、半径和高度**，再用 `x-Axis Vector` 固定 φ=0° 的参考方向，最后通过 `Angle Stepsize` 控制周向采样密度。当前官方片段未覆盖高度方向采样间隔、具体场分量选择、频率选择字段或推荐数值，因此这些项目应以你当前 CST 对话框中可见选项为准。",
+      "answer_sha256": "bd18bf6d87eaef0f2ec0c30f734fea9e654c8f0a4ba8e11e3fb3440d9645394f",
+      "evidence": [
+        {
+          "source_path": "3D/special_postpr/special_postpr_nearfieldscan.htm",
+          "chunk_idx": "0",
+          "text": "CST Official Help | 3D special postpr special postpr nearfieldscan\nPost Processing: 2D/3D Field Post-Processing > Cylinder Scan\n\nUse this dialog to calculate nearfields on a cylindrical surface based on results of a farfield monitor. Both a 2D and a 3D result of the cylinder scan will be available.\n\nThe name of the cylinder scan results in the Navigation Tree . Switch off automatic to manually define a suitable label. The excitation string of the corresponding farfield result is always appended to the scan label.\n\nSelects the farfield monitor used for the cylinder scan calculation.\n\nSpecifies the frequency point use for the cylinder scan evaluation. Available for broadband farfield monitors only.\n\nSets the coordinates of the cylinder base center in project units .\n\nSets the alignment axis of the scan cylinder.\n\nHere you may set the origin for Phi. This is used for the 2D result of the cylinder scan.\n\nRadius: Cylinder radius in meters.\n\nHeight : Cylinder height in meters.\n\nStep: Sampling step in degree.\n\nCalculates the configured cylinder scan. The results are added to the 2D/3D Results in the Navigation Tree.\n\nAborts a running calculation.\n\nShows this help text.\n\nFarfield Calculation Overview , Monitors\n\nCST Studio Suite 2025"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+          "chunk_idx": "2",
+          "text": "CST Official Help | 3D common preloadedmacro common preloadedmacro 0d nearfield planar scan\naxis of the scan cylinder.\n\nx-Axis Vector: Sets the starting axis for the phi angle.\n\nRadius: Cylinder radius in meters.\n\nHeight: Cylinder height in meters.\n\nAngle Stepsize: Sampling step in degree.\n\nPlanes are defined through their normal and minimum and maximum point. The minimum and maximum coordinate along the normal direction represents the position of the first and last parallel plane. Along the normal, a number of parallel planes equal to the number of samples in that direction will be generated.\n\nPlanes Normal: Direction normal to the generated parallel planes.\n\nXMin, XMax, YMin, YMax, ZMin, ZMax: Minimum and maximum coordinates of the generated planes. In the direction of the normal, it represents the coordinate of the first and last generated plane.\n\nNX, NY, NZ: Number of samples along each direction. In the direction of the normal, it equals the number of parallel planes generated. Along the two normal directions, it gives the number of sampling points of each plane.\n\nScan on solid surface\n\nCalculate a nearfield scan on the surface of a solid. In order to have meaningful results, the solid must have been excluded from the simulation."
+        },
+        {
+          "source_path": "VBA_3D/special_vbapostproc/special_vbapostproc_nearfieldscan_object.htm",
+          "chunk_idx": "0",
+          "text": "CST Official Help | VBA 3D special vbapostproc special vbapostproc nearfieldscan object\nNearfieldScan Object\n\nThe cylinder scan calculates electrical field values on parametrized cylinder outside the simulation volume. A proper farfield monitor has to be defined before starting the simulation to allow the cylinder scan calculation as a post-processing step. Both a 2D and a 3D result of the cylinder scan will be available.\n\nResets all internal values to their default settings.\n\nFarfieldMonitor ( name sName )\n\nDefines the farfield monitor used for the cylinder scan calculation.\n\nFrequency ( double frequency )\n\nSpecifies the frequency point use for the cylinder scan evaluation. Available for broadband farfield monitors only.\n\nUserBase ( double x , double y , double z )\n\nBase of the scan cylinder in project units.\n\nUserZAxis ( double x , double y , double z )\n\nAlignment axis of the scan cylinder.\n\nUserXAxis ( double x , double y , double z )\n\nStart axis for phi of the scan cylinder. This is used for the 2D result of the cylinder scan.\n\nStep ( double step )\n\nSpecifies the angular resolution of the scan cylinder in degrees.\n\nRadius ( double weight )\n\nSpecifies the radius in meters of the scan cylinder\n\nHeight ( double height )"
+        }
+      ],
+      "evidence_sha256": "3e1f73feea862d0858254306409ffbf8b93e8f068d32a04323dddd33e91ba8e2",
+      "ok": true,
+      "latency_ms": 29473.47,
+      "retrieved_sources": [
+        "3D/special_postpr/special_postpr_nearfieldscan.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+        "VBA_3D/special_vbapostproc/special_vbapostproc_nearfieldscan_object.htm"
+      ],
+      "retrieved_chunks": [
+        0,
+        2,
+        0
+      ],
+      "retrieval_relevant": true,
+      "rerank_applied": true,
+      "citations": [
+        {
+          "source_path": "VBA_3D/special_vbapostproc/special_vbapostproc_nearfieldscan_object.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "3D/special_postpr/special_postpr_nearfieldscan.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "valid_citations": [
+        {
+          "source_path": "VBA_3D/special_vbapostproc/special_vbapostproc_nearfieldscan_object.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "3D/special_postpr/special_postpr_nearfieldscan.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "citation_present": true,
+      "citation_precision": 1.0,
+      "provenance_complete": true,
+      "trace_rag_complete": true,
+      "trace_run_id": "097c76f05f63",
+      "agent_tokens": {
+        "prompt": 3028,
+        "completion": 882,
+        "calls": 2,
+        "total": 3910,
+        "cost_usd": 0.0567
+      },
+      "judge": {
+        "claim_count": 16,
+        "supported_claim_count": 12,
+        "unsupported_claim_count": 4,
+        "groundedness_score": 0.75,
+        "answer_relevance_score": 0.96,
+        "citation_entailment": false,
+        "claims": [
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-001",
+            "text": "Cylindrical Nearfield Scan 会在仿真体积外的参数化圆柱面上计算电场近场。",
+            "claim_sha256": "297de9a556600a9998a46f6829ed60f5508dc9a0b5f2030c5a996b0a45eb5d3f",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "VBA_3D/special_vbapostproc/special_vbapostproc_nearfieldscan_object.htm",
+                "chunk_idx": "0"
+              }
+            ],
+            "reason": "证据明确说明在仿真体积外的参数化圆柱上计算电场值。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-002",
+            "text": "圆柱扫描基于 farfield monitor 的结果进行计算，并且需在仿真开始前定义合适的 farfield monitor。",
+            "claim_sha256": "6c68cebe26928910431a2e4f804a71e387321eaa05386f05f13cdb11932be3d4",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "VBA_3D/special_vbapostproc/special_vbapostproc_nearfieldscan_object.htm",
+                "chunk_idx": "0"
+              }
+            ],
+            "reason": "证据明确要求仿真前定义 farfield monitor，作为后处理计算条件。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-003",
+            "text": "圆柱扫描计算后会提供 2D 和 3D 两类结果。",
+            "claim_sha256": "321eb578f8966a657fb695aaef4eab609581d4f53a5ff9ad33e805ae13fe3dee",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "VBA_3D/special_vbapostproc/special_vbapostproc_nearfieldscan_object.htm",
+                "chunk_idx": "0"
+              }
+            ],
+            "reason": "证据明确说明 2D 和 3D 结果均可用。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-004",
+            "text": "Cylinder axis 用于设置扫描圆柱的对齐轴。",
+            "claim_sha256": "2f5d3ad494122534697d70e87f13c5a1ac2b16613e6ea33c842c216b935b3f07",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+                "chunk_idx": "2"
+              }
+            ],
+            "reason": "证据提到 scan cylinder 的 axis；另一官方片段明确称其为 alignment axis。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-005",
+            "text": "x-Axis Vector 用于设定 phi 角的起始轴。",
+            "claim_sha256": "84af32784acee952dd20bdf5d5c7925ac570cad64ed943fc3254170ccd332cdf",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+                "chunk_idx": "2"
+              }
+            ],
+            "reason": "证据明确称其设置 phi angle 的 starting axis。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-006",
+            "text": "Radius 设置圆柱半径，单位为米。",
+            "claim_sha256": "dfd015f1203601f815f9cef29ec7f019233246a1042e497731f13881094c0d82",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+                "chunk_idx": "2"
+              }
+            ],
+            "reason": "证据直接说明 Radius 为以 meters 为单位的 cylinder radius。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-007",
+            "text": "圆柱半径决定近场计算面与模型之间的径向距离。",
+            "claim_sha256": "7ef70edceef1f649069297f86029a2cc347f19ce161c2bc63ed6350eeaa1cf36",
+            "supported": false,
+            "evidence_refs": [],
+            "reason": "证据只说明半径的定义和单位，未直接将其表述为与模型的径向距离。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-008",
+            "text": "Height 设置圆柱高度，单位为米。",
+            "claim_sha256": "a76faf5a2141627fc615d132e715ecb1438428178d96e42a75544295483b8c6e",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+                "chunk_idx": "2"
+              }
+            ],
+            "reason": "证据直接说明 Height 为以 meters 为单位的 cylinder height。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-009",
+            "text": "Angle Stepsize 设置周向角度采样步长，单位为 degree。",
+            "claim_sha256": "763a67aa0e11ac2f738e46e227a1cf53b7c0254745e9955c0f2f1c7a472ca9b7",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+                "chunk_idx": "2"
+              }
+            ],
+            "reason": "证据直接说明其为以 degree 为单位的 sampling step。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-010",
+            "text": "关闭自动命名后，可以手动指定 Cylinder Scan 结果标签。",
+            "claim_sha256": "645d9dbac4f25f40fdd8dabf8b32ac01e59e8481f7fb5d9a885761b806feb2a8",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/special_postpr/special_postpr_nearfieldscan.htm",
+                "chunk_idx": "0"
+              }
+            ],
+            "reason": "证据明确说明关闭 automatic 后可手动定义标签。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-011",
+            "text": "对应 farfield 结果的激励字符串会附加到扫描结果标签。",
+            "claim_sha256": "73653211c11d37202905c41ec6eee7d414d3dc1b5912c62e3472aaa4df60c2a4",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/special_postpr/special_postpr_nearfieldscan.htm",
+                "chunk_idx": "0"
+              }
+            ],
+            "reason": "证据明确说明 excitation string 总会附加到 scan label。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-012",
+            "text": "建议先确定圆柱的轴向、半径和高度，再设置 x-Axis Vector，最后设置 Angle Stepsize。",
+            "claim_sha256": "2596a99de3a368f95556a2f05514f97c03d835f068cd43b12f75bcdafa470d60",
+            "supported": false,
+            "evidence_refs": [],
+            "reason": "这是回答者提出的操作顺序建议，证据列出了参数但未规定该设置顺序。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-013",
+            "text": "x-Axis Vector 可固定 phi=0° 的参考方向。",
+            "claim_sha256": "18f5a35b15eb1c6b9d75514c96cd896772709c249dc80c090892b1a13d60ab3f",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+                "chunk_idx": "2"
+              }
+            ],
+            "reason": "设置 phi 的起始轴直接支持其作为 phi=0° 参考方向的表述。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-014",
+            "text": "Angle Stepsize 控制周向采样密度。",
+            "claim_sha256": "da9dff440feb6998d31991ae1fdc3eff4ece7bda6673dd6aa0d4f72b2b288a8d",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+                "chunk_idx": "2"
+              }
+            ],
+            "reason": "该字段被明确称为角度采样步长，因而直接决定周向采样间隔。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-015",
+            "text": "官方片段未覆盖高度方向采样间隔、具体场分量选择和推荐数值。",
+            "claim_sha256": "fe04d781566e8c144666d5cb470b9e8a711ac3469940c380aa9cb9b476d20dd8",
+            "supported": false,
+            "evidence_refs": [],
+            "reason": "这些内容确实未在给出的字段说明中出现，但不能仅凭所给片段严格证明官方内容整体未覆盖它们。"
+          },
+          {
+            "claim_id": "ho03_cylindrical_nearfield_scan:claim-016",
+            "text": "官方片段未覆盖频率选择字段。",
+            "claim_sha256": "31ff0f627847792c4f6a149ed6cf55cb608134c0e22f49eb773cc2e03b26507f",
+            "supported": false,
+            "evidence_refs": [],
+            "reason": "证据明确包含 Frequency 字段，并说明其用于宽带 farfield monitor 的频点评估。"
+          }
+        ],
+        "unsupported_claims": [
+          "圆柱半径决定近场计算面与模型之间的径向距离。",
+          "建议先确定圆柱的轴向、半径和高度，再设置 x-Axis Vector，最后设置 Angle Stepsize。",
+          "官方片段未覆盖高度方向采样间隔、具体场分量选择和推荐数值。",
+          "官方片段未覆盖频率选择字段。"
+        ],
+        "reason": "回答大部分关于圆柱扫描前提、几何参数、角度步长和结果命名的说明有直接证据支持；但“半径与模型距离”的扩展解释、推荐设置顺序及“官方片段未覆盖频率选择”不受支持，其中频率字段还被证据明确覆盖。",
+        "judge_tokens": 3678,
+        "prompt_version": "rag-claim-judge-v2",
+        "prompt_sha256": "a6e9de21096b5415a603aa89a523caae8d5609afd5aaf0ed3254749d6105473f",
+        "raw_response_sha256": "80cda5ea3e02cc7e9dd33cb0b7666de51c07158731f7173a720eca66182ff573"
+      }
+    },
+    {
+      "id": "ho04_export_touchstone_3d",
+      "language": "zh",
+      "category": "data_exchange",
+      "query": "三维仿真结果怎样导出成 Touchstone 或 MDIF 文件？",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n在 CST Studio Suite 2025 的三维仿真完成后，可通过结果导出功能输出网络参数文件：\n\n1. 确认仿真已完成，并已得到所需的 S 参数结果。  \n2. 在后处理菜单中选择：  \n   **Post Processing → Exchange → Export → TOUCHSTONE**。  \n   Touchstone 用于导出指定参考阻抗下计算得到的 S 参数，供 ADS、MATLAB、Python、VNA 数据对比等外部后处理使用。 [source=3D/special_overview/special_overview_resultexport.htm, chunk=0]\n3. 在导出对话框中选择要导出的结果集合，例如当前结果（Current results），并设置输出文件名与路径。  \n4. 选择格式：\n   - **Touchstone**：通常导出为 `.s1p`、`.s2p`、`.sNp` 等文件；\n   - 若需要 ADS 的 MDIF 类数据交换格式，可在导出格式中选择 **GMDIF (ADS)**（该格式与 Touchstone 2.0 一样，支持为每个端口模式分别指定固定的实数参考阻抗）。 [source=3D/special_tools/special_tools_exporttouchstone.htm, chunk=2]\n5. 设置参考阻抗后执行导出。Touchstone 文件采用固定的实数参考阻抗；若当前 S 参数参考阻抗不同，导出过程中通常会按指定阻抗进行重归一化。 [source=3D/special_tools/special_tools_exporttouchstone.htm, chunk=2]\n\n补充说明：官方结果导出概览列出的可用格式包括 ASCII、Touchstone、Keysight ADS Component 和 farfield source；其中 Touchstone 专门用于将仿真的 S 参数交给外部软件处理。 [source=3D/special_overview/special_overview_resultexport.htm, chunk=0]",
+      "answer_sha256": "cdf2fd56ba09439956f7aed7c6f7409c805a6e6ad9e10f64422477d28ef688aa",
+      "evidence": [
+        {
+          "source_path": "3D/special_overview/special_overview_resultexport.htm",
+          "chunk_idx": "0",
+          "text": "CST Official Help | 3D special overview special overview resultexport\nExporting Results Overview\n\nAvailable results export formats are ASCII, TOUCHSTONE, Keysight ADS Component and farfield source.\n\nThese export options allow the export of results data for usage in external post-processing.\n\nExport TOUCHSTONE files ( Post Processing: Exchange > Export > TOUCHSTONE ). This file format is used for exporting the calculated S-Parameters for a specified reference impedance. This file format is typically used to export the S-Matrix to circuit simulators.\n\nExport MDIF files ( Post Processing: Exchange > Export > MDIF ). This file format is used for exporting the calculated S-Parameters for a specified reference impedance. This file format is typically used to export parametric S-Matrix data to circuit simulators.\n\nExport Plot Data in ASCII files ( Post Processing: Exchange > Export > Plot Data (ASCII) ). This file format contains data from the current plot in the main view in ASCII tables. The actual format of the table depends on the type of the current plot."
+        },
+        {
+          "source_path": "3D/special_tools/special_tools_exporttouchstone.htm",
+          "chunk_idx": "2",
+          "text": "CST Official Help | 3D special tools special tools exporttouchstone\nus helps to save disk space.\n\nThe TOUCHSTONE file contains a fixed real reference impedance. During the export process, usually the S-Parameters will be renormalized to this impedance, if necessary.\n\nIf the export is done in the format TOUCHSTONE \"2.0\" or \"GMDIF (ADS)\" then it is possible to specify a fixed real reference impedance for each port mode separately.\n\nSpecifies the set of results to be exported. \"Current results\" refers to the S, Y or Z-Parameters that were calculated for the current parameter combination. \"All parametric results\" will trigger a multi-file export for all S, Y or Z-Parameters that were stored parametrically in previous solver runs. You can select multiple rows in the Result Navigator to reduce the multi-file export to the \"Selected parametric results\" .\n\nSince the MDIF file format is a parametric format it only features the parametrically stored S-Parameters and doesn't offer \"Current results\". As opposed to the TOUCHSTONE multi-file export all the parametric runs will be stored in a single file in case MDIF is chosen.\n\nChoose to export using TOUCHSTONE version \"1.0\" or \"2.0\" or MDIF version \"GMDIF (ADS)\" or \"GMDIF (AWR)\"."
+        },
+        {
+          "source_path": "EXP_DES/idem_builder/idem_builder_workflow.htm",
+          "chunk_idx": "5",
+          "text": "CST Official Help | EXP DES idem builder idem builder workflow\nThis task allows to export the model in Touchstone format. This will be helpful for performing a comparison between model and data.\n\nSelect the Export Touchstone task and keep its default options.\n\nIn the Output panel , it is possible to define both the netlist and Touchstone file name by defining them in the dedicated fields as well as the Output directory through the relevant Browse… button.\n\nAt this stage everything has been properly setup and it is ready for the simulation run.\n\nBy clicking on Run button the previously set tasks will be executed in sequence. The tasks in idle mode will be highlighted in orange color, the currently executed task will be highlighted in blue and it will become green once terminated.\n\nThe details of each task execution will be shown in the Log panel."
+        }
+      ],
+      "evidence_sha256": "f5cc4d3704d0e3c095ccb3671e0e8eb13bf0719b898d877644781d2d7edadf93",
+      "ok": true,
+      "latency_ms": 19776.32,
+      "retrieved_sources": [
+        "3D/special_overview/special_overview_resultexport.htm",
+        "3D/special_tools/special_tools_exporttouchstone.htm",
+        "EXP_DES/idem_builder/idem_builder_workflow.htm"
+      ],
+      "retrieved_chunks": [
+        0,
+        2,
+        5
+      ],
+      "retrieval_relevant": true,
+      "rerank_applied": true,
+      "citations": [
+        {
+          "source_path": "3D/special_overview/special_overview_resultexport.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/special_tools/special_tools_exporttouchstone.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "3D/special_tools/special_tools_exporttouchstone.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "3D/special_overview/special_overview_resultexport.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "valid_citations": [
+        {
+          "source_path": "3D/special_overview/special_overview_resultexport.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/special_tools/special_tools_exporttouchstone.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "3D/special_tools/special_tools_exporttouchstone.htm",
+          "chunk_idx": "2"
+        },
+        {
+          "source_path": "3D/special_overview/special_overview_resultexport.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "citation_present": true,
+      "citation_precision": 1.0,
+      "provenance_complete": true,
+      "trace_rag_complete": true,
+      "trace_run_id": "523aefc461d1",
+      "agent_tokens": {
+        "prompt": 2947,
+        "completion": 584,
+        "calls": 2,
+        "total": 3531,
+        "cost_usd": 0.047
+      },
+      "judge": {
+        "claim_count": 9,
+        "supported_claim_count": 6,
+        "unsupported_claim_count": 3,
+        "groundedness_score": 0.6666666666666666,
+        "answer_relevance_score": 0.85,
+        "citation_entailment": false,
+        "claims": [
+          {
+            "claim_id": "ho04_export_touchstone_3d:claim-001",
+            "text": "CST 可通过 Post Processing → Exchange → Export → TOUCHSTONE 导出 Touchstone 文件。",
+            "claim_sha256": "cf4de2ad26931869a8ffdfd938f1cfe1a6af38ce98604610d4e60469a695e4ef",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/special_overview/special_overview_resultexport.htm",
+                "chunk_idx": "0"
+              }
+            ],
+            "reason": "官方帮助明确给出了该菜单路径。"
+          },
+          {
+            "claim_id": "ho04_export_touchstone_3d:claim-002",
+            "text": "Touchstone 用于导出指定参考阻抗下计算得到的 S 参数。",
+            "claim_sha256": "3027aab72a63cc7b7e60bc32c41b7b1cb9da3dc602a92df3566b16869ea336f3",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/special_overview/special_overview_resultexport.htm",
+                "chunk_idx": "0"
+              }
+            ],
+            "reason": "证据明确说明该格式导出指定参考阻抗下计算的 S 参数。"
+          },
+          {
+            "claim_id": "ho04_export_touchstone_3d:claim-003",
+            "text": "Touchstone 可供 ADS、MATLAB、Python、VNA 数据对比等外部后处理使用。",
+            "claim_sha256": "60c410b2b4c18be635f8938fcb00a2a9a6c4fce0a78e6a2c7b7b3cb9beee8800",
+            "supported": false,
+            "evidence_refs": [],
+            "reason": "证据只说明可用于外部后处理和电路仿真器，未明确支持所列 ADS、MATLAB、Python 或 VNA 用途。"
+          },
+          {
+            "claim_id": "ho04_export_touchstone_3d:claim-004",
+            "text": "导出时可选择结果集合，例如 Current results。",
+            "claim_sha256": "6ed607a67a30cb76a9ed6d47d77a8f8235f30742042d06861880b729a487f9df",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/special_tools/special_tools_exporttouchstone.htm",
+                "chunk_idx": "2"
+              }
+            ],
+            "reason": "证据明确说明可指定导出的结果集合，且定义了 Current results。"
+          },
+          {
+            "claim_id": "ho04_export_touchstone_3d:claim-005",
+            "text": "导出对话框中可设置输出文件名与路径。",
+            "claim_sha256": "a9c26fb28ef9632e035a55057d379b4ee95d2115196e655205d22276c1639f0b",
+            "supported": false,
+            "evidence_refs": [],
+            "reason": "所给 3D Touchstone/MDIF 导出证据未说明该对话框可设置文件名和路径。"
+          },
+          {
+            "claim_id": "ho04_export_touchstone_3d:claim-006",
+            "text": "Touchstone 通常导出为 .s1p、.s2p、.sNp 等文件。",
+            "claim_sha256": "385e0c03099246fc7fe366131c07202166952b0da7c8f5e3bdde6fb54c337a12",
+            "supported": false,
+            "evidence_refs": [],
+            "reason": "证据未给出任何 Touchstone 文件扩展名。"
+          },
+          {
+            "claim_id": "ho04_export_touchstone_3d:claim-007",
+            "text": "可选择 TOUCHSTONE 1.0、TOUCHSTONE 2.0、GMDIF (ADS) 或 GMDIF (AWR) 格式。",
+            "claim_sha256": "fcd4d0a4c0fa59c2dc15649292c52d2ba721ef1d76bd26df229f03a62b028ad3",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/special_tools/special_tools_exporttouchstone.htm",
+                "chunk_idx": "2"
+              }
+            ],
+            "reason": "证据明确列出了这些可选导出版本和格式。"
+          },
+          {
+            "claim_id": "ho04_export_touchstone_3d:claim-008",
+            "text": "TOUCHSTONE 2.0 或 GMDIF (ADS) 可为每个端口模式分别指定固定的实数参考阻抗。",
+            "claim_sha256": "75d1e8a85b1a181bf39622eac3fc329897251aaca1516414af89d34fb0c5c741",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/special_tools/special_tools_exporttouchstone.htm",
+                "chunk_idx": "2"
+              }
+            ],
+            "reason": "证据直接说明这两种格式支持按端口模式分别指定固定实数参考阻抗。"
+          },
+          {
+            "claim_id": "ho04_export_touchstone_3d:claim-009",
+            "text": "Touchstone 文件采用固定实数参考阻抗，必要时导出过程通常会将 S 参数重归一化到该阻抗。",
+            "claim_sha256": "7e16e52cc53e1317a6d2dc853cb0d3a8dac6c4a5eb3bc4b5f6d61df8a08b2acd",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/special_tools/special_tools_exporttouchstone.htm",
+                "chunk_idx": "2"
+              }
+            ],
+            "reason": "证据直接说明固定实数参考阻抗及必要时的重归一化。"
+          }
+        ],
+        "unsupported_claims": [
+          "Touchstone 可供 ADS、MATLAB、Python、VNA 数据对比等外部后处理使用。",
+          "导出对话框中可设置输出文件名与路径。",
+          "Touchstone 通常导出为 .s1p、.s2p、.sNp 等文件。"
+        ],
+        "reason": "回答的主要导出路径、S 参数用途、格式选项和参考阻抗说明有证据支持；但具体外部软件用途、文件名/路径设置及文件扩展名未由所给证据支持。且问题涉及 MDIF，回答没有明确给出证据中的直接 MDIF 菜单路径 Post Processing → Exchange → Export → MDIF。",
+        "judge_tokens": 2745,
+        "prompt_version": "rag-claim-judge-v2",
+        "prompt_sha256": "273883a9b068302f2c49d3edf2b13e7fbc413a32fa7d2cf2c314a3428e1f50b2",
+        "raw_response_sha256": "ccf99e2e45a577e1371e93a27996c593a9ece880f2e3d033820a606770da9389"
+      }
+    },
+    {
+      "id": "ho05_tdr_from_sparameters",
+      "language": "en",
+      "category": "postprocess",
+      "query": "Which result template computes a TDR signal from simulated S-parameters?",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n**Time Signal Processing / TDR from S-parameter** 模板可根据仿真的 S 参数计算时域反射计（TDR）信号。路径为：**Post-Processing: Tools > Result Templates**。[source=3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm, chunk=0]",
+      "answer_sha256": "2b9fe1b577a70587adda35e3b40d480bc4200480b259c809e92952f11b085de7",
+      "evidence": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+          "chunk_idx": "0",
+          "text": "CST Official Help | 3D common preloadedmacro common preloadedmacro tdr from s parameter\nTime Signal Processing / TDR from S-parameter\n\nP ost-Processing: Tools > Result Templates\n\nThis result templates calculates time domain reflectometry (TDR) results from S-parameters. The required input time domain signals are determined by the specified frequency domain filter (see below) and the output signals are obtained from this filter and the given S-parameters by means of a Fourier transform. Refer to the general introduction of the TDR computation for more theoretical details.\n\nSpecify Port/Mode [3D Simulation] or Specify Task/Port [Circuits & Systems] frame\n\nDefines the S-parameters used for the TDR calculation.\n\nTime domain sampling options frame\n\nt_end: Stopping time of the generated time signals. t_end = 'Auto' derives t_end from the sampling of the S-parameter. The time signals start at t=0.\n\nn: Number of calculated time samples. n = 'Auto' derives n from the sampling of the S-parameter.\n\nFrequency Domain Filter frame\n\nUse AR-filter results [3D Simulation only]: AR-filtered S-parameters are used.\n\nNo filter: The unfiltered S-parameters are used. This is equivalent to a band limited Dirac delta input signal."
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_time_signals.htm",
+          "chunk_idx": "0",
+          "text": "CST Official Help | 3D common preloadedmacro common preloadedmacro tdr from time signals\nTime Signal Processing / TDR from Time Signals\n\nP ost-Processing: Tools > Result Templates\n\nThis result templates calculates time domain reflectometry (TDR) results time signals. Refer to the general introduction of the TDR computation for more theoretical details.\n\nSpecify Port/Mode [3D Simulation] or Specify Task/Port [Circuits & Systems] frame\n\nDefines the time signals used for the TDR calculation.\n\nGaussian Pulse options frame\n\nShift T_0 (TDR) to 50% (Pulse): The origin of the time delay axis is shifted to the time where the integrate pulse has risen to 50% of its maximal amplitude.\n\nCalculate Reflection Factor: The template calculates the reflection factor.\n\nRise time given by Gaussian Pulse frame\n\nDisplays properties of the used Gaussian pulse excitation :\n\nFmax: Frequency where the pulse spectrum has dropped to 10% of its peak amplitude\n\nTrise: Time delay between the 10% and 90% amplitude of the integrated Gaussian pulse\n\nSpatial resolution frame\n\nDisplays the spatial resolution of the used pulse.\n\nPreloaded Result Templates , Preloaded Macros Overview , Time Domain Reflectometry (TDR) , TDR from S-parameter\n\nCST Studio Suite 2025"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+          "chunk_idx": "0",
+          "text": "CST Official Help | 3D common preloadedmacro common preloadedmacro extract material properties from sparameters\nS-Parameters / Extract Material Properties from S-Parameters\n\nP ost-Processing: Tools > Result Templates\n\nThis result template can be used to extract the effective complex electrical permittivity and magnetic permeability based on the simulated results. It assumes a two-port system where the ports are positioned along the direction of the propagating electromagnetic wave. In such a system, the S-parameters represent the complex reflection coefficient (r) and the complex transmission coefficient (t). The template is based on Phys Rev. E 70, 016608 (2004) by X. Chen et al.\n\nThe figure below shows an example of a two-port system, where some inhomogeneous materials are sandwiched between two ports - named port 1 and port 2. If the source is excited from port 1 and electromagnetic wave propagates along z axis, reflection coefficient (r) will be equal to S1,1 and transmission coefficient (t) to S2,1.\n\nThe user dialog allows the user choose a set of the reflection coefficient (S1,1), and the transmission coefficient (S2,1) for the retrieval.\n\nEffective thickness of material sample:"
+        }
+      ],
+      "evidence_sha256": "b37cdae1eb1aecef804534867b8a709a98f2c92741b515911bd9f5b79f62ce45",
+      "retrieved_sources": [
+        "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_time_signals.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm"
+      ],
+      "retrieved_chunks": [
+        0,
+        0,
+        0
+      ],
+      "citations": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "trace_run_id": "47a47caa05cc",
+      "ok": false,
+      "error_stage": "judge_validation",
+      "error": "JudgeResponseValidationError: judge claim 1 references evidence outside the supplied Top-3",
+      "latency_ms": 24521.02,
+      "judge_validation_failure": {
+        "prompt_version": "rag-claim-judge-v2",
+        "prompt_sha256": "8aeb5d299547c6f874c143deeb36cd257182084af2edf61453bb5b9e735ac558",
+        "raw_response": "{\"claim_count\":2,\"supported_claim_count\":2,\"unsupported_claim_count\":0,\"groundedness_score\":1.0,\"answer_relevance_score\":1.0,\"citation_entailment\":true,\"claims\":[{\"text\":\"The \\\"Time Signal Processing / TDR from S-parameter\\\" result template calculates time-domain reflectometry (TDR) results from S-parameters.\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm\",\"chunk_idx\":0}],\"reason\":\"The evidence explicitly states that this result template calculates TDR results from S-parameters.\"},{\"text\":\"The template is located at \\\"Post-Processing: Tools > Result Templates.\\\"\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm\",\"chunk_idx\":0}],\"reason\":\"The evidence explicitly gives this menu path.\"}],\"reason\":\"The answer identifies the correct TDR-from-S-parameter template and its documented menu location, both directly supported by the cited evidence.\"}",
+        "raw_response_sha256": "3a61fb4b54930402015e5f9317f28a71e90835a709b5bfb47457690502305ce8",
+        "parsed_response": {
+          "claim_count": 2,
+          "supported_claim_count": 2,
+          "unsupported_claim_count": 0,
+          "groundedness_score": 1.0,
+          "answer_relevance_score": 1.0,
+          "citation_entailment": true,
+          "claims": [
+            {
+              "text": "The \"Time Signal Processing / TDR from S-parameter\" result template calculates time-domain reflectometry (TDR) results from S-parameters.",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "The evidence explicitly states that this result template calculates TDR results from S-parameters."
+            },
+            {
+              "text": "The template is located at \"Post-Processing: Tools > Result Templates.\"",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "The evidence explicitly gives this menu path."
+            }
+          ],
+          "reason": "The answer identifies the correct TDR-from-S-parameter template and its documented menu location, both directly supported by the cited evidence."
+        }
+      }
+    },
+    {
+      "id": "ho06_extract_material_touchstone",
+      "language": "mixed",
+      "category": "material",
+      "query": "怎样用 2-port Touchstone 提取 complex permittivity 和 permeability？",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n可用 CST 的结果模板从 **2-port Touchstone / 两端口 S 参数**中提取材料的有效复介电常数与复磁导率。该方法的基本前提是：待测结构等效为一个两端口传播系统，且两个端口沿电磁波传播方向布置。[source=3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm, chunk=0]\n\n建议流程如下：\n\n1. **准备两端口 S 参数**\n   - 被测材料（DUT）应放置在两端口之间。\n   - 端口方向应与预期电磁波传播方向一致。\n   - 获得或导入该 DUT 的 2-port Touchstone 数据，例如 `.s2p` 文件；也可以针对相同两端口结构先完成 CST 仿真并使用其 S 参数结果。\n\n2. **在 CST 中调用材料提取结果模板**\n   - 进入 CST 的后处理结果模板入口：\n     **Post-Processing → Tools → Result Templates**。[source=3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm, chunk=0]\n   - 选择与 **“Extract Material Properties from S-Parameters”** 或 **“Extract Complex Material Properties from 2-Port Touchstone”** 对应的模板/预加载宏。\n   - 将输入指定为你的两端口 S 参数或 Touchstone 文件。\n\n3. **设置与 DUT 相符的结构信息**\n   - 模板计算的是基于 S 参数反演得到的**有效复介电常数**和**有效复磁导率**；因此材料样品厚度、传播方向以及端口参考面应与实际测试/仿真模型一致。\n   - 文档明确说明，该模板用于依据仿真结果提取有效复介电常数和磁导率，并假设为沿传播方向布置端口的两端口系统。[source=3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm, chunk=0]\n\n4. **执行提取并检查结果**\n   - 运行模板后，查看频率相关的复参数曲线：通常需重点检查实部和虚部在目标频段内是否连续、是否存在不合理跳变。\n   - 若使用 Touchstone 导出/再导入流程，应注意参考阻抗一致性。CST 文档指出，Touchstone 导出时设定的阻抗会写入文件头，作为 S 参数的参考阻抗。[source=3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm, chunk=10]\n\n5. **理解适用范围**\n   - 这是针对**两端口、沿传播方向传输**的材料参数反演，不应直接套用到端口位置或模态与该假设不符的结构。\n   - 提取所得为“effective（有效）”参数；对于包含明显高阶模、强非均匀场或端口附近寄生效应显著的夹具，结果需要结合夹具与端口定义谨慎解释。\n\n当前检索片段未覆盖该预加载宏中每个输入字段的具体名称、完整菜单层级，以及厚度/参考面等参数的具体填法；这些应以你本机 CST 2025 中该 Result Template 或 Macro 对话框显示的字段为准。",
+      "answer_sha256": "f7c61ea480327937a50b3fbfae5d44ecf94ed959d492ae81f031a141ccb26e80",
+      "evidence": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+          "chunk_idx": "10",
+          "text": "CST Official Help | 3D common preloadedmacro common preloadedmacro extract complex material properties from 2port touchstone\ngL and simulated egL.\n\nMaximal magnitude deviation\n\nExtraction termination criteria for maximal allowed difference in magnitude between measured egL and simulated egL.\n\nImpedance (TOUCHSTONE export)\n\nThe value is used during the export of DUT S-parameters. This impedance value is placed in a header of the TOUCHSTONE files as the reference impedance, however the S-parameters are not renormalized to this value.\n\nPort and mode selection\n\nMultiple ports with multiple modes can be defined in the simulation. Port and mode selection allows to choose which transmission coefficient will be used for extraction\n\nReset all macro setting to default values.\n\nResult Template: S-Parameters / Extract Material Properties from S-Parameters\n\nCST Studio Suite 2025"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+          "chunk_idx": "0",
+          "text": "CST Official Help | 3D common preloadedmacro common preloadedmacro extract material properties from sparameters\nS-Parameters / Extract Material Properties from S-Parameters\n\nP ost-Processing: Tools > Result Templates\n\nThis result template can be used to extract the effective complex electrical permittivity and magnetic permeability based on the simulated results. It assumes a two-port system where the ports are positioned along the direction of the propagating electromagnetic wave. In such a system, the S-parameters represent the complex reflection coefficient (r) and the complex transmission coefficient (t). The template is based on Phys Rev. E 70, 016608 (2004) by X. Chen et al.\n\nThe figure below shows an example of a two-port system, where some inhomogeneous materials are sandwiched between two ports - named port 1 and port 2. If the source is excited from port 1 and electromagnetic wave propagates along z axis, reflection coefficient (r) will be equal to S1,1 and transmission coefficient (t) to S2,1.\n\nThe user dialog allows the user choose a set of the reflection coefficient (S1,1), and the transmission coefficient (S2,1) for the retrieval.\n\nEffective thickness of material sample:"
+        },
+        {
+          "source_path": "3D/special_tools/special_tools_import_smatrix_table.htm",
+          "chunk_idx": "1",
+          "text": "CST Official Help | 3D special tools special tools import smatrix table\n(vv)$ .\n\nThe four port network TOUCHSTONE file format (i.e. with file extension *.s4p ) is also supported and offers an alternative method to import directly the full anisotropic S parameter matrix.\n\nThe 4 ports are defined according to the following identification with the side of the panel and the field component:\n\nThis identification is consistent with the one used by the touchstone export functionality, see the Export TOUCHSTONE File page.\n\nUsing this file format the $S(uu), \\, S(vv)$ matrices will be simultaneously imported whereas the cross matrices $S(uv)$ and $S(vu)$ will be ignored and set to zero.\n\nFormat specification\n\nEach entry in the table describes the S parameter (as a function of the frequency) for the thin panel material interpreted as a two port network."
+        }
+      ],
+      "evidence_sha256": "7da1a5eac24922ae51191d85839cf7ef229b9d55a1af78f28efe74b5fb098605",
+      "retrieved_sources": [
+        "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+        "3D/special_tools/special_tools_import_smatrix_table.htm"
+      ],
+      "retrieved_chunks": [
+        10,
+        0,
+        1
+      ],
+      "citations": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+          "chunk_idx": "10"
+        }
+      ],
+      "trace_run_id": "5c41165c4d65",
+      "ok": false,
+      "error_stage": "judge_validation",
+      "error": "JudgeResponseValidationError: judge claim 1 references evidence outside the supplied Top-3",
+      "latency_ms": 177768.32,
+      "judge_validation_failure": {
+        "prompt_version": "rag-claim-judge-v2",
+        "prompt_sha256": "baac5f5e24092e973a4daa28f7aebe2eec7020c8280d0f10f2a1a6cc6affe2e6",
+        "raw_response": "{\"claim_count\":19,\"supported_claim_count\":10,\"unsupported_claim_count\":9,\"groundedness_score\":0.5263157894736842,\"answer_relevance_score\":0.78,\"citation_entailment\":false,\"claims\":[{\"text\":\"CST 的结果模板可基于仿真 S 参数提取有效复介电常数和有效复磁导率。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm\",\"chunk_idx\":0}],\"reason\":\"文档明确说明该结果模板可基于仿真结果提取有效复介电常数和磁导率。\"},{\"text\":\"该提取可直接通过导入 2-port Touchstone 数据完成。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"给出的片段未说明该模板可导入或直接使用 Touchstone 文件进行提取。\"},{\"text\":\"该方法假设待测结构是两端口传播系统。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm\",\"chunk_idx\":0}],\"reason\":\"文档明确写明模板假设为 two-port system。\"},{\"text\":\"两端口应沿电磁波传播方向布置。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm\",\"chunk_idx\":0}],\"reason\":\"文档明确说明端口位于传播电磁波的方向上。\"},{\"text\":\"DUT 应位于两个端口之间。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm\",\"chunk_idx\":0}],\"reason\":\"文档示例描述材料被夹在 port 1 与 port 2 之间。\"},{\"text\":\"可以获得或导入 DUT 的 .s2p 文件。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"证据未描述 .s2p 文件的获取或导入流程。\"},{\"text\":\"CST 中该结果模板的入口为 Post-Processing → Tools → Result Templates。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm\",\"chunk_idx\":0}],\"reason\":\"文档直接给出了该菜单路径。\"},{\"text\":\"可选择“Extract Material Properties from S-Parameters”结果模板。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm\",\"chunk_idx\":0}],\"reason\":\"该模板名称是文档标题和正文直接说明的对象。\"},{\"text\":\"可选择名为“Extract Complex Material Properties from 2-Port Touchstone”的模板或预加载宏。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"片段虽来自相关页面，但未提供该具体模板/宏的可选名称或操作说明。\"},{\"text\":\"模板对检索允许用户选择反射系数 S11 和传输系数 S21。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm\",\"chunk_idx\":0}],\"reason\":\"文档明确说明用户对话框可选择 S11 和 S21 用于 retrieval。\"},{\"text\":\"模板可将 Touchstone 文件指定为输入。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"证据未明确说明 Touchstone 文件是该模板的输入选项。\"},{\"text\":\"样品厚度必须与实际测试或仿真模型一致。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"证据仅出现“Effective thickness of material sample”字段标题，未给出这一一致性要求。\"},{\"text\":\"传播方向应与实际测试或仿真模型一致。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm\",\"chunk_idx\":0}],\"reason\":\"模板假设端口沿传播方向布置，文档示例也明确了沿 z 方向传播的情形。\"},{\"text\":\"端口参考面必须与实际测试或仿真模型一致。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"提供的片段未讨论端口参考面。\"},{\"text\":\"运行后应检查复参数实部和虚部是否连续，以及是否存在不合理跳变。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"证据未给出这种结果质量检查准则。\"},{\"text\":\"Touchstone 导出时设置的阻抗会写入文件头，作为 S 参数的参考阻抗。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm\",\"chunk_idx\":10}],\"reason\":\"文档明确说明该阻抗值会写入 Touchstone 文件头作为参考阻抗。\"},{\"text\":\"该反演适用于两端口且端口沿传播方向传输的情形。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm\",\"chunk_idx\":0}],\"reason\":\"这是文档明确列出的两端口和端口布置假设。\"},{\"text\":\"端口位置或模态不符合该假设的结构不应直接套用该方法。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"这是合理的推论，但证据未直接给出该限制性建议。\"},{\"text\":\"对高阶模、强非均匀场或端口寄生显著的夹具，结果需谨慎解释。\",\"supported\":false,\"evidence_refs\":[],\"reason\":\"提供的文档片段未讨论高阶模、非均匀场或端口寄生效应。\"}],\"reason\":\"回答正确引用了 CST 模板的核心用途、两端口传播假设、菜单入口、S11/S21 选择和 Touchstone 导出参考阻抗。其余关于 Touchstone 导入、具体宏、参考面/厚度设置和适用性诊断的多项操作性说明未由所给片段直接支持，因此引用整体不完全蕴含相邻主张。\"}",
+        "raw_response_sha256": "7c52da8c58b553839286d3646cbc313117ef9d658431e571d3745aa01c3585bd",
+        "parsed_response": {
+          "claim_count": 19,
+          "supported_claim_count": 10,
+          "unsupported_claim_count": 9,
+          "groundedness_score": 0.5263157894736842,
+          "answer_relevance_score": 0.78,
+          "citation_entailment": false,
+          "claims": [
+            {
+              "text": "CST 的结果模板可基于仿真 S 参数提取有效复介电常数和有效复磁导率。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "文档明确说明该结果模板可基于仿真结果提取有效复介电常数和磁导率。"
+            },
+            {
+              "text": "该提取可直接通过导入 2-port Touchstone 数据完成。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "给出的片段未说明该模板可导入或直接使用 Touchstone 文件进行提取。"
+            },
+            {
+              "text": "该方法假设待测结构是两端口传播系统。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "文档明确写明模板假设为 two-port system。"
+            },
+            {
+              "text": "两端口应沿电磁波传播方向布置。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "文档明确说明端口位于传播电磁波的方向上。"
+            },
+            {
+              "text": "DUT 应位于两个端口之间。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "文档示例描述材料被夹在 port 1 与 port 2 之间。"
+            },
+            {
+              "text": "可以获得或导入 DUT 的 .s2p 文件。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "证据未描述 .s2p 文件的获取或导入流程。"
+            },
+            {
+              "text": "CST 中该结果模板的入口为 Post-Processing → Tools → Result Templates。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "文档直接给出了该菜单路径。"
+            },
+            {
+              "text": "可选择“Extract Material Properties from S-Parameters”结果模板。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "该模板名称是文档标题和正文直接说明的对象。"
+            },
+            {
+              "text": "可选择名为“Extract Complex Material Properties from 2-Port Touchstone”的模板或预加载宏。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "片段虽来自相关页面，但未提供该具体模板/宏的可选名称或操作说明。"
+            },
+            {
+              "text": "模板对检索允许用户选择反射系数 S11 和传输系数 S21。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "文档明确说明用户对话框可选择 S11 和 S21 用于 retrieval。"
+            },
+            {
+              "text": "模板可将 Touchstone 文件指定为输入。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "证据未明确说明 Touchstone 文件是该模板的输入选项。"
+            },
+            {
+              "text": "样品厚度必须与实际测试或仿真模型一致。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "证据仅出现“Effective thickness of material sample”字段标题，未给出这一一致性要求。"
+            },
+            {
+              "text": "传播方向应与实际测试或仿真模型一致。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "模板假设端口沿传播方向布置，文档示例也明确了沿 z 方向传播的情形。"
+            },
+            {
+              "text": "端口参考面必须与实际测试或仿真模型一致。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "提供的片段未讨论端口参考面。"
+            },
+            {
+              "text": "运行后应检查复参数实部和虚部是否连续，以及是否存在不合理跳变。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "证据未给出这种结果质量检查准则。"
+            },
+            {
+              "text": "Touchstone 导出时设置的阻抗会写入文件头，作为 S 参数的参考阻抗。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+                  "chunk_idx": 10
+                }
+              ],
+              "reason": "文档明确说明该阻抗值会写入 Touchstone 文件头作为参考阻抗。"
+            },
+            {
+              "text": "该反演适用于两端口且端口沿传播方向传输的情形。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                  "chunk_idx": 0
+                }
+              ],
+              "reason": "这是文档明确列出的两端口和端口布置假设。"
+            },
+            {
+              "text": "端口位置或模态不符合该假设的结构不应直接套用该方法。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "这是合理的推论，但证据未直接给出该限制性建议。"
+            },
+            {
+              "text": "对高阶模、强非均匀场或端口寄生显著的夹具，结果需谨慎解释。",
+              "supported": false,
+              "evidence_refs": [],
+              "reason": "提供的文档片段未讨论高阶模、非均匀场或端口寄生效应。"
+            }
+          ],
+          "reason": "回答正确引用了 CST 模板的核心用途、两端口传播假设、菜单入口、S11/S21 选择和 Touchstone 导出参考阻抗。其余关于 Touchstone 导入、具体宏、参考面/厚度设置和适用性诊断的多项操作性说明未由所给片段直接支持，因此引用整体不完全蕴含相邻主张。"
+        }
+      }
+    }
+  ]
+}

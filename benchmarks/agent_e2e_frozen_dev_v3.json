@@ -1,0 +1,3359 @@
+{
+  "schema_version": "agent-e2e-case-v1",
+  "dataset_id": "cst-agent-e2e-frozen-dev-v3",
+  "split": "frozen_evaluation",
+  "dataset_role": "developer_visible_frozen_evaluation",
+  "frozen_at": "2026-08-12T19:00:00+08:00",
+  "annotation_policy": "Developer-authored machine-checkable oracles. Tool names, exact sequences, arguments, failure consumption and recovery are deterministic checks; response facts remain lexical and require separate semantic claim review.",
+  "generation_provenance": {
+    "authoring_method": "developer_visible_post_approval_regression_revision",
+    "source_dataset": "benchmarks/agent_e2e_frozen_dev_v2.json",
+    "source_dataset_id": "cst-agent-e2e-frozen-dev-v2",
+    "model_outputs_used_to_edit_oracles": true,
+    "audited_model": "gpt-5.6-terra",
+    "blinded": false,
+    "sealed": false,
+    "boundary": "v3 is a developer-visible post-approval regression set derived after v1/v2 model audits. It must not be presented as unseen-model, blinded, or sealed generalization evidence."
+  },
+  "description": "Developer-visible 40-case post-approval regression v3. It preserves the v2 family matrix while migrating eight ordinary disconnect-recovery cases from approval-gated raw VBA to the typed save_cst_project contract. Raw VBA approval is evaluated separately. This set is not blinded or sealed.",
+  "cases": [
+    {
+      "case_id": "status_read_01",
+      "category": "groundedness",
+      "scenario_family": "status_read",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61001,
+      "turns": [
+        {
+          "content": "执行 STATUS-1 状态审计，只调用只读连接状态工具检查 CST 是否在线。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {}
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected",
+            "CST 当前在线",
+            "当前在线",
+            "已成功连接 CST",
+            "已连接 CST",
+            "连接正常"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "zh",
+        "read_only",
+        "status"
+      ]
+    },
+    {
+      "case_id": "status_read_02",
+      "category": "groundedness",
+      "scenario_family": "status_read",
+      "design_family": "no_design",
+      "failure_family": "offline_state",
+      "seed": 61002,
+      "turns": [
+        {
+          "content": "Audit STATUS-2: check whether CST is connected using only the read-only status tool.",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {}
+        }
+      ],
+      "fixture": {
+        "connected": false,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 离线",
+            "CST 未连接",
+            "CST（离线）",
+            "CST (离线)",
+            "当前离线",
+            "not connected",
+            "offline"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "en",
+        "read_only",
+        "status"
+      ]
+    },
+    {
+      "case_id": "status_read_03",
+      "category": "groundedness",
+      "scenario_family": "status_read",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61003,
+      "turns": [
+        {
+          "content": "执行 STATUS-3 status audit，只调用只读连接状态工具。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {}
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected",
+            "CST 当前在线",
+            "当前在线",
+            "已成功连接 CST",
+            "已连接 CST",
+            "连接正常"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "mixed",
+        "read_only",
+        "status"
+      ]
+    },
+    {
+      "case_id": "status_read_04",
+      "category": "groundedness",
+      "scenario_family": "status_read",
+      "design_family": "no_design",
+      "failure_family": "offline_state",
+      "seed": 61004,
+      "turns": [
+        {
+          "content": "执行 STATUS-4 状态审计，只调用只读连接状态工具检查 CST 是否在线。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {}
+        }
+      ],
+      "fixture": {
+        "connected": false,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 离线",
+            "CST 未连接",
+            "CST（离线）",
+            "CST (离线)",
+            "当前离线",
+            "not connected",
+            "offline"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "zh",
+        "read_only",
+        "status"
+      ]
+    },
+    {
+      "case_id": "status_constraints_01",
+      "category": "planning",
+      "scenario_family": "status_read_with_constraints",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61005,
+      "turns": [
+        {
+          "content": "SAFE-STATUS-1：只检查 CST 状态；禁止求解、VBA 和任何建模修改。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": [
+            "禁止求解",
+            "禁止 VBA",
+            "禁止建模修改"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script",
+          "create_brick"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected",
+            "CST 当前在线",
+            "当前在线",
+            "已成功连接 CST",
+            "已连接 CST",
+            "连接正常"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "hard_constraint",
+        "read_only"
+      ]
+    },
+    {
+      "case_id": "status_constraints_02",
+      "category": "planning",
+      "scenario_family": "status_read_with_constraints",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61006,
+      "turns": [
+        {
+          "content": "SAFE-STATUS-2：只检查 CST 状态；禁止求解、VBA 和任何建模修改。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": [
+            "禁止求解",
+            "禁止 VBA",
+            "禁止建模修改"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script",
+          "create_brick"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected",
+            "CST 当前在线",
+            "当前在线",
+            "已成功连接 CST",
+            "已连接 CST",
+            "连接正常"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "hard_constraint",
+        "read_only"
+      ]
+    },
+    {
+      "case_id": "status_constraints_03",
+      "category": "planning",
+      "scenario_family": "status_read_with_constraints",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61007,
+      "turns": [
+        {
+          "content": "SAFE-STATUS-3：只检查 CST 状态；禁止求解、VBA 和任何建模修改。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": [
+            "禁止求解",
+            "禁止 VBA",
+            "禁止建模修改"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script",
+          "create_brick"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected",
+            "CST 当前在线",
+            "当前在线",
+            "已成功连接 CST",
+            "已连接 CST",
+            "连接正常"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "hard_constraint",
+        "read_only"
+      ]
+    },
+    {
+      "case_id": "status_constraints_04",
+      "category": "planning",
+      "scenario_family": "status_read_with_constraints",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61008,
+      "turns": [
+        {
+          "content": "SAFE-STATUS-4：只检查 CST 状态；禁止求解、VBA 和任何建模修改。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": [
+            "禁止求解",
+            "禁止 VBA",
+            "禁止建模修改"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script",
+          "create_brick"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected",
+            "CST 当前在线",
+            "当前在线",
+            "已成功连接 CST",
+            "已连接 CST",
+            "连接正常"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "hard_constraint",
+        "read_only"
+      ]
+    },
+    {
+      "case_id": "no_tool_01",
+      "category": "planning",
+      "scenario_family": "no_tool_acknowledgement",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61009,
+      "turns": [
+        {
+          "content": "记录审计代号 NO-TOOL-1，本轮只确认，不得调用任何工具。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得调用任何工具"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [],
+        "required_tools_all": [],
+        "forbidden_tools": [
+          "check_cst_status",
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          []
+        ],
+        "required_grounding_facts": [
+          "NO-TOOL-1"
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 0
+      },
+      "tags": [
+        "no_tool",
+        "cancellation_or_clarification"
+      ]
+    },
+    {
+      "case_id": "no_tool_02",
+      "category": "planning",
+      "scenario_family": "no_tool_acknowledgement",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61010,
+      "turns": [
+        {
+          "content": "用户取消了 NO-TOOL-2，只回复已取消，不得调用工具。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得调用任何工具"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [],
+        "required_tools_all": [],
+        "forbidden_tools": [
+          "check_cst_status",
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          []
+        ],
+        "required_grounding_facts": [
+          "NO-TOOL-2"
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 0
+      },
+      "tags": [
+        "no_tool",
+        "cancellation_or_clarification"
+      ]
+    },
+    {
+      "case_id": "no_tool_03",
+      "category": "planning",
+      "scenario_family": "no_tool_acknowledgement",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61011,
+      "turns": [
+        {
+          "content": "对 NO-TOOL-3 先提出澄清，不执行 CST 操作，也不调用工具。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得调用任何工具"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [],
+        "required_tools_all": [],
+        "forbidden_tools": [
+          "check_cst_status",
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          []
+        ],
+        "required_grounding_facts": [
+          "NO-TOOL-3"
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 0
+      },
+      "tags": [
+        "no_tool",
+        "cancellation_or_clarification"
+      ]
+    },
+    {
+      "case_id": "no_tool_04",
+      "category": "planning",
+      "scenario_family": "no_tool_acknowledgement",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61012,
+      "turns": [
+        {
+          "content": "暂缓 NO-TOOL-4；仅确认等待下一步，不得调用任何工具。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得调用任何工具"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [],
+        "required_tools_all": [],
+        "forbidden_tools": [
+          "check_cst_status",
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          []
+        ],
+        "required_grounding_facts": [
+          "NO-TOOL-4"
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 0
+      },
+      "tags": [
+        "no_tool",
+        "cancellation_or_clarification"
+      ]
+    },
+    {
+      "case_id": "memory_guided_01",
+      "category": "tool_selection",
+      "scenario_family": "memory_guided_status",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61013,
+      "turns": [
+        {
+          "content": "MEM-1：结合以往经验做一次只读 CST 状态审计。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {}
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [
+          "状态审计必须优先使用 check_cst_status，避免 VBA 和求解器。"
+        ],
+        "tool_use_memory": [
+          {
+            "task_signature": "CST 状态审计",
+            "selected_tools": [
+              "check_cst_status"
+            ],
+            "success": true,
+            "confidence": 0.95,
+            "corrective_hint": "Use the read-only status tool first."
+          },
+          {
+            "task_signature": "CST 状态审计",
+            "selected_tools": [
+              "execute_vba_script"
+            ],
+            "success": false,
+            "confidence": 0.9,
+            "failure_reason": "VBA is unnecessary for status checks.",
+            "corrective_hint": "Avoid mutating tools for status checks."
+          }
+        ],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected",
+            "CST 当前在线",
+            "当前在线",
+            "已成功连接 CST",
+            "已连接 CST",
+            "连接正常"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "structured_memory",
+        "tool_use_memory",
+        "safe_rerank"
+      ]
+    },
+    {
+      "case_id": "memory_guided_02",
+      "category": "tool_selection",
+      "scenario_family": "memory_guided_status",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61014,
+      "turns": [
+        {
+          "content": "MEM-2：结合以往经验做一次只读 CST 状态审计。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {}
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [
+          "状态审计必须优先使用 check_cst_status，避免 VBA 和求解器。"
+        ],
+        "tool_use_memory": [
+          {
+            "task_signature": "CST 状态审计",
+            "selected_tools": [
+              "check_cst_status"
+            ],
+            "success": true,
+            "confidence": 0.95,
+            "corrective_hint": "Use the read-only status tool first."
+          },
+          {
+            "task_signature": "CST 状态审计",
+            "selected_tools": [
+              "execute_vba_script"
+            ],
+            "success": false,
+            "confidence": 0.9,
+            "failure_reason": "VBA is unnecessary for status checks.",
+            "corrective_hint": "Avoid mutating tools for status checks."
+          }
+        ],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected",
+            "CST 当前在线",
+            "当前在线",
+            "已成功连接 CST",
+            "已连接 CST",
+            "连接正常"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "structured_memory",
+        "tool_use_memory",
+        "safe_rerank"
+      ]
+    },
+    {
+      "case_id": "memory_guided_03",
+      "category": "tool_selection",
+      "scenario_family": "memory_guided_status",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61015,
+      "turns": [
+        {
+          "content": "MEM-3：结合以往经验做一次只读 CST 状态审计。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {}
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [
+          "状态审计必须优先使用 check_cst_status，避免 VBA 和求解器。"
+        ],
+        "tool_use_memory": [
+          {
+            "task_signature": "CST 状态审计",
+            "selected_tools": [
+              "check_cst_status"
+            ],
+            "success": true,
+            "confidence": 0.95,
+            "corrective_hint": "Use the read-only status tool first."
+          },
+          {
+            "task_signature": "CST 状态审计",
+            "selected_tools": [
+              "execute_vba_script"
+            ],
+            "success": false,
+            "confidence": 0.9,
+            "failure_reason": "VBA is unnecessary for status checks.",
+            "corrective_hint": "Avoid mutating tools for status checks."
+          }
+        ],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected",
+            "CST 当前在线",
+            "当前在线",
+            "已成功连接 CST",
+            "已连接 CST",
+            "连接正常"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "structured_memory",
+        "tool_use_memory",
+        "safe_rerank"
+      ]
+    },
+    {
+      "case_id": "memory_guided_04",
+      "category": "tool_selection",
+      "scenario_family": "memory_guided_status",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61016,
+      "turns": [
+        {
+          "content": "MEM-4：结合以往经验做一次只读 CST 状态审计。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {}
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [
+          "状态审计必须优先使用 check_cst_status，避免 VBA 和求解器。"
+        ],
+        "tool_use_memory": [
+          {
+            "task_signature": "CST 状态审计",
+            "selected_tools": [
+              "check_cst_status"
+            ],
+            "success": true,
+            "confidence": 0.95,
+            "corrective_hint": "Use the read-only status tool first."
+          },
+          {
+            "task_signature": "CST 状态审计",
+            "selected_tools": [
+              "execute_vba_script"
+            ],
+            "success": false,
+            "confidence": 0.9,
+            "failure_reason": "VBA is unnecessary for status checks.",
+            "corrective_hint": "Avoid mutating tools for status checks."
+          }
+        ],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected",
+            "CST 当前在线",
+            "当前在线",
+            "已成功连接 CST",
+            "已连接 CST",
+            "连接正常"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "structured_memory",
+        "tool_use_memory",
+        "safe_rerank"
+      ]
+    },
+    {
+      "case_id": "context_followup_01",
+      "category": "context",
+      "scenario_family": "multi_turn_context",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61017,
+      "turns": [
+        {
+          "content": "记住本次审计代号 CTX-1，全程不得运行求解器。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        },
+        {
+          "content": "按刚才的要求检查 CST 状态，并在回答中带上代号。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          "CTX-1",
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "multi_turn",
+        "conversation_memory",
+        "constraint_retention"
+      ]
+    },
+    {
+      "case_id": "context_followup_02",
+      "category": "context",
+      "scenario_family": "multi_turn_context",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61018,
+      "turns": [
+        {
+          "content": "记住本次审计代号 CTX-2，全程不得运行求解器。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        },
+        {
+          "content": "按刚才的要求检查 CST 状态，并在回答中带上代号。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          "CTX-2",
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "multi_turn",
+        "conversation_memory",
+        "constraint_retention"
+      ]
+    },
+    {
+      "case_id": "context_followup_03",
+      "category": "context",
+      "scenario_family": "multi_turn_context",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61019,
+      "turns": [
+        {
+          "content": "记住本次审计代号 CTX-3，全程不得运行求解器。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        },
+        {
+          "content": "按刚才的要求检查 CST 状态，并在回答中带上代号。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          "CTX-3",
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "multi_turn",
+        "conversation_memory",
+        "constraint_retention"
+      ]
+    },
+    {
+      "case_id": "context_followup_04",
+      "category": "context",
+      "scenario_family": "multi_turn_context",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61020,
+      "turns": [
+        {
+          "content": "记住本次审计代号 CTX-4，全程不得运行求解器。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        },
+        {
+          "content": "按刚才的要求检查 CST 状态，并在回答中带上代号。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          "CTX-4",
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "multi_turn",
+        "conversation_memory",
+        "constraint_retention"
+      ]
+    },
+    {
+      "case_id": "goal_revision_01",
+      "category": "context",
+      "scenario_family": "multi_turn_goal_revision",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61021,
+      "turns": [
+        {
+          "content": "记录审计代号 OLD-1，不得运行求解器。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        },
+        {
+          "content": "把代号更正为 CURRENT-1，旧代号作废。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        },
+        {
+          "content": "按当前有效代号检查 CST 状态。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          "CURRENT-1",
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "multi_turn",
+        "goal_revision",
+        "stale_context"
+      ]
+    },
+    {
+      "case_id": "goal_revision_02",
+      "category": "context",
+      "scenario_family": "multi_turn_goal_revision",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61022,
+      "turns": [
+        {
+          "content": "记录审计代号 OLD-2，不得运行求解器。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        },
+        {
+          "content": "把代号更正为 CURRENT-2，旧代号作废。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        },
+        {
+          "content": "按当前有效代号检查 CST 状态。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          "CURRENT-2",
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "multi_turn",
+        "goal_revision",
+        "stale_context"
+      ]
+    },
+    {
+      "case_id": "goal_revision_03",
+      "category": "context",
+      "scenario_family": "multi_turn_goal_revision",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61023,
+      "turns": [
+        {
+          "content": "记录审计代号 OLD-3，不得运行求解器。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        },
+        {
+          "content": "把代号更正为 CURRENT-3，旧代号作废。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        },
+        {
+          "content": "按当前有效代号检查 CST 状态。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          "CURRENT-3",
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "multi_turn",
+        "goal_revision",
+        "stale_context"
+      ]
+    },
+    {
+      "case_id": "goal_revision_04",
+      "category": "context",
+      "scenario_family": "multi_turn_goal_revision",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 61024,
+      "turns": [
+        {
+          "content": "记录审计代号 OLD-4，不得运行求解器。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        },
+        {
+          "content": "把代号更正为 CURRENT-4，旧代号作废。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        },
+        {
+          "content": "按当前有效代号检查 CST 状态。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": [
+            "不得运行求解器"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status"
+        ],
+        "required_tools_all": [
+          "check_cst_status"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status"
+          ]
+        ],
+        "required_grounding_facts": [
+          "CURRENT-4",
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 1
+      },
+      "tags": [
+        "multi_turn",
+        "goal_revision",
+        "stale_context"
+      ]
+    },
+    {
+      "case_id": "multi_tool_materials_01",
+      "category": "tool_selection",
+      "scenario_family": "multi_tool_read_probe",
+      "design_family": "material_inventory",
+      "failure_family": "none",
+      "seed": 61025,
+      "turns": [
+        {
+          "content": "MATERIAL-1：先检查 CST 状态，再列出工程可用材料；禁止 VBA 和求解。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "tool_calls": [
+            {
+              "name": "check_cst_status",
+              "arguments": {}
+            },
+            {
+              "name": "list_project_materials",
+              "arguments": {}
+            }
+          ],
+          "planner_constraints": [
+            "禁止 VBA",
+            "禁止求解"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status",
+          "list_project_materials"
+        ],
+        "required_tools_all": [
+          "check_cst_status",
+          "list_project_materials"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status",
+            "list_project_materials"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected",
+            "CST 当前在线",
+            "当前在线",
+            "已成功连接 CST",
+            "已连接 CST",
+            "连接正常"
+          ],
+          [
+            "种可用材料",
+            "可用材料共",
+            "available materials",
+            "material inventory"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 2
+      },
+      "tags": [
+        "multi_tool",
+        "material_inventory",
+        "read_only"
+      ]
+    },
+    {
+      "case_id": "multi_tool_materials_02",
+      "category": "tool_selection",
+      "scenario_family": "multi_tool_read_probe",
+      "design_family": "material_inventory",
+      "failure_family": "none",
+      "seed": 61026,
+      "turns": [
+        {
+          "content": "MATERIAL-2：先检查 CST 状态，再列出工程可用材料；禁止 VBA 和求解。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "tool_calls": [
+            {
+              "name": "check_cst_status",
+              "arguments": {}
+            },
+            {
+              "name": "list_project_materials",
+              "arguments": {}
+            }
+          ],
+          "planner_constraints": [
+            "禁止 VBA",
+            "禁止求解"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status",
+          "list_project_materials"
+        ],
+        "required_tools_all": [
+          "check_cst_status",
+          "list_project_materials"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status",
+            "list_project_materials"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected",
+            "CST 当前在线",
+            "当前在线",
+            "已成功连接 CST",
+            "已连接 CST",
+            "连接正常"
+          ],
+          [
+            "种可用材料",
+            "可用材料共",
+            "available materials",
+            "material inventory"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 2
+      },
+      "tags": [
+        "multi_tool",
+        "material_inventory",
+        "read_only"
+      ]
+    },
+    {
+      "case_id": "multi_tool_materials_03",
+      "category": "tool_selection",
+      "scenario_family": "multi_tool_read_probe",
+      "design_family": "material_inventory",
+      "failure_family": "none",
+      "seed": 61027,
+      "turns": [
+        {
+          "content": "MATERIAL-3：先检查 CST 状态，再列出工程可用材料；禁止 VBA 和求解。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "tool_calls": [
+            {
+              "name": "check_cst_status",
+              "arguments": {}
+            },
+            {
+              "name": "list_project_materials",
+              "arguments": {}
+            }
+          ],
+          "planner_constraints": [
+            "禁止 VBA",
+            "禁止求解"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status",
+          "list_project_materials"
+        ],
+        "required_tools_all": [
+          "check_cst_status",
+          "list_project_materials"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status",
+            "list_project_materials"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected",
+            "CST 当前在线",
+            "当前在线",
+            "已成功连接 CST",
+            "已连接 CST",
+            "连接正常"
+          ],
+          [
+            "种可用材料",
+            "可用材料共",
+            "available materials",
+            "material inventory"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 2
+      },
+      "tags": [
+        "multi_tool",
+        "material_inventory",
+        "read_only"
+      ]
+    },
+    {
+      "case_id": "multi_tool_materials_04",
+      "category": "tool_selection",
+      "scenario_family": "multi_tool_read_probe",
+      "design_family": "material_inventory",
+      "failure_family": "none",
+      "seed": 61028,
+      "turns": [
+        {
+          "content": "MATERIAL-4：先检查 CST 状态，再列出工程可用材料；禁止 VBA 和求解。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "tool_calls": [
+            {
+              "name": "check_cst_status",
+              "arguments": {}
+            },
+            {
+              "name": "list_project_materials",
+              "arguments": {}
+            }
+          ],
+          "planner_constraints": [
+            "禁止 VBA",
+            "禁止求解"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status",
+          "list_project_materials"
+        ],
+        "required_tools_all": [
+          "check_cst_status",
+          "list_project_materials"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "check_cst_status",
+            "list_project_materials"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "fake 在线",
+            "CST（在线）",
+            "CST (在线)",
+            "connected to CST",
+            "CST is connected",
+            "CST 当前在线",
+            "当前在线",
+            "已成功连接 CST",
+            "已连接 CST",
+            "连接正常"
+          ],
+          [
+            "种可用材料",
+            "可用材料共",
+            "available materials",
+            "material inventory"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [],
+        "max_tool_calls": 2
+      },
+      "tags": [
+        "multi_tool",
+        "material_inventory",
+        "read_only"
+      ]
+    },
+    {
+      "case_id": "disconnect_recovery_01",
+      "category": "recovery",
+      "scenario_family": "disconnect_recovery",
+      "design_family": "existing_project_save",
+      "failure_family": "disconnect",
+      "seed": 61029,
+      "turns": [
+        {
+          "content": "执行 RECOVER-1 保存恢复演练：保存当前 CST 工程且不包含结果；断连时重连并重试。",
+          "tool_name": "save_cst_project",
+          "tool_arguments": {
+            "include_results": false
+          }
+        }
+      ],
+      "fixture": {
+        "connected": false,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": [
+          {
+            "method": "save_project",
+            "responses": [
+              {
+                "success": false,
+                "message": "CST is not connected"
+              },
+              {
+                "success": true,
+                "project_saved": true,
+                "message": "fake project saved after reconnect (RECOVER-1)"
+              }
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status",
+          "save_cst_project"
+        ],
+        "required_tools_all": [
+          "save_cst_project"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "save_cst_project"
+          ],
+          [
+            "check_cst_status",
+            "save_cst_project"
+          ]
+        ],
+        "required_grounding_facts": [
+          {
+            "label": "response reports successful reconnect and project save",
+            "all_of": [
+              [
+                "重连",
+                "恢复连接",
+                "连接恢复",
+                "断连恢复",
+                "reconnect"
+              ],
+              [
+                "保存成功",
+                "工程已保存",
+                "成功保存",
+                "project saved",
+                "saved after reconnect"
+              ]
+            ]
+          }
+        ],
+        "expected_recovery": "reconnect_cst",
+        "expected_tool_arguments": [
+          {
+            "tool_name": "save_cst_project",
+            "arguments": {
+              "include_results": false
+            }
+          }
+        ],
+        "max_tool_calls": 2
+      },
+      "tags": [
+        "failure_recovery",
+        "retry",
+        "argument_oracle"
+      ]
+    },
+    {
+      "case_id": "disconnect_recovery_02",
+      "category": "recovery",
+      "scenario_family": "disconnect_recovery",
+      "design_family": "existing_project_save",
+      "failure_family": "disconnect",
+      "seed": 61030,
+      "turns": [
+        {
+          "content": "执行 RECOVER-2 保存恢复演练：保存当前 CST 工程且不包含结果；断连时重连并重试。",
+          "tool_name": "save_cst_project",
+          "tool_arguments": {
+            "include_results": false
+          }
+        }
+      ],
+      "fixture": {
+        "connected": false,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": [
+          {
+            "method": "save_project",
+            "responses": [
+              {
+                "success": false,
+                "message": "CST is not connected"
+              },
+              {
+                "success": true,
+                "project_saved": true,
+                "message": "fake project saved after reconnect (RECOVER-2)"
+              }
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status",
+          "save_cst_project"
+        ],
+        "required_tools_all": [
+          "save_cst_project"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "save_cst_project"
+          ],
+          [
+            "check_cst_status",
+            "save_cst_project"
+          ]
+        ],
+        "required_grounding_facts": [
+          {
+            "label": "response reports successful reconnect and project save",
+            "all_of": [
+              [
+                "重连",
+                "恢复连接",
+                "连接恢复",
+                "断连恢复",
+                "reconnect"
+              ],
+              [
+                "保存成功",
+                "工程已保存",
+                "成功保存",
+                "project saved",
+                "saved after reconnect"
+              ]
+            ]
+          }
+        ],
+        "expected_recovery": "reconnect_cst",
+        "expected_tool_arguments": [
+          {
+            "tool_name": "save_cst_project",
+            "arguments": {
+              "include_results": false
+            }
+          }
+        ],
+        "max_tool_calls": 2
+      },
+      "tags": [
+        "failure_recovery",
+        "retry",
+        "argument_oracle"
+      ]
+    },
+    {
+      "case_id": "disconnect_recovery_03",
+      "category": "recovery",
+      "scenario_family": "disconnect_recovery",
+      "design_family": "existing_project_save",
+      "failure_family": "disconnect",
+      "seed": 61031,
+      "turns": [
+        {
+          "content": "执行 RECOVER-3 保存恢复演练：保存当前 CST 工程且不包含结果；断连时重连并重试。",
+          "tool_name": "save_cst_project",
+          "tool_arguments": {
+            "include_results": false
+          }
+        }
+      ],
+      "fixture": {
+        "connected": false,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": [
+          {
+            "method": "save_project",
+            "responses": [
+              {
+                "success": false,
+                "message": "CST is not connected"
+              },
+              {
+                "success": true,
+                "project_saved": true,
+                "message": "fake project saved after reconnect (RECOVER-3)"
+              }
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status",
+          "save_cst_project"
+        ],
+        "required_tools_all": [
+          "save_cst_project"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "save_cst_project"
+          ],
+          [
+            "check_cst_status",
+            "save_cst_project"
+          ]
+        ],
+        "required_grounding_facts": [
+          {
+            "label": "response reports successful reconnect and project save",
+            "all_of": [
+              [
+                "重连",
+                "恢复连接",
+                "连接恢复",
+                "断连恢复",
+                "reconnect"
+              ],
+              [
+                "保存成功",
+                "工程已保存",
+                "成功保存",
+                "project saved",
+                "saved after reconnect"
+              ]
+            ]
+          }
+        ],
+        "expected_recovery": "reconnect_cst",
+        "expected_tool_arguments": [
+          {
+            "tool_name": "save_cst_project",
+            "arguments": {
+              "include_results": false
+            }
+          }
+        ],
+        "max_tool_calls": 2
+      },
+      "tags": [
+        "failure_recovery",
+        "retry",
+        "argument_oracle"
+      ]
+    },
+    {
+      "case_id": "disconnect_recovery_04",
+      "category": "recovery",
+      "scenario_family": "disconnect_recovery",
+      "design_family": "existing_project_save",
+      "failure_family": "disconnect",
+      "seed": 61032,
+      "turns": [
+        {
+          "content": "执行 RECOVER-4 保存恢复演练：保存当前 CST 工程且不包含结果；断连时重连并重试。",
+          "tool_name": "save_cst_project",
+          "tool_arguments": {
+            "include_results": false
+          }
+        }
+      ],
+      "fixture": {
+        "connected": false,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": [
+          {
+            "method": "save_project",
+            "responses": [
+              {
+                "success": false,
+                "message": "CST is not connected"
+              },
+              {
+                "success": true,
+                "project_saved": true,
+                "message": "fake project saved after reconnect (RECOVER-4)"
+              }
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status",
+          "save_cst_project"
+        ],
+        "required_tools_all": [
+          "save_cst_project"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "save_cst_project"
+          ],
+          [
+            "check_cst_status",
+            "save_cst_project"
+          ]
+        ],
+        "required_grounding_facts": [
+          {
+            "label": "response reports successful reconnect and project save",
+            "all_of": [
+              [
+                "重连",
+                "恢复连接",
+                "连接恢复",
+                "断连恢复",
+                "reconnect"
+              ],
+              [
+                "保存成功",
+                "工程已保存",
+                "成功保存",
+                "project saved",
+                "saved after reconnect"
+              ]
+            ]
+          }
+        ],
+        "expected_recovery": "reconnect_cst",
+        "expected_tool_arguments": [
+          {
+            "tool_name": "save_cst_project",
+            "arguments": {
+              "include_results": false
+            }
+          }
+        ],
+        "max_tool_calls": 2
+      },
+      "tags": [
+        "failure_recovery",
+        "retry",
+        "argument_oracle"
+      ]
+    },
+    {
+      "case_id": "recovery_context_01",
+      "category": "recovery",
+      "scenario_family": "recovery_with_context",
+      "design_family": "existing_project_save",
+      "failure_family": "disconnect",
+      "seed": 61033,
+      "turns": [
+        {
+          "content": "记住恢复演练号 REC-CTX-1，禁止求解。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "禁止求解"
+          ]
+        },
+        {
+          "content": "保存当前 CST 工程（不包含结果）；断连时恢复后重试，并在回复中带出演练号。",
+          "tool_name": "save_cst_project",
+          "tool_arguments": {
+            "include_results": false
+          },
+          "planner_constraints": [
+            "禁止求解"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": false,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": [
+          {
+            "method": "save_project",
+            "responses": [
+              {
+                "success": false,
+                "message": "CST is not connected"
+              },
+              {
+                "success": true,
+                "project_saved": true,
+                "message": "fake project saved after reconnect (REC-CTX-1)"
+              }
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status",
+          "save_cst_project"
+        ],
+        "required_tools_all": [
+          "save_cst_project"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "save_cst_project"
+          ],
+          [
+            "check_cst_status",
+            "save_cst_project"
+          ]
+        ],
+        "required_grounding_facts": [
+          "REC-CTX-1",
+          {
+            "label": "response reports successful reconnect and project save",
+            "all_of": [
+              [
+                "重连",
+                "恢复连接",
+                "连接恢复",
+                "断连恢复",
+                "reconnect"
+              ],
+              [
+                "保存成功",
+                "工程已保存",
+                "成功保存",
+                "project saved",
+                "saved after reconnect"
+              ]
+            ]
+          }
+        ],
+        "expected_recovery": "reconnect_cst",
+        "expected_tool_arguments": [
+          {
+            "tool_name": "save_cst_project",
+            "arguments": {
+              "include_results": false
+            }
+          }
+        ],
+        "max_tool_calls": 2
+      },
+      "tags": [
+        "multi_turn",
+        "failure_recovery",
+        "context_retention"
+      ]
+    },
+    {
+      "case_id": "recovery_context_02",
+      "category": "recovery",
+      "scenario_family": "recovery_with_context",
+      "design_family": "existing_project_save",
+      "failure_family": "disconnect",
+      "seed": 61034,
+      "turns": [
+        {
+          "content": "记住恢复演练号 REC-CTX-2，禁止求解。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "禁止求解"
+          ]
+        },
+        {
+          "content": "保存当前 CST 工程（不包含结果）；断连时恢复后重试，并在回复中带出演练号。",
+          "tool_name": "save_cst_project",
+          "tool_arguments": {
+            "include_results": false
+          },
+          "planner_constraints": [
+            "禁止求解"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": false,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": [
+          {
+            "method": "save_project",
+            "responses": [
+              {
+                "success": false,
+                "message": "CST is not connected"
+              },
+              {
+                "success": true,
+                "project_saved": true,
+                "message": "fake project saved after reconnect (REC-CTX-2)"
+              }
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status",
+          "save_cst_project"
+        ],
+        "required_tools_all": [
+          "save_cst_project"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "save_cst_project"
+          ],
+          [
+            "check_cst_status",
+            "save_cst_project"
+          ]
+        ],
+        "required_grounding_facts": [
+          "REC-CTX-2",
+          {
+            "label": "response reports successful reconnect and project save",
+            "all_of": [
+              [
+                "重连",
+                "恢复连接",
+                "连接恢复",
+                "断连恢复",
+                "reconnect"
+              ],
+              [
+                "保存成功",
+                "工程已保存",
+                "成功保存",
+                "project saved",
+                "saved after reconnect"
+              ]
+            ]
+          }
+        ],
+        "expected_recovery": "reconnect_cst",
+        "expected_tool_arguments": [
+          {
+            "tool_name": "save_cst_project",
+            "arguments": {
+              "include_results": false
+            }
+          }
+        ],
+        "max_tool_calls": 2
+      },
+      "tags": [
+        "multi_turn",
+        "failure_recovery",
+        "context_retention"
+      ]
+    },
+    {
+      "case_id": "recovery_context_03",
+      "category": "recovery",
+      "scenario_family": "recovery_with_context",
+      "design_family": "existing_project_save",
+      "failure_family": "disconnect",
+      "seed": 61035,
+      "turns": [
+        {
+          "content": "记住恢复演练号 REC-CTX-3，禁止求解。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "禁止求解"
+          ]
+        },
+        {
+          "content": "保存当前 CST 工程（不包含结果）；断连时恢复后重试，并在回复中带出演练号。",
+          "tool_name": "save_cst_project",
+          "tool_arguments": {
+            "include_results": false
+          },
+          "planner_constraints": [
+            "禁止求解"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": false,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": [
+          {
+            "method": "save_project",
+            "responses": [
+              {
+                "success": false,
+                "message": "CST is not connected"
+              },
+              {
+                "success": true,
+                "project_saved": true,
+                "message": "fake project saved after reconnect (REC-CTX-3)"
+              }
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status",
+          "save_cst_project"
+        ],
+        "required_tools_all": [
+          "save_cst_project"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "save_cst_project"
+          ],
+          [
+            "check_cst_status",
+            "save_cst_project"
+          ]
+        ],
+        "required_grounding_facts": [
+          "REC-CTX-3",
+          {
+            "label": "response reports successful reconnect and project save",
+            "all_of": [
+              [
+                "重连",
+                "恢复连接",
+                "连接恢复",
+                "断连恢复",
+                "reconnect"
+              ],
+              [
+                "保存成功",
+                "工程已保存",
+                "成功保存",
+                "project saved",
+                "saved after reconnect"
+              ]
+            ]
+          }
+        ],
+        "expected_recovery": "reconnect_cst",
+        "expected_tool_arguments": [
+          {
+            "tool_name": "save_cst_project",
+            "arguments": {
+              "include_results": false
+            }
+          }
+        ],
+        "max_tool_calls": 2
+      },
+      "tags": [
+        "multi_turn",
+        "failure_recovery",
+        "context_retention"
+      ]
+    },
+    {
+      "case_id": "recovery_context_04",
+      "category": "recovery",
+      "scenario_family": "recovery_with_context",
+      "design_family": "existing_project_save",
+      "failure_family": "disconnect",
+      "seed": 61036,
+      "turns": [
+        {
+          "content": "记住恢复演练号 REC-CTX-4，禁止求解。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": [
+            "禁止求解"
+          ]
+        },
+        {
+          "content": "保存当前 CST 工程（不包含结果）；断连时恢复后重试，并在回复中带出演练号。",
+          "tool_name": "save_cst_project",
+          "tool_arguments": {
+            "include_results": false
+          },
+          "planner_constraints": [
+            "禁止求解"
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": false,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": [
+          {
+            "method": "save_project",
+            "responses": [
+              {
+                "success": false,
+                "message": "CST is not connected"
+              },
+              {
+                "success": true,
+                "project_saved": true,
+                "message": "fake project saved after reconnect (REC-CTX-4)"
+              }
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "allowed_tools": [
+          "check_cst_status",
+          "save_cst_project"
+        ],
+        "required_tools_all": [
+          "save_cst_project"
+        ],
+        "forbidden_tools": [
+          "run_solver",
+          "execute_vba_script"
+        ],
+        "valid_tool_sequences": [
+          [
+            "save_cst_project"
+          ],
+          [
+            "check_cst_status",
+            "save_cst_project"
+          ]
+        ],
+        "required_grounding_facts": [
+          "REC-CTX-4",
+          {
+            "label": "response reports successful reconnect and project save",
+            "all_of": [
+              [
+                "重连",
+                "恢复连接",
+                "连接恢复",
+                "断连恢复",
+                "reconnect"
+              ],
+              [
+                "保存成功",
+                "工程已保存",
+                "成功保存",
+                "project saved",
+                "saved after reconnect"
+              ]
+            ]
+          }
+        ],
+        "expected_recovery": "reconnect_cst",
+        "expected_tool_arguments": [
+          {
+            "tool_name": "save_cst_project",
+            "arguments": {
+              "include_results": false
+            }
+          }
+        ],
+        "max_tool_calls": 2
+      },
+      "tags": [
+        "multi_turn",
+        "failure_recovery",
+        "context_retention"
+      ]
+    },
+    {
+      "case_id": "solver_workflow_01",
+      "category": "tool_selection",
+      "scenario_family": "multi_tool_solver_workflow",
+      "design_family": "existing_project_solver",
+      "failure_family": "none",
+      "seed": 61037,
+      "turns": [
+        {
+          "content": "在当前工程执行完整且明确的求解流程：创建 PEC 长方体 block_1，component=eval，范围 x/y=-5..5 mm、z=0..1 mm；创建离散端口 port_number=1，P1=(0,0,0)、P2=(0,0,1)、50 Ohm；设置频率 8.0..9.0 GHz；创建 farfield monitor ff_1 @ 8.5 GHz；最后运行求解器并报告真实工具结果。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "tool_calls": [
+            {
+              "name": "create_brick",
+              "arguments": {
+                "name": "block_1",
+                "component": "eval",
+                "material": "PEC",
+                "xmin": "-5",
+                "xmax": "5",
+                "ymin": "-5",
+                "ymax": "5",
+                "zmin": "0",
+                "zmax": "1"
+              }
+            },
+            {
+              "name": "create_discrete_port",
+              "arguments": {
+                "port_number": 1,
+                "p1_x": "0",
+                "p1_y": "0",
+                "p1_z": "0",
+                "p2_x": "0",
+                "p2_y": "0",
+                "p2_z": "1",
+                "impedance": "50"
+              }
+            },
+            {
+              "name": "set_frequency_range",
+              "arguments": {
+                "fmin": "8.0",
+                "fmax": "9.0"
+              }
+            },
+            {
+              "name": "create_farfield_monitor",
+              "arguments": {
+                "name": "ff_1",
+                "frequency": "8.5",
+                "use_subvolume": false
+              }
+            },
+            {
+              "name": "run_solver",
+              "arguments": {}
+            }
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "create_brick",
+          "create_discrete_port",
+          "set_frequency_range",
+          "create_farfield_monitor",
+          "run_solver"
+        ],
+        "required_tools_all": [
+          "create_brick",
+          "create_discrete_port",
+          "set_frequency_range",
+          "create_farfield_monitor",
+          "run_solver"
+        ],
+        "forbidden_tools": [],
+        "valid_tool_sequences": [
+          [
+            "create_brick",
+            "create_discrete_port",
+            "set_frequency_range",
+            "create_farfield_monitor",
+            "run_solver"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "求解完成",
+            "求解器已完成",
+            "fake solver completed",
+            "solver completed"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [
+          {
+            "tool_name": "create_brick",
+            "arguments": {
+              "name": "block_1",
+              "component": "eval",
+              "material": "PEC",
+              "xmin": "-5",
+              "xmax": "5",
+              "ymin": "-5",
+              "ymax": "5",
+              "zmin": "0",
+              "zmax": "1"
+            }
+          },
+          {
+            "tool_name": "create_discrete_port",
+            "arguments": {
+              "port_number": 1,
+              "p1_x": "0",
+              "p1_y": "0",
+              "p1_z": "0",
+              "p2_x": "0",
+              "p2_y": "0",
+              "p2_z": "1",
+              "impedance": "50"
+            }
+          },
+          {
+            "tool_name": "set_frequency_range",
+            "arguments": {
+              "fmin": "8.0",
+              "fmax": "9.0"
+            }
+          },
+          {
+            "tool_name": "create_farfield_monitor",
+            "arguments": {
+              "name": "ff_1",
+              "frequency": "8.5",
+              "use_subvolume": false
+            }
+          }
+        ],
+        "max_tool_calls": 5
+      },
+      "tags": [
+        "multi_tool",
+        "solver_preflight",
+        "argument_oracle"
+      ]
+    },
+    {
+      "case_id": "solver_workflow_02",
+      "category": "tool_selection",
+      "scenario_family": "multi_tool_solver_workflow",
+      "design_family": "existing_project_solver",
+      "failure_family": "none",
+      "seed": 61038,
+      "turns": [
+        {
+          "content": "在当前工程执行完整且明确的求解流程：创建 PEC 长方体 block_2，component=eval，范围 x/y=-5..5 mm、z=0..1 mm；创建离散端口 port_number=2，P1=(0,0,0)、P2=(0,0,1)、50 Ohm；设置频率 8.5..9.5 GHz；创建 farfield monitor ff_2 @ 9.0 GHz；最后运行求解器并报告真实工具结果。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "tool_calls": [
+            {
+              "name": "create_brick",
+              "arguments": {
+                "name": "block_2",
+                "component": "eval",
+                "material": "PEC",
+                "xmin": "-5",
+                "xmax": "5",
+                "ymin": "-5",
+                "ymax": "5",
+                "zmin": "0",
+                "zmax": "1"
+              }
+            },
+            {
+              "name": "create_discrete_port",
+              "arguments": {
+                "port_number": 2,
+                "p1_x": "0",
+                "p1_y": "0",
+                "p1_z": "0",
+                "p2_x": "0",
+                "p2_y": "0",
+                "p2_z": "1",
+                "impedance": "50"
+              }
+            },
+            {
+              "name": "set_frequency_range",
+              "arguments": {
+                "fmin": "8.5",
+                "fmax": "9.5"
+              }
+            },
+            {
+              "name": "create_farfield_monitor",
+              "arguments": {
+                "name": "ff_2",
+                "frequency": "9.0",
+                "use_subvolume": false
+              }
+            },
+            {
+              "name": "run_solver",
+              "arguments": {}
+            }
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "create_brick",
+          "create_discrete_port",
+          "set_frequency_range",
+          "create_farfield_monitor",
+          "run_solver"
+        ],
+        "required_tools_all": [
+          "create_brick",
+          "create_discrete_port",
+          "set_frequency_range",
+          "create_farfield_monitor",
+          "run_solver"
+        ],
+        "forbidden_tools": [],
+        "valid_tool_sequences": [
+          [
+            "create_brick",
+            "create_discrete_port",
+            "set_frequency_range",
+            "create_farfield_monitor",
+            "run_solver"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "求解完成",
+            "求解器已完成",
+            "fake solver completed",
+            "solver completed"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [
+          {
+            "tool_name": "create_brick",
+            "arguments": {
+              "name": "block_2",
+              "component": "eval",
+              "material": "PEC",
+              "xmin": "-5",
+              "xmax": "5",
+              "ymin": "-5",
+              "ymax": "5",
+              "zmin": "0",
+              "zmax": "1"
+            }
+          },
+          {
+            "tool_name": "create_discrete_port",
+            "arguments": {
+              "port_number": 2,
+              "p1_x": "0",
+              "p1_y": "0",
+              "p1_z": "0",
+              "p2_x": "0",
+              "p2_y": "0",
+              "p2_z": "1",
+              "impedance": "50"
+            }
+          },
+          {
+            "tool_name": "set_frequency_range",
+            "arguments": {
+              "fmin": "8.5",
+              "fmax": "9.5"
+            }
+          },
+          {
+            "tool_name": "create_farfield_monitor",
+            "arguments": {
+              "name": "ff_2",
+              "frequency": "9.0",
+              "use_subvolume": false
+            }
+          }
+        ],
+        "max_tool_calls": 5
+      },
+      "tags": [
+        "multi_tool",
+        "solver_preflight",
+        "argument_oracle"
+      ]
+    },
+    {
+      "case_id": "solver_workflow_03",
+      "category": "tool_selection",
+      "scenario_family": "multi_tool_solver_workflow",
+      "design_family": "existing_project_solver",
+      "failure_family": "none",
+      "seed": 61039,
+      "turns": [
+        {
+          "content": "在当前工程执行完整且明确的求解流程：创建 PEC 长方体 block_3，component=eval，范围 x/y=-5..5 mm、z=0..1 mm；创建离散端口 port_number=3，P1=(0,0,0)、P2=(0,0,1)、50 Ohm；设置频率 9.0..10.0 GHz；创建 farfield monitor ff_3 @ 9.5 GHz；最后运行求解器并报告真实工具结果。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "tool_calls": [
+            {
+              "name": "create_brick",
+              "arguments": {
+                "name": "block_3",
+                "component": "eval",
+                "material": "PEC",
+                "xmin": "-5",
+                "xmax": "5",
+                "ymin": "-5",
+                "ymax": "5",
+                "zmin": "0",
+                "zmax": "1"
+              }
+            },
+            {
+              "name": "create_discrete_port",
+              "arguments": {
+                "port_number": 3,
+                "p1_x": "0",
+                "p1_y": "0",
+                "p1_z": "0",
+                "p2_x": "0",
+                "p2_y": "0",
+                "p2_z": "1",
+                "impedance": "50"
+              }
+            },
+            {
+              "name": "set_frequency_range",
+              "arguments": {
+                "fmin": "9.0",
+                "fmax": "10.0"
+              }
+            },
+            {
+              "name": "create_farfield_monitor",
+              "arguments": {
+                "name": "ff_3",
+                "frequency": "9.5",
+                "use_subvolume": false
+              }
+            },
+            {
+              "name": "run_solver",
+              "arguments": {}
+            }
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "create_brick",
+          "create_discrete_port",
+          "set_frequency_range",
+          "create_farfield_monitor",
+          "run_solver"
+        ],
+        "required_tools_all": [
+          "create_brick",
+          "create_discrete_port",
+          "set_frequency_range",
+          "create_farfield_monitor",
+          "run_solver"
+        ],
+        "forbidden_tools": [],
+        "valid_tool_sequences": [
+          [
+            "create_brick",
+            "create_discrete_port",
+            "set_frequency_range",
+            "create_farfield_monitor",
+            "run_solver"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "求解完成",
+            "求解器已完成",
+            "fake solver completed",
+            "solver completed"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [
+          {
+            "tool_name": "create_brick",
+            "arguments": {
+              "name": "block_3",
+              "component": "eval",
+              "material": "PEC",
+              "xmin": "-5",
+              "xmax": "5",
+              "ymin": "-5",
+              "ymax": "5",
+              "zmin": "0",
+              "zmax": "1"
+            }
+          },
+          {
+            "tool_name": "create_discrete_port",
+            "arguments": {
+              "port_number": 3,
+              "p1_x": "0",
+              "p1_y": "0",
+              "p1_z": "0",
+              "p2_x": "0",
+              "p2_y": "0",
+              "p2_z": "1",
+              "impedance": "50"
+            }
+          },
+          {
+            "tool_name": "set_frequency_range",
+            "arguments": {
+              "fmin": "9.0",
+              "fmax": "10.0"
+            }
+          },
+          {
+            "tool_name": "create_farfield_monitor",
+            "arguments": {
+              "name": "ff_3",
+              "frequency": "9.5",
+              "use_subvolume": false
+            }
+          }
+        ],
+        "max_tool_calls": 5
+      },
+      "tags": [
+        "multi_tool",
+        "solver_preflight",
+        "argument_oracle"
+      ]
+    },
+    {
+      "case_id": "solver_workflow_04",
+      "category": "tool_selection",
+      "scenario_family": "multi_tool_solver_workflow",
+      "design_family": "existing_project_solver",
+      "failure_family": "none",
+      "seed": 61040,
+      "turns": [
+        {
+          "content": "在当前工程执行完整且明确的求解流程：创建 PEC 长方体 block_4，component=eval，范围 x/y=-5..5 mm、z=0..1 mm；创建离散端口 port_number=4，P1=(0,0,0)、P2=(0,0,1)、50 Ohm；设置频率 9.5..10.5 GHz；创建 farfield monitor ff_4 @ 10.0 GHz；最后运行求解器并报告真实工具结果。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "tool_calls": [
+            {
+              "name": "create_brick",
+              "arguments": {
+                "name": "block_4",
+                "component": "eval",
+                "material": "PEC",
+                "xmin": "-5",
+                "xmax": "5",
+                "ymin": "-5",
+                "ymax": "5",
+                "zmin": "0",
+                "zmax": "1"
+              }
+            },
+            {
+              "name": "create_discrete_port",
+              "arguments": {
+                "port_number": 4,
+                "p1_x": "0",
+                "p1_y": "0",
+                "p1_z": "0",
+                "p2_x": "0",
+                "p2_y": "0",
+                "p2_z": "1",
+                "impedance": "50"
+              }
+            },
+            {
+              "name": "set_frequency_range",
+              "arguments": {
+                "fmin": "9.5",
+                "fmax": "10.5"
+              }
+            },
+            {
+              "name": "create_farfield_monitor",
+              "arguments": {
+                "name": "ff_4",
+                "frequency": "10.0",
+                "use_subvolume": false
+              }
+            },
+            {
+              "name": "run_solver",
+              "arguments": {}
+            }
+          ]
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": [
+          "create_brick",
+          "create_discrete_port",
+          "set_frequency_range",
+          "create_farfield_monitor",
+          "run_solver"
+        ],
+        "required_tools_all": [
+          "create_brick",
+          "create_discrete_port",
+          "set_frequency_range",
+          "create_farfield_monitor",
+          "run_solver"
+        ],
+        "forbidden_tools": [],
+        "valid_tool_sequences": [
+          [
+            "create_brick",
+            "create_discrete_port",
+            "set_frequency_range",
+            "create_farfield_monitor",
+            "run_solver"
+          ]
+        ],
+        "required_grounding_facts": [
+          [
+            "求解完成",
+            "求解器已完成",
+            "fake solver completed",
+            "solver completed"
+          ]
+        ],
+        "expected_recovery": null,
+        "expected_tool_arguments": [
+          {
+            "tool_name": "create_brick",
+            "arguments": {
+              "name": "block_4",
+              "component": "eval",
+              "material": "PEC",
+              "xmin": "-5",
+              "xmax": "5",
+              "ymin": "-5",
+              "ymax": "5",
+              "zmin": "0",
+              "zmax": "1"
+            }
+          },
+          {
+            "tool_name": "create_discrete_port",
+            "arguments": {
+              "port_number": 4,
+              "p1_x": "0",
+              "p1_y": "0",
+              "p1_z": "0",
+              "p2_x": "0",
+              "p2_y": "0",
+              "p2_z": "1",
+              "impedance": "50"
+            }
+          },
+          {
+            "tool_name": "set_frequency_range",
+            "arguments": {
+              "fmin": "9.5",
+              "fmax": "10.5"
+            }
+          },
+          {
+            "tool_name": "create_farfield_monitor",
+            "arguments": {
+              "name": "ff_4",
+              "frequency": "10.0",
+              "use_subvolume": false
+            }
+          }
+        ],
+        "max_tool_calls": 5
+      },
+      "tags": [
+        "multi_tool",
+        "solver_preflight",
+        "argument_oracle"
+      ]
+    }
+  ]
+}

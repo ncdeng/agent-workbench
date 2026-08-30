@@ -1,0 +1,84 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cst-agent-workbench"
+version = "0.1.0"
+description = "Agent workbench for CST antenna modeling, simulation, and optimization"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "CST Agent Workbench contributors" }]
+dependencies = [
+    "openai>=1.0",
+    "anthropic>=0.69",
+    "pandas>=1.5",
+    "numpy>=1.24",
+    # langgraph / langchain-core removed per ADR-001: the graph layer was withdrawn
+    # and no source file imports them.
+    "typing_extensions>=4.8",
+    "pywin32; platform_system == 'Windows'",
+]
+
+[project.optional-dependencies]
+report = [
+    "matplotlib>=3.8",
+]
+web = [
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+]
+rag = [
+    "chromadb>=0.4",
+    "PyMuPDF>=1.24",
+    "sentence-transformers>=2.2",
+]
+test = [
+    "pytest>=8.0",
+    "jsonschema>=4.20",
+    "matplotlib>=3.8",
+    "chromadb>=0.4",
+    "PyMuPDF>=1.24",
+    "sentence-transformers>=2.2",
+]
+dev = [
+    "pytest>=8.0",
+    "jsonschema>=4.20",
+    "matplotlib>=3.8",
+    "chromadb>=0.4",
+    "PyMuPDF>=1.24",
+    "sentence-transformers>=2.2",
+    "ruff>=0.4",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cst_agent_workbench*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--basetemp=.pytest-tmp"
+markers = [
+    "cst: opt-in tests that require CST Studio Suite, Windows COM, or live solver access",
+    "slow: slower benchmark or integration tests",
+    "frontend: frontend-related tests invoked from Python",
+    "real_embeddings: opt out of the fake-embedding fixture and load the real local model",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["F"]  # only critical errors (undefined names, unused imports that break things)
+ignore = [
+    "F821",  # undefined names — some are in eval/exec contexts
+    "F841",  # unused variables — some are intentional placeholders
+]
+
+[tool.ruff.lint.per-file-ignores]
+# __init__.py 的导入是显式 re-export
+"**/__init__.py" = ["F401"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["cst_agent_workbench"]

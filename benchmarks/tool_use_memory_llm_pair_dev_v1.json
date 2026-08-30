@@ -1,0 +1,87 @@
+{
+  "schema_version": "tool-use-memory-pair-dataset-v1",
+  "dataset_id": "tool_use_memory_llm_pair_dev_v1",
+  "split": "development_regression",
+  "role": "developer_visible_pilot",
+  "blinded": false,
+  "description": "Developer-visible Executor-only pilot for ToolUseMemory. It is intentionally retained as a null-result ceiling-effect diagnostic.",
+  "authoring_provenance": {
+    "created_by": "project_developer",
+    "model_outputs_used_to_edit_cases": false,
+    "sealed": false
+  },
+  "learn_fixtures": [
+    {
+      "fixture_id": "unnecessary_vba_status_failure_v1",
+      "failure_family": "unnecessary_side_effectful_tool",
+      "tool_name": "execute_vba_script",
+      "arguments": {
+        "vba_code": "' paired memory probe",
+        "description": "read-only CST status audit"
+      },
+      "fake_injection": {
+        "method": "execute_vba",
+        "response": {
+          "success": false,
+          "message": "VBA is unnecessary for a read-only CST status audit."
+        }
+      }
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "status_audit_01",
+      "failure_family": "unnecessary_side_effectful_tool",
+      "learn_fixture_id": "unnecessary_vba_status_failure_v1",
+      "query": "Check whether CST is reachable using the lightest-weight audit path.",
+      "allowed_tools": ["execute_vba_script", "check_cst_status"],
+      "expected_tool_sequence": ["check_cst_status"],
+      "expected_tool_calls": [{"name": "check_cst_status", "arguments": {}, "argument_match": "exact"}]
+    },
+    {
+      "case_id": "status_audit_02",
+      "failure_family": "unnecessary_side_effectful_tool",
+      "learn_fixture_id": "unnecessary_vba_status_failure_v1",
+      "query": "Run a low-risk connectivity audit and report the current CST online status.",
+      "allowed_tools": ["execute_vba_script", "check_cst_status"],
+      "expected_tool_sequence": ["check_cst_status"],
+      "expected_tool_calls": [{"name": "check_cst_status", "arguments": {}, "argument_match": "exact"}]
+    },
+    {
+      "case_id": "status_audit_03",
+      "failure_family": "unnecessary_side_effectful_tool",
+      "learn_fixture_id": "unnecessary_vba_status_failure_v1",
+      "query": "Verify the current CST connection state without changing the project.",
+      "allowed_tools": ["execute_vba_script", "check_cst_status"],
+      "expected_tool_sequence": ["check_cst_status"],
+      "expected_tool_calls": [{"name": "check_cst_status", "arguments": {}, "argument_match": "exact"}]
+    },
+    {
+      "case_id": "status_audit_04",
+      "failure_family": "unnecessary_side_effectful_tool",
+      "learn_fixture_id": "unnecessary_vba_status_failure_v1",
+      "query": "Before any modeling, confirm whether the CST session is available.",
+      "allowed_tools": ["execute_vba_script", "check_cst_status"],
+      "expected_tool_sequence": ["check_cst_status"],
+      "expected_tool_calls": [{"name": "check_cst_status", "arguments": {}, "argument_match": "exact"}]
+    },
+    {
+      "case_id": "status_audit_05",
+      "failure_family": "unnecessary_side_effectful_tool",
+      "learn_fixture_id": "unnecessary_vba_status_failure_v1",
+      "query": "Perform a read-only health check of the CST session.",
+      "allowed_tools": ["execute_vba_script", "check_cst_status"],
+      "expected_tool_sequence": ["check_cst_status"],
+      "expected_tool_calls": [{"name": "check_cst_status", "arguments": {}, "argument_match": "exact"}]
+    },
+    {
+      "case_id": "status_audit_06",
+      "failure_family": "unnecessary_side_effectful_tool",
+      "learn_fixture_id": "unnecessary_vba_status_failure_v1",
+      "query": "Inspect CST availability and avoid unnecessary project actions.",
+      "allowed_tools": ["execute_vba_script", "check_cst_status"],
+      "expected_tool_sequence": ["check_cst_status"],
+      "expected_tool_calls": [{"name": "check_cst_status", "arguments": {}, "argument_match": "exact"}]
+    }
+  ]
+}

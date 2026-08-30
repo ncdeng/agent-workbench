@@ -1,0 +1,1059 @@
+{
+  "schema_version": "tool-use-memory-deterministic-semantic-revalidation-v1",
+  "generated_at": "2026-08-10T11:31:33.752123+00:00",
+  "evaluation_role": "post_hoc_deterministic_revalidation",
+  "source": {
+    "report_sha256": "5e27a80f17f9a110227cbc309422e840597605761310acbf909cf7acf757a8a8",
+    "run_id": "b06d4033302e",
+    "run_fingerprint": "e3131290a7ada6d882ac034ee90ff97bb8ab2b284e9ceafa5f51ddc97b1d6d35",
+    "source_report_schema_version": "tool-use-memory-llm-pair-v2"
+  },
+  "dataset": {
+    "dataset_id": "tool_use_memory_llm_pair_dev_v2_multifamily",
+    "dataset_sha256": "5ac1bb0c25e361116d9cff789f6aa12ded76a11f8d928b4af8304e312d6ad681",
+    "case_count": 8,
+    "case_ids": [
+      "dedicated_patch_01",
+      "dedicated_patch_02",
+      "parameter_precondition_01",
+      "parameter_precondition_02",
+      "material_precondition_01",
+      "material_precondition_02",
+      "solver_preflight_01",
+      "solver_preflight_02"
+    ],
+    "split": "development_regression",
+    "role": "developer_visible_multifamily_development",
+    "blinded": false,
+    "manifest_sha256": "b0ab87a8ae8cb4cd2612c6613b0382857523bc098d91750dab3e20fd3057fa07",
+    "manifest_verified": true
+  },
+  "grader": {
+    "version": "tool-use-memory-deterministic-semantic-v1",
+    "dataset_sha256": "5ac1bb0c25e361116d9cff789f6aa12ded76a11f8d928b4af8304e312d6ad681",
+    "manifest_sha256": "b0ab87a8ae8cb4cd2612c6613b0382857523bc098d91750dab3e20fd3057fa07",
+    "harmless_extra_tools": [
+      "check_cst_status"
+    ],
+    "contract_sha256": "b73252626d975d50d66d871af908e7c947ec9b59c9b145320d3e866733c35c6a",
+    "grader_sha256": "95f36d9e4f074db87f82abb10943331d71f3360e623c04c0f91a155c4bcd1b5f",
+    "revalidator_sha256": "27017a5565ceab5062e1b29d18babf23251894a441108526bfc5a71ae5a2b2dd"
+  },
+  "denominators": {
+    "source_samples": 16,
+    "valid_semantic_scores": 16,
+    "invalid_semantic_scores": 0,
+    "unique_cases": 8
+  },
+  "arms": {
+    "no_memory": {
+      "samples": 8,
+      "valid_scores": 8,
+      "semantic_task_success": {
+        "successes": 7,
+        "trials": 8,
+        "rate": 0.875,
+        "unit": "correlated_provider_call",
+        "interpretation": "Descriptive only; repeated calls of one case are not independent units."
+      },
+      "final_response_outcome_consistency_rate": 0.875,
+      "exact_sequence_false_negatives": 0,
+      "unsupported_success_claims": 1
+    },
+    "learned": {
+      "samples": 8,
+      "valid_scores": 8,
+      "semantic_task_success": {
+        "successes": 8,
+        "trials": 8,
+        "rate": 1.0,
+        "unit": "correlated_provider_call",
+        "interpretation": "Descriptive only; repeated calls of one case are not independent units."
+      },
+      "final_response_outcome_consistency_rate": 1.0,
+      "exact_sequence_false_negatives": 1,
+      "unsupported_success_claims": 0
+    }
+  },
+  "case_majority": {
+    "endpoint": "majority",
+    "unit": "independent_case",
+    "valid": true,
+    "no_memory": {
+      "successes": 7,
+      "trials": 8,
+      "rate": 0.875,
+      "low": 0.5291118177871464,
+      "high": 0.9775825085499433,
+      "method": "wilson_95",
+      "unit": "independent_case"
+    },
+    "learned": {
+      "successes": 8,
+      "trials": 8,
+      "rate": 1.0,
+      "low": 0.6755924351161198,
+      "high": 1.0,
+      "method": "wilson_95",
+      "unit": "independent_case"
+    },
+    "rate_delta": 0.125,
+    "paired_test": {
+      "baseline_label": "no_memory",
+      "treatment_label": "learned",
+      "pair_count": 8,
+      "treatment_wins": 1,
+      "treatment_losses": 0,
+      "ties": 7,
+      "discordant_pairs": 1,
+      "p_value": 1.0,
+      "method": "exact_mcnemar_binomial_two_sided",
+      "unit": "independent_case"
+    },
+    "per_case": [
+      {
+        "case_id": "dedicated_patch_01",
+        "no_memory_success": true,
+        "learned_success": true,
+        "no_memory_sample_successes": 1,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      },
+      {
+        "case_id": "dedicated_patch_02",
+        "no_memory_success": true,
+        "learned_success": true,
+        "no_memory_sample_successes": 1,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      },
+      {
+        "case_id": "material_precondition_01",
+        "no_memory_success": true,
+        "learned_success": true,
+        "no_memory_sample_successes": 1,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      },
+      {
+        "case_id": "material_precondition_02",
+        "no_memory_success": true,
+        "learned_success": true,
+        "no_memory_sample_successes": 1,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      },
+      {
+        "case_id": "parameter_precondition_01",
+        "no_memory_success": true,
+        "learned_success": true,
+        "no_memory_sample_successes": 1,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      },
+      {
+        "case_id": "parameter_precondition_02",
+        "no_memory_success": true,
+        "learned_success": true,
+        "no_memory_sample_successes": 1,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      },
+      {
+        "case_id": "solver_preflight_01",
+        "no_memory_success": false,
+        "learned_success": true,
+        "no_memory_sample_successes": 0,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      },
+      {
+        "case_id": "solver_preflight_02",
+        "no_memory_success": true,
+        "learned_success": true,
+        "no_memory_sample_successes": 1,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      }
+    ]
+  },
+  "case_all_repeats": {
+    "endpoint": "all_repeats",
+    "unit": "independent_case",
+    "valid": true,
+    "no_memory": {
+      "successes": 7,
+      "trials": 8,
+      "rate": 0.875,
+      "low": 0.5291118177871464,
+      "high": 0.9775825085499433,
+      "method": "wilson_95",
+      "unit": "independent_case"
+    },
+    "learned": {
+      "successes": 8,
+      "trials": 8,
+      "rate": 1.0,
+      "low": 0.6755924351161198,
+      "high": 1.0,
+      "method": "wilson_95",
+      "unit": "independent_case"
+    },
+    "rate_delta": 0.125,
+    "paired_test": {
+      "baseline_label": "no_memory",
+      "treatment_label": "learned",
+      "pair_count": 8,
+      "treatment_wins": 1,
+      "treatment_losses": 0,
+      "ties": 7,
+      "discordant_pairs": 1,
+      "p_value": 1.0,
+      "method": "exact_mcnemar_binomial_two_sided",
+      "unit": "independent_case"
+    },
+    "per_case": [
+      {
+        "case_id": "dedicated_patch_01",
+        "no_memory_success": true,
+        "learned_success": true,
+        "no_memory_sample_successes": 1,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      },
+      {
+        "case_id": "dedicated_patch_02",
+        "no_memory_success": true,
+        "learned_success": true,
+        "no_memory_sample_successes": 1,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      },
+      {
+        "case_id": "material_precondition_01",
+        "no_memory_success": true,
+        "learned_success": true,
+        "no_memory_sample_successes": 1,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      },
+      {
+        "case_id": "material_precondition_02",
+        "no_memory_success": true,
+        "learned_success": true,
+        "no_memory_sample_successes": 1,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      },
+      {
+        "case_id": "parameter_precondition_01",
+        "no_memory_success": true,
+        "learned_success": true,
+        "no_memory_sample_successes": 1,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      },
+      {
+        "case_id": "parameter_precondition_02",
+        "no_memory_success": true,
+        "learned_success": true,
+        "no_memory_sample_successes": 1,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      },
+      {
+        "case_id": "solver_preflight_01",
+        "no_memory_success": false,
+        "learned_success": true,
+        "no_memory_sample_successes": 0,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      },
+      {
+        "case_id": "solver_preflight_02",
+        "no_memory_success": true,
+        "learned_success": true,
+        "no_memory_sample_successes": 1,
+        "learned_sample_successes": 1,
+        "repeats_per_arm": 1
+      }
+    ]
+  },
+  "machine_exact_vs_deterministic_semantic": {
+    "true_positive": 14,
+    "false_positive": 0,
+    "false_negative": 1,
+    "true_negative": 1,
+    "agreement_rate": 0.9375,
+    "precision": 1.0,
+    "recall": 0.9333333333333333,
+    "f1": 0.9655172413793104,
+    "denominator": 16
+  },
+  "samples": [
+    {
+      "sample_id": "parameter_precondition_01::repeat_01::no_memory",
+      "case_id": "parameter_precondition_01",
+      "failure_family": "parameter_precondition",
+      "repeat_index": 1,
+      "arm": "no_memory",
+      "final_response_sha256": "3efa72b5b5080c6285e1cd53cabbd1caf3c95ca5326ce80f3cee0cc5becea8f6",
+      "machine_exact_task_success": true,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "store_parameter",
+            "actual_name": "store_parameter",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          },
+          {
+            "required_index": 1,
+            "actual_index": 1,
+            "expected_name": "create_brick",
+            "actual_name": "create_brick",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": false
+      }
+    },
+    {
+      "sample_id": "parameter_precondition_01::repeat_01::learned",
+      "case_id": "parameter_precondition_01",
+      "failure_family": "parameter_precondition",
+      "repeat_index": 1,
+      "arm": "learned",
+      "final_response_sha256": "f8e12fbe5f0d2be059691032cb7a34a639323f8abdf3eb07c9dbd91dec7303af",
+      "machine_exact_task_success": true,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "store_parameter",
+            "actual_name": "store_parameter",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          },
+          {
+            "required_index": 1,
+            "actual_index": 1,
+            "expected_name": "create_brick",
+            "actual_name": "create_brick",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": false
+      }
+    },
+    {
+      "sample_id": "solver_preflight_02::repeat_01::learned",
+      "case_id": "solver_preflight_02",
+      "failure_family": "solver_preflight_excitation",
+      "repeat_index": 1,
+      "arm": "learned",
+      "final_response_sha256": "b0122e31be39a8f7dd54129a92f223b94a8b29087edb76439a0b19a4cca48b7c",
+      "machine_exact_task_success": true,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "create_discrete_port",
+            "actual_name": "create_discrete_port",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          },
+          {
+            "required_index": 1,
+            "actual_index": 1,
+            "expected_name": "run_solver",
+            "actual_name": "run_solver",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": false
+      }
+    },
+    {
+      "sample_id": "solver_preflight_02::repeat_01::no_memory",
+      "case_id": "solver_preflight_02",
+      "failure_family": "solver_preflight_excitation",
+      "repeat_index": 1,
+      "arm": "no_memory",
+      "final_response_sha256": "f02c2780bf1adb757007409cf35abd8ddf35dbd724c9727a58860c91bac256be",
+      "machine_exact_task_success": true,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "create_discrete_port",
+            "actual_name": "create_discrete_port",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          },
+          {
+            "required_index": 1,
+            "actual_index": 1,
+            "expected_name": "run_solver",
+            "actual_name": "run_solver",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": false
+      }
+    },
+    {
+      "sample_id": "solver_preflight_01::repeat_01::no_memory",
+      "case_id": "solver_preflight_01",
+      "failure_family": "solver_preflight_excitation",
+      "repeat_index": 1,
+      "arm": "no_memory",
+      "final_response_sha256": "33fcf335c7d5cbbde9914e6455364fb293b29db648432dc9f7f61dab322c3b45",
+      "machine_exact_task_success": false,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": false,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "create_discrete_port",
+            "actual_name": "create_discrete_port",
+            "argument_match": "exact",
+            "arguments_match": false,
+            "tool_success": true,
+            "passed": false
+          },
+          {
+            "required_index": 1,
+            "actual_index": 1,
+            "expected_name": "run_solver",
+            "actual_name": "run_solver",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": false,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": false,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": true
+      }
+    },
+    {
+      "sample_id": "solver_preflight_01::repeat_01::learned",
+      "case_id": "solver_preflight_01",
+      "failure_family": "solver_preflight_excitation",
+      "repeat_index": 1,
+      "arm": "learned",
+      "final_response_sha256": "7eb833b7b1508a0ea0e2946f9fdaf72eddbf67957a4d79fee6aa3c75b770c1d4",
+      "machine_exact_task_success": false,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "create_discrete_port",
+            "actual_name": "create_discrete_port",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          },
+          {
+            "required_index": 1,
+            "actual_index": 2,
+            "expected_name": "run_solver",
+            "actual_name": "run_solver",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [
+          {
+            "actual_index": 1,
+            "name": "check_cst_status",
+            "arguments": {},
+            "tool_success": true
+          }
+        ],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": true,
+        "unsupported_success_claim": false
+      }
+    },
+    {
+      "sample_id": "material_precondition_01::repeat_01::learned",
+      "case_id": "material_precondition_01",
+      "failure_family": "material_precondition",
+      "repeat_index": 1,
+      "arm": "learned",
+      "final_response_sha256": "0b8373c97b715f6f35eb2c1bd62eeced50c43240615a958c18dd15022409500d",
+      "machine_exact_task_success": true,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "create_material",
+            "actual_name": "create_material",
+            "argument_match": "subset",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          },
+          {
+            "required_index": 1,
+            "actual_index": 1,
+            "expected_name": "create_brick",
+            "actual_name": "create_brick",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": false
+      }
+    },
+    {
+      "sample_id": "material_precondition_01::repeat_01::no_memory",
+      "case_id": "material_precondition_01",
+      "failure_family": "material_precondition",
+      "repeat_index": 1,
+      "arm": "no_memory",
+      "final_response_sha256": "594d9f5926c6bd3831165e9b5a578f285f0812b7432fca456c35bb84172fe7c7",
+      "machine_exact_task_success": true,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "create_material",
+            "actual_name": "create_material",
+            "argument_match": "subset",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          },
+          {
+            "required_index": 1,
+            "actual_index": 1,
+            "expected_name": "create_brick",
+            "actual_name": "create_brick",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": false
+      }
+    },
+    {
+      "sample_id": "dedicated_patch_01::repeat_01::no_memory",
+      "case_id": "dedicated_patch_01",
+      "failure_family": "dedicated_backend_over_generic_vba",
+      "repeat_index": 1,
+      "arm": "no_memory",
+      "final_response_sha256": "d4b63c889764637fed39b6d28682f272cf980132c50ac8822fc8373e7daa2a10",
+      "machine_exact_task_success": true,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "build_rectangular_patch_fast",
+            "actual_name": "build_rectangular_patch_fast",
+            "argument_match": "subset",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": false
+      }
+    },
+    {
+      "sample_id": "dedicated_patch_01::repeat_01::learned",
+      "case_id": "dedicated_patch_01",
+      "failure_family": "dedicated_backend_over_generic_vba",
+      "repeat_index": 1,
+      "arm": "learned",
+      "final_response_sha256": "b89d564931f5e779a2e38f5f084cbfea767eb380d1428d9e9940979688830e2f",
+      "machine_exact_task_success": true,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "build_rectangular_patch_fast",
+            "actual_name": "build_rectangular_patch_fast",
+            "argument_match": "subset",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": false
+      }
+    },
+    {
+      "sample_id": "material_precondition_02::repeat_01::learned",
+      "case_id": "material_precondition_02",
+      "failure_family": "material_precondition",
+      "repeat_index": 1,
+      "arm": "learned",
+      "final_response_sha256": "41f36863b3ccae980b834b68ffbad40f4cf3d14ce6ddbf24077a5199914249e4",
+      "machine_exact_task_success": true,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "create_material",
+            "actual_name": "create_material",
+            "argument_match": "subset",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          },
+          {
+            "required_index": 1,
+            "actual_index": 1,
+            "expected_name": "create_brick",
+            "actual_name": "create_brick",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": false
+      }
+    },
+    {
+      "sample_id": "material_precondition_02::repeat_01::no_memory",
+      "case_id": "material_precondition_02",
+      "failure_family": "material_precondition",
+      "repeat_index": 1,
+      "arm": "no_memory",
+      "final_response_sha256": "76c79a9bb277708c5e3ea40b3e2e5618a0415f44198cd0bfbfc20bad98623f87",
+      "machine_exact_task_success": true,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "create_material",
+            "actual_name": "create_material",
+            "argument_match": "subset",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          },
+          {
+            "required_index": 1,
+            "actual_index": 1,
+            "expected_name": "create_brick",
+            "actual_name": "create_brick",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": false
+      }
+    },
+    {
+      "sample_id": "dedicated_patch_02::repeat_01::no_memory",
+      "case_id": "dedicated_patch_02",
+      "failure_family": "dedicated_backend_over_generic_vba",
+      "repeat_index": 1,
+      "arm": "no_memory",
+      "final_response_sha256": "9bf0eac24b57a036c367e252e4f969b02cf329fc5ded340ca2f5627c49ded433",
+      "machine_exact_task_success": true,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "build_rectangular_patch_fast",
+            "actual_name": "build_rectangular_patch_fast",
+            "argument_match": "subset",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": false
+      }
+    },
+    {
+      "sample_id": "dedicated_patch_02::repeat_01::learned",
+      "case_id": "dedicated_patch_02",
+      "failure_family": "dedicated_backend_over_generic_vba",
+      "repeat_index": 1,
+      "arm": "learned",
+      "final_response_sha256": "ef132eea301ebc7d34db979b73e0ee8df7fb0896b90cce2861d140b8a66ade27",
+      "machine_exact_task_success": true,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "build_rectangular_patch_fast",
+            "actual_name": "build_rectangular_patch_fast",
+            "argument_match": "subset",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": false
+      }
+    },
+    {
+      "sample_id": "parameter_precondition_02::repeat_01::learned",
+      "case_id": "parameter_precondition_02",
+      "failure_family": "parameter_precondition",
+      "repeat_index": 1,
+      "arm": "learned",
+      "final_response_sha256": "3314d452acb5c76af3f68301f7559915351e10e2c491bfd1ebf744ca1acfd325",
+      "machine_exact_task_success": true,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "store_parameter",
+            "actual_name": "store_parameter",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          },
+          {
+            "required_index": 1,
+            "actual_index": 1,
+            "expected_name": "create_brick",
+            "actual_name": "create_brick",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": false
+      }
+    },
+    {
+      "sample_id": "parameter_precondition_02::repeat_01::no_memory",
+      "case_id": "parameter_precondition_02",
+      "failure_family": "parameter_precondition",
+      "repeat_index": 1,
+      "arm": "no_memory",
+      "final_response_sha256": "999e4caa9b182fe04b09e48ce5aea2004a0546b713af2cabd2b16f02d3f943b3",
+      "machine_exact_task_success": true,
+      "deterministic_semantic": {
+        "grader_version": "tool-use-memory-deterministic-semantic-v1",
+        "score_valid": true,
+        "agent_completion_ok": true,
+        "completion_evidence_source": "legacy_nonempty_final_response_inference",
+        "required_calls_passed": true,
+        "required_call_checks": [
+          {
+            "required_index": 0,
+            "actual_index": 0,
+            "expected_name": "store_parameter",
+            "actual_name": "store_parameter",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          },
+          {
+            "required_index": 1,
+            "actual_index": 1,
+            "expected_name": "create_brick",
+            "actual_name": "create_brick",
+            "argument_match": "exact",
+            "arguments_match": true,
+            "tool_success": true,
+            "passed": true
+          }
+        ],
+        "harmless_extra_tools": [
+          "check_cst_status"
+        ],
+        "harmless_extra_calls": [],
+        "disallowed_extra_calls": [],
+        "semantic_task_success": true,
+        "response_outcome_stance": "success",
+        "final_response_outcome_consistent": true,
+        "exact_sequence_false_negative": false,
+        "unsupported_success_claim": false
+      }
+    }
+  ],
+  "limitations": [
+    "This revalidation makes no model calls and is bound to source-report and grader bytes.",
+    "For legacy reports, non-empty final text is an explicit inference that the tool loop completed.",
+    "The grader was added after these outputs and is therefore post-hoc, not a preregistered primary endpoint.",
+    "Response-outcome consistency is not claim-level natural-language groundedness.",
+    "The dataset is developer-visible and cannot support a blinded or sealed claim."
+  ],
+  "single_review_calibration": {
+    "review_protocol": {
+      "reviewer_id": "primary_developer_semantic_audit",
+      "reviewer_type": "model_assisted_human",
+      "blinded_to_arm": false,
+      "independent_double_review": false,
+      "rubric": "The requested state transition and all material arguments must match tool events; extra safe read-only checks do not invalidate an otherwise complete task; final factual claims must be supported by tool events."
+    },
+    "deterministic_vs_single_review": {
+      "true_positive": 15,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "agreement_rate": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "denominator": 16
+    },
+    "disagreements": [],
+    "boundary": "The available review is developer-visible and model-assisted, not an independent human gold standard. Outcome consistency is not calibrated as claim-level grounding."
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "connect": {
+    "success": true,
+    "message": "已连接到 CST 工程（cst.interface，安静模式）",
+    "project_file": "C:\\Users\\Deng\\AppData\\Local\\Temp\\CSTDE1\\Temp\\DE11\\Untitled_0.cst",
+    "mode": "online"
+  },
+  "runs": [
+    {
+      "run": 1,
+      "duration_sec": 36.324,
+      "project_path": "C:\\Users\\Deng\\AppData\\Local\\Temp\\cst_agent_workbench_runs\\fast_patch_1_ea4699.cst",
+      "mode": "fast_path",
+      "ok": true,
+      "error": "",
+      "reply_preview": "已使用矩形贴片快速路径直接完成建模，绕过了通用大模型建模链路。\n- 组件: `AntennaFP1_ea4699`\n- 基板: `RO4350B` (Dk=3.48, Df=0.0037, h=0.51 mm)\n- 导体: `Copper (annealed)`，厚度 0.035 mm\n- Patch: W=5.3273 mm, L=4.0596 mm\n- Feed line: W=1.1664 mm, launch=3.0447 mm\n- Inset feed: depth=1.4864 mm, gap=0.204 mm\n- Feed port: side waveguide port\n- "
+    },
+    {
+      "run": 2,
+      "duration_sec": 38.031,
+      "project_path": "C:\\Users\\Deng\\AppData\\Local\\Temp\\cst_agent_workbench_runs\\fast_patch_2_a6e066.cst",
+      "mode": "fast_path",
+      "ok": true,
+      "error": "",
+      "reply_preview": "已使用矩形贴片快速路径直接完成建模，绕过了通用大模型建模链路。\n- 组件: `AntennaFP2_a6e066`\n- 基板: `RO4350B` (Dk=3.48, Df=0.0037, h=0.51 mm)\n- 导体: `Copper (annealed)`，厚度 0.035 mm\n- Patch: W=5.3273 mm, L=4.0596 mm\n- Feed line: W=1.1664 mm, launch=3.0447 mm\n- Inset feed: depth=1.4864 mm, gap=0.204 mm\n- Feed port: side waveguide port\n- "
+    }
+  ],
+  "remaining_temp_items": [
+    "fast_patch_2_a6e066",
+    "fast_patch_2_a6e066.cst"
+  ]
+}

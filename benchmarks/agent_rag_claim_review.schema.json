@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "agent_rag_claim_review.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "pack_id",
+    "source_run_id",
+    "source_report_sha256",
+    "dataset_sha256",
+    "judge_prompt_version",
+    "review_protocol",
+    "judgments"
+  ],
+  "properties": {
+    "schema_version": {"const": "agent-rag-claim-review-v1"},
+    "pack_id": {"type": "string", "pattern": "^pk_[0-9a-f]{24}$"},
+    "source_run_id": {"type": "string", "minLength": 1},
+    "source_report_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "dataset_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "judge_prompt_version": {"type": "string", "minLength": 1},
+    "review_protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reviewer_id",
+        "reviewer_type",
+        "review_role",
+        "blinded_to_machine_judge",
+        "blinded_to_other_reviewer",
+        "verdict_blinding_scope",
+        "ordering_version",
+        "rubric_version",
+        "rubric_sha256"
+      ],
+      "properties": {
+        "reviewer_id": {"type": "string", "minLength": 1},
+        "reviewer_type": {"enum": ["human", "llm"]},
+        "review_role": {"enum": ["independent_reviewer", "adjudicator"]},
+        "blinded_to_machine_judge": {"type": "boolean"},
+        "blinded_to_other_reviewer": {"type": "boolean"},
+        "verdict_blinding_scope": {
+          "const": "machine_support_and_experiment_fields_removed_natural_ids_visible"
+        },
+        "ordering_version": {"const": "sha256-pack-bound-permutation-v1"},
+        "rubric_version": {"type": "string", "minLength": 1},
+        "rubric_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "adjudication_of": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "notes": {"type": "string"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"review_role": {"const": "adjudicator"}}},
+          "then": {"required": ["adjudication_of"]}
+        }
+      ]
+    },
+    "judgments": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "case_id",
+          "claim_id",
+          "claim_sha256",
+          "answer_sha256",
+          "evidence_sha256",
+          "supported",
+          "evidence_refs",
+          "notes"
+        ],
+        "properties": {
+          "case_id": {"type": "string", "minLength": 1},
+          "claim_id": {"type": "string", "minLength": 1},
+          "claim_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "answer_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "evidence_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "supported": {"type": ["boolean", "null"]},
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["source_path", "chunk_idx"],
+              "properties": {
+                "source_path": {"type": "string", "minLength": 1},
+                "chunk_idx": {"type": "string"}
+              }
+            }
+          },
+          "notes": {"type": "string"},
+          "review_context": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["query", "answer", "evidence", "claim_text"],
+            "properties": {
+              "query": {"type": "string"},
+              "answer": {"type": "string"},
+              "evidence": {"type": "array"},
+              "claim_text": {"type": "string"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

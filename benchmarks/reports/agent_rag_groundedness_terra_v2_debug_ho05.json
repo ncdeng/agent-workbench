@@ -1,0 +1,154 @@
+{
+  "schema_version": "agent-rag-groundedness-report-v2",
+  "run_id": "rag-groundedness-1786356731-166c11f97c",
+  "generated_at": "2026-08-10T10:12:11.380269+00:00",
+  "code_revision": "b7f3744503e72c83f76f2b857ee0dbf2a97c89d2",
+  "execution_contract": {
+    "selected_case_ids": [
+      "ho05_tdr_from_sparameters"
+    ],
+    "agent_model": "gpt-5.6-terra",
+    "judge_model": "gpt-5.6-terra",
+    "judge_prompt_version": "rag-claim-judge-v2",
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "reranker_model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "candidate_k": 20,
+    "final_k": 3,
+    "code_revision": "b7f3744503e72c83f76f2b857ee0dbf2a97c89d2",
+    "worktree_dirty": true,
+    "runner_sha256": "cd33f0b8c2bb4ed3cb760c6ae178e9cba750a397c9af3f495820667db09b7da4",
+    "judge_template_sha256": "b68674b03f143d0dfcc3835e43f72616f279a8bd6e3d16a3ae774ba553636dfd"
+  },
+  "execution_contract_sha256": "166c11f97c0252b64f6ef32b92c9976d8817945e000070f3ad6e0a0e74b5b806",
+  "dataset": {
+    "path": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\rag_official_docs_heldout_v1.json",
+    "sha256": "356c81af399842624c1c5607b35da426ab9791f10ead224fc917ac25d7d77ed2",
+    "role": "held_out_v1",
+    "case_count": 30,
+    "blinded": false,
+    "identity_scope": "byte_identity_only_not_independent_blinding"
+  },
+  "selection_policy": {
+    "method": "explicit_case_id_debug_filter",
+    "case_ids": [
+      "ho05_tdr_from_sparameters"
+    ],
+    "developer_visible": true,
+    "release_eligible": false
+  },
+  "selected_cases_sha256": "244db5c8af952a52cc4a3ec4ecf191ebe190d6e8007e8fda956595d2175ed5d1",
+  "dataset_role": "held_out_agent_subset",
+  "cases": 1,
+  "case_ids": [
+    "ho05_tdr_from_sparameters"
+  ],
+  "agent_model": "gpt-5.6-terra",
+  "judge_model": "gpt-5.6-terra",
+  "rag": {
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "reranker_model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "candidate_k": 20,
+    "final_k": 3
+  },
+  "success_rate": 0.0,
+  "retrieval_recall_at_3": 0.0,
+  "citation_presence_rate": 0.0,
+  "citation_precision": 0.0,
+  "provenance_completeness": 0.0,
+  "trace_rag_completeness": 0.0,
+  "groundedness_score": 0.0,
+  "answer_relevance_score": 0.0,
+  "unsupported_claim_rate": 0.0,
+  "latency_ms": {
+    "mean": 58298.93,
+    "p95": 58298.93
+  },
+  "results": [
+    {
+      "id": "ho05_tdr_from_sparameters",
+      "language": "en",
+      "category": "postprocess",
+      "query": "Which result template computes a TDR signal from simulated S-parameters?",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n计算由仿真 S 参数得到 TDR 信号的结果模板是：\n\n**Time Signal Processing / TDR from S-parameter**。该模板通过对给定 S 参数进行傅里叶变换来获得 TDR 输出信号。 [source=3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm, chunk=0]",
+      "answer_sha256": "0cdf8dfa8ff700f66c8ef13cdfc2040bed7cab1a57e86bd3fc23fc9b2a47bb87",
+      "evidence": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+          "chunk_idx": "",
+          "text": "CST Official Help | 3D common preloadedmacro common preloadedmacro tdr from s parameter\nTime Signal Processing / TDR from S-parameter\n\nP ost-Processing: Tools > Result Templates\n\nThis result templates calculates time domain reflectometry (TDR) results from S-parameters. The required input time domain signals are determined by the specified frequency domain filter (see below) and the output signals are obtained from this filter and the given S-parameters by means of a Fourier transform. Refer to the general introduction of the TDR computation for more theoretical details.\n\nSpecify Port/Mode [3D Simulation] or Specify Task/Port [Circuits & Systems] frame\n\nDefines the S-parameters used for the TDR calculation.\n\nTime domain sampling options frame\n\nt_end: Stopping time of the generated time signals. t_end = 'Auto' derives t_end from the sampling of the S-parameter. The time signals start at t=0.\n\nn: Number of calculated time samples. n = 'Auto' derives n from the sampling of the S-parameter.\n\nFrequency Domain Filter frame\n\nUse AR-filter results [3D Simulation only]: AR-filtered S-parameters are used.\n\nNo filter: The unfiltered S-parameters are used. This is equivalent to a band limited Dirac delta input signal."
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_time_signals.htm",
+          "chunk_idx": "",
+          "text": "CST Official Help | 3D common preloadedmacro common preloadedmacro tdr from time signals\nTime Signal Processing / TDR from Time Signals\n\nP ost-Processing: Tools > Result Templates\n\nThis result templates calculates time domain reflectometry (TDR) results time signals. Refer to the general introduction of the TDR computation for more theoretical details.\n\nSpecify Port/Mode [3D Simulation] or Specify Task/Port [Circuits & Systems] frame\n\nDefines the time signals used for the TDR calculation.\n\nGaussian Pulse options frame\n\nShift T_0 (TDR) to 50% (Pulse): The origin of the time delay axis is shifted to the time where the integrate pulse has risen to 50% of its maximal amplitude.\n\nCalculate Reflection Factor: The template calculates the reflection factor.\n\nRise time given by Gaussian Pulse frame\n\nDisplays properties of the used Gaussian pulse excitation :\n\nFmax: Frequency where the pulse spectrum has dropped to 10% of its peak amplitude\n\nTrise: Time delay between the 10% and 90% amplitude of the integrated Gaussian pulse\n\nSpatial resolution frame\n\nDisplays the spatial resolution of the used pulse.\n\nPreloaded Result Templates , Preloaded Macros Overview , Time Domain Reflectometry (TDR) , TDR from S-parameter\n\nCST Studio Suite 2025"
+        },
+        {
+          "source_path": "3D/special_theory/special_theory_time_domain_reflectometry_(tdr).htm",
+          "chunk_idx": "",
+          "text": "CST Official Help | 3D special theory special theory time domain reflectometry tdr\nTime Domain Reflectometry (TDR)\n\nTDR computation (Time Domain Reflection) is well known from measurement, where TDR is the only possibility to \"look into a structure\" and locate mismatches. Typically TDR is applied to TEM structures such as connectors or IC packages designed to have minimum return loss. The quality of the calculated TDR result chiefly depends on the used excitation signal.\n\nFrom transmission line theory, the transmission coefficient $T_{k,k+1}$ and the reflection coefficient $\\Gamma_{k,k+1}$ at an impedance discontinuity from $Z_k$ to $Z_{k+1}$ are \\begin{eqnarray} T_{k,k+1} &=& \\frac{2Z_{k+1}}{Z_{k+1}+Z_{k}} \\\\ \\Gamma_{k,k+1} &=& \\frac{Z_{k+1}-Z_{k}}{Z_{k+1}+Z_{k}}\\\\ o_k &=& \\Gamma_{k,k+1} i \\end{eqnarray} where the input signal $i$ leaves space $k$ and the reflection $o_k$ is returned into $k$."
+        }
+      ],
+      "evidence_sha256": "2b26fb84a22433610607b172b457807d3ba05944e2c8dc0f0f59da43b9e2cf5b",
+      "retrieved_sources": [
+        "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_time_signals.htm",
+        "3D/special_theory/special_theory_time_domain_reflectometry_(tdr).htm"
+      ],
+      "retrieved_chunks": [
+        0,
+        0,
+        0
+      ],
+      "citations": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "trace_run_id": "478560ec9c63",
+      "ok": false,
+      "error_stage": "judge_validation",
+      "error": "JudgeResponseValidationError: judge claim 1 references evidence outside the supplied Top-3",
+      "latency_ms": 58298.93,
+      "judge_validation_failure": {
+        "prompt_version": "rag-claim-judge-v2",
+        "prompt_sha256": "dc8a0fff115701aa847efd2734ea42f7c4f201abe943a20fb127f272bfaf9917",
+        "raw_response": "{\"claim_count\":2,\"supported_claim_count\":2,\"unsupported_claim_count\":0,\"groundedness_score\":1.0,\"answer_relevance_score\":1.0,\"citation_entailment\":true,\"claims\":[{\"text\":\"计算由仿真 S 参数得到 TDR 信号的结果模板是“Time Signal Processing / TDR from S-parameter”。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm\",\"chunk_idx\":\"0\"}],\"reason\":\"证据标题明确给出该结果模板名称，并说明其从 S 参数计算 TDR 结果。\"},{\"text\":\"该模板通过频域滤波器和给定 S 参数的傅里叶变换获得输出信号。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm\",\"chunk_idx\":\"0\"}],\"reason\":\"证据明确说明输出信号由滤波器和给定 S 参数通过傅里叶变换获得。\"}],\"reason\":\"答案直接回答了所问的结果模板名称，且关于傅里叶变换的补充说明也有证据支持。\"}",
+        "raw_response_sha256": "6d3fbb564eb620ea8a886509c6e4421d1dda7faa8f74b2c0ffd6035e06d50e1a",
+        "parsed_response": {
+          "claim_count": 2,
+          "supported_claim_count": 2,
+          "unsupported_claim_count": 0,
+          "groundedness_score": 1.0,
+          "answer_relevance_score": 1.0,
+          "citation_entailment": true,
+          "claims": [
+            {
+              "text": "计算由仿真 S 参数得到 TDR 信号的结果模板是“Time Signal Processing / TDR from S-parameter”。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+                  "chunk_idx": "0"
+                }
+              ],
+              "reason": "证据标题明确给出该结果模板名称，并说明其从 S 参数计算 TDR 结果。"
+            },
+            {
+              "text": "该模板通过频域滤波器和给定 S 参数的傅里叶变换获得输出信号。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+                  "chunk_idx": "0"
+                }
+              ],
+              "reason": "证据明确说明输出信号由滤波器和给定 S 参数通过傅里叶变换获得。"
+            }
+          ],
+          "reason": "答案直接回答了所问的结果模板名称，且关于傅里叶变换的补充说明也有证据支持。"
+        }
+      }
+    }
+  ]
+}

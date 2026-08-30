@@ -1,0 +1,288 @@
+{
+  "schema_version": "tool-use-memory-pair-dataset-v1",
+  "dataset_id": "tool_use_memory_llm_pair_dev_v2_multifamily",
+  "split": "development_regression",
+  "role": "developer_visible_multifamily_development",
+  "blinded": false,
+  "description": "Developer-visible multi-family ToolUseMemory A/B set. It tests production-written procedural failure recall without claiming unseen generalization.",
+  "authoring_provenance": {
+    "created_by": "project_developer_with_model_assistance",
+    "model_outputs_used_to_edit_cases": true,
+    "sealed": false,
+    "policy": "Freeze before the first Terra run; any post-output change creates a new regression version."
+  },
+  "learn_fixtures": [
+    {
+      "fixture_id": "generic_vba_patch_failure_v1",
+      "failure_family": "dedicated_backend_over_generic_vba",
+      "tool_name": "execute_vba_script",
+      "arguments": {
+        "vba_code": "' generic rectangular patch draft",
+        "description": "build a standard rectangular microstrip patch"
+      },
+      "fake_injection": {
+        "method": "execute_vba",
+        "response": {
+          "success": false,
+          "message": "Generic VBA is unnecessary for a standard rectangular microstrip patch; prefer the dedicated fast patch backend."
+        }
+      }
+    },
+    {
+      "fixture_id": "undefined_parameter_brick_failure_v1",
+      "failure_family": "parameter_precondition",
+      "tool_name": "create_brick",
+      "arguments": {
+        "name": "old_cover",
+        "component": "training",
+        "material": "Vacuum",
+        "xmin": "0",
+        "xmax": "10",
+        "ymin": "0",
+        "ymax": "10",
+        "zmin": "0",
+        "zmax": "old_h"
+      },
+      "fake_injection": {
+        "method": "execute_vba",
+        "response": {
+          "success": false,
+          "message": "Undefined CST parameter old_h; store every referenced parameter before creating parameterized geometry."
+        }
+      }
+    },
+    {
+      "fixture_id": "unknown_material_brick_failure_v1",
+      "failure_family": "material_precondition",
+      "tool_name": "create_brick",
+      "arguments": {
+        "name": "old_resonator",
+        "component": "training",
+        "material": "OldCeramic",
+        "xmin": "0",
+        "xmax": "10",
+        "ymin": "0",
+        "ymax": "8",
+        "zmin": "0",
+        "zmax": "2"
+      }
+    },
+    {
+      "fixture_id": "solver_missing_port_failure_v1",
+      "failure_family": "solver_preflight_excitation",
+      "tool_name": "run_solver",
+      "arguments": {},
+      "setup_tools": [
+        {
+          "name": "create_brick",
+          "arguments": {
+            "name": "training_block",
+            "component": "training",
+            "material": "Vacuum",
+            "xmin": "0",
+            "xmax": "1",
+            "ymin": "0",
+            "ymax": "1",
+            "zmin": "0",
+            "zmax": "1"
+          }
+        },
+        {"name": "set_frequency_range", "arguments": {"fmin": "1", "fmax": "2"}},
+        {
+          "name": "create_farfield_monitor",
+          "arguments": {"name": "farfield (f=1.5)", "frequency": "1.5"}
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "dedicated_patch_01",
+      "failure_family": "dedicated_backend_over_generic_vba",
+      "learn_fixture_id": "generic_vba_patch_failure_v1",
+      "query": "Build a standard rectangular microstrip patch at 2.45 GHz on FR-4 (epsilon 4.4, thickness 1.6 mm). Model only; do not run the solver.",
+      "allowed_tools": ["execute_vba_script", "use_template", "build_rectangular_patch_fast"],
+      "expected_tool_sequence": ["build_rectangular_patch_fast"],
+      "expected_tool_calls": [
+        {
+          "name": "build_rectangular_patch_fast",
+          "arguments": {
+            "f0_ghz": 2.45,
+            "substrate_name": "FR-4",
+            "epsilon_r": 4.4,
+            "substrate_thickness_mm": 1.6,
+            "run_solver": false
+          },
+          "argument_match": "subset"
+        }
+      ],
+      "max_tool_iterations": 4
+    },
+    {
+      "case_id": "dedicated_patch_02",
+      "failure_family": "dedicated_backend_over_generic_vba",
+      "learn_fixture_id": "generic_vba_patch_failure_v1",
+      "query": "Create a standard 5.8 GHz rectangular microstrip patch on RO4350B with epsilon 3.48 and 0.508 mm substrate thickness. Stop after modeling.",
+      "allowed_tools": ["execute_vba_script", "use_template", "build_rectangular_patch_fast"],
+      "expected_tool_sequence": ["build_rectangular_patch_fast"],
+      "expected_tool_calls": [
+        {
+          "name": "build_rectangular_patch_fast",
+          "arguments": {
+            "f0_ghz": 5.8,
+            "substrate_name": "RO4350B",
+            "epsilon_r": 3.48,
+            "substrate_thickness_mm": 0.508,
+            "run_solver": false
+          },
+          "argument_match": "subset"
+        }
+      ],
+      "max_tool_iterations": 4
+    },
+    {
+      "case_id": "parameter_precondition_01",
+      "failure_family": "parameter_precondition",
+      "learn_fixture_id": "undefined_parameter_brick_failure_v1",
+      "query": "Create a parameterized Vacuum cover brick named cover in component enclosure. Its bounds are x=0..40, y=0..30, z=0..cover_h, where cover_h is 2.5 mm.",
+      "allowed_tools": ["create_brick", "execute_vba_script", "store_parameter"],
+      "expected_tool_sequence": ["store_parameter", "create_brick"],
+      "expected_tool_calls": [
+        {"name": "store_parameter", "arguments": {"name": "cover_h", "value": "2.5"}, "argument_match": "exact"},
+        {
+          "name": "create_brick",
+          "arguments": {
+            "name": "cover",
+            "component": "enclosure",
+            "material": "Vacuum",
+            "xmin": "0",
+            "xmax": "40",
+            "ymin": "0",
+            "ymax": "30",
+            "zmin": "0",
+            "zmax": "cover_h"
+          },
+          "argument_match": "exact"
+        }
+      ],
+      "max_tool_iterations": 6
+    },
+    {
+      "case_id": "parameter_precondition_02",
+      "failure_family": "parameter_precondition",
+      "learn_fixture_id": "undefined_parameter_brick_failure_v1",
+      "query": "Make a parameterized Vacuum gap brick called air_gap in component fixture: x=-10..10, y=-6..6, z=0..gap_h. Define gap_h as 0.8 mm for this project.",
+      "allowed_tools": ["create_brick", "execute_vba_script", "store_parameter"],
+      "expected_tool_sequence": ["store_parameter", "create_brick"],
+      "expected_tool_calls": [
+        {"name": "store_parameter", "arguments": {"name": "gap_h", "value": "0.8"}, "argument_match": "exact"},
+        {
+          "name": "create_brick",
+          "arguments": {
+            "name": "air_gap",
+            "component": "fixture",
+            "material": "Vacuum",
+            "xmin": "-10",
+            "xmax": "10",
+            "ymin": "-6",
+            "ymax": "6",
+            "zmin": "0",
+            "zmax": "gap_h"
+          },
+          "argument_match": "exact"
+        }
+      ],
+      "max_tool_iterations": 6
+    },
+    {
+      "case_id": "material_precondition_01",
+      "failure_family": "material_precondition",
+      "learn_fixture_id": "unknown_material_brick_failure_v1",
+      "query": "Create custom material CeramicX with epsilon 9.8 and loss tangent 0.001, then create brick resonator in component cavity using CeramicX with bounds x=0..12, y=0..8, z=0..3 mm.",
+      "allowed_tools": ["create_brick", "execute_vba_script", "create_material"],
+      "expected_tool_sequence": ["create_material", "create_brick"],
+      "expected_tool_calls": [
+        {"name": "create_material", "arguments": {"name": "CeramicX", "epsilon": 9.8, "tand": 0.001}, "argument_match": "subset"},
+        {
+          "name": "create_brick",
+          "arguments": {
+            "name": "resonator",
+            "component": "cavity",
+            "material": "CeramicX",
+            "xmin": "0",
+            "xmax": "12",
+            "ymin": "0",
+            "ymax": "8",
+            "zmin": "0",
+            "zmax": "3"
+          },
+          "argument_match": "exact"
+        }
+      ],
+      "max_tool_iterations": 6
+    },
+    {
+      "case_id": "material_precondition_02",
+      "failure_family": "material_precondition",
+      "learn_fixture_id": "unknown_material_brick_failure_v1",
+      "query": "Define custom dielectric FoamY with epsilon 1.15 and loss tangent 0.0004. Use it for brick spacer in component feed, x=-5..5, y=-4..4, z=0..1.2 mm.",
+      "allowed_tools": ["create_brick", "execute_vba_script", "create_material"],
+      "expected_tool_sequence": ["create_material", "create_brick"],
+      "expected_tool_calls": [
+        {"name": "create_material", "arguments": {"name": "FoamY", "epsilon": 1.15, "tand": 0.0004}, "argument_match": "subset"},
+        {
+          "name": "create_brick",
+          "arguments": {
+            "name": "spacer",
+            "component": "feed",
+            "material": "FoamY",
+            "xmin": "-5",
+            "xmax": "5",
+            "ymin": "-4",
+            "ymax": "4",
+            "zmin": "0",
+            "zmax": "1.2"
+          },
+          "argument_match": "exact"
+        }
+      ],
+      "max_tool_iterations": 6
+    },
+    {
+      "case_id": "solver_preflight_01",
+      "failure_family": "solver_preflight_excitation",
+      "learn_fixture_id": "solver_missing_port_failure_v1",
+      "query": "The prepared model has geometry, frequency range and a farfield monitor but no excitation. Add discrete port 1 from (0,0,0) to (0,0,1.6) with 50 ohm, then run the solver.",
+      "allowed_tools": ["run_solver", "check_cst_status", "create_discrete_port"],
+      "setup_tools": [
+        {"name": "create_brick", "arguments": {"name": "eval_block_a", "component": "eval", "material": "Vacuum", "xmin": "0", "xmax": "1", "ymin": "0", "ymax": "1", "zmin": "0", "zmax": "1"}},
+        {"name": "set_frequency_range", "arguments": {"fmin": "1", "fmax": "2"}},
+        {"name": "create_farfield_monitor", "arguments": {"name": "farfield (f=1.5)", "frequency": "1.5"}}
+      ],
+      "expected_tool_sequence": ["create_discrete_port", "run_solver"],
+      "expected_tool_calls": [
+        {"name": "create_discrete_port", "arguments": {"port_number": 1, "p1_x": "0", "p1_y": "0", "p1_z": "0", "p2_x": "0", "p2_y": "0", "p2_z": "1.6", "impedance": "50"}, "argument_match": "exact"},
+        {"name": "run_solver", "arguments": {}, "argument_match": "exact"}
+      ],
+      "max_tool_iterations": 6
+    },
+    {
+      "case_id": "solver_preflight_02",
+      "failure_family": "solver_preflight_excitation",
+      "learn_fixture_id": "solver_missing_port_failure_v1",
+      "query": "This prepared model is missing only its excitation. Configure discrete port 2 from (-1,0,0) to (-1,0,0.9), impedance 75 ohm, and start the solver afterward.",
+      "allowed_tools": ["run_solver", "check_cst_status", "create_discrete_port"],
+      "setup_tools": [
+        {"name": "create_brick", "arguments": {"name": "eval_block_b", "component": "eval", "material": "Vacuum", "xmin": "0", "xmax": "1", "ymin": "0", "ymax": "1", "zmin": "0", "zmax": "1"}},
+        {"name": "set_frequency_range", "arguments": {"fmin": "4", "fmax": "6"}},
+        {"name": "create_farfield_monitor", "arguments": {"name": "farfield (f=5.0)", "frequency": "5.0"}}
+      ],
+      "expected_tool_sequence": ["create_discrete_port", "run_solver"],
+      "expected_tool_calls": [
+        {"name": "create_discrete_port", "arguments": {"port_number": 2, "p1_x": "-1", "p1_y": "0", "p1_z": "0", "p2_x": "-1", "p2_y": "0", "p2_z": "0.9", "impedance": "75"}, "argument_match": "exact"},
+        {"name": "run_solver", "arguments": {}, "argument_match": "exact"}
+      ],
+      "max_tool_iterations": 6
+    }
+  ]
+}

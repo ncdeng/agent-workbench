@@ -1,0 +1,35 @@
+[
+  {
+    "case": "resonance_high",
+    "strategy": "heuristic",
+    "reason": "当前谐振点 9.800 GHz 相对目标 9.400 GHz 偏高，优先通过增大 patch_L 做一轮频率校正。",
+    "message": "",
+    "updates": [
+      {
+        "name": "patch_L",
+        "old": 10.0,
+        "new": 10.425531914893618
+      }
+    ]
+  },
+  {
+    "case": "match_tuning",
+    "strategy": "heuristic",
+    "reason": "当前谐振点已接近目标频率，但 S11@9.400 GHz = -7.00 dB，优先微调 inset_depth。",
+    "message": "",
+    "updates": [
+      {
+        "name": "inset_depth",
+        "old": 2.0,
+        "new": 2.12
+      }
+    ]
+  },
+  {
+    "case": "already_met",
+    "strategy": "heuristic",
+    "reason": "",
+    "message": "程序化优化判断当前结果已满足目标：S11@9.400 GHz = -12.00 dB。当前轮不做额外调参。",
+    "updates": []
+  }
+]

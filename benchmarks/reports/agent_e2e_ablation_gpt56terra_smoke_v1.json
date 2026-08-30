@@ -1,0 +1,186 @@
+{
+  "schema_version": "agent-e2e-report-v1",
+  "run": {
+    "run_id": "782fff4b5cfc",
+    "timestamp_utc": "2026-08-09T23:48:50.771804+00:00",
+    "dataset_id": "cst-agent-e2e-fake-cst-v1",
+    "dataset_path": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\agent_e2e_cases.json",
+    "dataset_sha256": "693f531e8a723f5fdc2c22f023aaa64df06ac3deb3e30795e5167314a6e997c2",
+    "code_revision": "b7f3744503e72c83f76f2b857ee0dbf2a97c89d2",
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "provider": "openai_compatible",
+    "model": "gpt-5.6-terra",
+    "case_count": 1,
+    "groups": [
+      "full"
+    ],
+    "large_artifact_root": "D:\\cst_agent_rag_data\\agent_e2e_artifacts\\782fff4b5cfc",
+    "secrets_recorded": false
+  },
+  "groups": {
+    "full": {
+      "config": {
+        "memory": true,
+        "context": true,
+        "planner": true,
+        "recovery": true,
+        "tool_use_memory": true
+      },
+      "path_proof": {
+        "planner_call_count": 2,
+        "memory_recall_count": 0,
+        "recovery_attempt_count": 0,
+        "tool_memory_recall_count": 0,
+        "context_budget_event_count": 2,
+        "invalid_ablation_cases": []
+      },
+      "metrics": {
+        "task_success_rate": 1.0,
+        "constraint_adherence_rate": 1.0,
+        "hard_constraint_case_rate": 1.0,
+        "tool_selection_accuracy": 1.0,
+        "invalid_call_rate": 0.0,
+        "recovery_rate": null,
+        "tokens": {
+          "prompt_mean": 4766.0,
+          "completion_mean": 229.0,
+          "total_mean": 4995.0,
+          "total_p95": 4995.0,
+          "estimated": false
+        },
+        "latency_ms": {
+          "mean": 61760.184,
+          "median": 61760.184,
+          "p95": 61760.184
+        },
+        "groundedness": {
+          "claim_precision": 1.0,
+          "required_fact_recall": 1.0
+        }
+      },
+      "cases": [
+        {
+          "case_id": "status_grounded_01",
+          "category": "tool_selection",
+          "valid": true,
+          "task_success": true,
+          "constraint_checks": [
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "check_cst_status"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "check_cst_status",
+              "success": true,
+              "message": "已连接 CST（fake 在线）",
+              "description": "检查 CST 连接状态"
+            }
+          ],
+          "tool_sequence_valid": true,
+          "invalid_calls": [],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 4766,
+            "completion": 229,
+            "total": 4995,
+            "calls": 3
+          },
+          "latency_ms": 61760.184,
+          "grounding_checks": [
+            {
+              "fact": "fake 在线",
+              "supported": true
+            }
+          ],
+          "final_response": "已连接 CST（fake 在线）。",
+          "all_responses": [
+            "已连接 CST（fake 在线）。"
+          ],
+          "trace_run_id": "eab352037c69",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 2,
+            "executor_call_count": 2,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": null,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 2
+          },
+          "errors": []
+        }
+      ]
+    }
+  },
+  "comparisons": {},
+  "threshold_results": [
+    {
+      "name": "full_task_success_rate",
+      "passed": true,
+      "value": 1.0,
+      "threshold": ">= 0.8"
+    },
+    {
+      "name": "full_hard_constraint_case_rate",
+      "passed": true,
+      "value": 1.0,
+      "threshold": "== 1.0"
+    },
+    {
+      "name": "full_tool_selection_accuracy",
+      "passed": true,
+      "value": 1.0,
+      "threshold": ">= 0.8"
+    },
+    {
+      "name": "full_invalid_call_rate",
+      "passed": true,
+      "value": 0.0,
+      "threshold": "<= 0.1"
+    },
+    {
+      "name": "full_groundedness",
+      "passed": true,
+      "value": 1.0,
+      "threshold": ">= 0.9"
+    },
+    {
+      "name": "full_ablation_path_valid",
+      "passed": true,
+      "value": [],
+      "threshold": "empty"
+    },
+    {
+      "name": "full_path_valid",
+      "passed": true,
+      "value": [],
+      "threshold": "empty"
+    }
+  ],
+  "limitations": [
+    "Fake CST validates orchestration and recovery contracts, not CST electromagnetic fidelity.",
+    "The deterministic provider is a mechanism smoke test, bypasses RAG retrieval, uses lexical memory fallback, and must not be cited as LLM quality evidence.",
+    "Five frozen cases are a regression gate, not a statistically powered benchmark.",
+    "Free-text groundedness uses exact frozen facts; semantic entailment requires a blinded judge or manual review."
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sealed_eval_handoff.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "handoff_id",
+    "issuer",
+    "recipient",
+    "created_at",
+    "dataset_role",
+    "developer_access",
+    "custody",
+    "execution_contract",
+    "files"
+  ],
+  "properties": {
+    "schema_version": {"const": "sealed-eval-handoff-v1"},
+    "handoff_id": {"type": "string", "minLength": 8},
+    "issuer": {"type": "string", "minLength": 1},
+    "recipient": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "not_before": {"type": "string", "format": "date-time"},
+    "dataset_role": {"const": "blinded_held_out"},
+    "developer_access": {"const": false},
+    "custody": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["independent_issuer", "model_outputs_used_to_edit_oracles", "oracle_visible_to_executor"],
+      "properties": {
+        "independent_issuer": {"const": true},
+        "model_outputs_used_to_edit_oracles": {"const": false},
+        "oracle_visible_to_executor": {"const": false},
+        "notes": {"type": "string"}
+      }
+    },
+    "execution_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "model",
+        "arms",
+        "repeat_count",
+        "order_seed",
+        "runner_revision",
+        "runner_sha256",
+        "prompt_sha256",
+        "tool_catalog_sha256"
+      ],
+      "properties": {
+        "provider": {"type": "string", "minLength": 1},
+        "model": {"type": "string", "minLength": 1},
+        "arms": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "repeat_count": {"type": "integer", "minimum": 3},
+        "order_seed": {"type": "integer"},
+        "runner_revision": {"type": "string", "minLength": 7},
+        "runner_sha256": {"$ref": "#/$defs/sha256"},
+        "prompt_sha256": {"$ref": "#/$defs/sha256"},
+        "tool_catalog_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["public_cases", "fixture_pack", "private_oracles"],
+      "properties": {
+        "public_cases": {"$ref": "#/$defs/publicFile"},
+        "fixture_pack": {"$ref": "#/$defs/publicFile"},
+        "private_oracles": {"$ref": "#/$defs/privateFile"}
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "key_id", "value"],
+      "properties": {
+        "algorithm": {"const": "hmac-sha256"},
+        "key_id": {"type": "string", "minLength": 1},
+        "value": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "publicFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "size_bytes"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "size_bytes": {"type": "integer", "minimum": 1}
+      }
+    },
+    "privateFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sha256", "size_bytes"],
+      "properties": {
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "size_bytes": {"type": "integer", "minimum": 1}
+      }
+    }
+  }
+}

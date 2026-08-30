@@ -1,0 +1,245 @@
+{
+  "schema_version": "agent-e2e-report-v1",
+  "run": {
+    "run_id": "fba00d8e89da",
+    "timestamp_utc": "2026-08-09T17:25:44.239173+00:00",
+    "dataset_id": "cst-agent-e2e-fake-cst-v1",
+    "dataset_path": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\agent_e2e_cases.json",
+    "dataset_sha256": "a71fcb3fc2a2be23047f3909e1bc48f9d87f7d9db51ee6dcb25b59554066fdd3",
+    "code_revision": "b7f3744503e72c83f76f2b857ee0dbf2a97c89d2",
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "provider": "openai_compatible",
+    "model": "gpt-5.5",
+    "case_count": 1,
+    "groups": [
+      "full"
+    ],
+    "large_artifact_root": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\reports\\.agent_e2e_artifacts\\fba00d8e89da",
+    "secrets_recorded": false
+  },
+  "groups": {
+    "full": {
+      "config": {
+        "memory": true,
+        "context": true,
+        "planner": true,
+        "recovery": true,
+        "tool_use_memory": true
+      },
+      "path_proof": {
+        "planner_call_count": 2,
+        "memory_recall_count": 0,
+        "recovery_attempt_count": 1,
+        "tool_memory_recall_count": 0,
+        "context_budget_event_count": 3,
+        "invalid_ablation_cases": []
+      },
+      "metrics": {
+        "task_success_rate": 0.0,
+        "constraint_adherence_rate": 1.0,
+        "hard_constraint_case_rate": 1.0,
+        "tool_selection_accuracy": 1.0,
+        "invalid_call_rate": 0.0,
+        "recovery_rate": 1.0,
+        "tokens": {
+          "prompt_mean": 7377.0,
+          "completion_mean": 736.0,
+          "total_mean": 8113.0,
+          "total_p95": 8113.0,
+          "estimated": false
+        },
+        "latency_ms": {
+          "mean": 68433.262,
+          "median": 68433.262,
+          "p95": 68433.262
+        },
+        "groundedness": {
+          "claim_precision": 0.0,
+          "required_fact_recall": 0.0
+        }
+      },
+      "cases": [
+        {
+          "case_id": "recovery_disconnect_01",
+          "category": "recovery",
+          "valid": true,
+          "task_success": false,
+          "constraint_checks": [
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "check_cst_status",
+            "execute_vba_script"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "check_cst_status",
+              "success": true,
+              "message": "CST fake 离线",
+              "description": "检查 CST 连接状态"
+            },
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "execute_vba_script",
+              "success": true,
+              "message": "fake VBA 已在重连后执行",
+              "description": "执行无副作用 VBA 连通性探针：仅读取/打印工程信息，不修改模型。",
+              "error_type": "cst_connection",
+              "recovery_result": {
+                "action_name": "reconnect_cst",
+                "recovered": true,
+                "message": "CST reconnected",
+                "details": {
+                  "method": "connect",
+                  "outcome": {
+                    "success": true,
+                    "message": "fake reconnected",
+                    "project_file": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\reports\\.agent_e2e_artifacts\\fba00d8e89da\\full\\recovery_disconnect_01\\fake_project.cst"
+                  },
+                  "project_path": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\reports\\.agent_e2e_artifacts\\fba00d8e89da\\full\\recovery_disconnect_01\\fake_project.cst"
+                },
+                "retry_tool": "execute_vba_script",
+                "retry_arguments": {
+                  "description": "执行无副作用 VBA 连通性探针：仅读取/打印工程信息，不修改模型。",
+                  "vba_code": "Sub Main()\n    ' No-side-effect connectivity probe: do not create, modify, or delete any model data.\n    Debug.Print \"CST VBA connectivity probe OK\"\nEnd Sub"
+                },
+                "retry_success": true,
+                "retry_message": "fake VBA 已在重连后执行",
+                "retry_tool_event_id": "call_VYo5MpTlD1YSYhVw1Ned7qrm"
+              }
+            }
+          ],
+          "tool_sequence_valid": true,
+          "invalid_calls": [],
+          "recovery_events": [
+            {
+              "action_name": "reconnect_cst",
+              "recovered": true,
+              "message": "CST reconnected",
+              "details": {
+                "method": "connect",
+                "outcome": {
+                  "success": true,
+                  "message": "fake reconnected",
+                  "project_file": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\reports\\.agent_e2e_artifacts\\fba00d8e89da\\full\\recovery_disconnect_01\\fake_project.cst"
+                },
+                "project_path": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\reports\\.agent_e2e_artifacts\\fba00d8e89da\\full\\recovery_disconnect_01\\fake_project.cst"
+              },
+              "retry_tool": "execute_vba_script",
+              "retry_arguments": {
+                "description": "执行无副作用 VBA 连通性探针：仅读取/打印工程信息，不修改模型。",
+                "vba_code": "Sub Main()\n    ' No-side-effect connectivity probe: do not create, modify, or delete any model data.\n    Debug.Print \"CST VBA connectivity probe OK\"\nEnd Sub"
+              },
+              "retry_success": true,
+              "retry_message": "fake VBA 已在重连后执行",
+              "retry_tool_event_id": "call_VYo5MpTlD1YSYhVw1Ned7qrm"
+            }
+          ],
+          "recovery_success": true,
+          "token_usage": {
+            "prompt": 7377,
+            "completion": 736,
+            "total": 8113,
+            "calls": 4
+          },
+          "latency_ms": 68433.262,
+          "grounding_checks": [
+            {
+              "fact": "重连后 | 连接已恢复 | after reconnect",
+              "supported": false
+            }
+          ],
+          "final_response": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n已完成无副作用 VBA 连通性探针。\n\n- 初始状态检查：显示连接处于离线/中断状态。\n- 已尝试恢复连接并重试。\n- 无副作用 VBA 探针执行成功。\n- 探针脚本仅输出调试信息，不创建、不修改、不删除任何 CST 模型数据。",
+          "all_responses": [
+            "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n已完成无副作用 VBA 连通性探针。\n\n- 初始状态检查：显示连接处于离线/中断状态。\n- 已尝试恢复连接并重试。\n- 无副作用 VBA 探针执行成功。\n- 探针脚本仅输出调试信息，不创建、不修改、不删除任何 CST 模型数据。"
+          ],
+          "trace_run_id": "69be1fd4f420",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 2,
+            "executor_call_count": 3,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": null,
+            "recovery_attempt_count": 1,
+            "recovery_attempts": {
+              "reconnect_cst": 1
+            },
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "execute_vba_script",
+              "check_cst_status"
+            ],
+            "context_budget_event_count": 3
+          },
+          "errors": []
+        }
+      ]
+    }
+  },
+  "comparisons": {},
+  "threshold_results": [
+    {
+      "name": "full_task_success_rate",
+      "passed": false,
+      "value": 0.0,
+      "threshold": ">= 0.8"
+    },
+    {
+      "name": "full_hard_constraint_case_rate",
+      "passed": true,
+      "value": 1.0,
+      "threshold": "== 1.0"
+    },
+    {
+      "name": "full_tool_selection_accuracy",
+      "passed": true,
+      "value": 1.0,
+      "threshold": ">= 0.8"
+    },
+    {
+      "name": "full_invalid_call_rate",
+      "passed": true,
+      "value": 0.0,
+      "threshold": "<= 0.1"
+    },
+    {
+      "name": "full_groundedness",
+      "passed": false,
+      "value": 0.0,
+      "threshold": ">= 0.9"
+    },
+    {
+      "name": "full_ablation_path_valid",
+      "passed": true,
+      "value": [],
+      "threshold": "empty"
+    },
+    {
+      "name": "full_recovery_rate",
+      "passed": true,
+      "value": 1.0,
+      "threshold": "== 1.0"
+    },
+    {
+      "name": "full_path_valid",
+      "passed": true,
+      "value": [],
+      "threshold": "empty"
+    }
+  ],
+  "limitations": [
+    "Fake CST validates orchestration and recovery contracts, not CST electromagnetic fidelity.",
+    "The deterministic provider is a mechanism smoke test, bypasses RAG retrieval, uses lexical memory fallback, and must not be cited as LLM quality evidence.",
+    "Five frozen cases are a regression gate, not a statistically powered benchmark.",
+    "Free-text groundedness uses exact frozen facts; semantic entailment requires a blinded judge or manual review."
+  ]
+}

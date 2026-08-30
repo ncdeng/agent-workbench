@@ -1,0 +1,14 @@
+{
+  "name": "cst-agent-pi-sidecar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Restricted Pi Agent Core harness for CST Agent Workbench",
+  "scripts": {
+    "smoke": "node smoke.mjs"
+  },
+  "dependencies": {
+    "@earendil-works/pi-agent-core": "0.84.1",
+    "@earendil-works/pi-ai": "0.84.1"
+  }
+}

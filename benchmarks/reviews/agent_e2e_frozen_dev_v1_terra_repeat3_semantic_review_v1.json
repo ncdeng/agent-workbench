@@ -1,0 +1,35 @@
+{
+  "schema_version": "agent-e2e-semantic-review-v1",
+  "source_run_id": "7c0133740418",
+  "dataset_id": "cst-agent-e2e-frozen-dev-v1",
+  "dataset_sha256": "f09b95cef13bba72193743cf81a693ba27773e44be3c73bb80c511c7350471f2",
+  "review_protocol": {
+    "reviewer_id": "independent-terra-high-v1",
+    "reviewer_type": "model",
+    "blinded_to_machine_scores": false,
+    "rubric": "Judge whether the user goal was semantically completed from tool/recovery evidence, then whether every verifiable final-response claim is consistent with that evidence. Exact lexical or argument-form mismatches alone do not imply semantic failure."
+  },
+  "judgments": [
+    {"sample_id": "status_read_01::repeat_01", "response_sha256": "41106383149312c937eb0f29a8e74d0a76d12f19bd5839bc06effe86a0de798f", "semantic_execution_success": true, "grounded_final_response": true, "notes": "Status tool directly supports the online conclusion."},
+    {"sample_id": "no_tool_01::repeat_01", "response_sha256": "038cf16f0096b17239d3c261b31bf174b33df73b5496f6ea687e5ee1e148979d", "semantic_execution_success": true, "grounded_final_response": true, "notes": "No tool event occurred and the audit code was acknowledged."},
+    {"sample_id": "memory_guided_01::repeat_01", "response_sha256": "e0944d203f74b83300e58172e3e629fcc71e36bb83edff370a90a859f4d36439", "semantic_execution_success": true, "grounded_final_response": true, "notes": "Read-only status check completed without model mutation or solver calls."},
+    {"sample_id": "context_followup_01::repeat_01", "response_sha256": "e173b53e64e98edab7369c206f529070ac96d2f232b7a1fafe85c9945561c1db", "semantic_execution_success": true, "grounded_final_response": true, "notes": "CTX-1 was preserved and no solver call occurred."},
+    {"sample_id": "multi_tool_materials_01::repeat_01", "response_sha256": "d3147114f491dc6cc417ccb0b2c18e2ea402a81f4c0b12d68c52b495addfcaad", "semantic_execution_success": true, "grounded_final_response": true, "notes": "Status and material listing both succeeded and support the count."},
+    {"sample_id": "disconnect_recovery_01::repeat_01", "response_sha256": "6699c0481443d56718fb5e8f137acc08bdff5654b0bb6c0b0a9a181c2da9b89e", "semantic_execution_success": true, "grounded_final_response": false, "notes": "Reconnect and retry succeeded, but the final response retained a contradictory offline prefix."},
+    {"sample_id": "solver_workflow_01::repeat_01", "response_sha256": "c379409d9efcecf00949d182e4fa2e0c073017c52a4a374ff65ff237d906b016", "semantic_execution_success": true, "grounded_final_response": true, "notes": "After an initial failed attempt, the agent created minimum prerequisites and obtained fake solver completed."},
+    {"sample_id": "status_read_01::repeat_02", "response_sha256": "41106383149312c937eb0f29a8e74d0a76d12f19bd5839bc06effe86a0de798f", "semantic_execution_success": true, "grounded_final_response": true, "notes": "Status tool directly supports the online conclusion."},
+    {"sample_id": "no_tool_01::repeat_02", "response_sha256": "6d6fda62b314cb0efad33d4bbb38db35d38ffdb8ea2f15510b52b99693fcacce", "semantic_execution_success": true, "grounded_final_response": true, "notes": "No tool event occurred and the audit code was acknowledged."},
+    {"sample_id": "memory_guided_01::repeat_02", "response_sha256": "0c01cb395c9fda014e282faf890296c3d68b2f700fe27b7624fd605f6e9099df", "semantic_execution_success": true, "grounded_final_response": true, "notes": "Only a successful read-only status tool was used."},
+    {"sample_id": "context_followup_01::repeat_02", "response_sha256": "a7c1b74c3557e43a11a67a8f5825f76091fad1b5d3932d3ed800851f98b20262", "semantic_execution_success": true, "grounded_final_response": true, "notes": "CTX-1 and online status are supported; no solver event exists."},
+    {"sample_id": "multi_tool_materials_01::repeat_02", "response_sha256": "9e43f36e62497eb755edc6d781b7e9131ed385a7889773ccdf54695eb0b3ca3d", "semantic_execution_success": true, "grounded_final_response": true, "notes": "Both read-only tools succeeded and support the material count."},
+    {"sample_id": "disconnect_recovery_01::repeat_02", "response_sha256": "ca4262bbaf2977470ef4e7817ce4819d5aa891badd75cbc9b7b8c0daad11ba7a", "semantic_execution_success": true, "grounded_final_response": false, "notes": "Recovery succeeded, but the final offline prefix contradicts the recovered state."},
+    {"sample_id": "solver_workflow_01::repeat_02", "response_sha256": "7e0662c35da5c2257daee14b7f25352e19c8fb6649157444318037328f1a1a07", "semantic_execution_success": false, "grounded_final_response": false, "notes": "Minimum prerequisites were not built and the solver did not complete; the tool-availability claim is unsupported."},
+    {"sample_id": "status_read_01::repeat_03", "response_sha256": "41106383149312c937eb0f29a8e74d0a76d12f19bd5839bc06effe86a0de798f", "semantic_execution_success": true, "grounded_final_response": true, "notes": "Status tool directly supports the online conclusion."},
+    {"sample_id": "no_tool_01::repeat_03", "response_sha256": "6d6fda62b314cb0efad33d4bbb38db35d38ffdb8ea2f15510b52b99693fcacce", "semantic_execution_success": true, "grounded_final_response": true, "notes": "No tool event occurred and the audit code was acknowledged."},
+    {"sample_id": "memory_guided_01::repeat_03", "response_sha256": "c1200f8b73f30cb570c42e467aeee496bf93d9c683b0d44955972a9c22372098", "semantic_execution_success": true, "grounded_final_response": true, "notes": "The sole event is a successful read-only status check."},
+    {"sample_id": "context_followup_01::repeat_03", "response_sha256": "a6f9b73c2a06432be2b47659543732b674f8df29bed45afdcf6e1ee73b449a33", "semantic_execution_success": true, "grounded_final_response": true, "notes": "CTX-1 was retained and no solver call occurred."},
+    {"sample_id": "multi_tool_materials_01::repeat_03", "response_sha256": "dc31b0cefb006ae2bb5f42536acdbe51bada5fe5bccef995db2531cab560b4c2", "semantic_execution_success": true, "grounded_final_response": true, "notes": "Status and material listing succeeded and support the answer."},
+    {"sample_id": "disconnect_recovery_01::repeat_03", "response_sha256": "b27bcbf5533ed1a5820ddd36cdc854527d67f8b744554f09ec8f7c84ca5d4938", "semantic_execution_success": true, "grounded_final_response": false, "notes": "Reconnect and retry succeeded, but the offline prefix is stale and contradictory."},
+    {"sample_id": "solver_workflow_01::repeat_03", "response_sha256": "123a3f7ebf49ae98829b8c09cc9e56137492ddef068d4e86af720795885a5732", "semantic_execution_success": false, "grounded_final_response": false, "notes": "Only frequency setup completed; no geometry, port, monitor, or solver completion occurred."}
+  ]
+}

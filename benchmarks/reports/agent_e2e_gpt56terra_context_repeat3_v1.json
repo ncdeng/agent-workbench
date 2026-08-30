@@ -1,0 +1,1788 @@
+{
+  "schema_version": "agent-e2e-report-v1",
+  "run": {
+    "run_id": "751eb853b489",
+    "timestamp_utc": "2026-08-10T02:31:54.439238+00:00",
+    "dataset_id": "cst-agent-e2e-fake-cst-v2",
+    "dataset_split": "development_regression",
+    "dataset_role": "development_regression",
+    "dataset_frozen_at": "2026-08-10T00:00:00+08:00",
+    "annotation_policy": "Developer-authored regression oracles. Tool and recovery constraints are machine checked; response facts use lexical alternatives and require separate claim-level review for semantic claims.",
+    "generation_provenance": {
+      "authoring_method": "developer_authored_and_iterated",
+      "model_outputs_used_to_edit_oracles": true,
+      "blinded": false
+    },
+    "dataset_path": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\agent_e2e_cases.json",
+    "dataset_sha256": "9127d1b9bfc4868977ca36ae7ce0ff8bffb146c60ec158efcef24136034ba9c0",
+    "code_revision": "b7f3744503e72c83f76f2b857ee0dbf2a97c89d2",
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "provider": "openai_compatible",
+    "model": "gpt-5.6-terra",
+    "case_count": 3,
+    "sample_count": 9,
+    "repeat_count": 3,
+    "filters": {
+      "case_ids": [
+        "status_grounded_01",
+        "context_followup_01",
+        "context_goal_revision_01"
+      ],
+      "categories": [],
+      "scenario_families": [],
+      "design_families": [],
+      "failure_families": []
+    },
+    "seed_control": {
+      "python_random_per_case": true,
+      "provider_sampling_seed": false,
+      "note": "The case seed controls local Python randomness only; the OpenAI-compatible provider is not claimed deterministic."
+    },
+    "groups": [
+      "full"
+    ],
+    "large_artifact_root": "D:\\cst_agent_rag_data\\agent_eval\\artifacts\\751eb853b489",
+    "secrets_recorded": false
+  },
+  "groups": {
+    "full": {
+      "config": {
+        "memory": true,
+        "context": true,
+        "planner": true,
+        "recovery": true,
+        "tool_use_memory": true
+      },
+      "path_proof": {
+        "planner_call_count": 18,
+        "planner_fallback_count": 0,
+        "memory_recall_count": 0,
+        "recovery_attempt_count": 0,
+        "tool_memory_recall_count": 0,
+        "context_budget_event_count": 27,
+        "invalid_ablation_cases": []
+      },
+      "family_metrics": {
+        "scenario_family": {
+          "multi_turn_context_recall": {
+            "sample_count": 3,
+            "unique_case_count": 1,
+            "task_success_rate": 1.0,
+            "strict_grounded_success_rate": 0.0,
+            "hard_constraint_case_rate": 1.0,
+            "invalid_call_rate": 0.0
+          },
+          "multi_turn_goal_revision": {
+            "sample_count": 3,
+            "unique_case_count": 1,
+            "task_success_rate": 1.0,
+            "strict_grounded_success_rate": 1.0,
+            "hard_constraint_case_rate": 1.0,
+            "invalid_call_rate": 0.0
+          },
+          "status_read": {
+            "sample_count": 3,
+            "unique_case_count": 1,
+            "task_success_rate": 1.0,
+            "strict_grounded_success_rate": 1.0,
+            "hard_constraint_case_rate": 1.0,
+            "invalid_call_rate": 0.0
+          }
+        },
+        "design_family": {
+          "no_design": {
+            "sample_count": 9,
+            "unique_case_count": 3,
+            "task_success_rate": 1.0,
+            "strict_grounded_success_rate": 0.6666666666666666,
+            "hard_constraint_case_rate": 1.0,
+            "invalid_call_rate": 0.0
+          }
+        },
+        "failure_family": {
+          "none": {
+            "sample_count": 9,
+            "unique_case_count": 3,
+            "task_success_rate": 1.0,
+            "strict_grounded_success_rate": 0.6666666666666666,
+            "hard_constraint_case_rate": 1.0,
+            "invalid_call_rate": 0.0
+          }
+        }
+      },
+      "error_taxonomy": {
+        "grounding_or_context_failure": 3
+      },
+      "metrics": {
+        "task_success_rate": 1.0,
+        "strict_grounded_success_rate": 0.6666666666666666,
+        "constraint_adherence_rate": 1.0,
+        "hard_constraint_case_rate": 1.0,
+        "exact_tool_sequence_match_rate": 1.0,
+        "first_tool_accuracy": 1.0,
+        "tool_selection_accuracy": 1.0,
+        "invalid_call_rate": 0.0,
+        "recovery_rate": null,
+        "planner": {
+          "call_count": 18,
+          "fallback_count": 0,
+          "fallback_rate": 0.0
+        },
+        "tokens": {
+          "prompt_mean": 8316.888888888889,
+          "completion_mean": 588.3333333333334,
+          "total_mean": 8905.222222222223,
+          "total_p95": 12908.0,
+          "estimated": false
+        },
+        "latency_ms": {
+          "mean": 29525.384666666665,
+          "median": 31035.003,
+          "p95": 50645.28
+        },
+        "groundedness": {
+          "claim_precision": null,
+          "required_fact_recall": 0.8,
+          "lexical_fact_match_rate": 0.8,
+          "matching_method": "case_authored_lexical_alternatives"
+        },
+        "confidence_intervals": {
+          "task_success_rate": {
+            "successes": 9,
+            "trials": 9,
+            "rate": 1.0,
+            "low": 0.7008549515804559,
+            "high": 1.0,
+            "method": "wilson_95"
+          },
+          "strict_grounded_success_rate": {
+            "successes": 6,
+            "trials": 9,
+            "rate": 0.6666666666666666,
+            "low": 0.3542021355803963,
+            "high": 0.879416181613089,
+            "method": "wilson_95"
+          },
+          "hard_constraint_case_rate": {
+            "successes": 9,
+            "trials": 9,
+            "rate": 1.0,
+            "low": 0.7008549515804559,
+            "high": 1.0,
+            "method": "wilson_95"
+          },
+          "exact_tool_sequence_match_rate": {
+            "successes": 9,
+            "trials": 9,
+            "rate": 1.0,
+            "low": 0.7008549515804559,
+            "high": 1.0,
+            "method": "wilson_95"
+          },
+          "first_tool_accuracy": {
+            "successes": 9,
+            "trials": 9,
+            "rate": 1.0,
+            "low": 0.7008549515804559,
+            "high": 1.0,
+            "method": "wilson_95"
+          },
+          "recovery_rate": {
+            "successes": 0,
+            "trials": 0,
+            "rate": null,
+            "low": null,
+            "high": null,
+            "method": "wilson_95"
+          }
+        }
+      },
+      "cases": [
+        {
+          "case_id": "status_grounded_01",
+          "sample_id": "status_grounded_01::repeat_01",
+          "run_index": 1,
+          "category": "tool_selection",
+          "scenario_family": "status_read",
+          "design_family": "no_design",
+          "failure_family": "none",
+          "seed": 21001,
+          "valid": true,
+          "task_success": true,
+          "execution_success": true,
+          "strict_grounded_success": true,
+          "constraint_checks": [
+            {
+              "name": "allowed_tools",
+              "passed": true
+            },
+            {
+              "name": "required_tools_all",
+              "passed": true
+            },
+            {
+              "name": "valid_tool_sequence",
+              "passed": true
+            },
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "check_cst_status"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "check_cst_status",
+              "success": true,
+              "message": "已连接 CST（fake 在线）",
+              "description": "检查 CST 连接状态"
+            }
+          ],
+          "tool_sequence_valid": true,
+          "first_tool_valid": true,
+          "invalid_calls": [],
+          "failed_constraints": [],
+          "failure_labels": [],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 4688,
+            "completion": 226,
+            "total": 4914,
+            "calls": 3
+          },
+          "latency_ms": 44343.782,
+          "grounding_checks": [
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | 连接到 CST（在线） | CST 连接状态正常",
+              "supported": true
+            }
+          ],
+          "final_response": "已连接 CST（fake 在线）。",
+          "all_responses": [
+            "已连接 CST（fake 在线）。"
+          ],
+          "trace_run_id": "149911c0a1e8",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 1,
+            "planner_fallback_count": 0,
+            "executor_call_count": 3,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": null,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 2
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": false,
+              "call_kind": "auxiliary",
+              "response_content": "[\"check whether CST Studio Suite is connected using tool status\",\"CST Studio Suite connection status returned by tool\"]",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 110,
+                "completion_tokens": 113,
+                "total_tokens": 223
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"检查当前 CST 是否连接，并且仅依据工具返回的状态回答。\",\"constraints\":[\"请检查当前 CST 是否连接，并且只能依据工具返回的状态回答。\"],\"steps\":[{\"step_id\":\"step_1_check_connection\",\"kind\":\"tool\",\"title\":\"检查 CST 连接状态\",\"expected_output\":\"工具返回的当前 CST 连接状态。\",\"allowed_tools\":[\"check_cst_status\"]},{\"step_id\":\"step_2_report_status\",\"kind\":\"respond\",\"title\":\"依据工具结果报告状态\",\"expected_output\":\"仅根据连接状态工具返回结果给出 CST 是否已连接的回答。\",\"allowed_tools\":[]}],\"stop_condition\":\"获得 check_cst_status 的工具返回状态后，仅依据该状态完成回答。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1041,
+                "completion_tokens": 199,
+                "total_tokens": 1240
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "check_cst_status"
+              ],
+              "usage": {
+                "prompt_tokens": 1739,
+                "completion_tokens": 16,
+                "total_tokens": 1755
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已连接 CST（fake 在线）。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1908,
+                "completion_tokens": 11,
+                "total_tokens": 1919
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "context_followup_01",
+          "sample_id": "context_followup_01::repeat_01",
+          "run_index": 1,
+          "category": "context",
+          "scenario_family": "multi_turn_context_recall",
+          "design_family": "no_design",
+          "failure_family": "none",
+          "seed": 21003,
+          "valid": true,
+          "task_success": true,
+          "execution_success": true,
+          "strict_grounded_success": false,
+          "constraint_checks": [
+            {
+              "name": "allowed_tools",
+              "passed": true
+            },
+            {
+              "name": "required_tools_all",
+              "passed": true
+            },
+            {
+              "name": "valid_tool_sequence",
+              "passed": true
+            },
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "check_cst_status"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "check_cst_status",
+              "success": true,
+              "message": "已连接 CST（fake 在线）",
+              "description": "检查 CST 连接状态"
+            }
+          ],
+          "tool_sequence_valid": true,
+          "first_tool_valid": true,
+          "invalid_calls": [],
+          "failed_constraints": [],
+          "failure_labels": [
+            "grounding_or_context_failure"
+          ],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 8374,
+            "completion": 639,
+            "total": 9013,
+            "calls": 5
+          },
+          "latency_ms": 35861.624,
+          "grounding_checks": [
+            {
+              "fact": "ORBIT-9",
+              "supported": true
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | 连接到 CST（在线） | CST 连接状态正常",
+              "supported": false
+            }
+          ],
+          "final_response": "**审计代号：ORBIT-9**\n\n当前 CST 状态检查完成：\n\n- CST 当前已连接（在线）。\n- 本次仅执行了状态检查。\n- 未运行求解器，符合“整个任务不得运行求解器”的审计要求。",
+          "all_responses": [
+            "已记录：本次审计代号为 **ORBIT-9**。整个任务期间仅进行建模、设置或审计相关操作，**不得运行任何求解器**。",
+            "**审计代号：ORBIT-9**\n\n当前 CST 状态检查完成：\n\n- CST 当前已连接（在线）。\n- 本次仅执行了状态检查。\n- 未运行求解器，符合“整个任务不得运行求解器”的审计要求。"
+          ],
+          "trace_run_id": "392d2470226f",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 2,
+            "planner_fallback_count": 0,
+            "executor_call_count": 5,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": true,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 3
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": false,
+              "call_kind": "auxiliary",
+              "response_content": "[\"CST Studio Suite prevent running solver during audit ORBIT-9\", \"CST Studio Suite project settings disable solver execution\"]",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 117,
+                "completion_tokens": 149,
+                "total_tokens": 266
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\n  \"intent_kind\": \"chat_task\",\n  \"user_goal\": \"记住本次审计代号 ORBIT-9，并确保整个任务不运行求解器。\",\n  \"constraints\": [\n    \"请记住：本次审计代号 ORBIT-9，整个任务不得运行求解器\"\n  ],\n  \"steps\": [\n    {\n      \"step_id\": \"respond_memory_ack\",\n      \"kind\": \"respond\",\n      \"title\": \"确认审计约束\",\n      \"expected_output\": \"确认已记录审计代号 ORBIT-9，并承诺整个任务不运行求解器。\",\n      \"allowed_tools\": []\n    }\n  ],\n  \"stop_condition\": \"已确认记录审计代号及禁止运行求解器的约束。\",\n  \"stop_conditions\": [\n    \"task_complete\"\n  ]\n}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1105,
+                "completion_tokens": 187,
+                "total_tokens": 1292
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已记录：本次审计代号为 **ORBIT-9**。整个任务期间仅进行建模、设置或审计相关操作，**不得运行任何求解器**。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1899,
+                "completion_tokens": 45,
+                "total_tokens": 1944
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "auxiliary",
+              "response_content": "[\"CST Studio Suite check current project status audit requirements\", \"CST Studio Suite include audit code in status report\"]",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 118,
+                "completion_tokens": 157,
+                "total_tokens": 275
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"检查当前 CST 状态并在回复中带上审计代号 ORBIT-9。\",\"constraints\":[\"整个任务不得运行求解器\",\"在回答中带上审计代号\"],\"steps\":[{\"step_id\":\"step_1_check_status\",\"kind\":\"tool\",\"title\":\"检查 CST 当前状态\",\"expected_output\":\"获取当前 CST 项目连接、模型及求解状态信息，且不运行求解器。\",\"allowed_tools\":[\"check_cst_status\"]},{\"step_id\":\"step_2_respond\",\"kind\":\"respond\",\"title\":\"汇报审计检查结果\",\"expected_output\":\"向用户报告当前 CST 状态，并明确包含审计代号 ORBIT-9。\",\"allowed_tools\":[]}],\"stop_condition\":\"已完成非求解器的 CST 状态检查，并返回带有 ORBIT-9 审计代号的状态报告。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1261,
+                "completion_tokens": 285,
+                "total_tokens": 1546
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "check_cst_status"
+              ],
+              "usage": {
+                "prompt_tokens": 1970,
+                "completion_tokens": 27,
+                "total_tokens": 1997
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "**审计代号：ORBIT-9**\n\n当前 CST 状态检查完成：\n\n- CST 当前已连接（在线）。\n- 本次仅执行了状态检查。\n- 未运行求解器，符合“整个任务不得运行求解器”的审计要求。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2139,
+                "completion_tokens": 95,
+                "total_tokens": 2234
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "context_goal_revision_01",
+          "sample_id": "context_goal_revision_01::repeat_01",
+          "run_index": 1,
+          "category": "context",
+          "scenario_family": "multi_turn_goal_revision",
+          "design_family": "no_design",
+          "failure_family": "none",
+          "seed": 21008,
+          "valid": true,
+          "task_success": true,
+          "execution_success": true,
+          "strict_grounded_success": true,
+          "constraint_checks": [
+            {
+              "name": "allowed_tools",
+              "passed": true
+            },
+            {
+              "name": "required_tools_all",
+              "passed": true
+            },
+            {
+              "name": "valid_tool_sequence",
+              "passed": true
+            },
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "check_cst_status"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "check_cst_status",
+              "success": true,
+              "message": "已连接 CST（fake 在线）",
+              "description": "检查 CST 连接状态"
+            }
+          ],
+          "tool_sequence_valid": true,
+          "first_tool_valid": true,
+          "invalid_calls": [],
+          "failed_constraints": [],
+          "failure_labels": [],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 11830,
+            "completion": 952,
+            "total": 12782,
+            "calls": 7
+          },
+          "latency_ms": 50645.28,
+          "grounding_checks": [
+            {
+              "fact": "NEW-8",
+              "supported": true
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | 连接到 CST（在线） | CST 连接状态正常",
+              "supported": true
+            }
+          ],
+          "final_response": "审计代号：**NEW-8**\n\nCST 当前状态：**已连接（fake 在线）**。  \n本次仅完成状态检查，**未运行求解器**。",
+          "all_responses": [
+            "已记录审计代号：**OLD-7**。  \n本任务将不执行任何求解器操作。",
+            "已将审计代号更正为：**NEW-8**。  \n**OLD-7 已作废**；其余约束不变，整个任务仍**不得运行求解器**。",
+            "审计代号：**NEW-8**\n\nCST 当前状态：**已连接（fake 在线）**。  \n本次仅完成状态检查，**未运行求解器**。"
+          ],
+          "trace_run_id": "c6fe09b6ec44",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 3,
+            "planner_fallback_count": 0,
+            "executor_call_count": 7,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": true,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 4
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": false,
+              "call_kind": "auxiliary",
+              "response_content": "[\"CST Studio Suite record project note audit code OLD-7 without running solver\",\"CST Studio Suite prevent solver execution while documenting audit code OLD-7\"]",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 113,
+                "completion_tokens": 183,
+                "total_tokens": 296
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"记录审计代号 OLD-7，并确保整个任务不运行求解器。\",\"constraints\":[\"先记录审计代号 OLD-7，整个任务不得运行求解器\"],\"steps\":[{\"step_id\":\"respond_record_audit_code\",\"kind\":\"respond\",\"title\":\"确认记录审计代号\",\"expected_output\":\"确认已记录审计代号 OLD-7，并承诺不运行求解器。\",\"allowed_tools\":[]}],\"stop_condition\":\"审计代号 OLD-7 已记录且未执行任何求解器操作。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1133,
+                "completion_tokens": 190,
+                "total_tokens": 1323
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已记录审计代号：**OLD-7**。  \n本任务将不执行任何求解器操作。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1920,
+                "completion_tokens": 50,
+                "total_tokens": 1970
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "auxiliary",
+              "response_content": "[\"change audit code to NEW-8 mark OLD-7 obsolete keep other constraints unchanged\",\"update audit identifier NEW-8 obsolete OLD-7 without changing existing constraints\"]",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 120,
+                "completion_tokens": 150,
+                "total_tokens": 270
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\n  \"intent_kind\": \"direct_action\",\n  \"user_goal\": \"将审计代号更正为 NEW-8，并使 OLD-7 作废，同时保持不得运行求解器的约束。\",\n  \"constraints\": [\n    \"OLD-7 作废\",\n    \"其他约束保持不变\",\n    \"整个任务不得运行求解器\"\n  ],\n  \"steps\": [\n    {\n      \"step_id\": \"respond_audit_code_update\",\n      \"kind\": \"respond\",\n      \"title\": \"确认审计代号更正\",\n      \"expected_output\": \"确认 NEW-8 已记录、OLD-7 已作废，且不会运行求解器。\",\n      \"allowed_tools\": []\n    }\n  ],\n  \"stop_condition\": \"已确认审计代号更新及原有禁止运行求解器约束继续生效。\",\n  \"stop_conditions\": [\n    \"task_complete\"\n  ]\n}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1259,
+                "completion_tokens": 264,
+                "total_tokens": 1523
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已将审计代号更正为：**NEW-8**。  \n**OLD-7 已作废**；其余约束不变，整个任务仍**不得运行求解器**。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2026,
+                "completion_tokens": 48,
+                "total_tokens": 2074
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "auxiliary",
+              "response_content": "[\"check CST status using current valid audit code\", \"CST status report include audit code\"]",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 117,
+                "completion_tokens": 145,
+                "total_tokens": 262
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"按当前有效审计代号检查 CST 状态，并在答复中带上该代号。\",\"constraints\":[\"整个任务不得运行求解器\",\"当前有效审计代号为 NEW-8，OLD-7 作废\"],\"steps\":[{\"step_id\":\"check_cst_status\",\"kind\":\"tool\",\"title\":\"检查 CST 当前状态\",\"expected_output\":\"获取 CST 项目与连接的当前状态，且不运行求解器。\",\"allowed_tools\":[\"check_cst_status\"]},{\"step_id\":\"respond_with_status\",\"kind\":\"respond\",\"title\":\"汇报状态及审计代号\",\"expected_output\":\"向用户报告 CST 状态，并明确带上有效审计代号 NEW-8。\",\"allowed_tools\":[]}],\"stop_condition\":\"已完成 CST 状态检查并在答复中注明有效审计代号 NEW-8，且未运行求解器。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1311,
+                "completion_tokens": 310,
+                "total_tokens": 1621
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "check_cst_status"
+              ],
+              "usage": {
+                "prompt_tokens": 2002,
+                "completion_tokens": 46,
+                "total_tokens": 2048
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "审计代号：**NEW-8**\n\nCST 当前状态：**已连接（fake 在线）**。  \n本次仅完成状态检查，**未运行求解器**。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2179,
+                "completion_tokens": 44,
+                "total_tokens": 2223
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "status_grounded_01",
+          "sample_id": "status_grounded_01::repeat_02",
+          "run_index": 2,
+          "category": "tool_selection",
+          "scenario_family": "status_read",
+          "design_family": "no_design",
+          "failure_family": "none",
+          "seed": 21002,
+          "valid": true,
+          "task_success": true,
+          "execution_success": true,
+          "strict_grounded_success": true,
+          "constraint_checks": [
+            {
+              "name": "allowed_tools",
+              "passed": true
+            },
+            {
+              "name": "required_tools_all",
+              "passed": true
+            },
+            {
+              "name": "valid_tool_sequence",
+              "passed": true
+            },
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "check_cst_status"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "check_cst_status",
+              "success": true,
+              "message": "已连接 CST（fake 在线）",
+              "description": "检查 CST 连接状态"
+            }
+          ],
+          "tool_sequence_valid": true,
+          "first_tool_valid": true,
+          "invalid_calls": [],
+          "failed_constraints": [],
+          "failure_labels": [],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 4690,
+            "completion": 217,
+            "total": 4907,
+            "calls": 3
+          },
+          "latency_ms": 13322.006,
+          "grounding_checks": [
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | 连接到 CST（在线） | CST 连接状态正常",
+              "supported": true
+            }
+          ],
+          "final_response": "已连接 CST（fake 在线）。",
+          "all_responses": [
+            "已连接 CST（fake 在线）。"
+          ],
+          "trace_run_id": "773b3c51c7f0",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 1,
+            "planner_fallback_count": 0,
+            "executor_call_count": 2,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": null,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 2
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"检查当前 CST 是否连接，并且仅依据工具返回的状态作答。\",\"constraints\":[\"请检查当前 CST 是否连接，并且只能依据工具返回的状态回答\"],\"steps\":[{\"step_id\":\"check_connection\",\"kind\":\"tool\",\"title\":\"检查 CST 连接状态\",\"expected_output\":\"获取 CST 连接状态的工具返回结果。\",\"allowed_tools\":[\"check_cst_status\"]},{\"step_id\":\"respond_status\",\"kind\":\"respond\",\"title\":\"基于工具结果回答\",\"expected_output\":\"仅依据连接状态工具返回结果说明 CST 是否已连接。\",\"allowed_tools\":[]}],\"stop_condition\":\"获得 check_cst_status 的返回结果后，仅按该结果回答连接状态。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1041,
+                "completion_tokens": 190,
+                "total_tokens": 1231
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "check_cst_status"
+              ],
+              "usage": {
+                "prompt_tokens": 1739,
+                "completion_tokens": 16,
+                "total_tokens": 1755
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已连接 CST（fake 在线）。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1910,
+                "completion_tokens": 11,
+                "total_tokens": 1921
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "context_followup_01",
+          "sample_id": "context_followup_01::repeat_02",
+          "run_index": 2,
+          "category": "context",
+          "scenario_family": "multi_turn_context_recall",
+          "design_family": "no_design",
+          "failure_family": "none",
+          "seed": 21004,
+          "valid": true,
+          "task_success": true,
+          "execution_success": true,
+          "strict_grounded_success": false,
+          "constraint_checks": [
+            {
+              "name": "allowed_tools",
+              "passed": true
+            },
+            {
+              "name": "required_tools_all",
+              "passed": true
+            },
+            {
+              "name": "valid_tool_sequence",
+              "passed": true
+            },
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "check_cst_status"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "check_cst_status",
+              "success": true,
+              "message": "已连接 CST（fake 在线）",
+              "description": "检查 CST 连接状态"
+            }
+          ],
+          "tool_sequence_valid": true,
+          "first_tool_valid": true,
+          "invalid_calls": [],
+          "failed_constraints": [],
+          "failure_labels": [
+            "grounding_or_context_failure"
+          ],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 8436,
+            "completion": 645,
+            "total": 9081,
+            "calls": 5
+          },
+          "latency_ms": 23954.005,
+          "grounding_checks": [
+            {
+              "fact": "ORBIT-9",
+              "supported": true
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | 连接到 CST（在线） | CST 连接状态正常",
+              "supported": false
+            }
+          ],
+          "final_response": "**审计代号：ORBIT-9**\n\n已完成当前 CST 状态检查：\n\n- CST 当前已连接，状态正常（在线）。\n- 本次检查仅执行状态查询，**未运行求解器**。\n- 将继续遵守 ORBIT-9 审计要求：整个任务期间不执行求解。",
+          "all_responses": [
+            "已记录本次审计代号：**ORBIT-9**。  \n整个任务期间将**不运行求解器**，仅可进行建模、参数/边界/端口/监视器设置及结果结构检查等非求解操作。",
+            "**审计代号：ORBIT-9**\n\n已完成当前 CST 状态检查：\n\n- CST 当前已连接，状态正常（在线）。\n- 本次检查仅执行状态查询，**未运行求解器**。\n- 将继续遵守 ORBIT-9 审计要求：整个任务期间不执行求解。"
+          ],
+          "trace_run_id": "ec56931f8b60",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 2,
+            "planner_fallback_count": 0,
+            "executor_call_count": 3,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": true,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 3
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\n  \"intent_kind\": \"direct_action\",\n  \"user_goal\": \"记住本次审计代号 ORBIT-9，且整个任务不得运行求解器。\",\n  \"constraints\": [\n    \"请记住：本次审计代号 ORBIT-9，整个任务不得运行求解器\"\n  ],\n  \"steps\": [\n    {\n      \"step_id\": \"respond_memory_ack\",\n      \"kind\": \"respond\",\n      \"title\": \"确认审计约束\",\n      \"expected_output\": \"确认已记录审计代号 ORBIT-9，并承诺整个任务不运行求解器。\",\n      \"allowed_tools\": []\n    }\n  ],\n  \"stop_condition\": \"已确认记录审计代号与禁止运行求解器的约束。\",\n  \"stop_conditions\": [\n    \"task_complete\"\n  ]\n}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1105,
+                "completion_tokens": 187,
+                "total_tokens": 1292
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已记录本次审计代号：**ORBIT-9**。  \n整个任务期间将**不运行求解器**，仅可进行建模、参数/边界/端口/监视器设置及结果结构检查等非求解操作。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1899,
+                "completion_tokens": 61,
+                "total_tokens": 1960
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"检查当前 CST 状态并在回复中注明审计代号 ORBIT-9。\",\"constraints\":[\"本次审计代号 ORBIT-9\",\"整个任务不得运行求解器\",\"在回答中带上审计代号\"],\"steps\":[{\"step_id\":\"step_1\",\"kind\":\"tool\",\"title\":\"检查 CST 当前状态\",\"expected_output\":\"返回当前 CST 项目连接与状态信息，且不运行求解器。\",\"allowed_tools\":[\"check_cst_status\"]},{\"step_id\":\"step_2\",\"kind\":\"respond\",\"title\":\"汇报审计检查结果\",\"expected_output\":\"带审计代号 ORBIT-9 的当前状态说明，并确认未运行求解器。\",\"allowed_tools\":[]}],\"stop_condition\":\"已完成当前 CST 状态检查并以审计代号 ORBIT-9 汇报，期间未运行求解器。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1293,
+                "completion_tokens": 268,
+                "total_tokens": 1561
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "check_cst_status"
+              ],
+              "usage": {
+                "prompt_tokens": 1985,
+                "completion_tokens": 32,
+                "total_tokens": 2017
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "**审计代号：ORBIT-9**\n\n已完成当前 CST 状态检查：\n\n- CST 当前已连接，状态正常（在线）。\n- 本次检查仅执行状态查询，**未运行求解器**。\n- 将继续遵守 ORBIT-9 审计要求：整个任务期间不执行求解。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2154,
+                "completion_tokens": 97,
+                "total_tokens": 2251
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "context_goal_revision_01",
+          "sample_id": "context_goal_revision_01::repeat_02",
+          "run_index": 2,
+          "category": "context",
+          "scenario_family": "multi_turn_goal_revision",
+          "design_family": "no_design",
+          "failure_family": "none",
+          "seed": 21009,
+          "valid": true,
+          "task_success": true,
+          "execution_success": true,
+          "strict_grounded_success": true,
+          "constraint_checks": [
+            {
+              "name": "allowed_tools",
+              "passed": true
+            },
+            {
+              "name": "required_tools_all",
+              "passed": true
+            },
+            {
+              "name": "valid_tool_sequence",
+              "passed": true
+            },
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "check_cst_status"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "check_cst_status",
+              "success": true,
+              "message": "已连接 CST（fake 在线）",
+              "description": "检查 CST 连接状态"
+            }
+          ],
+          "tool_sequence_valid": true,
+          "first_tool_valid": true,
+          "invalid_calls": [],
+          "failed_constraints": [],
+          "failure_labels": [],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 11913,
+            "completion": 995,
+            "total": 12908,
+            "calls": 7
+          },
+          "latency_ms": 35537.019,
+          "grounding_checks": [
+            {
+              "fact": "NEW-8",
+              "supported": true
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | 连接到 CST（在线） | CST 连接状态正常",
+              "supported": true
+            }
+          ],
+          "final_response": "审计代号：**NEW-8**。  \n\nCST 状态检查完成：**已连接 CST（在线）**。  \n全程未运行求解器。",
+          "all_responses": [
+            "已记录审计代号：**OLD-7**。  \n本任务期间将仅进行建模/设置/结果前检查，**不会运行任何求解器**。",
+            "已将审计代号更正为：**NEW-8**。  \n**OLD-7 已作废**；其余约束不变，整个任务期间仍**禁止运行求解器**。",
+            "审计代号：**NEW-8**。  \n\nCST 状态检查完成：**已连接 CST（在线）**。  \n全程未运行求解器。"
+          ],
+          "trace_run_id": "2862adeb9c62",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 3,
+            "planner_fallback_count": 0,
+            "executor_call_count": 4,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": true,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 4
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\n  \"intent_kind\": \"direct_action\",\n  \"user_goal\": \"记录审计代号 OLD-7，并确保整个任务不运行求解器。\",\n  \"constraints\": [\n    \"先记录审计代号 OLD-7\",\n    \"整个任务不得运行求解器\"\n  ],\n  \"steps\": [\n    {\n      \"step_id\": \"respond_audit_recorded\",\n      \"kind\": \"respond\",\n      \"title\": \"确认记录与禁用求解器\",\n      \"expected_output\": \"确认已记录审计代号 OLD-7，且本任务不会运行求解器。\",\n      \"allowed_tools\": []\n    }\n  ],\n  \"stop_condition\": \"审计代号已记录并已确认任务期间不运行求解器。\",\n  \"stop_conditions\": [\n    \"task_complete\"\n  ]\n}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1133,
+                "completion_tokens": 235,
+                "total_tokens": 1368
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已记录审计代号：**OLD-7**。  \n本任务期间将仅进行建模/设置/结果前检查，**不会运行任何求解器**。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1921,
+                "completion_tokens": 75,
+                "total_tokens": 1996
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\n  \"intent_kind\": \"direct_action\",\n  \"user_goal\": \"将审计代号更正为 NEW-8，并使 OLD-7 作废，同时保持不得运行求解器的约束。\",\n  \"constraints\": [\n    \"OLD-7 作废\",\n    \"整个任务不得运行求解器\",\n    \"其他约束保持不变\"\n  ],\n  \"steps\": [\n    {\n      \"step_id\": \"respond_audit_code_update\",\n      \"kind\": \"respond\",\n      \"title\": \"确认审计代号更正\",\n      \"expected_output\": \"确认已记录 NEW-8、OLD-7 已作废，并确认继续不运行求解器。\",\n      \"allowed_tools\": []\n    }\n  ],\n  \"stop_condition\": \"已确认审计代号更正及持续生效的禁用求解器约束。\",\n  \"stop_conditions\": [\n    \"task_complete\"\n  ]\n}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1285,
+                "completion_tokens": 267,
+                "total_tokens": 1552
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已将审计代号更正为：**NEW-8**。  \n**OLD-7 已作废**；其余约束不变，整个任务期间仍**禁止运行求解器**。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2039,
+                "completion_tokens": 67,
+                "total_tokens": 2106
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"检查 CST 当前状态，并在答复中带上有效审计代号 NEW-8。\",\"constraints\":[\"整个任务不得运行求解器\",\"在答复中带上该代号\"],\"steps\":[{\"step_id\":\"check_cst_state\",\"kind\":\"tool\",\"title\":\"检查 CST 状态\",\"expected_output\":\"获取当前 CST 项目及连接状态信息，且不运行求解器。\",\"allowed_tools\":[\"check_cst_status\"]},{\"step_id\":\"respond_with_audit_code\",\"kind\":\"respond\",\"title\":\"汇报状态\",\"expected_output\":\"向用户报告 CST 状态，并明确附带有效审计代号 NEW-8。\",\"allowed_tools\":[]}],\"stop_condition\":\"已完成 CST 状态检查并在答复中附带有效审计代号 NEW-8，且全程未运行求解器。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1326,
+                "completion_tokens": 275,
+                "total_tokens": 1601
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "check_cst_status"
+              ],
+              "usage": {
+                "prompt_tokens": 2019,
+                "completion_tokens": 35,
+                "total_tokens": 2054
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "审计代号：**NEW-8**。  \n\nCST 状态检查完成：**已连接 CST（在线）**。  \n全程未运行求解器。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2190,
+                "completion_tokens": 41,
+                "total_tokens": 2231
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "status_grounded_01",
+          "sample_id": "status_grounded_01::repeat_03",
+          "run_index": 3,
+          "category": "tool_selection",
+          "scenario_family": "status_read",
+          "design_family": "no_design",
+          "failure_family": "none",
+          "seed": 21003,
+          "valid": true,
+          "task_success": true,
+          "execution_success": true,
+          "strict_grounded_success": true,
+          "constraint_checks": [
+            {
+              "name": "allowed_tools",
+              "passed": true
+            },
+            {
+              "name": "required_tools_all",
+              "passed": true
+            },
+            {
+              "name": "valid_tool_sequence",
+              "passed": true
+            },
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "check_cst_status"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "check_cst_status",
+              "success": true,
+              "message": "已连接 CST（fake 在线）",
+              "description": "检查 CST 连接状态"
+            }
+          ],
+          "tool_sequence_valid": true,
+          "first_tool_valid": true,
+          "invalid_calls": [],
+          "failed_constraints": [],
+          "failure_labels": [],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 4696,
+            "completion": 225,
+            "total": 4921,
+            "calls": 3
+          },
+          "latency_ms": 9856.366,
+          "grounding_checks": [
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | 连接到 CST（在线） | CST 连接状态正常",
+              "supported": true
+            }
+          ],
+          "final_response": "当前 CST 已连接（fake 在线）。",
+          "all_responses": [
+            "当前 CST 已连接（fake 在线）。"
+          ],
+          "trace_run_id": "6e00e38db6da",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 1,
+            "planner_fallback_count": 0,
+            "executor_call_count": 2,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": null,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 2
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"检查当前 CST 是否连接，并且仅依据工具返回的状态回答。\",\"constraints\":[\"请检查当前 CST 是否连接，并且只能依据工具返回的状态回答\"],\"steps\":[{\"step_id\":\"step_1_check_connection\",\"kind\":\"tool\",\"title\":\"检查 CST 连接状态\",\"expected_output\":\"返回当前 CST 连接状态的工具结果。\",\"allowed_tools\":[\"check_cst_status\"]},{\"step_id\":\"step_2_report_status\",\"kind\":\"respond\",\"title\":\"依据工具结果报告状态\",\"expected_output\":\"仅根据连接状态检查工具的返回结果回答是否已连接。\",\"allowed_tools\":[]}],\"stop_condition\":\"已获得 check_cst_status 的工具返回，并仅据此报告当前 CST 是否连接。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1041,
+                "completion_tokens": 197,
+                "total_tokens": 1238
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "check_cst_status"
+              ],
+              "usage": {
+                "prompt_tokens": 1741,
+                "completion_tokens": 16,
+                "total_tokens": 1757
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "当前 CST 已连接（fake 在线）。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1914,
+                "completion_tokens": 12,
+                "total_tokens": 1926
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "context_followup_01",
+          "sample_id": "context_followup_01::repeat_03",
+          "run_index": 3,
+          "category": "context",
+          "scenario_family": "multi_turn_context_recall",
+          "design_family": "no_design",
+          "failure_family": "none",
+          "seed": 21005,
+          "valid": true,
+          "task_success": true,
+          "execution_success": true,
+          "strict_grounded_success": false,
+          "constraint_checks": [
+            {
+              "name": "allowed_tools",
+              "passed": true
+            },
+            {
+              "name": "required_tools_all",
+              "passed": true
+            },
+            {
+              "name": "valid_tool_sequence",
+              "passed": true
+            },
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "check_cst_status"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "check_cst_status",
+              "success": true,
+              "message": "已连接 CST（fake 在线）",
+              "description": "检查 CST 连接状态"
+            }
+          ],
+          "tool_sequence_valid": true,
+          "first_tool_valid": true,
+          "invalid_calls": [],
+          "failed_constraints": [],
+          "failure_labels": [
+            "grounding_or_context_failure"
+          ],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 8393,
+            "completion": 579,
+            "total": 8972,
+            "calls": 5
+          },
+          "latency_ms": 21173.377,
+          "grounding_checks": [
+            {
+              "fact": "ORBIT-9",
+              "supported": true
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | 连接到 CST（在线） | CST 连接状态正常",
+              "supported": false
+            }
+          ],
+          "final_response": "**审计代号：ORBIT-9**\n\n当前 CST 状态检查完成：\n\n- 已成功连接至 CST Studio Suite（在线）。\n- 本次操作仅进行了状态连接检查。\n- **未运行求解器**，符合 ORBIT-9 审计要求。",
+          "all_responses": [
+            "已记录本次审计代号：**ORBIT-9**。  \n整个任务期间将**不运行任何求解器**，仅可进行不触发求解的建模、设置检查或结果树检查操作。",
+            "**审计代号：ORBIT-9**\n\n当前 CST 状态检查完成：\n\n- 已成功连接至 CST Studio Suite（在线）。\n- 本次操作仅进行了状态连接检查。\n- **未运行求解器**，符合 ORBIT-9 审计要求。"
+          ],
+          "trace_run_id": "adab8f1dbdc6",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 2,
+            "planner_fallback_count": 0,
+            "executor_call_count": 3,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": true,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 3
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"chat_task\",\"user_goal\":\"记住本次审计代号 ORBIT-9，并确保整个任务不运行求解器。\",\"constraints\":[\"请记住：本次审计代号 ORBIT-9，整个任务不得运行求解器\"],\"steps\":[{\"step_id\":\"respond_memory_ack\",\"kind\":\"respond\",\"title\":\"确认审计约束\",\"expected_output\":\"确认已记录审计代号 ORBIT-9，并承诺不运行求解器。\",\"allowed_tools\":[]}],\"stop_condition\":\"已确认记录审计代号且未执行任何求解器操作。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1105,
+                "completion_tokens": 144,
+                "total_tokens": 1249
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已记录本次审计代号：**ORBIT-9**。  \n整个任务期间将**不运行任何求解器**，仅可进行不触发求解的建模、设置检查或结果树检查操作。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1898,
+                "completion_tokens": 54,
+                "total_tokens": 1952
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"检查当前 CST 状态，并在回答中带上审计代号 ORBIT-9。\",\"constraints\":[\"本次审计代号 ORBIT-9\",\"整个任务不得运行求解器\"],\"steps\":[{\"step_id\":\"step_1_check_status\",\"kind\":\"tool\",\"title\":\"检查当前 CST 状态\",\"expected_output\":\"获取当前项目与 CST 连接状态，且不运行求解器。\",\"allowed_tools\":[\"check_cst_status\"]},{\"step_id\":\"step_2_respond\",\"kind\":\"respond\",\"title\":\"汇报审计检查结果\",\"expected_output\":\"向用户说明当前 CST 状态，并带上审计代号 ORBIT-9。\",\"allowed_tools\":[]}],\"stop_condition\":\"完成不触发求解器的 CST 状态检查并汇报结果。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1279,
+                "completion_tokens": 250,
+                "total_tokens": 1529
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "check_cst_status"
+              ],
+              "usage": {
+                "prompt_tokens": 1969,
+                "completion_tokens": 28,
+                "total_tokens": 1997
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "**审计代号：ORBIT-9**\n\n当前 CST 状态检查完成：\n\n- 已成功连接至 CST Studio Suite（在线）。\n- 本次操作仅进行了状态连接检查。\n- **未运行求解器**，符合 ORBIT-9 审计要求。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2142,
+                "completion_tokens": 103,
+                "total_tokens": 2245
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "context_goal_revision_01",
+          "sample_id": "context_goal_revision_01::repeat_03",
+          "run_index": 3,
+          "category": "context",
+          "scenario_family": "multi_turn_goal_revision",
+          "design_family": "no_design",
+          "failure_family": "none",
+          "seed": 21010,
+          "valid": true,
+          "task_success": true,
+          "execution_success": true,
+          "strict_grounded_success": true,
+          "constraint_checks": [
+            {
+              "name": "allowed_tools",
+              "passed": true
+            },
+            {
+              "name": "required_tools_all",
+              "passed": true
+            },
+            {
+              "name": "valid_tool_sequence",
+              "passed": true
+            },
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "check_cst_status"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "check_cst_status",
+              "success": true,
+              "message": "已连接 CST（fake 在线）",
+              "description": "检查 CST 连接状态"
+            }
+          ],
+          "tool_sequence_valid": true,
+          "first_tool_valid": true,
+          "invalid_calls": [],
+          "failed_constraints": [],
+          "failure_labels": [],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 11832,
+            "completion": 817,
+            "total": 12649,
+            "calls": 7
+          },
+          "latency_ms": 31035.003,
+          "grounding_checks": [
+            {
+              "fact": "NEW-8",
+              "supported": true
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | 连接到 CST（在线） | CST 连接状态正常",
+              "supported": true
+            }
+          ],
+          "final_response": "CST 状态检查完成：**已连接 CST（在线）**。  \n有效审计代号：**NEW-8**。  \n未运行求解器。",
+          "all_responses": [
+            "已记录审计代号：**OLD-7**。  \n本任务将**不运行任何求解器操作**。",
+            "已更正审计代号为：**NEW-8**。  \n**OLD-7 已作废**；其余约束保持不变，整个任务仍**不得运行求解器**。",
+            "CST 状态检查完成：**已连接 CST（在线）**。  \n有效审计代号：**NEW-8**。  \n未运行求解器。"
+          ],
+          "trace_run_id": "960bcfa05c6d",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 3,
+            "planner_fallback_count": 0,
+            "executor_call_count": 4,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": true,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 4
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"记录审计代号 OLD-7，且整个任务不运行求解器。\",\"constraints\":[\"先记录审计代号 OLD-7，整个任务不得运行求解器\"],\"steps\":[{\"step_id\":\"step_1\",\"kind\":\"respond\",\"title\":\"确认审计记录与不求解约束\",\"expected_output\":\"确认已记录审计代号 OLD-7，并承诺本任务不运行求解器。\",\"allowed_tools\":[]}],\"stop_condition\":\"已确认记录审计代号且未执行任何求解器操作。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1133,
+                "completion_tokens": 141,
+                "total_tokens": 1274
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已记录审计代号：**OLD-7**。  \n本任务将**不运行任何求解器操作**。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1922,
+                "completion_tokens": 31,
+                "total_tokens": 1953
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"chat_task\",\"user_goal\":\"将审计代号更正为 NEW-8，并作废 OLD-7，继续遵守不运行求解器的约束。\",\"constraints\":[\"OLD-7 作废\",\"其他约束保持不变\",\"整个任务不得运行求解器\"],\"steps\":[{\"step_id\":\"respond_correction\",\"kind\":\"respond\",\"title\":\"确认审计代号更正\",\"expected_output\":\"确认已记录 NEW-8、OLD-7 已作废，并确认不运行求解器约束继续有效。\",\"allowed_tools\":[]}],\"stop_condition\":\"已向用户确认审计代号更正及保留的约束。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1263,
+                "completion_tokens": 269,
+                "total_tokens": 1532
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已更正审计代号为：**NEW-8**。  \n**OLD-7 已作废**；其余约束保持不变，整个任务仍**不得运行求解器**。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2024,
+                "completion_tokens": 63,
+                "total_tokens": 2087
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"按当前有效审计代号检查 CST 状态，并在答复中带上该代号。\",\"constraints\":[\"整个任务不得运行求解器\"],\"steps\":[{\"step_id\":\"check_cst_status\",\"kind\":\"tool\",\"title\":\"检查 CST 当前状态\",\"expected_output\":\"获取当前 CST 项目与连接状态信息。\",\"allowed_tools\":[\"check_cst_status\"]},{\"step_id\":\"respond_with_audit_code\",\"kind\":\"respond\",\"title\":\"汇报状态及有效审计代号\",\"expected_output\":\"答复 CST 状态，并注明当前有效审计代号 NEW-8。\",\"allowed_tools\":[]}],\"stop_condition\":\"已完成 CST 状态检查并在答复中标注有效审计代号 NEW-8，且未运行求解器。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1313,
+                "completion_tokens": 239,
+                "total_tokens": 1552
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "check_cst_status"
+              ],
+              "usage": {
+                "prompt_tokens": 2005,
+                "completion_tokens": 34,
+                "total_tokens": 2039
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "CST 状态检查完成：**已连接 CST（在线）**。  \n有效审计代号：**NEW-8**。  \n未运行求解器。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2172,
+                "completion_tokens": 40,
+                "total_tokens": 2212
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        }
+      ]
+    }
+  },
+  "comparisons": {},
+  "threshold_results": [
+    {
+      "name": "full_task_success_rate",
+      "passed": true,
+      "value": 1.0,
+      "threshold": ">= 0.8"
+    },
+    {
+      "name": "full_hard_constraint_case_rate",
+      "passed": true,
+      "value": 1.0,
+      "threshold": "== 1.0"
+    },
+    {
+      "name": "full_exact_tool_sequence_match_rate",
+      "passed": true,
+      "value": 1.0,
+      "threshold": ">= 0.8"
+    },
+    {
+      "name": "full_invalid_call_rate",
+      "passed": true,
+      "value": 0.0,
+      "threshold": "<= 0.1"
+    },
+    {
+      "name": "full_lexical_required_fact_recall",
+      "passed": false,
+      "value": 0.8,
+      "threshold": ">= 0.9"
+    },
+    {
+      "name": "full_planner_fallback_count",
+      "passed": true,
+      "value": 0,
+      "threshold": "== 0"
+    },
+    {
+      "name": "full_ablation_path_valid",
+      "passed": true,
+      "value": [],
+      "threshold": "empty"
+    },
+    {
+      "name": "full_path_valid",
+      "passed": true,
+      "value": [],
+      "threshold": "empty"
+    }
+  ],
+  "limitations": [
+    "Fake CST validates orchestration and recovery contracts, not CST electromagnetic fidelity.",
+    "The deterministic provider is a mechanism smoke test, bypasses RAG retrieval, uses lexical memory fallback, and must not be cited as LLM quality evidence.",
+    "3 unique development_regression cases across 3 repeat(s) are not automatically a statistically powered benchmark.",
+    "Required-fact recall uses case-authored lexical alternatives; task_success reports execution success separately, while strict_grounded_success additionally requires lexical fact matches.",
+    "Claim precision and semantic entailment remain unevaluated until a blinded manual or calibrated claim-level review is attached.",
+    "The development_regression split and its lexical oracle were iterated during development; it is not a blinded held-out set."
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": "agent-e2e-manifest-v1",
+  "dataset_id": "cst-agent-e2e-fake-cst-v2",
+  "dataset_split": "development_regression",
+  "dataset_role": "development_regression",
+  "dataset_sha256": "9127d1b9bfc4868977ca36ae7ce0ff8bffb146c60ec158efcef24136034ba9c0",
+  "case_count": 10,
+  "case_ids": [
+    "status_grounded_01",
+    "planner_no_solver_01",
+    "context_followup_01",
+    "recovery_disconnect_01",
+    "tool_memory_rerank_01",
+    "offline_status_grounded_01",
+    "ack_constraint_no_tool_01",
+    "context_goal_revision_01",
+    "recovery_with_context_01",
+    "status_grounded_english_01"
+  ],
+  "category_counts": {
+    "context": 2,
+    "groundedness": 1,
+    "planning": 2,
+    "recovery": 2,
+    "tool_selection": 3
+  },
+  "family_counts": {
+    "scenario_family": {
+      "multi_turn_context_recall": 1,
+      "multi_turn_goal_revision": 1,
+      "multi_turn_recovery": 1,
+      "mutating_probe_recovery": 1,
+      "no_tool_acknowledgement": 1,
+      "status_read": 1,
+      "status_read_multilingual": 1,
+      "status_read_negative_state": 1,
+      "status_read_with_constraints": 1,
+      "status_read_with_memory": 1
+    },
+    "design_family": {
+      "no_design": 10
+    },
+    "failure_family": {
+      "disconnect": 2,
+      "none": 7,
+      "offline_state": 1
+    }
+  },
+  "dataset_frozen_at": "2026-08-10T00:00:00+08:00",
+  "annotation_policy": "Developer-authored regression oracles. Tool and recovery constraints are machine checked; response facts use lexical alternatives and require separate claim-level review for semantic claims.",
+  "generation_provenance": {
+    "authoring_method": "developer_authored_and_iterated",
+    "model_outputs_used_to_edit_oracles": true,
+    "blinded": false
+  },
+  "manifest_created_at": "2026-08-10T01:46:52.280783+00:00",
+  "code_revision_at_freeze": "b7f3744503e72c83f76f2b857ee0dbf2a97c89d2",
+  "source_path": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\agent_e2e_cases.json",
+  "honest_boundary": "A matching SHA proves dataset immutability only. Blinded status depends on the recorded authoring and access-control process."
+}

@@ -1,0 +1,550 @@
+{
+  "schema_version": "agent-e2e-report-v1",
+  "run": {
+    "run_id": "1026d724c309",
+    "timestamp_utc": "2026-08-09T16:55:49.705408+00:00",
+    "dataset_id": "cst-agent-e2e-fake-cst-v1",
+    "dataset_path": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\agent_e2e_cases.json",
+    "dataset_sha256": "59d716875c96a18a55beba729827fd4c4831e0ea22efaad7b4ba4a462d1c7e93",
+    "code_revision": "b7f3744503e72c83f76f2b857ee0dbf2a97c89d2",
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "provider": "deterministic_proxy",
+    "model": "gpt-5.5",
+    "case_count": 5,
+    "groups": [
+      "full"
+    ],
+    "large_artifact_root": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\reports\\.agent_e2e_artifacts",
+    "secrets_recorded": false
+  },
+  "groups": {
+    "full": {
+      "config": {
+        "memory": true,
+        "context": true,
+        "planner": true,
+        "recovery": true,
+        "tool_use_memory": true
+      },
+      "path_proof": {
+        "planner_call_count": 18,
+        "memory_recall_count": 2,
+        "recovery_attempt_count": 0,
+        "tool_memory_recall_count": 2,
+        "context_budget_event_count": 12,
+        "invalid_ablation_cases": [
+          "prior_turn_missing_from_context"
+        ]
+      },
+      "metrics": {
+        "task_success_rate": 0.0,
+        "constraint_adherence_rate": 1.0,
+        "hard_constraint_case_rate": 1.0,
+        "tool_selection_accuracy": 0.0,
+        "invalid_call_rate": 0.0,
+        "recovery_rate": 0.0,
+        "tokens": {
+          "prompt_mean": 0.0,
+          "completion_mean": 0.0,
+          "total_mean": 0.0,
+          "total_p95": 0.0,
+          "estimated": false
+        },
+        "latency_ms": {
+          "mean": 33239.5778,
+          "median": 5238.749,
+          "p95": 145397.426
+        },
+        "groundedness": {
+          "claim_precision": 0.0,
+          "required_fact_recall": 0.0
+        }
+      },
+      "cases": [
+        {
+          "case_id": "status_grounded_01",
+          "category": "tool_selection",
+          "valid": true,
+          "task_success": false,
+          "constraint_checks": [
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [],
+          "tool_events": [],
+          "tool_sequence_valid": false,
+          "invalid_calls": [],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 0,
+            "completion": 0,
+            "total": 0,
+            "calls": 0
+          },
+          "latency_ms": 145397.426,
+          "grounding_checks": [
+            {
+              "fact": "fake 在线",
+              "supported": false
+            }
+          ],
+          "final_response": "当前系统提示、工具定义和本轮必要上下文超过 token 预算，已停止请求模型；请缩小工具范围或提高 AGENT_CONTEXT_MAX_TOKENS。",
+          "all_responses": [
+            "当前系统提示、工具定义和本轮必要上下文超过 token 预算，已停止请求模型；请缩小工具范围或提高 AGENT_CONTEXT_MAX_TOKENS。"
+          ],
+          "trace_run_id": "68607971a7c8",
+          "trace_status": "failed",
+          "path_proof": {
+            "planner_call_count": 3,
+            "executor_call_count": 0,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": null,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "set_units",
+              "store_parameter",
+              "delete_parameter",
+              "create_material",
+              "create_brick",
+              "create_cylinder",
+              "set_frequency_range",
+              "set_boundary",
+              "set_background",
+              "create_discrete_port",
+              "create_farfield_monitor",
+              "boolean_subtract",
+              "change_solver_type",
+              "run_solver",
+              "recall_tool_result",
+              "use_template",
+              "execute_vba_script",
+              "build_rectangular_patch_fast",
+              "build_dipole_fast",
+              "build_pixel_patch_fast",
+              "check_cst_status",
+              "open_results",
+              "list_results",
+              "read_result",
+              "get_s_parameter",
+              "list_project_materials"
+            ],
+            "context_budget_event_count": 2
+          },
+          "errors": []
+        },
+        {
+          "case_id": "planner_no_solver_01",
+          "category": "planning",
+          "valid": true,
+          "task_success": false,
+          "constraint_checks": [
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [],
+          "tool_events": [],
+          "tool_sequence_valid": false,
+          "invalid_calls": [],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 0,
+            "completion": 0,
+            "total": 0,
+            "calls": 0
+          },
+          "latency_ms": 3166.404,
+          "grounding_checks": [
+            {
+              "fact": "fake 在线",
+              "supported": false
+            }
+          ],
+          "final_response": "当前系统提示、工具定义和本轮必要上下文超过 token 预算，已停止请求模型；请缩小工具范围或提高 AGENT_CONTEXT_MAX_TOKENS。",
+          "all_responses": [
+            "当前系统提示、工具定义和本轮必要上下文超过 token 预算，已停止请求模型；请缩小工具范围或提高 AGENT_CONTEXT_MAX_TOKENS。"
+          ],
+          "trace_run_id": "7b00e36ec684",
+          "trace_status": "failed",
+          "path_proof": {
+            "planner_call_count": 3,
+            "executor_call_count": 0,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": null,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "set_units",
+              "store_parameter",
+              "delete_parameter",
+              "create_material",
+              "create_brick",
+              "create_cylinder",
+              "set_frequency_range",
+              "set_boundary",
+              "set_background",
+              "create_discrete_port",
+              "create_farfield_monitor",
+              "boolean_subtract",
+              "change_solver_type",
+              "run_solver",
+              "recall_tool_result",
+              "use_template",
+              "execute_vba_script",
+              "build_rectangular_patch_fast",
+              "build_dipole_fast",
+              "build_pixel_patch_fast",
+              "check_cst_status",
+              "open_results",
+              "list_results",
+              "read_result",
+              "get_s_parameter",
+              "list_project_materials"
+            ],
+            "context_budget_event_count": 2
+          },
+          "errors": []
+        },
+        {
+          "case_id": "context_followup_01",
+          "category": "context",
+          "valid": true,
+          "task_success": false,
+          "constraint_checks": [
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [],
+          "tool_events": [],
+          "tool_sequence_valid": false,
+          "invalid_calls": [],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 0,
+            "completion": 0,
+            "total": 0,
+            "calls": 0
+          },
+          "latency_ms": 8083.482,
+          "grounding_checks": [
+            {
+              "fact": "ORBIT-9",
+              "supported": false
+            },
+            {
+              "fact": "fake 在线",
+              "supported": false
+            }
+          ],
+          "final_response": "当前系统提示、工具定义和本轮必要上下文超过 token 预算，已停止请求模型；请缩小工具范围或提高 AGENT_CONTEXT_MAX_TOKENS。",
+          "all_responses": [
+            "当前系统提示、工具定义和本轮必要上下文超过 token 预算，已停止请求模型；请缩小工具范围或提高 AGENT_CONTEXT_MAX_TOKENS。",
+            "当前系统提示、工具定义和本轮必要上下文超过 token 预算，已停止请求模型；请缩小工具范围或提高 AGENT_CONTEXT_MAX_TOKENS。"
+          ],
+          "trace_run_id": "dfad2bc8eb30",
+          "trace_status": "failed",
+          "path_proof": {
+            "planner_call_count": 6,
+            "executor_call_count": 0,
+            "memory_recall_count": 1,
+            "context_prior_turn_visible": false,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "set_units",
+              "store_parameter",
+              "delete_parameter",
+              "create_material",
+              "create_brick",
+              "create_cylinder",
+              "set_frequency_range",
+              "set_boundary",
+              "set_background",
+              "create_discrete_port",
+              "create_farfield_monitor",
+              "boolean_subtract",
+              "change_solver_type",
+              "run_solver",
+              "recall_tool_result",
+              "use_template",
+              "execute_vba_script",
+              "build_rectangular_patch_fast",
+              "build_dipole_fast",
+              "build_pixel_patch_fast",
+              "check_cst_status",
+              "open_results",
+              "list_results",
+              "read_result",
+              "get_s_parameter",
+              "list_project_materials"
+            ],
+            "context_budget_event_count": 4
+          },
+          "errors": []
+        },
+        {
+          "case_id": "recovery_disconnect_01",
+          "category": "recovery",
+          "valid": true,
+          "task_success": false,
+          "constraint_checks": [
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [],
+          "tool_events": [],
+          "tool_sequence_valid": false,
+          "invalid_calls": [],
+          "recovery_events": [],
+          "recovery_success": false,
+          "token_usage": {
+            "prompt": 0,
+            "completion": 0,
+            "total": 0,
+            "calls": 0
+          },
+          "latency_ms": 4311.828,
+          "grounding_checks": [
+            {
+              "fact": "after reconnect",
+              "supported": false
+            }
+          ],
+          "final_response": "当前系统提示、工具定义和本轮必要上下文超过 token 预算，已停止请求模型；请缩小工具范围或提高 AGENT_CONTEXT_MAX_TOKENS。",
+          "all_responses": [
+            "当前系统提示、工具定义和本轮必要上下文超过 token 预算，已停止请求模型；请缩小工具范围或提高 AGENT_CONTEXT_MAX_TOKENS。"
+          ],
+          "trace_run_id": "77f34bc56794",
+          "trace_status": "failed",
+          "path_proof": {
+            "planner_call_count": 3,
+            "executor_call_count": 0,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": null,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "set_units",
+              "store_parameter",
+              "delete_parameter",
+              "create_material",
+              "create_brick",
+              "create_cylinder",
+              "set_frequency_range",
+              "set_boundary",
+              "set_background",
+              "create_discrete_port",
+              "create_farfield_monitor",
+              "boolean_subtract",
+              "change_solver_type",
+              "run_solver",
+              "recall_tool_result",
+              "use_template",
+              "execute_vba_script",
+              "build_rectangular_patch_fast",
+              "build_dipole_fast",
+              "build_pixel_patch_fast",
+              "check_cst_status",
+              "open_results",
+              "list_results",
+              "read_result",
+              "get_s_parameter",
+              "list_project_materials"
+            ],
+            "context_budget_event_count": 2
+          },
+          "errors": []
+        },
+        {
+          "case_id": "tool_memory_rerank_01",
+          "category": "tool_selection",
+          "valid": true,
+          "task_success": false,
+          "constraint_checks": [
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [],
+          "tool_events": [],
+          "tool_sequence_valid": false,
+          "invalid_calls": [],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 0,
+            "completion": 0,
+            "total": 0,
+            "calls": 0
+          },
+          "latency_ms": 5238.749,
+          "grounding_checks": [
+            {
+              "fact": "fake 在线",
+              "supported": false
+            }
+          ],
+          "final_response": "当前系统提示、工具定义和本轮必要上下文超过 token 预算，已停止请求模型；请缩小工具范围或提高 AGENT_CONTEXT_MAX_TOKENS。",
+          "all_responses": [
+            "当前系统提示、工具定义和本轮必要上下文超过 token 预算，已停止请求模型；请缩小工具范围或提高 AGENT_CONTEXT_MAX_TOKENS。"
+          ],
+          "trace_run_id": "57c8a21af636",
+          "trace_status": "failed",
+          "path_proof": {
+            "planner_call_count": 3,
+            "executor_call_count": 0,
+            "memory_recall_count": 1,
+            "context_prior_turn_visible": null,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 2,
+            "tool_memory_reranked_tools": [
+              "check_cst_status",
+              "set_units",
+              "store_parameter",
+              "delete_parameter",
+              "create_material",
+              "create_brick",
+              "create_cylinder",
+              "set_frequency_range",
+              "set_boundary",
+              "set_background",
+              "create_discrete_port",
+              "create_farfield_monitor",
+              "boolean_subtract",
+              "change_solver_type",
+              "run_solver",
+              "recall_tool_result",
+              "use_template",
+              "build_rectangular_patch_fast",
+              "build_dipole_fast",
+              "build_pixel_patch_fast",
+              "open_results",
+              "list_results",
+              "read_result",
+              "get_s_parameter",
+              "list_project_materials",
+              "execute_vba_script"
+            ],
+            "context_budget_event_count": 2
+          },
+          "errors": []
+        }
+      ]
+    }
+  },
+  "comparisons": {},
+  "threshold_results": [
+    {
+      "name": "full_task_success_rate",
+      "passed": false,
+      "value": 0.0,
+      "threshold": ">= 0.8"
+    },
+    {
+      "name": "full_hard_constraint_case_rate",
+      "passed": true,
+      "value": 1.0,
+      "threshold": "== 1.0"
+    },
+    {
+      "name": "full_tool_selection_accuracy",
+      "passed": false,
+      "value": 0.0,
+      "threshold": ">= 0.8"
+    },
+    {
+      "name": "full_invalid_call_rate",
+      "passed": true,
+      "value": 0.0,
+      "threshold": "<= 0.1"
+    },
+    {
+      "name": "full_groundedness",
+      "passed": false,
+      "value": 0.0,
+      "threshold": ">= 0.9"
+    },
+    {
+      "name": "full_ablation_path_valid",
+      "passed": false,
+      "value": [
+        "prior_turn_missing_from_context"
+      ],
+      "threshold": "empty"
+    },
+    {
+      "name": "full_recovery_rate",
+      "passed": false,
+      "value": 0.0,
+      "threshold": "== 1.0"
+    },
+    {
+      "name": "full_path_valid",
+      "passed": false,
+      "value": [
+        "prior_turn_missing_from_context"
+      ],
+      "threshold": "empty"
+    }
+  ],
+  "limitations": [
+    "Fake CST validates orchestration and recovery contracts, not CST electromagnetic fidelity.",
+    "The deterministic provider is a mechanism smoke test and must not be cited as LLM quality evidence.",
+    "Five frozen cases are a regression gate, not a statistically powered benchmark.",
+    "Free-text groundedness uses exact frozen facts; semantic entailment requires a blinded judge or manual review."
+  ]
+}

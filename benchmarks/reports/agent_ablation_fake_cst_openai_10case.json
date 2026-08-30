@@ -1,0 +1,2375 @@
+{
+  "config": {
+    "case_count": 10,
+    "max_rounds": 4,
+    "groups": [
+      "llm_no_memory",
+      "llm_with_memory"
+    ],
+    "proposal_provider": "openai_compatible"
+  },
+  "metadata": {
+    "timestamp_utc": "2026-04-30T10:03:15+00:00",
+    "python_version": "3.14.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "proposal_provider": "openai_compatible",
+    "provider_model": "gpt-5.5",
+    "openai_api_key_configured": true,
+    "openai_base_url_configured": true,
+    "case_seed_min": 10000,
+    "case_seed_max": 10009,
+    "case_names": [
+      "freq_too_high_00",
+      "freq_too_low_01",
+      "poor_inset_match_02",
+      "poor_feed_match_03",
+      "mixed_offset_04",
+      "freq_too_high_05",
+      "freq_too_low_06",
+      "poor_inset_match_07",
+      "poor_feed_match_08",
+      "mixed_offset_09"
+    ]
+  },
+  "groups": {
+    "llm_no_memory": {
+      "group": "llm_no_memory",
+      "case_count": 10,
+      "success_rate": 0.7,
+      "avg_rounds_to_success": 1.7143,
+      "avg_tokens": 1993.3,
+      "proposal_reject_rate": 0.2083,
+      "fallback_rate": 0.2083,
+      "repeat_error_rate": 0.0,
+      "memory_recall_hit_rate": 0.0,
+      "memory_changed_proposal_rate": 0.0,
+      "memory_compliance_rate": 0.0,
+      "memory_violation_rate": 0.0,
+      "memory_enforced_rate": 0.0,
+      "provider_error_count": 0,
+      "failure_cases": [
+        {
+          "case": "poor_feed_match_03",
+          "final_target_s11_db": -6.587,
+          "rounds": 4
+        },
+        {
+          "case": "poor_feed_match_08",
+          "final_target_s11_db": -6.517,
+          "rounds": 4
+        },
+        {
+          "case": "mixed_offset_09",
+          "final_target_s11_db": -8.877,
+          "rounds": 4
+        }
+      ],
+      "cases": [
+        {
+          "case": "freq_too_high_00",
+          "success": true,
+          "rounds_to_success": 1,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 10.3288,
+            "min_s11_db": -14.193,
+            "target_s11_db": 27.212,
+            "bandwidth_ghz": 0.3734,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.5637,
+            "min_s11_db": -17.253,
+            "target_s11_db": -15.966,
+            "bandwidth_ghz": 0.4116,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "patch_L",
+              "delta_mm": 1.165,
+              "source": "heuristic",
+              "provider": "",
+              "reason": "当前谐振点 10.329 GHz 相对目标 9.400 GHz 偏高，优先通过增大 patch_L 做一轮频率校正。",
+              "target_s11_before": 27.212,
+              "target_s11_after": -15.966,
+              "min_freq_after": 9.5637,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "",
+                  "delta_mm": 0.0
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 1.165
+                },
+                "fallback_reason": "param '' 不在允许列表",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 140,
+            "completion": 45,
+            "total": 185
+          },
+          "proposal_rejects": 1,
+          "fallbacks": 1,
+          "repeated_errors": 0,
+          "memory_hits": 0,
+          "memory_rounds": 0,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "freq_too_low_01",
+          "success": true,
+          "rounds_to_success": 1,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 8.5491,
+            "min_s11_db": -14.494,
+            "target_s11_db": 20.257,
+            "bandwidth_ghz": 0.3774,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.4048,
+            "min_s11_db": -17.878,
+            "target_s11_db": -17.877,
+            "bandwidth_ghz": 0.4197,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "patch_L",
+              "delta_mm": -1.6,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前谐振频率8.549GHz低于目标9.400GHz，应减小patch_L以升高谐振频率，先将谐振点拉向目标频段。",
+              "target_s11_before": 20.257,
+              "target_s11_after": -17.877,
+              "min_freq_after": 9.4048,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": -1.6
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": -1.6
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 517,
+            "completion": 189,
+            "total": 706
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 0,
+          "memory_rounds": 0,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "poor_inset_match_02",
+          "success": true,
+          "rounds_to_success": 4,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 9.4305,
+            "min_s11_db": -8.001,
+            "target_s11_db": -7.957,
+            "bandwidth_ghz": 0.2686,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.3717,
+            "min_s11_db": -10.079,
+            "target_s11_db": -10.041,
+            "bandwidth_ghz": 0.2997,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "patch_L",
+              "delta_mm": 0.1,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振频率9.431GHz略高于目标9.400GHz，增大patch_L可降低谐振频率；当前失配较明显，但应先将谐振点拉近目标频率。",
+              "target_s11_before": -7.957,
+              "target_s11_after": -7.971,
+              "min_freq_after": 9.3717,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 0.1
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 0.1
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 2,
+              "param": "patch_L",
+              "delta_mm": -0.1,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振频率9.372GHz低于目标9.400GHz，需略微缩短patch_L以升高谐振频率；当前目标处S11与谐振点接近，先校准频点再优化匹配。",
+              "target_s11_before": -7.971,
+              "target_s11_after": -7.957,
+              "min_freq_after": 9.4305,
+              "improved": false,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": -0.1
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": -0.1
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 3,
+              "param": "patch_L",
+              "delta_mm": 0.1,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前谐振频率9.431GHz高于目标9.400GHz，应增大patch_L以降低谐振频率；目标处S11仍较差，但需先将频点拉近目标，且历史未显示有效的匹配参数改善趋势。",
+              "target_s11_before": -7.957,
+              "target_s11_after": -7.971,
+              "min_freq_after": 9.3717,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 0.1
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 0.1
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 4,
+              "param": "inset_depth",
+              "delta_mm": 0.2,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振频率9.372GHz与目标9.400GHz偏差很小，但目标处S11仅-7.97dB，主要问题是匹配不足；优先增加inset_depth调整馈入点阻抗以改善匹配，历史无明确失败方向可避让。",
+              "target_s11_before": -7.971,
+              "target_s11_after": -10.041,
+              "min_freq_after": 9.3717,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.2
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.2
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 2252,
+            "completion": 1431,
+            "total": 3683
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 0,
+          "memory_rounds": 0,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "poor_feed_match_03",
+          "success": false,
+          "rounds_to_success": null,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 9.3948,
+            "min_s11_db": -7.141,
+            "target_s11_db": -7.139,
+            "bandwidth_ghz": 0.2549,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.3948,
+            "min_s11_db": -6.589,
+            "target_s11_db": -6.587,
+            "bandwidth_ghz": 0.2467,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "inset_depth",
+              "delta_mm": 0.5,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振频率已非常接近目标9.400GHz，但S11仅-7.14dB，主要问题是匹配不足；优先增大内嵌深度以降低输入阻抗、改善匹配。",
+              "target_s11_before": -7.139,
+              "target_s11_after": -6.187,
+              "min_freq_after": 9.3948,
+              "improved": false,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.5
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.5
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 2,
+              "param": "inset_depth",
+              "delta_mm": -0.214,
+              "source": "heuristic",
+              "provider": "",
+              "reason": "当前谐振点已接近目标频率，但 S11@9.400 GHz = -6.19 dB，优先微调 inset_depth。",
+              "target_s11_before": -6.187,
+              "target_s11_after": -6.778,
+              "min_freq_after": 9.3948,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.3
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": -0.214
+                },
+                "fallback_reason": "上轮 inset_depth 同方向调整未改善，拒绝重复",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 3,
+              "param": "inset_depth",
+              "delta_mm": 0.3,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振频率已非常接近目标，仅低约0.005GHz，不宜优先改patch_L；当前目标处S11仅-6.78dB，主要问题是匹配不足，优先微调inset_depth改善输入阻抗匹配。历史无明确有效方向，采用小步正向调整以避免过冲。",
+              "target_s11_before": -6.778,
+              "target_s11_after": -5.872,
+              "min_freq_after": 9.3948,
+              "improved": false,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.3
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.3
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 4,
+              "param": "inset_depth",
+              "delta_mm": -0.2192,
+              "source": "heuristic",
+              "provider": "",
+              "reason": "当前谐振点已接近目标频率，但 S11@9.400 GHz = -5.87 dB，优先微调 inset_depth。",
+              "target_s11_before": -5.872,
+              "target_s11_after": -6.587,
+              "min_freq_after": 9.3948,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.5
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": -0.2192
+                },
+                "fallback_reason": "上轮 inset_depth 同方向调整未改善，拒绝重复",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 2254,
+            "completion": 1073,
+            "total": 3327
+          },
+          "proposal_rejects": 2,
+          "fallbacks": 2,
+          "repeated_errors": 0,
+          "memory_hits": 0,
+          "memory_rounds": 0,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "mixed_offset_04",
+          "success": true,
+          "rounds_to_success": 3,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 9.82,
+            "min_s11_db": -4.112,
+            "target_s11_db": 4.355,
+            "bandwidth_ghz": 0.2165,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.3909,
+            "min_s11_db": -10.605,
+            "target_s11_db": -10.601,
+            "bandwidth_ghz": 0.3098,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "patch_L",
+              "delta_mm": 0.7,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前谐振频率9.820GHz高于目标9.400GHz，需要增大贴片长度以降低谐振频率，先将谐振点拉向目标频率后再优化匹配。",
+              "target_s11_before": 4.355,
+              "target_s11_after": -5.751,
+              "min_freq_after": 9.3909,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 0.7
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 0.7
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 2,
+              "param": "inset_depth",
+              "delta_mm": 0.3,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振频率已接近目标9.400GHz，主要问题是目标处S11仅-5.75dB、匹配较差；优先调整内嵌深度改善输入阻抗匹配，暂不改patch_L以免引起频偏。",
+              "target_s11_before": -5.751,
+              "target_s11_after": -8.19,
+              "min_freq_after": 9.3909,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.3
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.3
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 3,
+              "param": "inset_depth",
+              "delta_mm": 0.4,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振频率9.391GHz与目标9.400GHz仅差0.009GHz，频偏很小，当前主要问题是目标处S11仅-8.19dB，需优先改善阻抗匹配；调整inset_depth比改patch_L更适合优化匹配，且避免继续无改动。",
+              "target_s11_before": -8.19,
+              "target_s11_after": -10.601,
+              "min_freq_after": 9.3909,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.4
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.4
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 1657,
+            "completion": 616,
+            "total": 2273
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 0,
+          "memory_rounds": 0,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "freq_too_high_05",
+          "success": true,
+          "rounds_to_success": 1,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 10.3304,
+            "min_s11_db": -14.25,
+            "target_s11_db": 27.297,
+            "bandwidth_ghz": 0.3732,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.4247,
+            "min_s11_db": -17.873,
+            "target_s11_db": -17.844,
+            "bandwidth_ghz": 0.4185,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "patch_L",
+              "delta_mm": 1.4,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前谐振频率10.330GHz高于目标9.400GHz，应增大patch_L以降低谐振频率，先将谐振点拉向目标频率再优化匹配。",
+              "target_s11_before": 27.297,
+              "target_s11_after": -17.844,
+              "min_freq_after": 9.4247,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 1.4
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 1.4
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 517,
+            "completion": 178,
+            "total": 695
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 0,
+          "memory_rounds": 0,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "freq_too_low_06",
+          "success": true,
+          "rounds_to_success": 1,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 8.4433,
+            "min_s11_db": -14.264,
+            "target_s11_db": 29.673,
+            "bandwidth_ghz": 0.372,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.3931,
+            "min_s11_db": -18.063,
+            "target_s11_db": -18.061,
+            "bandwidth_ghz": 0.4195,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "patch_L",
+              "delta_mm": -1.8,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前谐振频率8.443 GHz低于目标9.400 GHz，应减小patch_L以升高谐振频率；按频率与长度近似反比估算需缩短约1.8 mm，优先先把谐振点移到目标附近，再优化匹配。",
+              "target_s11_before": 29.673,
+              "target_s11_after": -18.061,
+              "min_freq_after": 9.3931,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": -1.8
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": -1.8
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 517,
+            "completion": 192,
+            "total": 709
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 0,
+          "memory_rounds": 0,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "poor_inset_match_07",
+          "success": true,
+          "rounds_to_success": 1,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 9.4205,
+            "min_s11_db": -8.874,
+            "target_s11_db": -8.854,
+            "bandwidth_ghz": 0.2824,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.4205,
+            "min_s11_db": -11.739,
+            "target_s11_db": -11.719,
+            "bandwidth_ghz": 0.3253,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "inset_depth",
+              "delta_mm": 0.3,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振频率9.421GHz与目标9.400GHz仅偏高0.22%，频率已较接近；目标处S11仅-8.85dB，主要问题是匹配不足。优先增大嵌入深度以降低馈点输入电阻、改善匹配。",
+              "target_s11_before": -8.854,
+              "target_s11_after": -11.719,
+              "min_freq_after": 9.4205,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.3
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.3
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 517,
+            "completion": 470,
+            "total": 987
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 0,
+          "memory_rounds": 0,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "poor_feed_match_08",
+          "success": false,
+          "rounds_to_success": null,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 9.3811,
+            "min_s11_db": -7.448,
+            "target_s11_db": -7.431,
+            "bandwidth_ghz": 0.2617,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.3811,
+            "min_s11_db": -6.534,
+            "target_s11_db": -6.517,
+            "bandwidth_ghz": 0.248,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "inset_depth",
+              "delta_mm": 0.5,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振频率9.381GHz与目标9.400GHz仅差0.019GHz，频率已接近目标；但目标处S11仅-7.43dB，匹配不足，应优先调整内嵌馈电深度以改善阻抗匹配。",
+              "target_s11_before": -7.431,
+              "target_s11_after": -6.717,
+              "min_freq_after": 9.3811,
+              "improved": false,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.5
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.5
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 2,
+              "param": "inset_depth",
+              "delta_mm": -0.2093,
+              "source": "heuristic",
+              "provider": "",
+              "reason": "当前谐振点已接近目标频率，但 S11@9.400 GHz = -6.72 dB，优先微调 inset_depth。",
+              "target_s11_before": -6.717,
+              "target_s11_after": -7.198,
+              "min_freq_after": 9.3811,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.4
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": -0.2093
+                },
+                "fallback_reason": "上轮 inset_depth 同方向调整未改善，拒绝重复",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 3,
+              "param": "inset_depth",
+              "delta_mm": 0.5,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振频率仅比目标低19MHz，频偏较小；主要问题是目标处S11仅-7.20dB，匹配不足。当前内嵌深度可能偏浅，适当增大可降低输入阻抗并改善匹配。",
+              "target_s11_before": -7.198,
+              "target_s11_after": -5.612,
+              "min_freq_after": 9.3811,
+              "improved": false,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.5
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.5
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 4,
+              "param": "inset_depth",
+              "delta_mm": -0.2267,
+              "source": "heuristic",
+              "provider": "",
+              "reason": "当前谐振点已接近目标频率，但 S11@9.400 GHz = -5.61 dB，优先微调 inset_depth。",
+              "target_s11_before": -5.612,
+              "target_s11_after": -6.517,
+              "min_freq_after": 9.3811,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.3
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": -0.2267
+                },
+                "fallback_reason": "上轮 inset_depth 同方向调整未改善，拒绝重复",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 2246,
+            "completion": 1648,
+            "total": 3894
+          },
+          "proposal_rejects": 2,
+          "fallbacks": 2,
+          "repeated_errors": 0,
+          "memory_hits": 0,
+          "memory_rounds": 0,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "mixed_offset_09",
+          "success": false,
+          "rounds_to_success": null,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 9.9255,
+            "min_s11_db": -3.051,
+            "target_s11_db": 10.203,
+            "bandwidth_ghz": 0.2003,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.4275,
+            "min_s11_db": -8.913,
+            "target_s11_db": -8.877,
+            "bandwidth_ghz": 0.2833,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "patch_L",
+              "delta_mm": 0.8,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前谐振频率9.925GHz高于目标9.400GHz，应增大patch_L以降低谐振频率，先将谐振点拉近目标后再优化匹配。",
+              "target_s11_before": 10.203,
+              "target_s11_after": -5.006,
+              "min_freq_after": 9.4275,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 0.8
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 0.8
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 2,
+              "param": "patch_L",
+              "delta_mm": 0.1,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振点9.428GHz略高于目标9.400GHz，增大patch_L可降频；上轮无实际改动，先小步对准频点再优化匹配。",
+              "target_s11_before": -5.006,
+              "target_s11_after": -4.981,
+              "min_freq_after": 9.3688,
+              "improved": false,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 0.1
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 0.1
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 3,
+              "param": "inset_depth",
+              "delta_mm": 0.5,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振点9.369GHz已接近目标9.400GHz，频偏较小；但谐振处和目标处S11均约-5dB，主要问题是阻抗匹配差。上轮无有效调整且未改善，因此优先改变inset_depth进行匹配优化。",
+              "target_s11_before": -4.981,
+              "target_s11_after": -8.852,
+              "min_freq_after": 9.3688,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.5
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.5
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 4,
+              "param": "patch_L",
+              "delta_mm": -0.1,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前谐振频率9.369GHz低于目标9.400GHz，需略微减小patch_L以升高谐振频率；目标处S11与谐振处接近，先校准频点，历史无明确失败方向可避开。",
+              "target_s11_before": -8.852,
+              "target_s11_after": -8.877,
+              "min_freq_after": 9.4275,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": false,
+                "recalled_memory_ids": [],
+                "recalled_lessons": [],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": -0.1
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": -0.1
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 2252,
+            "completion": 1222,
+            "total": 3474
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 0,
+          "memory_rounds": 0,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        }
+      ]
+    },
+    "llm_with_memory": {
+      "group": "llm_with_memory",
+      "case_count": 10,
+      "success_rate": 1.0,
+      "avg_rounds_to_success": 1.5,
+      "avg_tokens": 1212.1,
+      "proposal_reject_rate": 0.0,
+      "fallback_rate": 0.0,
+      "repeat_error_rate": 0.0,
+      "memory_recall_hit_rate": 1.0,
+      "memory_changed_proposal_rate": 0.4667,
+      "memory_compliance_rate": 1.0,
+      "memory_violation_rate": 0.0,
+      "memory_enforced_rate": 0.0,
+      "provider_error_count": 0,
+      "failure_cases": [],
+      "cases": [
+        {
+          "case": "freq_too_high_00",
+          "success": true,
+          "rounds_to_success": 1,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 10.3288,
+            "min_s11_db": -14.193,
+            "target_s11_db": 27.212,
+            "bandwidth_ghz": 0.3734,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.423,
+            "min_s11_db": -17.816,
+            "target_s11_db": -17.791,
+            "bandwidth_ghz": 0.4187,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "patch_L",
+              "delta_mm": 1.4,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前谐振频率10.329GHz高于目标9.400GHz，应增大patch_L以降低谐振频率；按频率反比估算需增加约1.4mm，且避免调整曾导致匹配恶化的feed_W",
+              "target_s11_before": 27.212,
+              "target_s11_after": -17.791,
+              "min_freq_after": 9.423,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0",
+                  "failure:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时",
+                  "历史失败：feed_W 过小导致匹配恶化"
+                ],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 1.4
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 1.4
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 544,
+            "completion": 179,
+            "total": 723
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 1,
+          "memory_rounds": 1,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "freq_too_low_01",
+          "success": true,
+          "rounds_to_success": 1,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 8.5491,
+            "min_s11_db": -14.494,
+            "target_s11_db": 20.257,
+            "bandwidth_ghz": 0.3774,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.4048,
+            "min_s11_db": -17.878,
+            "target_s11_db": -17.877,
+            "bandwidth_ghz": 0.4197,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "patch_L",
+              "delta_mm": -1.6,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前谐振8.549GHz低于目标9.400GHz，应减小patch_L以升高谐振频率；目标处S11很差主要因频点未对准，且历史显示feed_W过小会恶化匹配，先不调整馈线。",
+              "target_s11_before": 20.257,
+              "target_s11_after": -17.877,
+              "min_freq_after": 9.4048,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0",
+                  "failure:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时",
+                  "历史失败：feed_W 过小导致匹配恶化"
+                ],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": -1.6
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": -1.6
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 544,
+            "completion": 225,
+            "total": 769
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 1,
+          "memory_rounds": 1,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "poor_inset_match_02",
+          "success": true,
+          "rounds_to_success": 1,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 9.4305,
+            "min_s11_db": -8.001,
+            "target_s11_db": -7.957,
+            "bandwidth_ghz": 0.2686,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.4305,
+            "min_s11_db": -10.071,
+            "target_s11_db": -10.026,
+            "bandwidth_ghz": 0.2996,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "inset_depth",
+              "delta_mm": 0.2,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振频率已接近目标，仅高31MHz；目标处S11约-8dB，主要问题是匹配不足，优先增加inset_depth改善输入阻抗匹配。",
+              "target_s11_before": -7.957,
+              "target_s11_after": -10.026,
+              "min_freq_after": 9.4305,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时"
+                ],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.2
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.2
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 517,
+            "completion": 332,
+            "total": 849
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 1,
+          "memory_rounds": 1,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "poor_feed_match_03",
+          "success": true,
+          "rounds_to_success": 1,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 9.3948,
+            "min_s11_db": -7.141,
+            "target_s11_db": -7.139,
+            "bandwidth_ghz": 0.2549,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.3948,
+            "min_s11_db": -10.756,
+            "target_s11_db": -10.755,
+            "bandwidth_ghz": 0.3092,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "feed_W",
+              "delta_mm": 0.3,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振频率已接近目标（9.395 vs 9.400 GHz），主要问题是匹配不足（S11仅-7.14 dB）；根据记忆约束当前feed_W偏小且过小会导致匹配恶化，因此优先增大feed_W以改善馈线阻抗匹配。",
+              "target_s11_before": -7.139,
+              "target_s11_after": -10.755,
+              "min_freq_after": 9.3948,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0",
+                  "failure:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时",
+                  "历史失败：feed_W 过小导致匹配恶化"
+                ],
+                "proposal_before_validation": {
+                  "param": "feed_W",
+                  "delta_mm": 0.3
+                },
+                "proposal_after_validation": {
+                  "param": "feed_W",
+                  "delta_mm": 0.3
+                },
+                "fallback_reason": "",
+                "changed_by_memory": true,
+                "memory_expected_param": "feed_W",
+                "memory_expected_delta_sign": 1,
+                "memory_constraints": [
+                  "当前 feed_W=1.144 mm 偏小；召回记忆指出 feed_W 过小会导致匹配恶化，必须优先增大 feed_W。"
+                ],
+                "memory_complied": true,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 614,
+            "completion": 176,
+            "total": 790
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 1,
+          "memory_rounds": 1,
+          "memory_changed": 1,
+          "memory_guided_rounds": 1,
+          "memory_complied": 1,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "mixed_offset_04",
+          "success": true,
+          "rounds_to_success": 3,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 9.82,
+            "min_s11_db": -4.112,
+            "target_s11_db": 4.355,
+            "bandwidth_ghz": 0.2165,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.3909,
+            "min_s11_db": -10.86,
+            "target_s11_db": -10.856,
+            "bandwidth_ghz": 0.3136,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "feed_W",
+              "delta_mm": 0.5,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前 feed_W=1.641 mm 偏小且历史表明馈线过窄会导致匹配恶化；虽然谐振频率高于目标需后续增大 patch_L 降频，但当前目标处 S11 很差，应优先增大 feed_W 改善馈线阻抗匹配。",
+              "target_s11_before": 4.355,
+              "target_s11_after": 0.719,
+              "min_freq_after": 9.82,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0",
+                  "failure:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时",
+                  "历史失败：feed_W 过小导致匹配恶化"
+                ],
+                "proposal_before_validation": {
+                  "param": "feed_W",
+                  "delta_mm": 0.5
+                },
+                "proposal_after_validation": {
+                  "param": "feed_W",
+                  "delta_mm": 0.5
+                },
+                "fallback_reason": "",
+                "changed_by_memory": true,
+                "memory_expected_param": "feed_W",
+                "memory_expected_delta_sign": 1,
+                "memory_constraints": [
+                  "当前 feed_W=1.641 mm 偏小；召回记忆指出 feed_W 过小会导致匹配恶化，必须优先增大 feed_W。"
+                ],
+                "memory_complied": true,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 2,
+              "param": "feed_W",
+              "delta_mm": 0.4,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前feed_W=2.141 mm偏小，且历史失败记录表明feed_W过小会导致匹配恶化；目标处S11=0.72 dB匹配很差，因此优先增大feed_W改善馈线阻抗匹配，避免重复过小方向。",
+              "target_s11_before": 0.719,
+              "target_s11_after": -0.75,
+              "min_freq_after": 9.82,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0",
+                  "failure:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时",
+                  "历史失败：feed_W 过小导致匹配恶化"
+                ],
+                "proposal_before_validation": {
+                  "param": "feed_W",
+                  "delta_mm": 0.4
+                },
+                "proposal_after_validation": {
+                  "param": "feed_W",
+                  "delta_mm": 0.4
+                },
+                "fallback_reason": "",
+                "changed_by_memory": true,
+                "memory_expected_param": "feed_W",
+                "memory_expected_delta_sign": 1,
+                "memory_constraints": [
+                  "当前 feed_W=2.141 mm 偏小；召回记忆指出 feed_W 过小会导致匹配恶化，必须优先增大 feed_W。"
+                ],
+                "memory_complied": true,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 3,
+              "param": "patch_L",
+              "delta_mm": 0.7,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前谐振频率9.820GHz高于目标9.400GHz，应增大patch_L使谐振降频；目标处S11很差主要因频点偏移，先调谐振位置，且避免重复历史中feed_W过小导致匹配恶化的方向",
+              "target_s11_before": -0.75,
+              "target_s11_after": -10.856,
+              "min_freq_after": 9.3909,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0",
+                  "failure:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时",
+                  "历史失败：feed_W 过小导致匹配恶化"
+                ],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 0.7
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 0.7
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 1872,
+            "completion": 601,
+            "total": 2473
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 3,
+          "memory_rounds": 3,
+          "memory_changed": 2,
+          "memory_guided_rounds": 2,
+          "memory_complied": 2,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "freq_too_high_05",
+          "success": true,
+          "rounds_to_success": 1,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 10.3304,
+            "min_s11_db": -14.25,
+            "target_s11_db": 27.297,
+            "bandwidth_ghz": 0.3732,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.4247,
+            "min_s11_db": -17.873,
+            "target_s11_db": -17.844,
+            "bandwidth_ghz": 0.4185,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "patch_L",
+              "delta_mm": 1.4,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前谐振频率10.330GHz高于目标9.400GHz，应增大patch_L以降低谐振频率；按频率与长度近似反比估算需增加约1.4mm，先调谐频率，避免重复减小feed_W导致匹配恶化",
+              "target_s11_before": 27.297,
+              "target_s11_after": -17.844,
+              "min_freq_after": 9.4247,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0",
+                  "failure:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时",
+                  "历史失败：feed_W 过小导致匹配恶化"
+                ],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 1.4
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 1.4
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 544,
+            "completion": 201,
+            "total": 745
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 1,
+          "memory_rounds": 1,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "freq_too_low_06",
+          "success": true,
+          "rounds_to_success": 1,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 8.4433,
+            "min_s11_db": -14.264,
+            "target_s11_db": 29.673,
+            "bandwidth_ghz": 0.372,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.3931,
+            "min_s11_db": -18.063,
+            "target_s11_db": -18.061,
+            "bandwidth_ghz": 0.4195,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "patch_L",
+              "delta_mm": -1.8,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前谐振频率8.443GHz低于目标9.400GHz，应减小patch_L以升高谐振频率；目标处S11很差主要因谐振偏离，先调谐频率，避免重复调整feed_W导致匹配恶化",
+              "target_s11_before": 29.673,
+              "target_s11_after": -18.061,
+              "min_freq_after": 9.3931,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0",
+                  "failure:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时",
+                  "历史失败：feed_W 过小导致匹配恶化"
+                ],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": -1.8
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": -1.8
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 544,
+            "completion": 201,
+            "total": 745
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 1,
+          "memory_rounds": 1,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "poor_inset_match_07",
+          "success": true,
+          "rounds_to_success": 1,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 9.4205,
+            "min_s11_db": -8.874,
+            "target_s11_db": -8.854,
+            "bandwidth_ghz": 0.2824,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.4205,
+            "min_s11_db": -12.574,
+            "target_s11_db": -12.554,
+            "bandwidth_ghz": 0.3379,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "inset_depth",
+              "delta_mm": 0.4,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "谐振频率9.421GHz已接近目标9.400GHz，仅略偏高；但谐振点和目标处S11均约-8.9dB，主要问题是匹配不足。适当增大内嵌深度以降低馈入点等效阻抗，优先改善S11。",
+              "target_s11_before": -8.854,
+              "target_s11_after": -12.554,
+              "min_freq_after": 9.4205,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时"
+                ],
+                "proposal_before_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.4
+                },
+                "proposal_after_validation": {
+                  "param": "inset_depth",
+                  "delta_mm": 0.4
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 517,
+            "completion": 376,
+            "total": 893
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 1,
+          "memory_rounds": 1,
+          "memory_changed": 0,
+          "memory_guided_rounds": 0,
+          "memory_complied": 0,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "poor_feed_match_08",
+          "success": true,
+          "rounds_to_success": 2,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 9.3811,
+            "min_s11_db": -7.448,
+            "target_s11_db": -7.431,
+            "bandwidth_ghz": 0.2617,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.3811,
+            "min_s11_db": -12.925,
+            "target_s11_db": -12.907,
+            "bandwidth_ghz": 0.3439,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "feed_W",
+              "delta_mm": 0.2,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前谐振频率9.381GHz与目标9.400GHz非常接近，主要问题是目标处S11仅-7.43dB匹配不足；根据记忆约束，feed_W=1.181mm偏小且过小会导致匹配恶化，因此优先增大feed_W以改善馈线阻抗匹配。",
+              "target_s11_before": -7.431,
+              "target_s11_after": -9.861,
+              "min_freq_after": 9.3811,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0",
+                  "failure:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时",
+                  "历史失败：feed_W 过小导致匹配恶化"
+                ],
+                "proposal_before_validation": {
+                  "param": "feed_W",
+                  "delta_mm": 0.2
+                },
+                "proposal_after_validation": {
+                  "param": "feed_W",
+                  "delta_mm": 0.2
+                },
+                "fallback_reason": "",
+                "changed_by_memory": true,
+                "memory_expected_param": "feed_W",
+                "memory_expected_delta_sign": 1,
+                "memory_constraints": [
+                  "当前 feed_W=1.181 mm 偏小；召回记忆指出 feed_W 过小会导致匹配恶化，必须优先增大 feed_W。"
+                ],
+                "memory_complied": true,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 2,
+              "param": "feed_W",
+              "delta_mm": 0.3,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "目标频点S11仅-9.86 dB，主要需改善匹配；且当前feed_W=1.381 mm偏小，历史失败表明feed_W过小会导致匹配恶化，因此优先增大feed_W以改善馈线阻抗匹配。谐振频率9.381 GHz略低于目标9.400 GHz，频偏很小，暂不优先调整patch_L。",
+              "target_s11_before": -9.861,
+              "target_s11_after": -12.907,
+              "min_freq_after": 9.3811,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0",
+                  "failure:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时",
+                  "历史失败：feed_W 过小导致匹配恶化"
+                ],
+                "proposal_before_validation": {
+                  "param": "feed_W",
+                  "delta_mm": 0.3
+                },
+                "proposal_after_validation": {
+                  "param": "feed_W",
+                  "delta_mm": 0.3
+                },
+                "fallback_reason": "",
+                "changed_by_memory": true,
+                "memory_expected_param": "feed_W",
+                "memory_expected_delta_sign": 1,
+                "memory_constraints": [
+                  "当前 feed_W=1.381 mm 偏小；召回记忆指出 feed_W 过小会导致匹配恶化，必须优先增大 feed_W。"
+                ],
+                "memory_complied": true,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 1268,
+            "completion": 401,
+            "total": 1669
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 2,
+          "memory_rounds": 2,
+          "memory_changed": 2,
+          "memory_guided_rounds": 2,
+          "memory_complied": 2,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        },
+        {
+          "case": "mixed_offset_09",
+          "success": true,
+          "rounds_to_success": 3,
+          "initial_summary": {
+            "success": true,
+            "min_freq_ghz": 9.9255,
+            "min_s11_db": -3.051,
+            "target_s11_db": 10.203,
+            "bandwidth_ghz": 0.2003,
+            "met": false,
+            "plot_data_points": 41
+          },
+          "final_summary": {
+            "success": true,
+            "min_freq_ghz": 9.3688,
+            "min_s11_db": -10.159,
+            "target_s11_db": -10.112,
+            "bandwidth_ghz": 0.302,
+            "met": true,
+            "plot_data_points": 41
+          },
+          "rounds": [
+            {
+              "round": 1,
+              "param": "feed_W",
+              "delta_mm": 0.4,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前feed_W=1.598 mm偏小且历史表明过小会导致匹配恶化，目标处S11很差需优先增大feed_W改善馈线阻抗匹配；谐振频率偏高的问题后续再通过增大patch_L降频。",
+              "target_s11_before": 10.203,
+              "target_s11_after": 6.998,
+              "min_freq_after": 9.9255,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0",
+                  "failure:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时",
+                  "历史失败：feed_W 过小导致匹配恶化"
+                ],
+                "proposal_before_validation": {
+                  "param": "feed_W",
+                  "delta_mm": 0.4
+                },
+                "proposal_after_validation": {
+                  "param": "feed_W",
+                  "delta_mm": 0.4
+                },
+                "fallback_reason": "",
+                "changed_by_memory": true,
+                "memory_expected_param": "feed_W",
+                "memory_expected_delta_sign": 1,
+                "memory_constraints": [
+                  "当前 feed_W=1.598 mm 偏小；召回记忆指出 feed_W 过小会导致匹配恶化，必须优先增大 feed_W。"
+                ],
+                "memory_complied": true,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 2,
+              "param": "feed_W",
+              "delta_mm": 0.4,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前feed_W=1.998 mm偏小，且历史失败表明feed_W过小会导致匹配恶化；目标处S11很差，需优先增大feed_W改善馈线阻抗匹配，避免重复过小方向。",
+              "target_s11_before": 6.998,
+              "target_s11_after": 5.072,
+              "min_freq_after": 9.9255,
+              "improved": true,
+              "met": false,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0",
+                  "failure:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时",
+                  "历史失败：feed_W 过小导致匹配恶化"
+                ],
+                "proposal_before_validation": {
+                  "param": "feed_W",
+                  "delta_mm": 0.4
+                },
+                "proposal_after_validation": {
+                  "param": "feed_W",
+                  "delta_mm": 0.4
+                },
+                "fallback_reason": "",
+                "changed_by_memory": true,
+                "memory_expected_param": "feed_W",
+                "memory_expected_delta_sign": 1,
+                "memory_constraints": [
+                  "当前 feed_W=1.998 mm 偏小；召回记忆指出 feed_W 过小会导致匹配恶化，必须优先增大 feed_W。"
+                ],
+                "memory_complied": true,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            },
+            {
+              "round": 3,
+              "param": "patch_L",
+              "delta_mm": 0.9,
+              "source": "llm",
+              "provider": "openai_compatible",
+              "reason": "当前谐振频率9.925GHz高于目标9.400GHz，应增大patch_L以降低谐振频率；目标处S11很差主要因谐振偏高，先进行频率对准，且避免重复历史中feed_W过小导致匹配恶化的方向。",
+              "target_s11_before": 5.072,
+              "target_s11_after": -10.112,
+              "min_freq_after": 9.3688,
+              "improved": true,
+              "met": true,
+              "memory_impact": {
+                "used_memory": true,
+                "recalled_memory_ids": [
+                  "lesson:0",
+                  "failure:0"
+                ],
+                "recalled_lessons": [
+                  "S11 匹配差且 feed_W 过小时，优先增大 feed_W，而不是反复调整 inset_depth。; feed_W 过小会导致匹配持续恶化; 增大 feed_W 靠近 50 欧姆馈线宽度; 避免在 feed_W 明显过小时只调 inset_depth; 目标频率附近 S11 未达标且 feed_W 偏小时",
+                  "历史失败：feed_W 过小导致匹配恶化"
+                ],
+                "proposal_before_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 0.9
+                },
+                "proposal_after_validation": {
+                  "param": "patch_L",
+                  "delta_mm": 0.9
+                },
+                "fallback_reason": "",
+                "changed_by_memory": false,
+                "memory_expected_param": "",
+                "memory_expected_delta_sign": 0,
+                "memory_constraints": [],
+                "memory_complied": false,
+                "memory_violation": false,
+                "memory_violation_reason": "",
+                "memory_enforced_by_validator": false
+              }
+            }
+          ],
+          "tokens": {
+            "prompt": 1879,
+            "completion": 586,
+            "total": 2465
+          },
+          "proposal_rejects": 0,
+          "fallbacks": 0,
+          "repeated_errors": 0,
+          "memory_hits": 3,
+          "memory_rounds": 3,
+          "memory_changed": 2,
+          "memory_guided_rounds": 2,
+          "memory_complied": 2,
+          "memory_violations": 0,
+          "memory_enforced": 0,
+          "provider_errors": []
+        }
+      ]
+    }
+  }
+}

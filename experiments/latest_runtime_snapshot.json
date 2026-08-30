@@ -1,0 +1,123 @@
+{
+  "timestamp_local": "2026-03-17T11:11:57",
+  "project": {
+    "connected": true,
+    "offline_mode": false,
+    "path": "C:\\Users\\Deng\\AppData\\Local\\Temp\\cst_agent_workbench_runs\\fast_patch_1_a0d6d8.cst",
+    "is_temp_fast_path_project": true
+  },
+  "chat": {
+    "history_length": 2,
+    "mode": "fast_path",
+    "ok": true,
+    "error": "",
+    "had_tool_failure": false,
+    "last_tool_message": "",
+    "has_last_vba": true
+  },
+  "model": {
+    "object_count": 3,
+    "port_count": 1,
+    "parameter_count": 17,
+    "objects": {
+      "AntennaFP1_a0d6d8:Ground": "Copper (annealed)",
+      "AntennaFP1_a0d6d8:Substrate": "RO4350B",
+      "AntennaFP1_a0d6d8:Patch": "Copper (annealed)"
+    },
+    "ports": [
+      {
+        "port_number": 1,
+        "impedance": "50"
+      }
+    ],
+    "parameters": {
+      "f0": "18.8",
+      "er": "3.48",
+      "tand": "0.0037",
+      "substrate_h": "0.51",
+      "copper_t": "0.035",
+      "patch_W": "5.3273",
+      "patch_L": "4.0596",
+      "feed_W": "1.1664",
+      "feed_L": "3.0447",
+      "inset_gap": "0.204",
+      "notch_W": "1.5744",
+      "inset_depth": "1.4864",
+      "sub_W": "11.4473",
+      "sub_L": "10.1643",
+      "ground_W": "11.4473",
+      "ground_L": "10.1643",
+      "rear_margin": "3.06"
+    }
+  },
+  "results": {
+    "available": true,
+    "success": true,
+    "item": "1D Results\\S-Parameters\\S1,1",
+    "type": "s_parameter",
+    "message": "已读取: 1D Results\\S-Parameters\\S1,1",
+    "points": 1001,
+    "min_s11_db": -29.931981767002203,
+    "min_freq_ghz": 18.753000259399414
+  },
+  "optimization": {
+    "enabled": false,
+    "active": false,
+    "round": 0,
+    "history_count": 0,
+    "target_mode": "at_f0",
+    "target_freq_ghz": 0.0,
+    "target_db": -10.0,
+    "best_metric_value": null,
+    "best_round": 0
+  },
+  "execution": {
+    "feed_strategy": "microstrip",
+    "fast_path_counter": 1,
+    "tool_event_count": 5,
+    "recent_tool_events": [
+      {
+        "phase": "0_新建工程",
+        "tool_name": "new_project",
+        "success": true,
+        "message": "已新建 CST 工程",
+        "description": "为 fast path 创建独立 CST 工程，避免重复运行时旧几何叠加"
+      },
+      {
+        "phase": "1_环境与材料",
+        "tool_name": "fast_patch_setup",
+        "success": true,
+        "message": "VBA 已在 CST 中执行",
+        "description": "矩形贴片快路径: 参数、材料、频率和边界一次性下发"
+      },
+      {
+        "phase": "2_几何建模",
+        "tool_name": "fast_patch_geometry",
+        "success": true,
+        "message": "VBA 已在 CST 中执行",
+        "description": "矩形贴片快路径: 数值几何一次性下发"
+      },
+      {
+        "phase": "3_边界与端口",
+        "tool_name": "fast_patch_port",
+        "success": true,
+        "message": "VBA 已在 CST 中执行",
+        "description": "矩形贴片快路径: 侧边 waveguide port"
+      },
+      {
+        "phase": "4_运行仿真",
+        "tool_name": "run_solver",
+        "success": true,
+        "message": "求解器已完成（原生 API）",
+        "description": "矩形贴片快路径: 单次求解"
+      }
+    ]
+  },
+  "token_stats": {
+    "prompt": 0,
+    "completion": 0,
+    "calls": 0,
+    "total": 0,
+    "cost_usd": 0.0
+  }
+}

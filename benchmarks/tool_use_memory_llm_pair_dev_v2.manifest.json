@@ -1,0 +1,30 @@
+{
+  "schema_version": "tool-use-memory-pair-manifest-v1",
+  "dataset_id": "tool_use_memory_llm_pair_dev_v2_multifamily",
+  "dataset_sha256": "5ac1bb0c25e361116d9cff789f6aa12ded76a11f8d928b4af8304e312d6ad681",
+  "case_count": 8,
+  "case_ids": [
+    "dedicated_patch_01",
+    "dedicated_patch_02",
+    "parameter_precondition_01",
+    "parameter_precondition_02",
+    "material_precondition_01",
+    "material_precondition_02",
+    "solver_preflight_01",
+    "solver_preflight_02"
+  ],
+  "split": "development_regression",
+  "role": "developer_visible_multifamily_development",
+  "blinded": false,
+  "failure_families": [
+    "dedicated_backend_over_generic_vba",
+    "parameter_precondition",
+    "material_precondition",
+    "solver_preflight_excitation"
+  ],
+  "limitations": [
+    "A matching SHA proves byte identity, not blinded authoring or unseen generalization.",
+    "The set was authored with model assistance before its first Terra run and is development evidence only.",
+    "Any case or oracle edit after inspecting model output requires a new dataset version."
+  ]
+}

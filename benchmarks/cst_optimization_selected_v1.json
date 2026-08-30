@@ -1,0 +1,14 @@
+{
+  "original_near_resonance_2d": {
+    "heuristic": "D:/cst_agent_rag_data/agent_eval/optimization_comparison/5c9689c89d0b/report.json",
+    "llm": "D:/cst_agent_rag_data/agent_eval/optimization_comparison/239354a5da8e/report.json",
+    "cst_native": "D:/cst_agent_rag_data/agent_eval/optimization_comparison/9adbea4698e6/report.json",
+    "hybrid": "D:/cst_agent_rag_data/agent_eval/optimization_comparison/2cdfafe1d32b/report.json"
+  },
+  "patch_l_short_1010_1d": {
+    "heuristic": "D:/cst_agent_rag_data/agent_eval/optimization_comparison/96bb7b2ceab1/report.json",
+    "llm": "D:/cst_agent_rag_data/agent_eval/optimization_comparison/2212dce2e291/report.json",
+    "cst_native": "D:/cst_agent_rag_data/agent_eval/optimization_comparison/002d0d815f7c/report.json",
+    "hybrid": "D:/cst_agent_rag_data/agent_eval/optimization_comparison/e86e0778bba2/report.json"
+  }
+}

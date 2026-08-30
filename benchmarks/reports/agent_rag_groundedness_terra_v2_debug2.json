@@ -1,0 +1,460 @@
+{
+  "schema_version": "agent-rag-groundedness-report-v2",
+  "run_id": "rag-groundedness-1786356368-853aed440c",
+  "generated_at": "2026-08-10T10:06:08.017801+00:00",
+  "code_revision": "b7f3744503e72c83f76f2b857ee0dbf2a97c89d2",
+  "execution_contract": {
+    "selected_case_ids": [
+      "ho05_tdr_from_sparameters",
+      "ho06_extract_material_touchstone"
+    ],
+    "agent_model": "gpt-5.6-terra",
+    "judge_model": "gpt-5.6-terra",
+    "judge_prompt_version": "rag-claim-judge-v2",
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "reranker_model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "candidate_k": 20,
+    "final_k": 3,
+    "code_revision": "b7f3744503e72c83f76f2b857ee0dbf2a97c89d2"
+  },
+  "execution_contract_sha256": "853aed440cd77fdbb79d41d6700f508f97ad2d498908be6e310434464e5d6cc2",
+  "dataset": {
+    "path": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\rag_official_docs_heldout_v1.json",
+    "sha256": "356c81af399842624c1c5607b35da426ab9791f10ead224fc917ac25d7d77ed2",
+    "role": "held_out_v1",
+    "case_count": 30,
+    "blinded": false,
+    "identity_scope": "byte_identity_only_not_independent_blinding"
+  },
+  "selection_policy": {
+    "method": "explicit_case_id_debug_filter",
+    "case_ids": [
+      "ho05_tdr_from_sparameters",
+      "ho06_extract_material_touchstone"
+    ],
+    "developer_visible": true,
+    "release_eligible": false
+  },
+  "selected_cases_sha256": "cc4d3131c72de4e02664b5f350ca8e07cad33da4c8513c48caffdac42ef94815",
+  "dataset_role": "held_out_agent_subset",
+  "cases": 2,
+  "case_ids": [
+    "ho05_tdr_from_sparameters",
+    "ho06_extract_material_touchstone"
+  ],
+  "agent_model": "gpt-5.6-terra",
+  "judge_model": "gpt-5.6-terra",
+  "rag": {
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "reranker_model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "candidate_k": 20,
+    "final_k": 3
+  },
+  "success_rate": 0.5,
+  "retrieval_recall_at_3": 1.0,
+  "citation_presence_rate": 1.0,
+  "citation_precision": 1.0,
+  "provenance_completeness": 1.0,
+  "trace_rag_completeness": 1.0,
+  "groundedness_score": 0.8571428571428571,
+  "answer_relevance_score": 0.95,
+  "unsupported_claim_rate": 0.14285714285714285,
+  "latency_ms": {
+    "mean": 49947.6,
+    "p95": 69222.24
+  },
+  "results": [
+    {
+      "id": "ho05_tdr_from_sparameters",
+      "language": "en",
+      "category": "postprocess",
+      "query": "Which result template computes a TDR signal from simulated S-parameters?",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n计算由仿真 S 参数得到的 TDR 信号，应使用结果模板：\n\n**Time Signal Processing / TDR from S-parameter**\n\n该模板位于 **Post-Processing: Tools > Result Templates**，通过对给定 S 参数及所选频域滤波器进行傅里叶变换来生成时域反射计（TDR）结果。 [source=3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm, chunk=0]",
+      "answer_sha256": "ff7b99b98a02e899900e5e257a467ad98a82d71d04a7fc3e87f6b922df605822",
+      "evidence": [],
+      "evidence_sha256": null,
+      "retrieved_sources": [
+        "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_time_signals.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm"
+      ],
+      "retrieved_chunks": [
+        0,
+        0,
+        0
+      ],
+      "citations": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "trace_run_id": "6393fde3b28b",
+      "ok": false,
+      "error_stage": "judge_validation",
+      "error": "JudgeResponseValidationError: judge claim 1 references evidence outside the supplied Top-3",
+      "latency_ms": 69222.24,
+      "judge_validation_failure": {
+        "prompt_version": "rag-claim-judge-v2",
+        "prompt_sha256": "a0f2471bd7a5053f7f392a95655caca8fe2d00126a783712ddcc721dd8062552",
+        "raw_response": "{\"claim_count\":3,\"supported_claim_count\":3,\"unsupported_claim_count\":0,\"groundedness_score\":1.0,\"answer_relevance_score\":1.0,\"citation_entailment\":true,\"claims\":[{\"text\":\"计算由仿真S参数得到的TDR信号应使用“Time Signal Processing / TDR from S-parameter”结果模板。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm\",\"chunk_idx\":\"0\"}],\"reason\":\"证据标题即为该模板名称，并说明其从S参数计算TDR结果。\"},{\"text\":\"该模板位于“Post-Processing: Tools > Result Templates”。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm\",\"chunk_idx\":\"0\"}],\"reason\":\"证据直接列出了该菜单路径。\"},{\"text\":\"该模板通过给定S参数和指定频域滤波器，经傅里叶变换获得TDR输出信号。\",\"supported\":true,\"evidence_refs\":[{\"source_path\":\"3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm\",\"chunk_idx\":\"0\"}],\"reason\":\"证据明确说明输出信号由滤波器和给定S参数通过傅里叶变换获得。\"}],\"reason\":\"答案直接回答了所需结果模板，且所有材料性说明均由所引证据直接支持。\"}",
+        "raw_response_sha256": "d1f6a8b81f019b56f217ce9c717cf38b88bb64cf5fc0c384415d4234a641ec19",
+        "parsed_response": {
+          "claim_count": 3,
+          "supported_claim_count": 3,
+          "unsupported_claim_count": 0,
+          "groundedness_score": 1.0,
+          "answer_relevance_score": 1.0,
+          "citation_entailment": true,
+          "claims": [
+            {
+              "text": "计算由仿真S参数得到的TDR信号应使用“Time Signal Processing / TDR from S-parameter”结果模板。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+                  "chunk_idx": "0"
+                }
+              ],
+              "reason": "证据标题即为该模板名称，并说明其从S参数计算TDR结果。"
+            },
+            {
+              "text": "该模板位于“Post-Processing: Tools > Result Templates”。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+                  "chunk_idx": "0"
+                }
+              ],
+              "reason": "证据直接列出了该菜单路径。"
+            },
+            {
+              "text": "该模板通过给定S参数和指定频域滤波器，经傅里叶变换获得TDR输出信号。",
+              "supported": true,
+              "evidence_refs": [
+                {
+                  "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+                  "chunk_idx": "0"
+                }
+              ],
+              "reason": "证据明确说明输出信号由滤波器和给定S参数通过傅里叶变换获得。"
+            }
+          ],
+          "reason": "答案直接回答了所需结果模板，且所有材料性说明均由所引证据直接支持。"
+        }
+      }
+    },
+    {
+      "id": "ho06_extract_material_touchstone",
+      "language": "mixed",
+      "category": "material",
+      "query": "怎样用 2-port Touchstone 提取 complex permittivity 和 permeability？",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n可按 CST 的“两端口传输样品”思路进行：将待测材料置于电磁波传播方向上的两端口结构中，获得或导入对应的 2-port Touchstone（通常为 `.s2p`）数据，再运行材料反演模板。该模板以两端口 S 参数为基础，提取**有效复介电常数**与**复磁导率**；其前提是两个端口沿电磁波传播方向布置。 [source=3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm, chunk=0]\n\n## 在 CST 中的操作路径\n\n1. **准备两端口 S 参数**\n   - 建立或使用一个两端口测试夹具，材料样品位于端口之间。\n   - 两个端口应沿主传播方向相对布置，即形成穿透测量结构。\n   - 由仿真得到 S 参数，或准备测量得到的 2-port Touchstone 文件。该反演流程基于两端口系统。 [source=3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm, chunk=0]\n\n2. **导入 Touchstone 数据**\n   - 在相应的材料提取预置宏/流程中选择加载测量数据（Touchstone）。\n   - 文档明确指出，该流程可加载 Touchstone 文件中的 **S21**；具体可用选项会随所选提取技术而变化。 [source=3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm, chunk=7]\n\n3. **调用材料参数提取功能**\n   - 对仿真 S 参数，可通过：\n     **Post-Processing → Tools → Result Templates → S-Parameters → Extract Material Properties from S-Parameters**\n   - 此结果模板用于由仿真结果反演有效复介电常数和复磁导率。 [source=3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm, chunk=0]\n\n4. **选择待提取的材料属性类型**\n   - 若所选提取材料类型为 **Normal**，流程提取的是**复介电常数**。 [source=3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm, chunk=7]\n   - 若材料类型为 **Surface impedance (table)**，则提取结果为**表面阻抗**，而不是体材料的复介电常数。 [source=3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm, chunk=7]\n\n## 建模/数据准备时应重点核对\n\n- 必须是**两端口**数据，而非单端口反射数据。\n- 两端口必须与实际波传播方向一致，否则不满足该模板所述的基本假设。 [source=3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm, chunk=0]\n- 若使用外部测量的 `.s2p`，应保证端口参考定义一致。对于两端口 Touchstone 表征，两个端口都相对于共同参考电位；文档提示两端口情况下需特别注意这一点。 [source=3D/special_solvopt/special_solvopt_lumpedelements.htm, chunk=3]\n\n简而言之：**两端口夹具/波导结构 → 获取或导入 `.s2p` → 在 Result Templates 中执行 S 参数材料提取 → 确认端口沿传播方向布置 → 查看提取出的有效复 ε 与复 μ。**",
+      "answer_sha256": "d0ac8e983189d80bc68b83576125ab9edfa1a619089a93db545c2e4badc584d4",
+      "evidence": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+          "chunk_idx": "7",
+          "text": "CST Official Help | 3D common preloadedmacro common preloadedmacro extract complex material properties from 2port touchstone\nelected for extraction is of type Normal , complex permittivity will be extracted. If the material selected for extraction is of type Surface impedance (table) , surface impedance will be extracted.\n\nLoad measured data (Touchstone)\n\nThe options are enabled based on the selected extraction technique.\n\nProp. const. T he S21 of the TOUCHSTONE file will be loaded.\n\nTHRU Std. is used to select TOUCHSTONE file of THRU standard including the end-launch connectors.\n\nLINE Std. is used to select TOUCHSTONE file of THRU standard including the end-launch connectors.\n\nDUT is used to select TOUCHSTONE file of Device under test including the end-launch connectors.\n\nIt is possible to model only a fraction of the measured transmission line sample in order to speed up the simulation. Length difference between THRU and LINE corresponds to the physical samples while Transmission line length in 3D EM model corresponds to the simulation.\n\nIf the Transmission line length in 3D EM model differs from Length difference between THRU and LINE , it is necessary to ensure that Length difference between THRU and LINE is smaller than ½ of the guided wavelength at the lowest measured frequency point."
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+          "chunk_idx": "",
+          "text": "CST Official Help | 3D common preloadedmacro common preloadedmacro extract material properties from sparameters\nS-Parameters / Extract Material Properties from S-Parameters\n\nP ost-Processing: Tools > Result Templates\n\nThis result template can be used to extract the effective complex electrical permittivity and magnetic permeability based on the simulated results. It assumes a two-port system where the ports are positioned along the direction of the propagating electromagnetic wave. In such a system, the S-parameters represent the complex reflection coefficient (r) and the complex transmission coefficient (t). The template is based on Phys Rev. E 70, 016608 (2004) by X. Chen et al.\n\nThe figure below shows an example of a two-port system, where some inhomogeneous materials are sandwiched between two ports - named port 1 and port 2. If the source is excited from port 1 and electromagnetic wave propagates along z axis, reflection coefficient (r) will be equal to S1,1 and transmission coefficient (t) to S2,1.\n\nThe user dialog allows the user choose a set of the reflection coefficient (S1,1), and the transmission coefficient (S2,1) for the retrieval.\n\nEffective thickness of material sample:"
+        },
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_lumpedelements.htm",
+          "chunk_idx": "3",
+          "text": "CST Official Help | 3D special solvopt special solvopt lumpedelements\nthe current into pin1 (current continuity). For 1-port Touchstone characterizations, current continuity is automatically satisfied. For 2-port Touchstone characterizations, same care has to be taken. Both ports of the Touchstone circuit refer to a common reference potential which can be identified with the ideal circuit ground. If the touchstone file describes a general 2-port circuit component that couples internally to the ideal circuit ground, current continuity might not be satisfied. A 2-port Touchstone characterisation satisfies the current continuity condition, if $S_{11} + S_{21} = S_{22} + S_{12} = 1$ for scattering parameters or $Y_{11} + Y_{21} = Y_{22} + Y_{12} = 0$ for admittance parameters, respectively. Here the S and Y parameters (and their sums) are considered as complex numbers with real and imaginary part (and not just as magnitude). Therefore the formula for the scattering parameters reads $\\operatorname{Re}(S_{11} + S_{21}) = \\operatorname{Re}(S_{22} + S_{12}) = 1$ and $\\operatorname{Im}(S_{11} + S_{21}) = \\operatorname{Im}(S_{22} + S_{12}) = 0$."
+        }
+      ],
+      "evidence_sha256": "8e361fdae28b4f9e041831de622452ea8dbb1b998ed2a65b82059a073472519b",
+      "ok": true,
+      "latency_ms": 30672.96,
+      "retrieved_sources": [
+        "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+        "3D/special_solvopt/special_solvopt_lumpedelements.htm"
+      ],
+      "retrieved_chunks": [
+        7,
+        0,
+        3
+      ],
+      "retrieval_relevant": true,
+      "rerank_applied": true,
+      "citations": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+          "chunk_idx": "7"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+          "chunk_idx": "7"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+          "chunk_idx": "7"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_lumpedelements.htm",
+          "chunk_idx": "3"
+        }
+      ],
+      "valid_citations": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+          "chunk_idx": "7"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+          "chunk_idx": "7"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+          "chunk_idx": "7"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_lumpedelements.htm",
+          "chunk_idx": "3"
+        }
+      ],
+      "citation_present": true,
+      "citation_precision": 1.0,
+      "provenance_complete": true,
+      "trace_rag_complete": true,
+      "trace_run_id": "25f8e6fe9f49",
+      "agent_tokens": {
+        "prompt": 3068,
+        "completion": 1048,
+        "calls": 2,
+        "total": 4116,
+        "cost_usd": 0.0621
+      },
+      "judge": {
+        "claim_count": 14,
+        "supported_claim_count": 12,
+        "unsupported_claim_count": 2,
+        "groundedness_score": 0.8571428571428571,
+        "answer_relevance_score": 0.95,
+        "citation_entailment": false,
+        "claims": [
+          {
+            "claim_id": "ho06_extract_material_touchstone:claim-001",
+            "text": "CST 的 S 参数材料提取结果模板可从仿真结果中提取有效复介电常数和复磁导率。",
+            "claim_sha256": "b3921331d482f40d7d602b11c435dbbb5d7c3682de82062f60c17668e9553771",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                "chunk_idx": ""
+              }
+            ],
+            "reason": "证据明确说明该模板基于仿真结果提取有效复介电常数和磁导率。"
+          },
+          {
+            "claim_id": "ho06_extract_material_touchstone:claim-002",
+            "text": "该模板假定为两端口系统，且端口沿电磁波传播方向布置。",
+            "claim_sha256": "b9c31fa2d8cae70477450de187e1c1cacc94ceb67bbfdde215bb87dd9def6f06",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                "chunk_idx": ""
+              }
+            ],
+            "reason": "证据直接陈述了两端口及端口沿传播方向的假设。"
+          },
+          {
+            "claim_id": "ho06_extract_material_touchstone:claim-003",
+            "text": "样品可夹置于端口 1 和端口 2 之间进行两端口测量或仿真。",
+            "claim_sha256": "702d3624a32f9c587f17eed4b25d674a849c4f6b2ee2bd14eaa0254051a930ea",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                "chunk_idx": ""
+              }
+            ],
+            "reason": "证据中的示例描述非均匀材料夹在两个端口之间。"
+          },
+          {
+            "claim_id": "ho06_extract_material_touchstone:claim-004",
+            "text": "可由仿真获得用于反演的 S 参数。",
+            "claim_sha256": "241403050e015ef0c08c19c512e3f42b9332780451a09f8efd639ea198cffde7",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                "chunk_idx": ""
+              }
+            ],
+            "reason": "该模板明确基于仿真结果的 S 参数工作。"
+          },
+          {
+            "claim_id": "ho06_extract_material_touchstone:claim-005",
+            "text": "Touchstone 流程可以加载测量数据。",
+            "claim_sha256": "c5d5f7d381f89bcc2b4535f6e9772a1a0404b732081d7516642e03b2468d862b",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+                "chunk_idx": "7"
+              }
+            ],
+            "reason": "证据明确包含“Load measured data (Touchstone)”。"
+          },
+          {
+            "claim_id": "ho06_extract_material_touchstone:claim-006",
+            "text": "2-port Touchstone 文件通常为 .s2p 文件。",
+            "claim_sha256": "a2ee2a9c88e79e06b63ff44c5bce4e6464c33c236f7c5b9e1e375ff870b4fa96",
+            "supported": false,
+            "evidence_refs": [],
+            "reason": "所给证据提到 Touchstone 文件，但没有说明 .s2p 扩展名。"
+          },
+          {
+            "claim_id": "ho06_extract_material_touchstone:claim-007",
+            "text": "在 Prop. const. 提取技术下，会加载 Touchstone 文件中的 S21。",
+            "claim_sha256": "7fbb377379028bcf3931e158944d01109d157fe34b898009f60b3c7ec9878b55",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+                "chunk_idx": "7"
+              }
+            ],
+            "reason": "证据直接说明“Prop. const.”会加载 Touchstone 文件的 S21。"
+          },
+          {
+            "claim_id": "ho06_extract_material_touchstone:claim-008",
+            "text": "Touchstone 数据加载选项取决于所选的提取技术。",
+            "claim_sha256": "77aee1e269b006a29237ac770b3b2356fb99b5bb8d812e8d74c20c28f42dfde0",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+                "chunk_idx": "7"
+              }
+            ],
+            "reason": "证据明确说明选项会基于所选提取技术启用。"
+          },
+          {
+            "claim_id": "ho06_extract_material_touchstone:claim-009",
+            "text": "仿真 S 参数材料提取模板的菜单路径为 Post-Processing → Tools → Result Templates → S-Parameters → Extract Material Properties from S-Parameters。",
+            "claim_sha256": "5a77a5ca72b67527bda7c355f8ce58fe8046f58d2fcb0ae073e43497c9eedcaa",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                "chunk_idx": ""
+              }
+            ],
+            "reason": "证据给出了 Post-Processing: Tools > Result Templates 及该 S-Parameters 模板名称。"
+          },
+          {
+            "claim_id": "ho06_extract_material_touchstone:claim-010",
+            "text": "提取材料类型为 Normal 时，提取的是复介电常数。",
+            "claim_sha256": "1e1e81956346902ebc8b79875bbe4a16867e01ecb7ff1df62791ef427dad0b4f",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+                "chunk_idx": "7"
+              }
+            ],
+            "reason": "证据直接说明 Normal 类型会提取 complex permittivity。"
+          },
+          {
+            "claim_id": "ho06_extract_material_touchstone:claim-011",
+            "text": "提取材料类型为 Surface impedance (table) 时，提取的是表面阻抗。",
+            "claim_sha256": "c1138f1d1fd867ba8e6b99408c9b06625134371f24ff95ced591eb1a8774753d",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+                "chunk_idx": "7"
+              }
+            ],
+            "reason": "证据直接说明该类型会提取 surface impedance。"
+          },
+          {
+            "claim_id": "ho06_extract_material_touchstone:claim-012",
+            "text": "该材料提取模板要求两端口系统，而不是单端口反射系统。",
+            "claim_sha256": "22ceac8238ceb6678597405aec6936984e5d5131b907974547eb0d0e5a23dbef",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+                "chunk_idx": ""
+              }
+            ],
+            "reason": "证据明确将该模板的前提限定为 two-port system。"
+          },
+          {
+            "claim_id": "ho06_extract_material_touchstone:claim-013",
+            "text": "对于 2-port Touchstone 表征，两个端口参考同一公共参考电位。",
+            "claim_sha256": "2723d090767d8876bd764dde95091084eb4cf919bca24d243e747b034aa0dc20",
+            "supported": true,
+            "evidence_refs": [
+              {
+                "source_path": "3D/special_solvopt/special_solvopt_lumpedelements.htm",
+                "chunk_idx": "3"
+              }
+            ],
+            "reason": "证据明确说明两个端口均参考共同的参考电位。"
+          },
+          {
+            "claim_id": "ho06_extract_material_touchstone:claim-014",
+            "text": "将外部测量的 2-port Touchstone 文件导入后，可直接通过所述 Result Templates 流程提取有效复介电常数和复磁导率。",
+            "claim_sha256": "01837a4f9e7e5f9811a5ad327da4353e14a612c452305604324af9b818f826a4",
+            "supported": false,
+            "evidence_refs": [],
+            "reason": "证据分别支持 Touchstone 测量数据加载及仿真 S 参数模板提取 ε、μ，但未直接证明导入的 Touchstone 数据可通过该特定仿真结果模板直接同时提取 ε 和 μ。"
+          }
+        ],
+        "unsupported_claims": [
+          "2-port Touchstone 文件通常为 .s2p 文件。",
+          "将外部测量的 2-port Touchstone 文件导入后，可直接通过所述 Result Templates 流程提取有效复介电常数和复磁导率。"
+        ],
+        "reason": "答案总体与问题高度相关，且多数两端口布置、仿真 S 参数反演、Touchstone 加载和材料类型选择的说法有证据支持。但“.s2p”扩展名未被证据说明，并且证据没有直接建立“外部 Touchstone 导入”与“仿真 S 参数模板同时提取复 ε、复 μ”之间的完整流程关联，因此存在未被引文完全蕴含的关键连接性主张。",
+        "judge_tokens": 4902,
+        "prompt_version": "rag-claim-judge-v2",
+        "prompt_sha256": "1e192b2fa42ea4051e3b4a6bee08afdb47d4ddf20dbc4b350b3ab261a77f73e3",
+        "raw_response_sha256": "91dba0575bb811f1baab3830eee666a8616396a18bbcf1b8882bc078b05811c2"
+      }
+    }
+  ]
+}

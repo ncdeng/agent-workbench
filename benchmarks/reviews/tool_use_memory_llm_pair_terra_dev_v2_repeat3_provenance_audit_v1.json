@@ -1,0 +1,39 @@
+{
+  "schema_version": "tool-use-memory-run-provenance-audit-v1",
+  "run_id": "1fcbca236c08",
+  "run_fingerprint": "fcfddfb731b37423d4ffa245d30047e25e2fe2207eed1041cb61cc7f72ec7e9a",
+  "report_path": "benchmarks/reports/tool_use_memory_llm_pair_terra_dev_v2_repeat3_v1.json",
+  "report_sha256": "63aa470a2a5cbbdb7892e290ec2ed0f28b42b1d8ec509d080361db968ecf3842",
+  "checkpoint_sha256": "c1cc305de3e6f68f8e996b8e96b91d92f7de17131e9997f89500b5f86be68e42",
+  "identity_checks": {
+    "report_sample_count": 48,
+    "checkpoint_sample_count": 48,
+    "sample_id_sets_equal": true,
+    "byte_canonical_sample_records_equal": 48,
+    "duplicate_sample_ids": 0
+  },
+  "orchestration_incident": {
+    "outer_shell_timeout_seconds": 1204.3,
+    "checkpoint_samples_observed_at_timeout": 43,
+    "resume_process_started": true,
+    "original_python_child_survived_shell_timeout": true,
+    "final_report_checkpoint_metadata": {
+      "resumed": false,
+      "resumed_sample_count": 0,
+      "executed_sample_count": 48
+    },
+    "interpretation": "The final report and checkpoint contain the same 48 samples from the original process. A short overlapping resume attempt may have added provider load while the final tail samples were running."
+  },
+  "claim_eligibility": {
+    "task_success_and_tool_behavior": "usable_development_evidence",
+    "token_usage": "usable_development_evidence",
+    "latency_arm_comparison": "contaminated_not_causal",
+    "resume_demonstration": "not_eligible_for_this_run",
+    "held_out_or_blinded_gain": "not_eligible"
+  },
+  "remediation": {
+    "implemented": true,
+    "change": "Runner now supports --max-new-samples and raises EvaluationPaused only after atomically checkpointing a completed sample.",
+    "purpose": "Use self-termination at sample boundaries instead of relying on Windows shell timeouts that may orphan child processes."
+  }
+}

@@ -1,0 +1,349 @@
+{
+  "dataset_role": "held_out_agent_subset",
+  "cases": 3,
+  "case_ids": [
+    "waveguide_port_zh",
+    "waveguide_port_en",
+    "broadband_farfield_monitor_mixed"
+  ],
+  "agent_model": "gpt-5.5",
+  "judge_model": "gpt-5.5",
+  "rag": {
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "reranker_model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "candidate_k": 20,
+    "final_k": 3
+  },
+  "success_rate": 1.0,
+  "retrieval_recall_at_3": 1.0,
+  "citation_presence_rate": 1.0,
+  "citation_precision": 1.0,
+  "provenance_completeness": 1.0,
+  "trace_rag_completeness": 1.0,
+  "groundedness_score": 0.9,
+  "answer_relevance_score": 0.9333333333333332,
+  "unsupported_claim_rate": 0.08333333333333333,
+  "latency_ms": {
+    "mean": 34348.48,
+    "p95": 55875.45
+  },
+  "results": [
+    {
+      "id": "waveguide_port_zh",
+      "language": "zh",
+      "category": "port",
+      "query": "在 Filter Designer 3D 中如何定义波导端口？",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n在 **CST Filter Designer 3D** 中，波导端口通常作为一个专用的 **Waveguide Port 模型**来定义；该模型表示一个波导端口，并带有可用于与相邻波导结构锚点对齐/吸附的 anchor，例如可吸附到 Line Waveguide 或 Resonator Waveguide 的 anchor，以组成波导滤波器装配体。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0][source=Filter_Designer_3D/example/port_waveguide_inductive.htm, chunk=0]\n\n定义波导端口时，文档片段明确提到的主要参数包括：\n\n1. **Waveguide width / 波导宽度**：用于指定波导的宽度。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]  \n2. **Waveguide height / 波导高度**：用于指定波导的高度。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]  \n3. **Waveguide access length / 波导接入段长度**：用于定义波导接入段的长度。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]  \n\n如果使用的是 **Port Waveguide Inductive** 类型，还会涉及额外的感性耦合结构参数，例如：\n\n4. **Iris wall thickness / 虹膜壁厚**：用于指定 iris wall 的厚度。[source=Filter_Designer_3D/example/port_waveguide_inductive.htm, chunk=0]  \n5. **Iris width / 虹膜宽度**：用于定义 iris 的宽度，该参数可用于调节耦合强度；当前检索片段只显示到 “This parameter can be used to tu…”，完整调谐说明未覆盖。[source=Filter_Designer_3D/example/port_waveguide_inductive.htm, chunk=0]\n\n结构生成方面，普通 **Port Waveguide** 示例中说明：背景材料被定义为理想导体，边界条件被设置为 electric，以生成波导端口结构；当前片段没有给出更完整的菜单路径或逐步 GUI 操作。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]\n\n简要理解就是：在 Filter Designer 3D 里定义波导端口时，需要选择/使用相应的 **Port Waveguide** 组件，设置波导的 **宽度、高度、接入长度**，并通过其 anchor 与滤波器中的 Line Waveguide 或 Resonator Waveguide 对接；若是感性波导端口，还需要设置 iris 相关尺寸来控制耦合。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0][source=Filter_Designer_3D/example/port_waveguide_inductive.htm, chunk=0]",
+      "ok": true,
+      "latency_ms": 55875.45,
+      "retrieved_sources": [
+        "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+        "Filter_Designer_3D/example/port_waveguide.htm",
+        "Filter_Designer_3D/example/port_siw_microstrip.htm"
+      ],
+      "retrieved_chunks": [
+        0,
+        0,
+        0
+      ],
+      "retrieval_relevant": true,
+      "rerank_applied": true,
+      "citations": [
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "valid_citations": [
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "citation_present": true,
+      "citation_precision": 1.0,
+      "provenance_complete": true,
+      "trace_rag_complete": true,
+      "trace_run_id": "701b59aed225",
+      "agent_tokens": {
+        "prompt": 5212,
+        "completion": 908,
+        "calls": 2,
+        "total": 6120,
+        "cost_usd": 0.0794
+      },
+      "judge": {
+        "claim_count": 15,
+        "supported_claim_count": 13,
+        "unsupported_claim_count": 2,
+        "groundedness_score": 0.87,
+        "answer_relevance_score": 0.95,
+        "citation_entailment": false,
+        "unsupported_claims": [
+          "当前检索片段只显示到“This parameter can be used to tu…”，完整调谐说明未覆盖",
+          "感性波导端口的 iris 相关尺寸都用于控制耦合"
+        ],
+        "reason": "答案关于 Port Waveguide/Port Waveguide Inductive 表示波导端口、可通过 anchor 吸附到 Line/Resonator Waveguide、主要参数为宽度/高度/access length，以及 inductive 类型的 iris wall thickness 和 iris width 等内容均由证据直接支持。但证据完整写明 iris width can be used to tune the coupling，并非片段被截断；且证据只明确 iris width 可调耦合，不支持所有 iris 相关尺寸都控制耦合。",
+        "judge_tokens": 2474
+      }
+    },
+    {
+      "id": "waveguide_port_en",
+      "language": "en",
+      "category": "port",
+      "query": "How is a waveguide port defined in Filter Designer 3D?",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n在 Filter Designer 3D 的相关示例中，**waveguide port（波导端口）被定义为一个表示波导端口的模型**，并且该模型包含可用于与波导结构锚点对齐/吸附的 anchor，从而组装波导滤波器组件。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]\n\n对于普通 **Port Waveguide** 示例，该端口的 anchor 可吸附到 **Line Waveguide** 的 anchor，用于构建波导滤波器装配体。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]\n\n该波导端口模型包含用于描述端口几何的参数：**波导宽度、波导高度、以及 waveguide access 的长度**。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]\n\n文档片段还说明，在结构生成中，**背景材料被定义为理想导体材料，边界条件被设置为 electric**。[source=Filter_Designer_3D/example/port_waveguide.htm, chunk=0]\n\n另外，**Port Waveguide Inductive** 示例同样表示一个波导端口，其 anchor 可吸附到 **Resonator Waveguide** 的 anchor，用于构建波导滤波器装配体。[source=Filter_Designer_3D/example/port_waveguide_inductive.htm, chunk=0]\n\n该 inductive 类型的波导端口除波导宽度、高度和 access 长度外，还包含 **iris wall 厚度** 与 **iris 宽度**等参数，其中 iris 宽度可用于调节耦合。[source=Filter_Designer_3D/example/port_waveguide_inductive.htm, chunk=0]\n\n当前检索片段没有覆盖更详细的 GUI 操作步骤、字段名称完整列表、端口模式设置或数值推荐，因此这些内容不能仅凭当前片段确认。",
+      "ok": true,
+      "latency_ms": 23899.2,
+      "retrieved_sources": [
+        "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+        "Filter_Designer_3D/example/port_waveguide.htm",
+        "Filter_Designer_3D/example/port_siw_microstrip.htm"
+      ],
+      "retrieved_chunks": [
+        0,
+        0,
+        0
+      ],
+      "retrieval_relevant": true,
+      "rerank_applied": true,
+      "citations": [
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "valid_citations": [
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "Filter_Designer_3D/example/port_waveguide_inductive.htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "citation_present": true,
+      "citation_precision": 1.0,
+      "provenance_complete": true,
+      "trace_rag_complete": true,
+      "trace_run_id": "df8b2ee5ad19",
+      "agent_tokens": {
+        "prompt": 5326,
+        "completion": 682,
+        "calls": 2,
+        "total": 6008,
+        "cost_usd": 0.0737
+      },
+      "judge": {
+        "claim_count": 15,
+        "supported_claim_count": 15,
+        "unsupported_claim_count": 0,
+        "groundedness_score": 1,
+        "answer_relevance_score": 0.9,
+        "citation_entailment": true,
+        "unsupported_claims": [],
+        "reason": "The answer's substantive claims are directly supported by the supplied chunks: the waveguide port model, anchors/snapping targets, geometric parameters, structure generation settings, and inductive-port iris parameters are all stated in the evidence. The offline notice is operational metadata and was ignored.",
+        "judge_tokens": 2164
+      }
+    },
+    {
+      "id": "broadband_farfield_monitor_mixed",
+      "language": "mixed",
+      "category": "postprocess",
+      "query": "broadband farfield monitors 怎么批量创建？",
+      "answer": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n在 CST 里批量创建 **broadband farfield monitors**，官方文档给出的入口是：\n\n**Home → Macros → VBA Macros → Solver → Monitors and Probes → Broadband Field Monitors**。[source=3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm, chunk=0]\n\n这个宏的作用是：在一个指定的频率范围内，按等间隔方式一次性定义多个 **farfield monitors**。[source=3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm, chunk=0]\n\n创建后，每一个 farfield monitor 都会在 **Navigation Tree** 中生成一个独立条目。[source=3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm, chunk=0]\n\n这个宏可以重复执行；再次使用时不会覆盖之前已经定义的 monitors。[source=3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm, chunk=0]\n\n另外，如果你后续要用 **1D / Farfield (broadband)** 结果模板，它要求工程中已经定义了多个 farfield monitors；官方文档也说明可以通过上述 **Farfield / Broadband Farfield Monitors** 宏比较方便地完成这些 monitor 的定义。[source=3D/common_preloadedmacro/common_preloadedmacro_1d_farfield_(broadband).htm, chunk=0]\n\n需要注意：当前检索到的官方片段只明确说明了宏入口、按频率范围等间隔批量创建、Navigation Tree 条目、可重复执行且不覆盖旧定义；具体对话框里的字段名称、起止频率/步数/间隔等参数细节，当前片段没有覆盖。",
+      "ok": true,
+      "latency_ms": 23270.79,
+      "retrieved_sources": [
+        "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_1d_farfield_(broadband).htm",
+        "VBA_3D/special_vbamonitors/special_vbamonitors_monitor_object.htm"
+      ],
+      "retrieved_chunks": [
+        0,
+        0,
+        11
+      ],
+      "retrieval_relevant": true,
+      "rerank_applied": true,
+      "citations": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_1d_farfield_(broadband).htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "valid_citations": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+          "chunk_idx": "0"
+        },
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_1d_farfield_(broadband).htm",
+          "chunk_idx": "0"
+        }
+      ],
+      "citation_present": true,
+      "citation_precision": 1.0,
+      "provenance_complete": true,
+      "trace_rag_complete": true,
+      "trace_run_id": "92f188f8fd2a",
+      "agent_tokens": {
+        "prompt": 5160,
+        "completion": 754,
+        "calls": 2,
+        "total": 5914,
+        "cost_usd": 0.0742
+      },
+      "judge": {
+        "claim_count": 6,
+        "supported_claim_count": 5,
+        "unsupported_claim_count": 1,
+        "groundedness_score": 0.83,
+        "answer_relevance_score": 0.95,
+        "citation_entailment": true,
+        "unsupported_claims": [
+          "具体对话框里的起止频率/间隔等参数细节当前片段没有覆盖"
+        ],
+        "reason": "Most factual claims are directly supported: the macro menu path, its ability to create multiple equally spaced farfield monitors over a frequency range, Navigation Tree entries, repeat use without overwriting, and the 1D/Farfield broadband template requirement are all in the evidence. However, the answer says the retrieved snippets do not cover start/end frequency or interval details, while the evidence explicitly mentions lower limit, upper limit, and frequency distance.",
+        "judge_tokens": 2035
+      }
+    }
+  ]
+}

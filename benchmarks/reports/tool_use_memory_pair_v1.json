@@ -1,0 +1,46 @@
+{
+  "schema_version": "tool-use-memory-pair-report-v1",
+  "run": {
+    "run_id": "aa0f4223c3e6",
+    "timestamp_utc": "2026-08-10T01:35:24.081035+00:00",
+    "artifact_root": "D:\\cst_agent_rag_data\\agent_eval\\tool_use_memory\\aa0f4223c3e6",
+    "memory_path": "D:\\cst_agent_rag_data\\agent_eval\\tool_use_memory\\aa0f4223c3e6\\learned\\memory\\tool_use_memory.json",
+    "secrets_recorded": false
+  },
+  "arms": {
+    "no_memory": {
+      "safe_tool_order": [
+        "execute_vba_script",
+        "check_cst_status"
+      ],
+      "top1": "execute_vba_script"
+    },
+    "learned": {
+      "safe_tool_order": [
+        "check_cst_status",
+        "execute_vba_script"
+      ],
+      "top1": "check_cst_status",
+      "recalled_record_count": 1,
+      "guidance": "[工具使用经验；仅用于安全白名单内的排序与参数提示]\n- failed tools=execute_vba_script; reason=VBA is unavailable and unnecessary for this read-only status audit.; correction=Review tool preconditions and arguments before retrying."
+    }
+  },
+  "checks": {
+    "cold_start_empty": true,
+    "production_failure_write_recorded": true,
+    "memory_file_persisted": true,
+    "cross_instance_record_loaded": true,
+    "related_failure_recalled": true,
+    "guidance_injected": true,
+    "learned_arm_changed_top1": true,
+    "failed_tool_demoted": true,
+    "safe_tool_set_preserved": true,
+    "project_scope_isolated": true
+  },
+  "all_checks_passed": true,
+  "limitations": [
+    "This deterministic paired run proves production write, persistence, scoped recall, and safe reranking contracts.",
+    "It does not prove that ToolUseMemory improves an LLM's held-out task-success rate.",
+    "The learn phase intentionally creates a final unrecovered tool failure so the production write gate stores it."
+  ]
+}

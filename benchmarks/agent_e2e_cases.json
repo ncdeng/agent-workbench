@@ -1,0 +1,358 @@
+{
+  "schema_version": "agent-e2e-case-v1",
+  "dataset_id": "cst-agent-e2e-fake-cst-v2",
+  "split": "development_regression",
+  "dataset_role": "development_regression",
+  "frozen_at": "2026-08-10T00:00:00+08:00",
+  "annotation_policy": "Developer-authored regression oracles. Tool and recovery constraints are machine checked; response facts use lexical alternatives and require separate claim-level review for semantic claims.",
+  "generation_provenance": {
+    "authoring_method": "developer_authored_and_iterated",
+    "model_outputs_used_to_edit_oracles": true,
+    "blinded": false
+  },
+  "description": "Frozen development/regression cases that run CSTAgent.chat with a fake CST boundary, including multilingual, no-tool, context-revision, and compound-recovery tasks. This set is not a blinded held-out benchmark.",
+  "cases": [
+    {
+      "case_id": "status_grounded_01",
+      "category": "tool_selection",
+      "scenario_family": "status_read",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 21001,
+      "turns": [
+        {
+          "content": "请检查当前 CST 是否连接，并且只能依据工具返回的状态回答。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {}
+        }
+      ],
+      "fixture": {"connected": true, "structured_lessons": [], "tool_use_memory": [], "injected_failures": []},
+      "oracle": {
+        "allowed_tools": ["check_cst_status"],
+        "required_tools_all": ["check_cst_status"],
+        "forbidden_tools": ["run_solver", "execute_vba_script"],
+        "valid_tool_sequences": [["check_cst_status"]],
+        "required_grounding_facts": [["fake 在线", "CST（在线）", "CST (在线)", "连接到 CST（在线）", "CST 连接状态正常"]],
+        "expected_recovery": null,
+        "max_tool_calls": 1
+      },
+      "tags": ["planner", "tool_loop", "groundedness"]
+    },
+    {
+      "case_id": "planner_no_solver_01",
+      "category": "planning",
+      "scenario_family": "status_read_with_constraints",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 21002,
+      "turns": [
+        {
+          "content": "只检查 CST 连接状态，不得运行求解器，也不要执行任何 VBA。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": ["不得运行求解器", "不得执行 VBA"]
+        }
+      ],
+      "fixture": {"connected": true, "structured_lessons": [], "tool_use_memory": [], "injected_failures": []},
+      "oracle": {
+        "allowed_tools": ["check_cst_status"],
+        "required_tools_all": ["check_cst_status"],
+        "forbidden_tools": ["run_solver", "execute_vba_script"],
+        "valid_tool_sequences": [["check_cst_status"]],
+        "required_grounding_facts": [["fake 在线", "CST（在线）", "CST (在线)", "连接到 CST（在线）", "CST 连接状态正常"]],
+        "expected_recovery": null,
+        "max_tool_calls": 1
+      },
+      "tags": ["planner", "constraint"]
+    },
+    {
+      "case_id": "context_followup_01",
+      "category": "context",
+      "scenario_family": "multi_turn_context_recall",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 21003,
+      "turns": [
+        {
+          "content": "请记住：本次审计代号 ORBIT-9，整个任务不得运行求解器。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": ["不得运行求解器"]
+        },
+        {
+          "content": "按刚才的审计要求检查当前 CST 状态，并在回答中带上审计代号。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": ["不得运行求解器"]
+        }
+      ],
+      "fixture": {"connected": true, "structured_lessons": [], "tool_use_memory": [], "injected_failures": []},
+      "oracle": {
+        "allowed_tools": ["check_cst_status"],
+        "required_tools_all": ["check_cst_status"],
+        "forbidden_tools": ["run_solver", "execute_vba_script"],
+        "valid_tool_sequences": [["check_cst_status"]],
+        "required_grounding_facts": ["ORBIT-9", ["fake 在线", "CST（在线）", "CST (在线)", "连接到 CST（在线）", "CST 连接状态正常"]],
+        "expected_recovery": null,
+        "max_tool_calls": 1
+      },
+      "tags": ["context", "conversation_memory", "constraint"]
+    },
+    {
+      "case_id": "recovery_disconnect_01",
+      "category": "recovery",
+      "scenario_family": "mutating_probe_recovery",
+      "design_family": "no_design",
+      "failure_family": "disconnect",
+      "seed": 21004,
+      "turns": [
+        {
+          "content": "保存当前 CST 工程；如果连接中断，恢复连接后重试。",
+          "tool_name": "save_cst_project",
+          "tool_arguments": {"include_results": false}
+        }
+      ],
+      "fixture": {
+        "connected": false,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": [
+          {
+            "method": "save_project",
+            "responses": [
+              {"success": false, "message": "CST is not connected"},
+              {"success": true, "message": "fake 工程已在重连后保存", "project_saved": true}
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "allowed_tools": ["check_cst_status", "save_cst_project"],
+        "required_tools_all": ["save_cst_project"],
+        "forbidden_tools": ["run_solver", "execute_vba_script"],
+        "valid_tool_sequences": [["save_cst_project"], ["check_cst_status", "save_cst_project"]],
+        "required_grounding_facts": [
+          {
+            "label": "response mentions connection recovery and successful save",
+            "all_of": [
+              ["连接恢复", "连接已恢复", "恢复连接", "重连", "已恢复", "reconnect"],
+              ["工程已成功保存", "已保存", "恢复后完成", "连接恢复后完成", "重试成功", "完成重试", "重试并完成", "重连后保存", "恢复后保存", "retry succeeded", "after reconnect"]
+            ]
+          }
+        ],
+        "expected_recovery": "reconnect_cst",
+        "max_tool_calls": 2
+      },
+      "tags": ["failure_recovery", "retry", "trace"]
+    },
+    {
+      "case_id": "tool_memory_rerank_01",
+      "category": "tool_selection",
+      "scenario_family": "status_read_with_memory",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 21005,
+      "turns": [
+        {
+          "content": "做一次 CST 状态安全检查，优先采用之前成功且低风险的工具。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {}
+        }
+      ],
+      "fixture": {
+        "connected": true,
+        "structured_lessons": ["状态检查只读任务应优先使用 check_cst_status，避免执行 VBA 或求解器。"],
+        "tool_use_memory": [
+          {"task_signature": "CST 状态安全检查", "selected_tools": ["check_cst_status"], "success": true, "confidence": 0.95, "corrective_hint": "Use the read-only status tool first."},
+          {"task_signature": "CST 状态安全检查", "selected_tools": ["execute_vba_script"], "success": false, "confidence": 0.90, "failure_reason": "VBA is unnecessary for a status-only audit.", "corrective_hint": "Avoid VBA for status checks."}
+        ],
+        "injected_failures": []
+      },
+      "oracle": {
+        "allowed_tools": ["check_cst_status"],
+        "required_tools_all": ["check_cst_status"],
+        "forbidden_tools": ["run_solver", "execute_vba_script"],
+        "valid_tool_sequences": [["check_cst_status"]],
+        "required_grounding_facts": [["fake 在线", "CST（在线）", "CST (在线)", "连接到 CST（在线）", "CST 连接状态正常"]],
+        "expected_recovery": null,
+        "max_tool_calls": 1
+      },
+      "tags": ["tool_use_memory", "safe_rerank", "scope"]
+    },
+    {
+      "case_id": "offline_status_grounded_01",
+      "category": "groundedness",
+      "scenario_family": "status_read_negative_state",
+      "design_family": "no_design",
+      "failure_family": "offline_state",
+      "seed": 21006,
+      "turns": [
+        {
+          "content": "必须调用只读状态工具检查当前 CST 是否在线；如果未连接，要明确说明离线，不得尝试建模、VBA 或求解。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": ["不得尝试建模、VBA 或求解"]
+        }
+      ],
+      "fixture": {"connected": false, "structured_lessons": [], "tool_use_memory": [], "injected_failures": []},
+      "oracle": {
+        "allowed_tools": ["check_cst_status"],
+        "required_tools_all": ["check_cst_status"],
+        "forbidden_tools": ["run_solver", "execute_vba_script"],
+        "valid_tool_sequences": [["check_cst_status"]],
+        "required_grounding_facts": [["fake 离线", "CST 未连接", "CST（离线）", "CST (离线)", "当前未连接"]],
+        "expected_recovery": null,
+        "max_tool_calls": 1
+      },
+      "tags": ["groundedness", "negative_state", "constraint"]
+    },
+    {
+      "case_id": "ack_constraint_no_tool_01",
+      "category": "planning",
+      "scenario_family": "no_tool_acknowledgement",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 21007,
+      "turns": [
+        {
+          "content": "请记住审计标记 SAFE-42。本轮不得调用任何工具，只需确认已记录。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": ["本轮不得调用任何工具"]
+        }
+      ],
+      "fixture": {"connected": true, "structured_lessons": [], "tool_use_memory": [], "injected_failures": []},
+      "oracle": {
+        "allowed_tools": [],
+        "required_tools_all": [],
+        "forbidden_tools": ["check_cst_status", "run_solver", "execute_vba_script"],
+        "valid_tool_sequences": [[]],
+        "required_grounding_facts": ["SAFE-42"],
+        "expected_recovery": null,
+        "max_tool_calls": 0
+      },
+      "tags": ["planner", "no_tool", "single_respond_step"]
+    },
+    {
+      "case_id": "context_goal_revision_01",
+      "category": "context",
+      "scenario_family": "multi_turn_goal_revision",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 21008,
+      "turns": [
+        {
+          "content": "先记录审计代号 OLD-7，整个任务不得运行求解器。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": ["不得运行求解器"]
+        },
+        {
+          "content": "把审计代号更正为 NEW-8，OLD-7 作废；其他约束保持不变。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": ["不得运行求解器"]
+        },
+        {
+          "content": "按当前有效审计代号检查 CST 状态，并在答复中带上该代号。",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": ["不得运行求解器"]
+        }
+      ],
+      "fixture": {"connected": true, "structured_lessons": [], "tool_use_memory": [], "injected_failures": []},
+      "oracle": {
+        "allowed_tools": ["check_cst_status"],
+        "required_tools_all": ["check_cst_status"],
+        "forbidden_tools": ["run_solver", "execute_vba_script"],
+        "valid_tool_sequences": [["check_cst_status"]],
+        "required_grounding_facts": ["NEW-8", ["fake 在线", "CST（在线）", "CST (在线)", "连接到 CST（在线）", "CST 连接状态正常"]],
+        "expected_recovery": null,
+        "max_tool_calls": 1
+      },
+      "tags": ["context", "goal_revision", "conversation_memory", "constraint"]
+    },
+    {
+      "case_id": "recovery_with_context_01",
+      "category": "recovery",
+      "scenario_family": "multi_turn_recovery",
+      "design_family": "no_design",
+      "failure_family": "disconnect",
+      "seed": 21009,
+      "turns": [
+        {
+          "content": "记住恢复演练编号 REC-11，整个演练不得运行求解器。",
+          "tool_name": null,
+          "tool_arguments": {},
+          "planner_constraints": ["不得运行求解器"]
+        },
+        {
+          "content": "现在执行无副作用 VBA 连通性探针；若连接中断则恢复后重试，并在答复中带出演练编号。",
+          "tool_name": "execute_vba_script",
+          "tool_arguments": {"vba_code": "' E2E contextual recovery probe", "description": "无副作用上下文恢复探针"},
+          "planner_constraints": ["不得运行求解器"]
+        }
+      ],
+      "fixture": {
+        "connected": false,
+        "structured_lessons": [],
+        "tool_use_memory": [],
+        "injected_failures": [
+          {
+            "method": "execute_vba",
+            "responses": [
+              {"success": false, "message": "CST is not connected"},
+              {"success": true, "executed": true, "message": "fake contextual VBA executed after reconnect"}
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "allowed_tools": ["check_cst_status", "execute_vba_script"],
+        "required_tools_all": ["execute_vba_script"],
+        "forbidden_tools": ["run_solver"],
+        "valid_tool_sequences": [["execute_vba_script"], ["check_cst_status", "execute_vba_script"]],
+        "required_grounding_facts": [
+          "REC-11",
+          {
+            "label": "response mentions connection recovery and successful probe",
+            "all_of": [
+              ["连接恢复", "连接已恢复", "恢复连接", "重连", "已恢复", "reconnect"],
+              ["探针已成功执行", "VBA 已成功执行", "恢复后完成", "连接恢复后完成", "重试成功", "完成重试", "重试并完成", "重连后执行", "恢复后执行", "retry succeeded", "after reconnect"]
+            ]
+          }
+        ],
+        "expected_recovery": "reconnect_cst",
+        "max_tool_calls": 2
+      },
+      "tags": ["context", "failure_recovery", "retry", "trace"]
+    },
+    {
+      "case_id": "status_grounded_english_01",
+      "category": "tool_selection",
+      "scenario_family": "status_read_multilingual",
+      "design_family": "no_design",
+      "failure_family": "none",
+      "seed": 21010,
+      "turns": [
+        {
+          "content": "Check whether CST is connected. Use only the read-only status tool and do not run the solver or VBA.",
+          "tool_name": "check_cst_status",
+          "tool_arguments": {},
+          "planner_constraints": ["do not run the solver or VBA"]
+        }
+      ],
+      "fixture": {"connected": true, "structured_lessons": [], "tool_use_memory": [], "injected_failures": []},
+      "oracle": {
+        "allowed_tools": ["check_cst_status"],
+        "required_tools_all": ["check_cst_status"],
+        "forbidden_tools": ["run_solver", "execute_vba_script"],
+        "valid_tool_sequences": [["check_cst_status"]],
+        "required_grounding_facts": [["fake 在线", "CST（在线）", "CST (在线)", "connected to CST", "CST is connected"]],
+        "expected_recovery": null,
+        "max_tool_calls": 1
+      },
+      "tags": ["multilingual", "planner", "tool_loop", "groundedness"]
+    }
+  ]
+}

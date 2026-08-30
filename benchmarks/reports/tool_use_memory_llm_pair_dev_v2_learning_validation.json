@@ -1,0 +1,113 @@
+{
+  "schema_version": "tool-use-memory-learning-validation-v1",
+  "generated_at": "2026-08-10T08:38:40.492493+00:00",
+  "dataset": {
+    "dataset_id": "tool_use_memory_llm_pair_dev_v2_multifamily",
+    "dataset_sha256": "5ac1bb0c25e361116d9cff789f6aa12ded76a11f8d928b4af8304e312d6ad681",
+    "case_count": 8,
+    "case_ids": [
+      "dedicated_patch_01",
+      "dedicated_patch_02",
+      "parameter_precondition_01",
+      "parameter_precondition_02",
+      "material_precondition_01",
+      "material_precondition_02",
+      "solver_preflight_01",
+      "solver_preflight_02"
+    ],
+    "split": "development_regression",
+    "role": "developer_visible_multifamily_development",
+    "blinded": false,
+    "manifest_path": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\tool_use_memory_llm_pair_dev_v2.manifest.json",
+    "manifest_sha256": "b0ab87a8ae8cb4cd2612c6613b0382857523bc098d91750dab3e20fd3057fa07",
+    "manifest_verified": true
+  },
+  "artifact_root": "D:\\cst_agent_rag_data\\agent_eval\\tool_use_memory_llm_dev_v2",
+  "fixture_count": 4,
+  "all_production_writes_recorded": true,
+  "all_cross_instance_recalls_nonempty": true,
+  "all_failed_tools_demoted": true,
+  "all_checks_passed": true,
+  "fixtures": [
+    {
+      "fixture_id": "generic_vba_patch_failure_v1",
+      "failure_family": "dedicated_backend_over_generic_vba",
+      "production_write_recorded": true,
+      "cross_instance_recall_count": 1,
+      "guidance_sha256": "de983e4a97253ed7d756ddcca91868e933f19c6a2caa9ade921a68b134d43cfa",
+      "original_tool_order": [
+        "execute_vba_script",
+        "use_template",
+        "build_rectangular_patch_fast"
+      ],
+      "reranked_tool_order": [
+        "use_template",
+        "build_rectangular_patch_fast",
+        "execute_vba_script"
+      ],
+      "failed_tool_demoted": true,
+      "project_scope_shared": true
+    },
+    {
+      "fixture_id": "undefined_parameter_brick_failure_v1",
+      "failure_family": "parameter_precondition",
+      "production_write_recorded": true,
+      "cross_instance_recall_count": 1,
+      "guidance_sha256": "53b78d7b3cf4242c700eda770eaaafbfb0a88f1d907560be048b869a7a75dfc9",
+      "original_tool_order": [
+        "create_brick",
+        "execute_vba_script",
+        "store_parameter"
+      ],
+      "reranked_tool_order": [
+        "execute_vba_script",
+        "store_parameter",
+        "create_brick"
+      ],
+      "failed_tool_demoted": true,
+      "project_scope_shared": true
+    },
+    {
+      "fixture_id": "unknown_material_brick_failure_v1",
+      "failure_family": "material_precondition",
+      "production_write_recorded": true,
+      "cross_instance_recall_count": 1,
+      "guidance_sha256": "aa7acb6ba34c566c17f9fb8e95d7816f015b6ba2bf73a7b5150ddefc88c0dd2d",
+      "original_tool_order": [
+        "create_brick",
+        "execute_vba_script",
+        "create_material"
+      ],
+      "reranked_tool_order": [
+        "execute_vba_script",
+        "create_material",
+        "create_brick"
+      ],
+      "failed_tool_demoted": true,
+      "project_scope_shared": true
+    },
+    {
+      "fixture_id": "solver_missing_port_failure_v1",
+      "failure_family": "solver_preflight_excitation",
+      "production_write_recorded": true,
+      "cross_instance_recall_count": 1,
+      "guidance_sha256": "23dfc26adda1e3bcb4eeac93cd08c57fd29d37c8513b59fb0350afb839932b53",
+      "original_tool_order": [
+        "run_solver",
+        "check_cst_status",
+        "create_discrete_port"
+      ],
+      "reranked_tool_order": [
+        "check_cst_status",
+        "create_discrete_port",
+        "run_solver"
+      ],
+      "failed_tool_demoted": true,
+      "project_scope_shared": true
+    }
+  ],
+  "limitations": [
+    "This validates production write, persistence, scoped recall, and safe reranking without an LLM.",
+    "It does not prove that a real model follows recalled guidance or improves task success."
+  ]
+}

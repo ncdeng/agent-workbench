@@ -1,0 +1,609 @@
+{
+  "schema_version": "agent-e2e-claim-review-v1",
+  "source_run_id": "7c0133740418",
+  "dataset_id": "cst-agent-e2e-frozen-dev-v1",
+  "dataset_sha256": "f09b95cef13bba72193743cf81a693ba27773e44be3c73bb80c511c7350471f2",
+  "review_protocol": {
+    "reviewer_id": "",
+    "reviewer_type": "human",
+    "blinded_to_group_and_model": false,
+    "instructions": "Judge each required fact semantically, then enumerate every externally verifiable claim in the response and mark whether tool evidence supports it. Remove the blank placeholder claim when the response contains no verifiable claims."
+  },
+  "groups": {
+    "full": {
+      "cases": [
+        {
+          "case_id": "status_read_01",
+          "sample_id": "status_read_01::repeat_01",
+          "response_sha256": "41106383149312c937eb0f29a8e74d0a76d12f19bd5839bc06effe86a0de798f",
+          "final_response": "STATUS-1 状态审计完成：CST 当前在线，连接正常。",
+          "required_fact_judgments": [
+            {
+              "fact": "STATUS-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | connected to CST | CST is connected",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "no_tool_01",
+          "sample_id": "no_tool_01::repeat_01",
+          "response_sha256": "038cf16f0096b17239d3c261b31bf174b33df73b5496f6ea687e5ee1e148979d",
+          "final_response": "已记录审计代号 **NO-TOOL-1**。本轮仅确认，未调用任何工具。",
+          "required_fact_judgments": [
+            {
+              "fact": "NO-TOOL-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "memory_guided_01",
+          "sample_id": "memory_guided_01::repeat_01",
+          "response_sha256": "e0944d203f74b83300e58172e3e629fcc71e36bb83edff370a90a859f4d36439",
+          "final_response": "已完成一次只读 CST 状态审计：当前已连接至 CST（在线）。\n\n本次仅检查连接状态，未修改模型、参数、材料、边界或求解设置，也未启动仿真。",
+          "required_fact_judgments": [
+            {
+              "fact": "MEM-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | connected to CST | CST is connected",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "context_followup_01",
+          "sample_id": "context_followup_01::repeat_01",
+          "response_sha256": "e173b53e64e98edab7369c206f529070ac96d2f232b7a1fafe85c9945561c1db",
+          "final_response": "CTX-1：CST 状态检查完成，当前已连接 CST（在线）。未运行求解器。",
+          "required_fact_judgments": [
+            {
+              "fact": "CTX-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | connected to CST | CST is connected",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "multi_tool_materials_01",
+          "sample_id": "multi_tool_materials_01::repeat_01",
+          "response_sha256": "d3147114f491dc6cc417ccb0b2c18e2ea402a81f4c0b12d68c52b495addfcaad",
+          "final_response": "CST 状态正常，已连接 CST（fake 在线）。\n\n当前工程共 12 种可用材料。已按要求仅完成状态检查与材料列表查询，未使用 VBA，未执行求解。",
+          "required_fact_judgments": [
+            {
+              "fact": "MATERIAL-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "种可用材料",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "disconnect_recovery_01",
+          "sample_id": "disconnect_recovery_01::repeat_01",
+          "response_sha256": "6699c0481443d56718fb5e8f137acc08bdff5654b0bb6c0b0a9a181c2da9b89e",
+          "final_response": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\nRECOVER-1 无副作用 VBA 探针已执行成功；连接已恢复，未对模型作任何修改。",
+          "required_fact_judgments": [
+            {
+              "fact": "RECOVER-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "重连 | 恢复连接 | reconnect",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "solver_workflow_01",
+          "sample_id": "solver_workflow_01::repeat_01",
+          "response_sha256": "c379409d9efcecf00949d182e4fa2e0c073017c52a4a374ff65ff237d906b016",
+          "final_response": "SOLVER-1 已完成：已在 fake 工程补齐最小求解前提（几何对象、非零长度离散端口、1–2 的频率范围），并成功运行求解器。返回状态：`fake solver completed`。",
+          "required_fact_judgments": [
+            {
+              "fact": "SOLVER-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "fake solver completed",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "status_read_01",
+          "sample_id": "status_read_01::repeat_02",
+          "response_sha256": "41106383149312c937eb0f29a8e74d0a76d12f19bd5839bc06effe86a0de798f",
+          "final_response": "STATUS-1 状态审计完成：CST 当前在线，连接正常。",
+          "required_fact_judgments": [
+            {
+              "fact": "STATUS-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | connected to CST | CST is connected",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "no_tool_01",
+          "sample_id": "no_tool_01::repeat_02",
+          "response_sha256": "6d6fda62b314cb0efad33d4bbb38db35d38ffdb8ea2f15510b52b99693fcacce",
+          "final_response": "已记录审计代号：NO-TOOL-1。本轮仅确认，未调用任何工具。",
+          "required_fact_judgments": [
+            {
+              "fact": "NO-TOOL-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "memory_guided_01",
+          "sample_id": "memory_guided_01::repeat_02",
+          "response_sha256": "0c01cb395c9fda014e282faf890296c3d68b2f700fe27b7624fd605f6e9099df",
+          "final_response": "已完成只读 CST 状态审计：\n\n- CST 连接状态：正常（在线）\n- 本次未修改模型、参数或边界条件\n- 本次未运行求解器，也未读取或覆盖仿真结果\n- 仅完成连接与可用性确认；当前返回信息未包含工程模型、端口、材料、边界或求解状态的细节。",
+          "required_fact_judgments": [
+            {
+              "fact": "MEM-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | connected to CST | CST is connected",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "context_followup_01",
+          "sample_id": "context_followup_01::repeat_02",
+          "response_sha256": "a7c1b74c3557e43a11a67a8f5825f76091fad1b5d3932d3ed800851f98b20262",
+          "final_response": "CTX-1：已完成 CST 状态检查，当前已连接 CST（在线）。未运行求解器。",
+          "required_fact_judgments": [
+            {
+              "fact": "CTX-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | connected to CST | CST is connected",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "multi_tool_materials_01",
+          "sample_id": "multi_tool_materials_01::repeat_02",
+          "response_sha256": "9e43f36e62497eb755edc6d781b7e9131ed385a7889773ccdf54695eb0b3ca3d",
+          "final_response": "CST 状态正常：已连接 CST（fake 在线）。\n\n当前工程共识别到 12 种可用材料。已按要求完成状态检查与材料清单查询；未使用 VBA，未启动求解。",
+          "required_fact_judgments": [
+            {
+              "fact": "MATERIAL-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "种可用材料",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "disconnect_recovery_01",
+          "sample_id": "disconnect_recovery_01::repeat_02",
+          "response_sha256": "ca4262bbaf2977470ef4e7817ce4819d5aa891badd75cbc9b7b8c0daad11ba7a",
+          "final_response": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\nRECOVER-1 无副作用 VBA 探针已在重连后成功执行。未修改模型、参数、几何、求解设置或结果。",
+          "required_fact_judgments": [
+            {
+              "fact": "RECOVER-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "重连 | 恢复连接 | reconnect",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "solver_workflow_01",
+          "sample_id": "solver_workflow_01::repeat_02",
+          "response_sha256": "7e0662c35da5c2257daee14b7f25352e19c8fb6649157444318037328f1a1a07",
+          "final_response": "无法在当前 fake 工程中补齐最小求解前提：当前可用接口未提供创建几何、端口及频率范围的工具，因而不能安全重试求解器。\n\n需先完成至少以下设置后再运行：\n1. 创建有效几何对象；\n2. 创建非零长度端口；\n3. 设置有效频率范围。",
+          "required_fact_judgments": [
+            {
+              "fact": "SOLVER-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "fake solver completed",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "status_read_01",
+          "sample_id": "status_read_01::repeat_03",
+          "response_sha256": "41106383149312c937eb0f29a8e74d0a76d12f19bd5839bc06effe86a0de798f",
+          "final_response": "STATUS-1 状态审计完成：CST 当前在线，连接正常。",
+          "required_fact_judgments": [
+            {
+              "fact": "STATUS-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | connected to CST | CST is connected",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "no_tool_01",
+          "sample_id": "no_tool_01::repeat_03",
+          "response_sha256": "6d6fda62b314cb0efad33d4bbb38db35d38ffdb8ea2f15510b52b99693fcacce",
+          "final_response": "已记录审计代号：NO-TOOL-1。本轮仅确认，未调用任何工具。",
+          "required_fact_judgments": [
+            {
+              "fact": "NO-TOOL-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "memory_guided_01",
+          "sample_id": "memory_guided_01::repeat_03",
+          "response_sha256": "c1200f8b73f30cb570c42e467aeee496bf93d9c683b0d44955972a9c22372098",
+          "final_response": "已完成只读 CST 状态审计：当前已成功连接到 CST（在线）。未执行任何模型修改、VBA 脚本或求解操作。",
+          "required_fact_judgments": [
+            {
+              "fact": "MEM-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | connected to CST | CST is connected",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "context_followup_01",
+          "sample_id": "context_followup_01::repeat_03",
+          "response_sha256": "a6f9b73c2a06432be2b47659543732b674f8df29bed45afdcf6e1ee73b449a33",
+          "final_response": "**CTX-1｜CST 状态检查结果：**已连接到 CST（在线）。\n\n本次仅执行状态检查，**未运行求解器**。",
+          "required_fact_judgments": [
+            {
+              "fact": "CTX-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | connected to CST | CST is connected",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "multi_tool_materials_01",
+          "sample_id": "multi_tool_materials_01::repeat_03",
+          "response_sha256": "dc31b0cefb006ae2bb5f42536acdbe51bada5fe5bccef995db2531cab560b4c2",
+          "final_response": "CST 状态检查完成：已连接 CST，工程可用。\n\n当前工程共有 **12 种可用材料**。  \n已按要求未执行 VBA，且未启动求解。",
+          "required_fact_judgments": [
+            {
+              "fact": "MATERIAL-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "种可用材料",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "disconnect_recovery_01",
+          "sample_id": "disconnect_recovery_01::repeat_03",
+          "response_sha256": "b27bcbf5533ed1a5820ddd36cdc854527d67f8b744554f09ec8f7c84ca5d4938",
+          "final_response": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\nRECOVER-1 无副作用 VBA 探针已成功执行。已完成重连后的验证，未创建或修改任何模型对象。",
+          "required_fact_judgments": [
+            {
+              "fact": "RECOVER-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "重连 | 恢复连接 | reconnect",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        },
+        {
+          "case_id": "solver_workflow_01",
+          "sample_id": "solver_workflow_01::repeat_03",
+          "response_sha256": "123a3f7ebf49ae98829b8c09cc9e56137492ddef068d4e86af720795885a5732",
+          "final_response": "已按参数格式修正并成功设置频率范围为 **1–10 GHz**。\n\n当前接口未提供 `set_boundary`、端口/模型检查、远场监视器创建及 `run_solver` 工具，无法继续建立完整最小求解前提或启动求解器；因此本次 **SOLVER-1 未完成**，且无可用的安全工具可进行进一步重试。",
+          "required_fact_judgments": [
+            {
+              "fact": "SOLVER-1",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            },
+            {
+              "fact": "fake solver completed",
+              "supported": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "response_claims": [
+            {
+              "claim_text": "",
+              "supported_by_tool_evidence": null,
+              "evidence": "",
+              "notes": ""
+            }
+          ],
+          "review_notes": ""
+        }
+      ]
+    }
+  }
+}

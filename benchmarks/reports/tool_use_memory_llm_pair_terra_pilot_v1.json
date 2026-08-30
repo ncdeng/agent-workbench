@@ -1,0 +1,357 @@
+{
+  "schema_version": "tool-use-memory-llm-pair-v1",
+  "run": {
+    "run_id": "8b0762197f42",
+    "timestamp_utc": "2026-08-10T07:25:47.248746+00:00",
+    "model": "gpt-5.6-terra",
+    "unique_cases": 6,
+    "repeat_count": 1,
+    "pair_count": 6,
+    "artifact_root": "D:\\cst_agent_rag_data\\agent_eval\\tool_use_memory_llm\\8b0762197f42"
+  },
+  "learn_phase": {
+    "production_write_recorded": true,
+    "write_evidence": {
+      "task_signature": "tool_failure:execute_vba_script",
+      "selected_tools": [
+        "execute_vba_script"
+      ],
+      "success": false,
+      "failure": true,
+      "failure_reason": "VBA is unnecessary for a read-only CST status audit.",
+      "corrective_hint": "Review tool preconditions and arguments before retrying.",
+      "timestamp": "2026-08-10T07:22:38.269815+00:00",
+      "confidence": 0.5,
+      "metric_delta": null,
+      "metadata": {
+        "tool_call_id": "",
+        "arguments": {
+          "vba_code": "' paired memory probe",
+          "description": "read-only CST status audit"
+        },
+        "prior_failures": 0,
+        "project_scope": "project:00bf93c8eec5a19d",
+        "design_signature": ""
+      }
+    }
+  },
+  "arms": {
+    "no_memory": {
+      "samples": 6,
+      "preferred_tool_rate": 1.0,
+      "repeat_error_rate": 0.0,
+      "invalid_call_rate": 0.0,
+      "mean_tokens": 0.0,
+      "mean_latency_ms": 15792.962166666666
+    },
+    "learned": {
+      "samples": 6,
+      "preferred_tool_rate": 1.0,
+      "repeat_error_rate": 0.0,
+      "invalid_call_rate": 0.0,
+      "mean_tokens": 0.0,
+      "mean_latency_ms": 13182.618333333334
+    }
+  },
+  "paired": {
+    "preferred_tool_rate_delta": 0.0,
+    "learned_wins": 0,
+    "learned_losses": 0,
+    "ties": 6
+  },
+  "samples": [
+    {
+      "sample_id": "status_audit_01::no_memory::repeat_01",
+      "pair_id": "status_audit_01::repeat_01",
+      "case_id": "status_audit_01",
+      "repeat_index": 1,
+      "arm": "no_memory",
+      "query": "Check whether CST is reachable using the lightest-weight audit path.",
+      "tool_calls": [
+        "check_cst_status"
+      ],
+      "first_tool": "check_cst_status",
+      "preferred_tool_selected": true,
+      "invalid_call": false,
+      "recalled_memory_count": 0,
+      "final_response": "CST is reachable and connected.",
+      "final_response_sha256": "c18a72086e7a6341a9f0c2754df1c1d53dd4cea3d181bbfc5ade3c7ae18d8303",
+      "token_usage": {
+        "prompt": 411,
+        "completion": 38,
+        "total": 0,
+        "calls": 2
+      },
+      "latency_ms": 5049.319
+    },
+    {
+      "sample_id": "status_audit_01::learned::repeat_01",
+      "pair_id": "status_audit_01::repeat_01",
+      "case_id": "status_audit_01",
+      "repeat_index": 1,
+      "arm": "learned",
+      "query": "Check whether CST is reachable using the lightest-weight audit path.",
+      "tool_calls": [
+        "check_cst_status"
+      ],
+      "first_tool": "check_cst_status",
+      "preferred_tool_selected": true,
+      "invalid_call": false,
+      "recalled_memory_count": 1,
+      "final_response": "CST is reachable and connected.",
+      "final_response_sha256": "c18a72086e7a6341a9f0c2754df1c1d53dd4cea3d181bbfc5ade3c7ae18d8303",
+      "token_usage": {
+        "prompt": 523,
+        "completion": 38,
+        "total": 0,
+        "calls": 2
+      },
+      "latency_ms": 6901.809
+    },
+    {
+      "sample_id": "status_audit_02::no_memory::repeat_01",
+      "pair_id": "status_audit_02::repeat_01",
+      "case_id": "status_audit_02",
+      "repeat_index": 1,
+      "arm": "no_memory",
+      "query": "Run a low-risk connectivity audit and report the current CST online status.",
+      "tool_calls": [
+        "check_cst_status"
+      ],
+      "first_tool": "check_cst_status",
+      "preferred_tool_selected": true,
+      "invalid_call": false,
+      "recalled_memory_count": 0,
+      "final_response": "CST is connected and online (fake online session).",
+      "final_response_sha256": "cf9e483bab5df536eb3e4f1ee68ef9d29299b91e302b7e456bd5336eb51643a8",
+      "token_usage": {
+        "prompt": 413,
+        "completion": 44,
+        "total": 0,
+        "calls": 2
+      },
+      "latency_ms": 4005.343
+    },
+    {
+      "sample_id": "status_audit_02::learned::repeat_01",
+      "pair_id": "status_audit_02::repeat_01",
+      "case_id": "status_audit_02",
+      "repeat_index": 1,
+      "arm": "learned",
+      "query": "Run a low-risk connectivity audit and report the current CST online status.",
+      "tool_calls": [
+        "check_cst_status"
+      ],
+      "first_tool": "check_cst_status",
+      "preferred_tool_selected": true,
+      "invalid_call": false,
+      "recalled_memory_count": 1,
+      "final_response": "CST is currently connected and online (fake online status).",
+      "final_response_sha256": "e5d18bb1cc5abef69fc8fc60ee3fc7bbd5273b7f2d206bd3c20b964f61032da6",
+      "token_usage": {
+        "prompt": 525,
+        "completion": 47,
+        "total": 0,
+        "calls": 2
+      },
+      "latency_ms": 8537.173
+    },
+    {
+      "sample_id": "status_audit_03::no_memory::repeat_01",
+      "pair_id": "status_audit_03::repeat_01",
+      "case_id": "status_audit_03",
+      "repeat_index": 1,
+      "arm": "no_memory",
+      "query": "Verify the current CST connection state without changing the project.",
+      "tool_calls": [
+        "check_cst_status"
+      ],
+      "first_tool": "check_cst_status",
+      "preferred_tool_selected": true,
+      "invalid_call": false,
+      "recalled_memory_count": 0,
+      "final_response": "已连接 CST（fake 在线）。",
+      "final_response_sha256": "1add8da3d3e7ae6d79f4b0202002caa92678eb610c12eda10e0dd8d2281bbcb0",
+      "token_usage": {
+        "prompt": 407,
+        "completion": 39,
+        "total": 0,
+        "calls": 2
+      },
+      "latency_ms": 9249.209
+    },
+    {
+      "sample_id": "status_audit_03::learned::repeat_01",
+      "pair_id": "status_audit_03::repeat_01",
+      "case_id": "status_audit_03",
+      "repeat_index": 1,
+      "arm": "learned",
+      "query": "Verify the current CST connection state without changing the project.",
+      "tool_calls": [
+        "check_cst_status"
+      ],
+      "first_tool": "check_cst_status",
+      "preferred_tool_selected": true,
+      "invalid_call": false,
+      "recalled_memory_count": 1,
+      "final_response": "已连接 CST（fake 在线）。",
+      "final_response_sha256": "1add8da3d3e7ae6d79f4b0202002caa92678eb610c12eda10e0dd8d2281bbcb0",
+      "token_usage": {
+        "prompt": 519,
+        "completion": 38,
+        "total": 0,
+        "calls": 2
+      },
+      "latency_ms": 49757.701
+    },
+    {
+      "sample_id": "status_audit_04::no_memory::repeat_01",
+      "pair_id": "status_audit_04::repeat_01",
+      "case_id": "status_audit_04",
+      "repeat_index": 1,
+      "arm": "no_memory",
+      "query": "Before any modeling, confirm whether the CST session is available.",
+      "tool_calls": [
+        "check_cst_status"
+      ],
+      "first_tool": "check_cst_status",
+      "preferred_tool_selected": true,
+      "invalid_call": false,
+      "recalled_memory_count": 0,
+      "final_response": "CST session is available and connected.",
+      "final_response_sha256": "3e7a5d9ad55ab23f5d3e02c568090bafa4fd0245060f06ca781b864363db6fb8",
+      "token_usage": {
+        "prompt": 409,
+        "completion": 38,
+        "total": 0,
+        "calls": 2
+      },
+      "latency_ms": 67374.085
+    },
+    {
+      "sample_id": "status_audit_04::learned::repeat_01",
+      "pair_id": "status_audit_04::repeat_01",
+      "case_id": "status_audit_04",
+      "repeat_index": 1,
+      "arm": "learned",
+      "query": "Before any modeling, confirm whether the CST session is available.",
+      "tool_calls": [
+        "check_cst_status"
+      ],
+      "first_tool": "check_cst_status",
+      "preferred_tool_selected": true,
+      "invalid_call": false,
+      "recalled_memory_count": 1,
+      "final_response": "CST session is available and connected.",
+      "final_response_sha256": "3e7a5d9ad55ab23f5d3e02c568090bafa4fd0245060f06ca781b864363db6fb8",
+      "token_usage": {
+        "prompt": 521,
+        "completion": 39,
+        "total": 0,
+        "calls": 2
+      },
+      "latency_ms": 3823.491
+    },
+    {
+      "sample_id": "status_audit_05::no_memory::repeat_01",
+      "pair_id": "status_audit_05::repeat_01",
+      "case_id": "status_audit_05",
+      "repeat_index": 1,
+      "arm": "no_memory",
+      "query": "Perform a read-only health check of the CST session.",
+      "tool_calls": [
+        "check_cst_status"
+      ],
+      "first_tool": "check_cst_status",
+      "preferred_tool_selected": true,
+      "invalid_call": false,
+      "recalled_memory_count": 0,
+      "final_response": "CST session is connected and online.",
+      "final_response_sha256": "3bcc4b5ea08866c60a6a68c0462109f307337c1d4fe22f8d5a1e39775ae05ce5",
+      "token_usage": {
+        "prompt": 407,
+        "completion": 42,
+        "total": 0,
+        "calls": 2
+      },
+      "latency_ms": 4807.055
+    },
+    {
+      "sample_id": "status_audit_05::learned::repeat_01",
+      "pair_id": "status_audit_05::repeat_01",
+      "case_id": "status_audit_05",
+      "repeat_index": 1,
+      "arm": "learned",
+      "query": "Perform a read-only health check of the CST session.",
+      "tool_calls": [
+        "check_cst_status"
+      ],
+      "first_tool": "check_cst_status",
+      "preferred_tool_selected": true,
+      "invalid_call": false,
+      "recalled_memory_count": 1,
+      "final_response": "CST session is connected and online.",
+      "final_response_sha256": "3bcc4b5ea08866c60a6a68c0462109f307337c1d4fe22f8d5a1e39775ae05ce5",
+      "token_usage": {
+        "prompt": 519,
+        "completion": 45,
+        "total": 0,
+        "calls": 2
+      },
+      "latency_ms": 5464.436
+    },
+    {
+      "sample_id": "status_audit_06::no_memory::repeat_01",
+      "pair_id": "status_audit_06::repeat_01",
+      "case_id": "status_audit_06",
+      "repeat_index": 1,
+      "arm": "no_memory",
+      "query": "Inspect CST availability and avoid unnecessary project actions.",
+      "tool_calls": [
+        "check_cst_status"
+      ],
+      "first_tool": "check_cst_status",
+      "preferred_tool_selected": true,
+      "invalid_call": false,
+      "recalled_memory_count": 0,
+      "final_response": "CST is connected and available.",
+      "final_response_sha256": "47883fab941d5ffe3b5f6b44644688dc943b53bcb91452017a74f9b574643f18",
+      "token_usage": {
+        "prompt": 403,
+        "completion": 41,
+        "total": 0,
+        "calls": 2
+      },
+      "latency_ms": 4272.762
+    },
+    {
+      "sample_id": "status_audit_06::learned::repeat_01",
+      "pair_id": "status_audit_06::repeat_01",
+      "case_id": "status_audit_06",
+      "repeat_index": 1,
+      "arm": "learned",
+      "query": "Inspect CST availability and avoid unnecessary project actions.",
+      "tool_calls": [
+        "check_cst_status"
+      ],
+      "first_tool": "check_cst_status",
+      "preferred_tool_selected": true,
+      "invalid_call": false,
+      "recalled_memory_count": 1,
+      "final_response": "CST is available and connected. No project actions were performed.",
+      "final_response_sha256": "9f0c567072189966472d8c8c7474c43a7df134aaf0902cef205280e7fdd5e038",
+      "token_usage": {
+        "prompt": 515,
+        "completion": 45,
+        "total": 0,
+        "calls": 2
+      },
+      "latency_ms": 4611.1
+    }
+  ],
+  "limitations": [
+    "This is an Executor-only two-tool paired evaluation, not full Planner-to-Executor Agent E2E.",
+    "The six paraphrases are developer-visible and specifically target a known prior failure family.",
+    "A null lift means the tasks are too easy or memory is behaviorally ineffective; it must not be hidden."
+  ]
+}

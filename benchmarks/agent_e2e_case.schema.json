@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "agent-e2e-case-v1",
+  "title": "CST Agent E2E Dataset",
+  "type": "object",
+  "required": ["schema_version", "dataset_id", "split", "description", "cases"],
+  "properties": {
+    "schema_version": {"const": "agent-e2e-case-v1"},
+    "dataset_id": {"type": "string", "minLength": 1},
+    "split": {"type": "string", "minLength": 1},
+    "dataset_role": {"type": "string"},
+    "description": {"type": "string", "minLength": 1},
+    "frozen_at": {"type": "string", "format": "date-time"},
+    "annotation_policy": {"type": ["string", "object"]},
+    "generation_provenance": {"type": "object"},
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/case"}
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"split": {"enum": ["held_out", "frozen_evaluation"]}},
+        "required": ["split"]
+      },
+      "then": {
+        "required": ["dataset_role", "frozen_at", "annotation_policy", "generation_provenance"],
+        "properties": {
+          "cases": {
+            "minItems": 30,
+            "maxItems": 50,
+            "items": {
+              "allOf": [
+                {"$ref": "#/$defs/case"},
+                {"required": ["scenario_family", "design_family", "failure_family"]}
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": true,
+  "$defs": {
+    "turn": {
+      "type": "object",
+      "required": ["content", "tool_name", "tool_arguments"],
+      "properties": {
+        "content": {"type": "string", "minLength": 1},
+        "tool_name": {"type": ["string", "null"]},
+        "tool_arguments": {"type": "object"},
+        "tool_calls": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "arguments"],
+            "properties": {
+              "name": {"type": "string", "minLength": 1},
+              "arguments": {"type": "object"}
+            }
+          }
+        },
+        "planner_constraints": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "fixture": {
+      "type": "object",
+      "required": ["connected", "structured_lessons", "tool_use_memory", "injected_failures"],
+      "properties": {
+        "connected": {"type": "boolean"},
+        "structured_lessons": {"type": "array"},
+        "tool_use_memory": {"type": "array"},
+        "injected_failures": {"type": "array"}
+      },
+      "additionalProperties": true
+    },
+    "oracle": {
+      "type": "object",
+      "required": [
+        "allowed_tools",
+        "required_tools_all",
+        "forbidden_tools",
+        "valid_tool_sequences",
+        "required_grounding_facts",
+        "expected_recovery",
+        "max_tool_calls"
+      ],
+      "properties": {
+        "allowed_tools": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "required_tools_all": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "forbidden_tools": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "valid_tool_sequences": {
+          "type": "array",
+          "items": {"type": "array", "items": {"type": "string"}}
+        },
+        "required_grounding_facts": {"type": "array"},
+        "expected_recovery": {"type": ["string", "null"]},
+        "expected_tool_arguments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["tool_name", "arguments"],
+            "properties": {
+              "tool_name": {"type": "string", "minLength": 1},
+              "occurrence": {"type": "integer", "minimum": 1},
+              "arguments": {"type": "object"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "max_tool_calls": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": true
+    },
+    "case": {
+      "type": "object",
+      "required": ["case_id", "category", "seed", "turns", "fixture", "oracle", "tags"],
+      "properties": {
+        "case_id": {"type": "string", "minLength": 1},
+        "category": {"type": "string", "minLength": 1},
+        "scenario_family": {"type": "string", "minLength": 1},
+        "design_family": {"type": "string", "minLength": 1},
+        "failure_family": {"type": "string", "minLength": 1},
+        "seed": {"type": "integer", "minimum": 1},
+        "turns": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/turn"}},
+        "fixture": {"$ref": "#/$defs/fixture"},
+        "oracle": {"$ref": "#/$defs/oracle"},
+        "tags": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      },
+      "additionalProperties": true
+    }
+  }
+}

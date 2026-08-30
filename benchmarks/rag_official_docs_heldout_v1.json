@@ -1,0 +1,283 @@
+{
+  "dataset_role": "held_out_v1",
+  "frozen_at": "2026-08-09",
+  "corpus": "CST Studio Suite 2025 Online Help",
+  "collection": "cst_official_docs_bge_base_en_v1",
+  "annotation_policy": "relevance 3=direct, 2=substantive alternative, 1=background only, 0=irrelevant hard negative",
+  "cases": [
+    {
+      "id": "ho01_floquet_boundary_settings",
+      "query": "Floquet 边界里如何设置扫描角度、模式数和极化？",
+      "reference_english_query": "How are scan angles, mode count and polarization configured for Floquet boundaries?",
+      "language": "zh", "category": "boundary", "difficulty": "hard",
+      "expected_sources": ["3D/special_solvopt/special_solvopt_floquet_special.htm"],
+      "qrels": [
+        {"source_path": "3D/special_solvopt/special_solvopt_floquet_special.htm", "relevance": 3, "doc_family": "floquet_boundary_settings"},
+        {"source_path": "VBA_3D/special_vbaports/floquetport_object.htm", "relevance": 1, "doc_family": "floquet_port_api"}
+      ]
+    },
+    {
+      "id": "ho02_farfield_source",
+      "query": "How do I define a farfield source from imported radiation data?",
+      "reference_english_query": "How do I define a farfield source from imported radiation data?",
+      "language": "en", "category": "source", "difficulty": "medium",
+      "expected_sources": ["3D/special_solvopt/special_solvopt_farfield_source.htm"],
+      "qrels": [{"source_path": "3D/special_solvopt/special_solvopt_farfield_source.htm", "relevance": 3, "doc_family": "farfield_source_dialog"}]
+    },
+    {
+      "id": "ho03_cylindrical_nearfield_scan",
+      "query": "cylindrical nearfield scan 要怎样设置采样圆柱和场计算？",
+      "reference_english_query": "How is a cylindrical nearfield scan configured for field calculation?",
+      "language": "mixed", "category": "postprocess", "difficulty": "medium",
+      "expected_sources": ["3D/special_postpr/special_postpr_nearfieldscan.htm", "VBA_3D/special_vbapostproc/special_vbapostproc_nearfieldscan_object.htm"],
+      "qrels": [
+        {"source_path": "3D/special_postpr/special_postpr_nearfieldscan.htm", "relevance": 3, "doc_family": "cylindrical_nearfield_scan"},
+        {"source_path": "VBA_3D/special_vbapostproc/special_vbapostproc_nearfieldscan_object.htm", "relevance": 2, "doc_family": "cylindrical_nearfield_scan"}
+      ]
+    },
+    {
+      "id": "ho04_export_touchstone_3d",
+      "query": "三维仿真结果怎样导出成 Touchstone 或 MDIF 文件？",
+      "reference_english_query": "How are 3D simulation results exported as TOUCHSTONE or MDIF files?",
+      "language": "zh", "category": "data_exchange", "difficulty": "easy",
+      "expected_sources": ["3D/special_tools/special_tools_exporttouchstone.htm", "DES/userinterface/xyplot/exporttouchstone.htm", "VBA_3D/special_vbaimpexp/special_vbaimp_exp_touchstone.htm"],
+      "qrels": [
+        {"source_path": "3D/special_tools/special_tools_exporttouchstone.htm", "relevance": 3, "doc_family": "touchstone_export"},
+        {"source_path": "DES/userinterface/xyplot/exporttouchstone.htm", "relevance": 2, "doc_family": "touchstone_export"},
+        {"source_path": "VBA_3D/special_vbaimpexp/special_vbaimp_exp_touchstone.htm", "relevance": 2, "doc_family": "touchstone_export"}
+      ]
+    },
+    {
+      "id": "ho05_tdr_from_sparameters",
+      "query": "Which result template computes a TDR signal from simulated S-parameters?",
+      "reference_english_query": "Which result template computes a TDR signal from simulated S-parameters?",
+      "language": "en", "category": "postprocess", "difficulty": "medium",
+      "expected_sources": ["3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm"],
+      "qrels": [{"source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm", "relevance": 3, "doc_family": "tdr_from_sparameters"}]
+    },
+    {
+      "id": "ho06_extract_material_touchstone",
+      "query": "怎样用 2-port Touchstone 提取 complex permittivity 和 permeability？",
+      "reference_english_query": "How can complex permittivity and permeability be extracted from a two-port TOUCHSTONE file?",
+      "language": "mixed", "category": "material", "difficulty": "hard",
+      "expected_sources": ["3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm"],
+      "qrels": [{"source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm", "relevance": 3, "doc_family": "material_extraction_touchstone"}]
+    },
+    {
+      "id": "ho07_legacy_sparameter_goal",
+      "query": "旧工程里的 S-Parameter goal 为什么不能再新建，应该查看哪个设置说明？",
+      "reference_english_query": "Why can an S-Parameter goal no longer be created and how are legacy goals handled?",
+      "language": "zh", "category": "optimization", "difficulty": "hard",
+      "expected_sources": ["3D/special_solvopt/special_solvopt_define_s-parameter_goal.htm"],
+      "qrels": [{"source_path": "3D/special_solvopt/special_solvopt_define_s-parameter_goal.htm", "relevance": 3, "doc_family": "legacy_sparameter_goal"}]
+    },
+    {
+      "id": "ho08_optimizer_goals",
+      "query": "Where are optimizer goals added, enabled, weighted and assigned to result values?",
+      "reference_english_query": "Where are optimizer goals added, enabled, weighted and assigned to result values?",
+      "language": "en", "category": "optimization", "difficulty": "medium",
+      "expected_sources": ["3D/special_process/special_solvopt_optimizer_goals.htm"],
+      "qrels": [{"source_path": "3D/special_process/special_solvopt_optimizer_goals.htm", "relevance": 3, "doc_family": "optimizer_goals"}]
+    },
+    {
+      "id": "ho09_optimizer_algorithm_settings",
+      "query": "optimizer 的 global algorithm、population 和 stopping settings 在哪里配置？",
+      "reference_english_query": "Where are the optimizer global algorithm, population and stopping settings configured?",
+      "language": "mixed", "category": "optimization", "difficulty": "medium",
+      "expected_sources": ["3D/special_process/special_solvopt_optimizer_global_alg_settings.htm", "DES/analysis/optimization/optimizer_global_algorithm_settings.htm"],
+      "qrels": [
+        {"source_path": "3D/special_process/special_solvopt_optimizer_global_alg_settings.htm", "relevance": 3, "doc_family": "optimizer_global_algorithm"},
+        {"source_path": "DES/analysis/optimization/optimizer_global_algorithm_settings.htm", "relevance": 2, "doc_family": "optimizer_global_algorithm"}
+      ]
+    },
+    {
+      "id": "ho10_hf_thermal_setup",
+      "query": "如何把高频电磁损耗耦合到热仿真并完成 HF-Thermal 工作流？",
+      "reference_english_query": "How is a coupled high-frequency electromagnetic and thermal simulation set up?",
+      "language": "zh", "category": "multiphysics", "difficulty": "hard",
+      "expected_sources": ["3D/common_overview/common_overview_howto_coupled_hf-thermal.htm", "DES/analysis/simulation/tasks/em_thermal_coupling_simulation_task.htm"],
+      "qrels": [
+        {"source_path": "3D/common_overview/common_overview_howto_coupled_hf-thermal.htm", "relevance": 3, "doc_family": "em_thermal_coupling"},
+        {"source_path": "DES/analysis/simulation/tasks/em_thermal_coupling_simulation_task.htm", "relevance": 2, "doc_family": "em_thermal_coupling"}
+      ]
+    },
+    {
+      "id": "ho11_import_thermal_losses",
+      "query": "How can thermal losses be imported from another CST project?",
+      "reference_english_query": "How can thermal losses be imported from another CST project?",
+      "language": "en", "category": "multiphysics", "difficulty": "easy",
+      "expected_sources": ["3D/special_solvopt/special_solvopt_import_thermal_losses_from_project.htm"],
+      "qrels": [{"source_path": "3D/special_solvopt/special_solvopt_import_thermal_losses_from_project.htm", "relevance": 3, "doc_family": "import_thermal_losses"}]
+    },
+    {
+      "id": "ho12_thermal_solver_parameters",
+      "query": "steady-state thermal solver 的 accuracy、iteration 和 convergence 参数怎么设？",
+      "reference_english_query": "How are accuracy, iteration and convergence parameters configured for the steady-state thermal solver?",
+      "language": "mixed", "category": "solver", "difficulty": "medium",
+      "expected_sources": ["3D/special_solvopt/special_solvopt_thermal_solver_parameters.htm"],
+      "qrels": [
+        {"source_path": "3D/special_solvopt/special_solvopt_thermal_solver_parameters.htm", "relevance": 3, "doc_family": "steady_thermal_solver_parameters"},
+        {"source_path": "3D/special_solvopt/special_solvopt_thermal_td_solver_parameters.htm", "relevance": 0, "hard_negative": true, "doc_family": "transient_thermal_solver_parameters"}
+      ]
+    },
+    {
+      "id": "ho13_tetrahedral_eigenmode_specials",
+      "query": "四面体网格下的经典无损本征模求解器有哪些特殊设置？",
+      "reference_english_query": "Which special settings are available for the classical lossless tetrahedral eigenmode solver?",
+      "language": "zh", "category": "solver", "difficulty": "hard",
+      "expected_sources": ["3D/special_solvopt/special_solvopt_eigenmode_solver_specials_tetrahedral.htm"],
+      "qrels": [{"source_path": "3D/special_solvopt/special_solvopt_eigenmode_solver_specials_tetrahedral.htm", "relevance": 3, "doc_family": "tetrahedral_eigenmode_specials"}]
+    },
+    {
+      "id": "ho14_adaptive_surface_mesh",
+      "query": "How are adaptive surface mesh properties configured for the integral equation solver?",
+      "reference_english_query": "How are adaptive surface mesh properties configured for the integral equation solver?",
+      "language": "en", "category": "mesh", "difficulty": "medium",
+      "expected_sources": ["3D/special_solvopt/special_solvopt_adaptive_surface_mesh_refinement_properties.htm"],
+      "qrels": [{"source_path": "3D/special_solvopt/special_solvopt_adaptive_surface_mesh_refinement_properties.htm", "relevance": 3, "doc_family": "adaptive_surface_mesh_ie"}]
+    },
+    {
+      "id": "ho15_stationary_current_sources",
+      "query": "stationary current solver 支持哪些 source types，potential 和 current source 怎么选？",
+      "reference_english_query": "Which source types are supported by the stationary current solver and how are potential and current sources selected?",
+      "language": "mixed", "category": "source", "difficulty": "hard",
+      "expected_sources": ["3D/special_solvopt/special_solvopt_stationary_current_sources.htm"],
+      "qrels": [{"source_path": "3D/special_solvopt/special_solvopt_stationary_current_sources.htm", "relevance": 3, "doc_family": "stationary_current_sources"}]
+    },
+    {
+      "id": "ho16_des_export_touchstone",
+      "query": "在 CST Design Environment 的曲线结果窗口怎样导出 Touchstone？",
+      "reference_english_query": "How is TOUCHSTONE exported from an XY plot in CST Design Environment?",
+      "language": "zh", "category": "data_exchange", "difficulty": "medium",
+      "expected_sources": ["DES/userinterface/xyplot/exporttouchstone.htm", "3D/special_tools/special_tools_exporttouchstone.htm"],
+      "qrels": [
+        {"source_path": "DES/userinterface/xyplot/exporttouchstone.htm", "relevance": 3, "doc_family": "touchstone_export"},
+        {"source_path": "3D/special_tools/special_tools_exporttouchstone.htm", "relevance": 2, "doc_family": "touchstone_export"}
+      ]
+    },
+    {
+      "id": "ho17_parameter_list_window",
+      "query": "What is the Parameter List docking window and how is it shown or hidden?",
+      "reference_english_query": "What is the Parameter List docking window and how is it shown or hidden?",
+      "language": "en", "category": "ui", "difficulty": "easy",
+      "expected_sources": ["DES/userinterface/uielemente/parameterlist.htm"],
+      "qrels": [{"source_path": "DES/userinterface/uielemente/parameterlist.htm", "relevance": 3, "doc_family": "parameter_list_window"}]
+    },
+    {
+      "id": "ho18_touchstone_format",
+      "query": "Touchstone file 的 extension、option line 和数据列格式是什么？",
+      "reference_english_query": "What are the file extensions, option line and data column syntax of the TOUCHSTONE format?",
+      "language": "mixed", "category": "file_format", "difficulty": "medium",
+      "expected_sources": ["DES/theory/touchstone_format.htm"],
+      "qrels": [{"source_path": "DES/theory/touchstone_format.htm", "relevance": 3, "doc_family": "touchstone_format"}]
+    },
+    {
+      "id": "ho19_sparameter_task_excitations",
+      "query": "S 参数仿真任务的 Excitation 选项卡怎样选择激励端口和模式？",
+      "reference_english_query": "How are ports and modes selected in the Excitation tab of an S-Parameter simulation task?",
+      "language": "zh", "category": "excitation", "difficulty": "medium",
+      "expected_sources": ["DES/analysis/simulation/tasks/s-parameter_simulation_task_excitations.htm"],
+      "qrels": [{"source_path": "DES/analysis/simulation/tasks/s-parameter_simulation_task_excitations.htm", "relevance": 3, "doc_family": "des_sparameter_task_excitations"}]
+    },
+    {
+      "id": "ho20_em_thermal_task",
+      "query": "How is an EM-Thermal Coupling Simulation Task configured in a simulation project?",
+      "reference_english_query": "How is an EM-Thermal Coupling Simulation Task configured in a simulation project?",
+      "language": "en", "category": "multiphysics", "difficulty": "medium",
+      "expected_sources": ["DES/analysis/simulation/tasks/em_thermal_coupling_simulation_task.htm", "3D/common_overview/common_overview_howto_coupled_hf-thermal.htm"],
+      "qrels": [
+        {"source_path": "DES/analysis/simulation/tasks/em_thermal_coupling_simulation_task.htm", "relevance": 3, "doc_family": "em_thermal_coupling"},
+        {"source_path": "3D/common_overview/common_overview_howto_coupled_hf-thermal.htm", "relevance": 2, "doc_family": "em_thermal_coupling"}
+      ]
+    },
+    {
+      "id": "ho21_des_optimizer_algorithm",
+      "query": "Design Studio optimizer 的 global algorithm settings 和 3D optimizer 有什么配置入口？",
+      "reference_english_query": "Where are global algorithm settings configured for the Design Studio optimizer?",
+      "language": "mixed", "category": "optimization", "difficulty": "hard",
+      "expected_sources": ["DES/analysis/optimization/optimizer_global_algorithm_settings.htm", "3D/special_process/special_solvopt_optimizer_global_alg_settings.htm"],
+      "qrels": [
+        {"source_path": "DES/analysis/optimization/optimizer_global_algorithm_settings.htm", "relevance": 3, "doc_family": "optimizer_global_algorithm"},
+        {"source_path": "3D/special_process/special_solvopt_optimizer_global_alg_settings.htm", "relevance": 2, "doc_family": "optimizer_global_algorithm"}
+      ]
+    },
+    {
+      "id": "ho22_vba_brick",
+      "query": "用 VBA 创建 Brick 时需要设置哪些名称、组件、材料和坐标参数？",
+      "reference_english_query": "Which name, component, material and coordinate methods are needed to create a Brick with VBA?",
+      "language": "zh", "category": "vba_modeling", "difficulty": "medium",
+      "expected_sources": ["VBA_3D/common_vbabasicsolids/common_vbabrick_object.htm"],
+      "qrels": [{"source_path": "VBA_3D/common_vbabasicsolids/common_vbabrick_object.htm", "relevance": 3, "doc_family": "vba_brick_object"}]
+    },
+    {
+      "id": "ho23_vba_cylinder",
+      "query": "Which VBA object and methods create a cylinder with an axis and outer radius?",
+      "reference_english_query": "Which VBA object and methods create a cylinder with an axis and outer radius?",
+      "language": "en", "category": "vba_modeling", "difficulty": "medium",
+      "expected_sources": ["VBA_3D/common_vbabasicsolids/common_vbacylinder_object.htm"],
+      "qrels": [{"source_path": "VBA_3D/common_vbabasicsolids/common_vbacylinder_object.htm", "relevance": 3, "doc_family": "vba_cylinder_object"}]
+    },
+    {
+      "id": "ho24_vba_transform",
+      "query": "Transform VBA object 怎样完成 translate、rotate、scale 和 multiple copy？",
+      "reference_english_query": "How does the Transform VBA object perform translation, rotation, scaling and multiple copies?",
+      "language": "mixed", "category": "vba_modeling", "difficulty": "hard",
+      "expected_sources": ["VBA_3D/special_vbatransformo/special_vbatransformo_transform_object.htm"],
+      "qrels": [{"source_path": "VBA_3D/special_vbatransformo/special_vbatransformo_transform_object.htm", "relevance": 3, "doc_family": "vba_transform_object"}]
+    },
+    {
+      "id": "ho25_vba_fdsolver",
+      "query": "VBA 中哪个对象控制频域高频求解器和积分方程求解器？",
+      "reference_english_query": "Which VBA object controls the frequency-domain high-frequency and integral-equation solvers?",
+      "language": "zh", "category": "vba_solver", "difficulty": "medium",
+      "expected_sources": ["VBA_3D/special_vbasolver/special_vbasolver_fdsolver_object.htm"],
+      "qrels": [{"source_path": "VBA_3D/special_vbasolver/special_vbasolver_fdsolver_object.htm", "relevance": 3, "doc_family": "vba_fdsolver_object"}]
+    },
+    {
+      "id": "ho26_vba_eigenmodesolver",
+      "query": "Which VBA methods configure and start the eigenmode solver?",
+      "reference_english_query": "Which VBA methods configure and start the eigenmode solver?",
+      "language": "en", "category": "vba_solver", "difficulty": "medium",
+      "expected_sources": ["VBA_3D/special_vbasolver/special_vbasolver_eigenmodesolver_object.htm"],
+      "qrels": [{"source_path": "VBA_3D/special_vbasolver/special_vbasolver_eigenmodesolver_object.htm", "relevance": 3, "doc_family": "vba_eigenmodesolver_object"}]
+    },
+    {
+      "id": "ho27_vba_monitor",
+      "query": "Monitor object 如何定义 frequency field monitor 和 time monitor？",
+      "reference_english_query": "How does the Monitor VBA object define frequency-domain field monitors and time monitors?",
+      "language": "mixed", "category": "vba_monitor", "difficulty": "medium",
+      "expected_sources": ["VBA_3D/special_vbamonitors/special_vbamonitors_monitor_object.htm"],
+      "qrels": [{"source_path": "VBA_3D/special_vbamonitors/special_vbamonitors_monitor_object.htm", "relevance": 3, "doc_family": "vba_monitor_object"}]
+    },
+    {
+      "id": "ho28_vba_floquetport",
+      "query": "怎样用 VBA 配置无限周期单元的 Floquet ports 和 modes？",
+      "reference_english_query": "How are Floquet ports and modes configured for an infinite periodic unit cell with VBA?",
+      "language": "zh", "category": "vba_port", "difficulty": "hard",
+      "expected_sources": ["VBA_3D/special_vbaports/floquetport_object.htm"],
+      "qrels": [
+        {"source_path": "VBA_3D/special_vbaports/floquetport_object.htm", "relevance": 3, "doc_family": "floquet_port_api"},
+        {"source_path": "3D/special_solvopt/special_solvopt_floquet_special.htm", "relevance": 1, "doc_family": "floquet_boundary_settings"}
+      ]
+    },
+    {
+      "id": "ho29_vba_touchstone_export",
+      "query": "Which VBA command exports S-parameters to a TOUCHSTONE-compatible file?",
+      "reference_english_query": "Which VBA command exports S-parameters to a TOUCHSTONE-compatible file?",
+      "language": "en", "category": "vba_data_exchange", "difficulty": "easy",
+      "expected_sources": ["VBA_3D/special_vbaimpexp/special_vbaimp_exp_touchstone.htm", "3D/special_tools/special_tools_exporttouchstone.htm"],
+      "qrels": [
+        {"source_path": "VBA_3D/special_vbaimpexp/special_vbaimp_exp_touchstone.htm", "relevance": 3, "doc_family": "touchstone_export"},
+        {"source_path": "3D/special_tools/special_tools_exporttouchstone.htm", "relevance": 2, "doc_family": "touchstone_export"}
+      ]
+    },
+    {
+      "id": "ho30_filter_eigenmode_analysis",
+      "query": "Filter Designer 3D 里 eigenmode analysis 怎样预测 assembly 的 design parameters？",
+      "reference_english_query": "How does eigenmode analysis predict design parameters for an assembly in Filter Designer 3D?",
+      "language": "mixed", "category": "filter_designer", "difficulty": "medium",
+      "expected_sources": ["Filter_Designer_3D/example/eigenmode_analysis.htm"],
+      "qrels": [{"source_path": "Filter_Designer_3D/example/eigenmode_analysis.htm", "relevance": 3, "doc_family": "filter_designer_eigenmode_analysis"}]
+    }
+  ]
+}

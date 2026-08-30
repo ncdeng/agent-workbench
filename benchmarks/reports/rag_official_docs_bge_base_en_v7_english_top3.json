@@ -1,0 +1,360 @@
+{
+  "index": {
+    "available": true,
+    "healthy": true,
+    "count": 13242,
+    "error": "",
+    "persist_dir": "D:\\cst_agent_rag_data\\chromadb_v7_bge_base_en",
+    "collection": "cst_official_docs_bge_base_en_v1",
+    "schema_version": 4,
+    "embedding_provider": "local",
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "embedding_query_instruction": "Represent this sentence for searching relevant passages: ",
+    "document_language": "en",
+    "query_expansion": "english_corpus_contract_v1",
+    "multi_query_fusion": "max_cosine",
+    "status": "ready",
+    "stored_schema_version": 4,
+    "stored_embedding_provider": "local",
+    "stored_embedding_model": "BAAI/bge-base-en-v1.5",
+    "stored_embedding_query_instruction": "Represent this sentence for searching relevant passages: ",
+    "stored_document_language": "en",
+    "stored_query_expansion": "english_corpus_contract_v1",
+    "stored_multi_query_fusion": "max_cosine"
+  },
+  "dataset_role": "development_pilot",
+  "query_field": "english_query",
+  "cases": 12,
+  "top_k": 3,
+  "recall_at_3": 0.9166666666666666,
+  "mrr": 0.7777777777777778,
+  "provenance_completeness": 1.0,
+  "repeated_source_slot_rate": 0.0,
+  "latency_ms": {
+    "mean": 156.25,
+    "p50": 143.6,
+    "p95": 252.58
+  },
+  "by_language": {
+    "en": {
+      "cases": 4,
+      "recall_at_3": 1.0,
+      "mrr": 0.7083333333333334
+    },
+    "mixed": {
+      "cases": 5,
+      "recall_at_3": 0.8,
+      "mrr": 0.8
+    },
+    "zh": {
+      "cases": 3,
+      "recall_at_3": 1.0,
+      "mrr": 0.8333333333333334
+    }
+  },
+  "results": [
+    {
+      "id": "waveguide_port_zh",
+      "query": "在 Filter Designer 3D 中如何定义波导端口？",
+      "english_query": "How is a waveguide port defined in Filter Designer 3D?",
+      "expected_sources": [
+        "Filter_Designer_3D/example/port_waveguide.htm"
+      ],
+      "category": "port",
+      "language": "zh",
+      "retrieval_query": "How is a waveguide port defined in Filter Designer 3D?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 123.87,
+      "returned_sources": [
+        "Filter_Designer_3D/example/port_waveguide.htm",
+        "Filter_Designer_3D/example/bandpass_filter_waveguide.htm",
+        "Filter_Designer_3D/example/port_waveguide_inductive.htm"
+      ],
+      "scores": [
+        0.8206650018692017,
+        0.8094083666801453,
+        0.8081638813018799
+      ]
+    },
+    {
+      "id": "waveguide_port_en",
+      "query": "How is a waveguide port defined in Filter Designer 3D?",
+      "english_query": "How is a waveguide port defined in Filter Designer 3D?",
+      "expected_sources": [
+        "Filter_Designer_3D/example/port_waveguide.htm"
+      ],
+      "category": "port",
+      "language": "en",
+      "retrieval_query": "How is a waveguide port defined in Filter Designer 3D?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 230.93,
+      "returned_sources": [
+        "Filter_Designer_3D/example/port_waveguide.htm",
+        "Filter_Designer_3D/example/bandpass_filter_waveguide.htm",
+        "Filter_Designer_3D/example/port_waveguide_inductive.htm"
+      ],
+      "scores": [
+        0.8206650018692017,
+        0.8094083666801453,
+        0.8081638813018799
+      ]
+    },
+    {
+      "id": "discrete_port_overview_zh",
+      "query": "CST 离散端口有哪些类型，应该如何选择？",
+      "english_query": "What discrete port types are available in CST and how should they be selected?",
+      "expected_sources": [
+        "3D/special_overview/special_overview_discrete_port_overview.htm"
+      ],
+      "category": "port",
+      "language": "zh",
+      "retrieval_query": "What discrete port types are available in CST and how should they be selected?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 222.3,
+      "returned_sources": [
+        "3D/special_overview/special_overview_discrete_port_overview.htm",
+        "3D/special_solvopt/special_solvopt_discreteports.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_construct_multiple_discrete_ports.htm"
+      ],
+      "scores": [
+        0.7473857402801514,
+        0.7456240653991699,
+        0.737580418586731
+      ]
+    },
+    {
+      "id": "broadband_farfield_monitor_mixed",
+      "query": "broadband farfield monitors 怎么批量创建？",
+      "english_query": "How can broadband farfield monitors be created in bulk?",
+      "expected_sources": [
+        "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm"
+      ],
+      "category": "postprocess",
+      "language": "mixed",
+      "retrieval_query": "How can broadband farfield monitors be created in bulk?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 121.16,
+      "returned_sources": [
+        "3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm",
+        "3D/special_solvopt/special_solvopt_monitor.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_1d_farfield_(broadband).htm"
+      ],
+      "scores": [
+        0.7285308241844177,
+        0.7122803926467896,
+        0.7116297483444214
+      ]
+    },
+    {
+      "id": "farfield_phase_center_zh",
+      "query": "远场结果里如何设置和计算 phase center？",
+      "english_query": "How is the phase center configured and calculated for farfield results?",
+      "expected_sources": [
+        "3D/special_postpr/special_postpr_farfield_plot_special_settings_phase_center.htm"
+      ],
+      "category": "postprocess",
+      "language": "mixed",
+      "retrieval_query": "How is the phase center configured and calculated for farfield results?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 252.58,
+      "returned_sources": [
+        "3D/special_postpr/special_postpr_farfield_plot_special_settings_phase_center.htm",
+        "EXP_HF/examplesoverview/circular_horn_antenna.htm",
+        "VBA_3D/special_vbapostproc/special_vbapostproc_farfieldcalculator_object.htm"
+      ],
+      "scores": [
+        0.8055974245071411,
+        0.7823920845985413,
+        0.772887110710144
+      ]
+    },
+    {
+      "id": "frequency_mesh_refinement_zh",
+      "query": "频域求解器的自适应网格加密如何配置？",
+      "english_query": "How is adaptive mesh refinement configured for the frequency domain solver?",
+      "expected_sources": [
+        "3D/special_solvopt/special_solvopt_adaptive_mesh_refinement_frequency_domain.htm",
+        "3D/special_solvopt/special_solvopt_adaptive_hexahedral_mesh_refinement_(frequency_domain).htm"
+      ],
+      "category": "solver",
+      "language": "zh",
+      "retrieval_query": "How is adaptive mesh refinement configured for the frequency domain solver?",
+      "hit": true,
+      "rank": 2,
+      "reciprocal_rank": 0.5,
+      "latency_ms": 143.66,
+      "returned_sources": [
+        "EXP_HF/examplesoverview/magic_t.htm",
+        "3D/special_solvopt/special_solvopt_adaptive_mesh_refinement_frequency_domain.htm",
+        "3D/common_overview/common_overview_problems_fd_solver.htm"
+      ],
+      "scores": [
+        0.8282339572906494,
+        0.8246137499809265,
+        0.8146100640296936
+      ]
+    },
+    {
+      "id": "time_mesh_refinement_en",
+      "query": "How do I configure adaptive mesh refinement for the time domain solver?",
+      "english_query": "How do I configure adaptive mesh refinement for the time domain solver?",
+      "expected_sources": [
+        "3D/special_solvopt/special_solvopt_adaptive_mesh_refinement_time_domain.htm"
+      ],
+      "category": "solver",
+      "language": "en",
+      "retrieval_query": "How do I configure adaptive mesh refinement for the time domain solver?",
+      "hit": true,
+      "rank": 3,
+      "reciprocal_rank": 0.3333333333333333,
+      "latency_ms": 128.73,
+      "returned_sources": [
+        "EXP_HF/examplesoverview/magic_t.htm",
+        "EXP_HF/examplesoverview/microstrip_phase_bridge.htm",
+        "3D/special_solvopt/special_solvopt_adaptive_mesh_refinement_time_domain.htm"
+      ],
+      "scores": [
+        0.8031174540519714,
+        0.7909041047096252,
+        0.7888334393501282
+      ]
+    },
+    {
+      "id": "parameter_sweep_zh",
+      "query": "如何在 CST 中建立 parameter sweep 并设置扫描参数？",
+      "english_query": "How do I create a parameter sweep and configure its sweep parameters in CST?",
+      "expected_sources": [
+        "3D/special_process/special_solvopt_parametersweep.htm",
+        "3D/special_process/special_solvopt_parametersweeppar.htm"
+      ],
+      "category": "workflow",
+      "language": "mixed",
+      "retrieval_query": "How do I create a parameter sweep and configure its sweep parameters in CST?",
+      "hit": false,
+      "rank": null,
+      "reciprocal_rank": 0.0,
+      "latency_ms": 143.53,
+      "returned_sources": [
+        "3D/special_solvopt/special_solvopt_parametersweepoptions.htm",
+        "DES/analysis/parametersweep/special_solvopt_parametersweepoptions.htm",
+        "DES/analysis/parametersweep/special_solvopt_parametersweep.htm"
+      ],
+      "scores": [
+        0.8055320978164673,
+        0.7980325222015381,
+        0.7962015271186829
+      ]
+    },
+    {
+      "id": "symmetry_boundary_zh",
+      "query": "CST 边界条件中的 symmetry planes 应该怎么设置？",
+      "english_query": "How should symmetry planes be configured in CST boundary conditions?",
+      "expected_sources": [
+        "3D/special_solvopt/special_solvopt_boundary_conditions_symmetryplanes.htm"
+      ],
+      "category": "boundary",
+      "language": "mixed",
+      "retrieval_query": "How should symmetry planes be configured in CST boundary conditions?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 108.87,
+      "returned_sources": [
+        "3D/special_solvopt/special_solvopt_boundary_conditions_symmetryplanes.htm",
+        "EXP_LF/examplesoverview/tutorials/eddy_current_sensor.htm",
+        "EXP_HF/examplesoverview/narrow_band_filter.htm"
+      ],
+      "scores": [
+        0.8009616136550903,
+        0.7957422733306885,
+        0.7926642298698425
+      ]
+    },
+    {
+      "id": "unit_cell_boundary_en",
+      "query": "How are unit cell boundary conditions configured for periodic structures?",
+      "english_query": "How are unit cell boundary conditions configured for periodic structures?",
+      "expected_sources": [
+        "3D/special_solvopt/special_solvopt_boundary_conditions_unit_cell.htm"
+      ],
+      "category": "boundary",
+      "language": "en",
+      "retrieval_query": "How are unit cell boundary conditions configured for periodic structures?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 153.8,
+      "returned_sources": [
+        "3D/special_solvopt/special_solvopt_boundary_conditions_unit_cell.htm",
+        "3D/special_overview/special_overview_frequency_domain_solver_overview.htm",
+        "3D/special_overview/special_overview_eigenmodesolverover.htm"
+      ],
+      "scores": [
+        0.8380022048950195,
+        0.785794734954834,
+        0.7799897193908691
+      ]
+    },
+    {
+      "id": "lumped_element_zh",
+      "query": "CST 中如何定义 lumped element 及其电路参数？",
+      "english_query": "How is a lumped element defined in CST and how are its circuit parameters configured?",
+      "expected_sources": [
+        "3D/special_solvopt/special_solvopt_lumpedelements.htm",
+        "VBA_3D/special_vbadiscreteelements/special_vbalumpedelement_object.htm"
+      ],
+      "category": "modeling",
+      "language": "mixed",
+      "retrieval_query": "How is a lumped element defined in CST and how are its circuit parameters configured?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 185.35,
+      "returned_sources": [
+        "3D/special_solvopt/special_solvopt_lumpedelements.htm",
+        "3D/common_tools/common_tools_pcb_import_dialog.htm",
+        "VBA_3D/special_vbadiscreteelements/special_vbalumpedelement_object.htm"
+      ],
+      "scores": [
+        0.7731354236602783,
+        0.7630387544631958,
+        0.7524081468582153
+      ]
+    },
+    {
+      "id": "result_template_goal_en",
+      "query": "How can a 1D result template be used as an optimization goal?",
+      "english_query": "How can a 1D result template be used as an optimization goal?",
+      "expected_sources": [
+        "3D/special_process/special_solvopt_define_1d_resulttemplate_goal.htm"
+      ],
+      "category": "postprocess",
+      "language": "en",
+      "retrieval_query": "How can a 1D result template be used as an optimization goal?",
+      "hit": true,
+      "rank": 2,
+      "reciprocal_rank": 0.5,
+      "latency_ms": 60.21,
+      "returned_sources": [
+        "DES/analysis/optimization/special_solvopt_define_1d_resulttemplate_goal.htm",
+        "3D/special_process/special_solvopt_define_1d_resulttemplate_goal.htm",
+        "DES/analysis/optimization/special_solvopt_define_1dc_resulttemplate_goal.htm"
+      ],
+      "scores": [
+        0.8525113463401794,
+        0.847090482711792,
+        0.8309658765792847
+      ]
+    }
+  ]
+}

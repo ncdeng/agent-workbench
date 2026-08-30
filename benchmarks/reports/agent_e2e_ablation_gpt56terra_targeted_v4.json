@@ -1,0 +1,625 @@
+{
+  "schema_version": "agent-e2e-report-v1",
+  "run": {
+    "run_id": "f22b6520d39b",
+    "timestamp_utc": "2026-08-10T00:12:23.591605+00:00",
+    "dataset_id": "cst-agent-e2e-fake-cst-v2",
+    "dataset_path": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\agent_e2e_cases.json",
+    "dataset_sha256": "d2220bbd4fc5fb3ae54d4ee74df39389b5037146e841afa5b9e5f9ec7026c4c8",
+    "code_revision": "b7f3744503e72c83f76f2b857ee0dbf2a97c89d2",
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "provider": "openai_compatible",
+    "model": "gpt-5.6-terra",
+    "case_count": 3,
+    "groups": [
+      "full"
+    ],
+    "large_artifact_root": "D:\\cst_agent_rag_data\\agent_e2e_artifacts\\f22b6520d39b",
+    "secrets_recorded": false
+  },
+  "groups": {
+    "full": {
+      "config": {
+        "memory": true,
+        "context": true,
+        "planner": true,
+        "recovery": true,
+        "tool_use_memory": true
+      },
+      "path_proof": {
+        "planner_call_count": 5,
+        "planner_fallback_count": 0,
+        "memory_recall_count": 0,
+        "recovery_attempt_count": 1,
+        "tool_memory_recall_count": 0,
+        "context_budget_event_count": 8,
+        "invalid_ablation_cases": []
+      },
+      "metrics": {
+        "task_success_rate": 0.6666666666666666,
+        "constraint_adherence_rate": 1.0,
+        "hard_constraint_case_rate": 1.0,
+        "tool_selection_accuracy": 1.0,
+        "invalid_call_rate": 0.0,
+        "recovery_rate": 1.0,
+        "planner": {
+          "call_count": 5,
+          "fallback_count": 0,
+          "fallback_rate": 0.0
+        },
+        "tokens": {
+          "prompt_mean": 7223.333333333333,
+          "completion_mean": 551.6666666666666,
+          "total_mean": 7775.0,
+          "total_p95": 12653.0,
+          "estimated": false
+        },
+        "latency_ms": {
+          "mean": 41523.451,
+          "median": 51699.311,
+          "p95": 55048.114
+        },
+        "groundedness": {
+          "claim_precision": null,
+          "required_fact_recall": 0.75,
+          "lexical_fact_match_rate": 0.75,
+          "matching_method": "case_authored_lexical_alternatives"
+        }
+      },
+      "cases": [
+        {
+          "case_id": "recovery_disconnect_01",
+          "category": "recovery",
+          "valid": true,
+          "task_success": false,
+          "constraint_checks": [
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "execute_vba_script"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "execute_vba_script",
+              "success": true,
+              "message": "fake VBA 已在重连后执行",
+              "description": "执行无副作用的 VBA 连通性探针，不修改 CST 工程。",
+              "error_type": "cst_connection",
+              "recovery_result": {
+                "action_name": "reconnect_cst",
+                "recovered": true,
+                "message": "CST reconnected",
+                "details": {
+                  "method": "connect",
+                  "outcome": {
+                    "success": true,
+                    "message": "fake reconnected",
+                    "project_file": "D:\\cst_agent_rag_data\\agent_e2e_artifacts\\f22b6520d39b\\full\\recovery_disconnect_01\\fake_project.cst"
+                  },
+                  "project_path": "D:\\cst_agent_rag_data\\agent_e2e_artifacts\\f22b6520d39b\\full\\recovery_disconnect_01\\fake_project.cst"
+                },
+                "retry_tool": "execute_vba_script",
+                "retry_arguments": {
+                  "description": "执行无副作用的 VBA 连通性探针，不修改 CST 工程。",
+                  "vba_code": "Sub Main()\n    ' No-op connectivity probe: intentionally performs no model or project changes.\nEnd Sub"
+                },
+                "retry_success": true,
+                "retry_message": "fake VBA 已在重连后执行",
+                "retry_tool_event_id": "call_SZgXItOLG9NRL4kI5NN5H2Rl"
+              }
+            }
+          ],
+          "tool_sequence_valid": true,
+          "invalid_calls": [],
+          "recovery_events": [
+            {
+              "action_name": "reconnect_cst",
+              "recovered": true,
+              "message": "CST reconnected",
+              "details": {
+                "method": "connect",
+                "outcome": {
+                  "success": true,
+                  "message": "fake reconnected",
+                  "project_file": "D:\\cst_agent_rag_data\\agent_e2e_artifacts\\f22b6520d39b\\full\\recovery_disconnect_01\\fake_project.cst"
+                },
+                "project_path": "D:\\cst_agent_rag_data\\agent_e2e_artifacts\\f22b6520d39b\\full\\recovery_disconnect_01\\fake_project.cst"
+              },
+              "retry_tool": "execute_vba_script",
+              "retry_arguments": {
+                "description": "执行无副作用的 VBA 连通性探针，不修改 CST 工程。",
+                "vba_code": "Sub Main()\n    ' No-op connectivity probe: intentionally performs no model or project changes.\nEnd Sub"
+              },
+              "retry_success": true,
+              "retry_message": "fake VBA 已在重连后执行",
+              "retry_tool_event_id": "call_SZgXItOLG9NRL4kI5NN5H2Rl"
+            }
+          ],
+          "recovery_success": true,
+          "token_usage": {
+            "prompt": 4935,
+            "completion": 469,
+            "total": 5404,
+            "calls": 3
+          },
+          "latency_ms": 51699.311,
+          "grounding_checks": [
+            {
+              "fact": "重连后 | 连接已恢复 | 恢复连接 | 连接中断后已恢复 | after reconnect",
+              "supported": false
+            }
+          ],
+          "final_response": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n已执行无副作用的 VBA 连通性探针；连接恢复后重试成功。未对 CST 工程、模型或参数作任何修改。",
+          "all_responses": [
+            "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n已执行无副作用的 VBA 连通性探针；连接恢复后重试成功。未对 CST 工程、模型或参数作任何修改。"
+          ],
+          "trace_run_id": "53d2780283e8",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 1,
+            "planner_fallback_count": 0,
+            "executor_call_count": 3,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": null,
+            "recovery_attempt_count": 1,
+            "recovery_attempts": {
+              "reconnect_cst": 1
+            },
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 2
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": false,
+              "call_kind": "auxiliary",
+              "response_content": "[\"VBA automation connectivity probe without side effects retry after reconnecting\", \"CST Studio Suite VBA connection lost reconnect and retry macro execution\"]",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 121,
+                "completion_tokens": 123,
+                "total_tokens": 244
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\n  \"intent_kind\": \"direct_action\",\n  \"user_goal\": \"执行无副作用的 VBA 连通性探针，并在连接中断后恢复连接重试。\",\n  \"constraints\": [\n    \"执行一段无副作用的 VBA 连通性探针\",\n    \"如果连接中断，恢复连接后重试\"\n  ],\n  \"steps\": [\n    {\n      \"step_id\": \"run_connectivity_probe\",\n      \"kind\": \"tool\",\n      \"title\": \"执行 VBA 连通性探针\",\n      \"expected_output\": \"VBA 探针成功执行并返回连接可用状态；若首次因连接中断失败，恢复连接后自动重试。\",\n      \"allowed_tools\": [\n        \"execute_vba_script\"\n      ]\n    },\n    {\n      \"step_id\": \"respond_status\",\n      \"kind\": \"respond\",\n      \"title\": \"反馈探针结果\",\n      \"expected_output\": \"向用户报告 VBA 连通性探针是否执行成功及重试情况。\",\n      \"allowed_tools\": []\n    }\n  ],\n  \"stop_condition\": \"VBA 连通性探针成功执行，或在恢复连接后的重试结束并获得明确结果。\",\n  \"stop_conditions\": [\n    \"task_complete\",\n    \"stagnation_limit\",\n    \"max_round_limit\"\n  ]\n}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1059,
+                "completion_tokens": 288,
+                "total_tokens": 1347
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "execute_vba_script"
+              ],
+              "usage": {
+                "prompt_tokens": 1854,
+                "completion_tokens": 144,
+                "total_tokens": 1998
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已执行无副作用的 VBA 连通性探针；连接恢复后重试成功。未对 CST 工程、模型或参数作任何修改。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2022,
+                "completion_tokens": 37,
+                "total_tokens": 2059
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "offline_status_grounded_01",
+          "category": "groundedness",
+          "valid": true,
+          "task_success": true,
+          "constraint_checks": [
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "check_cst_status"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "check_cst_status",
+              "success": true,
+              "message": "CST fake 离线",
+              "description": "检查 CST 连接状态"
+            }
+          ],
+          "tool_sequence_valid": true,
+          "invalid_calls": [],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 5012,
+            "completion": 256,
+            "total": 5268,
+            "calls": 3
+          },
+          "latency_ms": 17822.928,
+          "grounding_checks": [
+            {
+              "fact": "fake 离线 | CST 未连接 | CST（离线） | CST (离线) | 当前未连接",
+              "supported": true
+            }
+          ],
+          "final_response": "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n当前 CST 未连接（离线）。因此我不会尝试建模、执行 VBA 或运行求解。",
+          "all_responses": [
+            "[离线模式] CST 未连接，以下工具调用将在离线模式下运行。\n\n当前 CST 未连接（离线）。因此我不会尝试建模、执行 VBA 或运行求解。"
+          ],
+          "trace_run_id": "3fe3778adeab",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 1,
+            "planner_fallback_count": 0,
+            "executor_call_count": 3,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": null,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 2
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": false,
+              "call_kind": "auxiliary",
+              "response_content": "[\"check CST online connection status read-only before modeling VBA solving\", \"CST offline not connected status do not run modeling VBA solver\"]",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 128,
+                "completion_tokens": 109,
+                "total_tokens": 237
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"检查当前 CST 是否在线；若未连接则明确说明离线且不进行建模、VBA 或求解。\",\"constraints\":[\"必须调用只读状态工具检查当前 CST 是否在线\",\"如果未连接，要明确说明离线，不得尝试建模、VBA 或求解\"],\"steps\":[{\"step_id\":\"check_cst_online\",\"kind\":\"tool\",\"title\":\"检查 CST 在线状态\",\"expected_output\":\"获得 CST 当前连接状态，以决定是否仅报告离线状态。\",\"allowed_tools\":[\"check_cst_status\"]},{\"step_id\":\"report_connection_status\",\"kind\":\"respond\",\"title\":\"报告检查结果\",\"expected_output\":\"明确说明 CST 是否在线；若离线，明确不会尝试建模、VBA 或求解。\",\"allowed_tools\":[]}],\"stop_condition\":\"完成只读在线状态检查并向用户明确报告连接状态；若未连接则止于离线说明。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1141,
+                "completion_tokens": 213,
+                "total_tokens": 1354
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "check_cst_status"
+              ],
+              "usage": {
+                "prompt_tokens": 1853,
+                "completion_tokens": 16,
+                "total_tokens": 1869
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "当前 CST 未连接（离线）。因此我不会尝试建模、执行 VBA 或运行求解。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2018,
+                "completion_tokens": 27,
+                "total_tokens": 2045
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "context_goal_revision_01",
+          "category": "context",
+          "valid": true,
+          "task_success": true,
+          "constraint_checks": [
+            {
+              "name": "forbid:run_solver",
+              "passed": true
+            },
+            {
+              "name": "forbid:execute_vba_script",
+              "passed": true
+            },
+            {
+              "name": "max_tool_calls",
+              "passed": true
+            }
+          ],
+          "tool_calls": [
+            "check_cst_status"
+          ],
+          "tool_events": [
+            {
+              "phase": "0_通用脚本",
+              "tool_name": "check_cst_status",
+              "success": true,
+              "message": "已连接 CST（fake 在线）",
+              "description": "检查 CST 连接状态"
+            }
+          ],
+          "tool_sequence_valid": true,
+          "invalid_calls": [],
+          "recovery_events": [],
+          "recovery_success": null,
+          "token_usage": {
+            "prompt": 11723,
+            "completion": 930,
+            "total": 12653,
+            "calls": 7
+          },
+          "latency_ms": 55048.114,
+          "grounding_checks": [
+            {
+              "fact": "NEW-8",
+              "supported": true
+            },
+            {
+              "fact": "fake 在线 | CST（在线） | CST (在线) | 连接到 CST（在线） | CST 连接状态正常",
+              "supported": true
+            }
+          ],
+          "final_response": "CST 状态检查完成：**已连接 CST（在线）**。  \n\n有效审计代号：**NEW-8**。  \n本次仅执行状态检查，**未运行求解器**。",
+          "all_responses": [
+            "已记录审计代号：**OLD-7**。  \n本任务将不运行任何求解器操作。",
+            "已将审计代号更正为：**NEW-8**。  \n**OLD-7 已作废**；其余约束保持不变，整个任务仍不运行求解器。",
+            "CST 状态检查完成：**已连接 CST（在线）**。  \n\n有效审计代号：**NEW-8**。  \n本次仅执行状态检查，**未运行求解器**。"
+          ],
+          "trace_run_id": "153f6b4de07f",
+          "trace_status": "completed",
+          "path_proof": {
+            "planner_call_count": 3,
+            "planner_fallback_count": 0,
+            "executor_call_count": 7,
+            "memory_recall_count": 0,
+            "context_prior_turn_visible": true,
+            "recovery_attempt_count": 0,
+            "recovery_attempts": {},
+            "tool_memory_recall_count": 0,
+            "tool_memory_reranked_tools": [
+              "recall_tool_result"
+            ],
+            "context_budget_event_count": 4
+          },
+          "provider_diagnostics": [
+            {
+              "is_planner": false,
+              "call_kind": "auxiliary",
+              "response_content": "[\"CST Studio Suite record project notes audit code OLD-7\", \"CST Studio Suite prevent running solver during task\"]",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 113,
+                "completion_tokens": 234,
+                "total_tokens": 347
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\n  \"intent_kind\": \"direct_action\",\n  \"user_goal\": \"记录审计代号 OLD-7，且整个任务不运行求解器。\",\n  \"constraints\": [\n    \"先记录审计代号 OLD-7，整个任务不得运行求解器\"\n  ],\n  \"steps\": [\n    {\n      \"step_id\": \"respond_1\",\n      \"kind\": \"respond\",\n      \"title\": \"确认审计记录与禁用求解器\",\n      \"expected_output\": \"确认已记录审计代号 OLD-7，并承诺本任务不运行求解器。\",\n      \"allowed_tools\": []\n    }\n  ],\n  \"stop_condition\": \"已确认记录审计代号且未执行任何求解器操作。\",\n  \"stop_conditions\": [\n    \"task_complete\"\n  ]\n}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1119,
+                "completion_tokens": 181,
+                "total_tokens": 1300
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已记录审计代号：**OLD-7**。  \n本任务将不运行任何求解器操作。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1920,
+                "completion_tokens": 29,
+                "total_tokens": 1949
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "auxiliary",
+              "response_content": "[\"change audit code to NEW-8 mark OLD-7 obsolete keep other constraints unchanged\",\"update audit code constraints NEW-8 OLD-7 obsolete\"]",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 120,
+                "completion_tokens": 152,
+                "total_tokens": 272
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\n  \"intent_kind\": \"chat_task\",\n  \"user_goal\": \"将审计代号更正为 NEW-8，并使 OLD-7 作废，同时保持不得运行求解器的约束。\",\n  \"constraints\": [\n    \"其他约束保持不变\",\n    \"整个任务不得运行求解器\"\n  ],\n  \"steps\": [\n    {\n      \"step_id\": \"respond_audit_update\",\n      \"kind\": \"respond\",\n      \"title\": \"确认审计代号更正\",\n      \"expected_output\": \"确认已记录 NEW-8、OLD-7 已作废，并确认不运行求解器约束继续生效。\",\n      \"allowed_tools\": []\n    }\n  ],\n  \"stop_condition\": \"完成审计代号更正确认且不执行任何求解器操作。\",\n  \"stop_conditions\": [\n    \"task_complete\"\n  ]\n}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1246,
+                "completion_tokens": 287,
+                "total_tokens": 1533
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "已将审计代号更正为：**NEW-8**。  \n**OLD-7 已作废**；其余约束保持不变，整个任务仍不运行求解器。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2003,
+                "completion_tokens": 47,
+                "total_tokens": 2050
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "auxiliary",
+              "response_content": "[\"Check CST status with current valid audit code and include audit code in response\",\"CST status verification current valid audit code response include code\"]",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 117,
+                "completion_tokens": 158,
+                "total_tokens": 275
+              },
+              "error": ""
+            },
+            {
+              "is_planner": true,
+              "call_kind": "planner",
+              "response_content": "{\"intent_kind\":\"direct_action\",\"user_goal\":\"按当前有效审计代号检查 CST 状态，并在答复中带上该代号。\",\"constraints\":[\"整个任务不得运行求解器\",\"在答复中带上该代号\"],\"steps\":[{\"step_id\":\"check_cst_status\",\"kind\":\"tool\",\"title\":\"检查 CST 当前状态\",\"expected_output\":\"获取 CST 项目连接与当前仿真状态，且不运行求解器。\",\"allowed_tools\":[\"check_cst_status\"]},{\"step_id\":\"respond_with_audit_code\",\"kind\":\"respond\",\"title\":\"汇报状态\",\"expected_output\":\"携带有效审计代号 NEW-8 的 CST 状态答复。\",\"allowed_tools\":[]}],\"stop_condition\":\"完成 CST 状态检查并在答复中标注有效审计代号 NEW-8，且全程未运行求解器。\",\"stop_conditions\":[\"task_complete\"]}",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 1304,
+                "completion_tokens": 304,
+                "total_tokens": 1608
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "",
+              "response_tool_names": [
+                "check_cst_status"
+              ],
+              "usage": {
+                "prompt_tokens": 1978,
+                "completion_tokens": 33,
+                "total_tokens": 2011
+              },
+              "error": ""
+            },
+            {
+              "is_planner": false,
+              "call_kind": "executor",
+              "response_content": "CST 状态检查完成：**已连接 CST（在线）**。  \n\n有效审计代号：**NEW-8**。  \n本次仅执行状态检查，**未运行求解器**。",
+              "response_tool_names": [],
+              "usage": {
+                "prompt_tokens": 2153,
+                "completion_tokens": 49,
+                "total_tokens": 2202
+              },
+              "error": ""
+            }
+          ],
+          "errors": []
+        }
+      ]
+    }
+  },
+  "comparisons": {},
+  "threshold_results": [
+    {
+      "name": "full_task_success_rate",
+      "passed": false,
+      "value": 0.6666666666666666,
+      "threshold": ">= 0.8"
+    },
+    {
+      "name": "full_hard_constraint_case_rate",
+      "passed": true,
+      "value": 1.0,
+      "threshold": "== 1.0"
+    },
+    {
+      "name": "full_tool_selection_accuracy",
+      "passed": true,
+      "value": 1.0,
+      "threshold": ">= 0.8"
+    },
+    {
+      "name": "full_invalid_call_rate",
+      "passed": true,
+      "value": 0.0,
+      "threshold": "<= 0.1"
+    },
+    {
+      "name": "full_required_fact_recall",
+      "passed": false,
+      "value": 0.75,
+      "threshold": ">= 0.9"
+    },
+    {
+      "name": "full_planner_fallback_count",
+      "passed": true,
+      "value": 0,
+      "threshold": "== 0"
+    },
+    {
+      "name": "full_ablation_path_valid",
+      "passed": true,
+      "value": [],
+      "threshold": "empty"
+    },
+    {
+      "name": "full_recovery_rate",
+      "passed": true,
+      "value": 1.0,
+      "threshold": "== 1.0"
+    },
+    {
+      "name": "full_path_valid",
+      "passed": true,
+      "value": [],
+      "threshold": "empty"
+    }
+  ],
+  "limitations": [
+    "Fake CST validates orchestration and recovery contracts, not CST electromagnetic fidelity.",
+    "The deterministic provider is a mechanism smoke test, bypasses RAG retrieval, uses lexical memory fallback, and must not be cited as LLM quality evidence.",
+    "Five frozen cases are a regression gate, not a statistically powered benchmark.",
+    "Required-fact recall uses case-authored lexical alternatives; claim precision and semantic entailment require a blinded judge or manual review."
+  ]
+}

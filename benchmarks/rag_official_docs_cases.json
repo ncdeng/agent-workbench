@@ -1,0 +1,107 @@
+[
+  {
+    "id": "waveguide_port_zh",
+    "query": "在 Filter Designer 3D 中如何定义波导端口？",
+    "english_query": "How is a waveguide port defined in Filter Designer 3D?",
+    "expected_sources": ["Filter_Designer_3D/example/port_waveguide.htm"],
+    "category": "port",
+    "language": "zh"
+  },
+  {
+    "id": "waveguide_port_en",
+    "query": "How is a waveguide port defined in Filter Designer 3D?",
+    "english_query": "How is a waveguide port defined in Filter Designer 3D?",
+    "expected_sources": ["Filter_Designer_3D/example/port_waveguide.htm"],
+    "category": "port",
+    "language": "en"
+  },
+  {
+    "id": "discrete_port_overview_zh",
+    "query": "CST 离散端口有哪些类型，应该如何选择？",
+    "english_query": "What discrete port types are available in CST and how should they be selected?",
+    "expected_sources": ["3D/special_overview/special_overview_discrete_port_overview.htm"],
+    "category": "port",
+    "language": "zh"
+  },
+  {
+    "id": "broadband_farfield_monitor_mixed",
+    "query": "broadband farfield monitors 怎么批量创建？",
+    "english_query": "How can broadband farfield monitors be created in bulk?",
+    "expected_sources": ["3D/common_preloadedmacro/common_preloadedmacro_farfield_broadband_farfield_monitors.htm"],
+    "category": "postprocess",
+    "language": "mixed"
+  },
+  {
+    "id": "farfield_phase_center_zh",
+    "query": "远场结果里如何设置和计算 phase center？",
+    "english_query": "How is the phase center configured and calculated for farfield results?",
+    "expected_sources": ["3D/special_postpr/special_postpr_farfield_plot_special_settings_phase_center.htm"],
+    "category": "postprocess",
+    "language": "mixed"
+  },
+  {
+    "id": "frequency_mesh_refinement_zh",
+    "query": "频域求解器的自适应网格加密如何配置？",
+    "english_query": "How is adaptive mesh refinement configured for the frequency domain solver?",
+    "expected_sources": [
+      "3D/special_solvopt/special_solvopt_adaptive_mesh_refinement_frequency_domain.htm",
+      "3D/special_solvopt/special_solvopt_adaptive_hexahedral_mesh_refinement_(frequency_domain).htm"
+    ],
+    "category": "solver",
+    "language": "zh"
+  },
+  {
+    "id": "time_mesh_refinement_en",
+    "query": "How do I configure adaptive mesh refinement for the time domain solver?",
+    "english_query": "How do I configure adaptive mesh refinement for the time domain solver?",
+    "expected_sources": ["3D/special_solvopt/special_solvopt_adaptive_mesh_refinement_time_domain.htm"],
+    "category": "solver",
+    "language": "en"
+  },
+  {
+    "id": "parameter_sweep_zh",
+    "query": "如何在 CST 中建立 parameter sweep 并设置扫描参数？",
+    "english_query": "How do I create a parameter sweep and configure its sweep parameters in CST?",
+    "expected_sources": [
+      "3D/special_process/special_solvopt_parametersweep.htm",
+      "3D/special_process/special_solvopt_parametersweeppar.htm"
+    ],
+    "category": "workflow",
+    "language": "mixed"
+  },
+  {
+    "id": "symmetry_boundary_zh",
+    "query": "CST 边界条件中的 symmetry planes 应该怎么设置？",
+    "english_query": "How should symmetry planes be configured in CST boundary conditions?",
+    "expected_sources": ["3D/special_solvopt/special_solvopt_boundary_conditions_symmetryplanes.htm"],
+    "category": "boundary",
+    "language": "mixed"
+  },
+  {
+    "id": "unit_cell_boundary_en",
+    "query": "How are unit cell boundary conditions configured for periodic structures?",
+    "english_query": "How are unit cell boundary conditions configured for periodic structures?",
+    "expected_sources": ["3D/special_solvopt/special_solvopt_boundary_conditions_unit_cell.htm"],
+    "category": "boundary",
+    "language": "en"
+  },
+  {
+    "id": "lumped_element_zh",
+    "query": "CST 中如何定义 lumped element 及其电路参数？",
+    "english_query": "How is a lumped element defined in CST and how are its circuit parameters configured?",
+    "expected_sources": [
+      "3D/special_solvopt/special_solvopt_lumpedelements.htm",
+      "VBA_3D/special_vbadiscreteelements/special_vbalumpedelement_object.htm"
+    ],
+    "category": "modeling",
+    "language": "mixed"
+  },
+  {
+    "id": "result_template_goal_en",
+    "query": "How can a 1D result template be used as an optimization goal?",
+    "english_query": "How can a 1D result template be used as an optimization goal?",
+    "expected_sources": ["3D/special_process/special_solvopt_define_1d_resulttemplate_goal.htm"],
+    "category": "postprocess",
+    "language": "en"
+  }
+]

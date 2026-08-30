@@ -1,0 +1,111 @@
+{
+  "schema_version": "agent-e2e-evidence-registry-v2",
+  "status": "current_developer_visible_evidence",
+  "honest_boundary": "This registry binds current repository bytes. It does not prove blinded evaluation, external custody, reviewer independence, or sealed release eligibility.",
+  "datasets": {
+    "frozen_dev_v1": {
+      "path": "benchmarks/agent_e2e_frozen_dev_v1.json",
+      "dataset_id": "cst-agent-e2e-frozen-dev-v1",
+      "dataset_sha256": "f09b95cef13bba72193743cf81a693ba27773e44be3c73bb80c511c7350471f2",
+      "manifest_path": "benchmarks/agent_e2e_frozen_dev_v1.manifest.json",
+      "manifest_sha256": "9b12ff843f30950af242d384559bd949bdf19e473c38e94d9fca0241846f0ea5",
+      "case_count": 40,
+      "developer_visible": true,
+      "blinded": false,
+      "oracle_revision_boundary": "Developer-authored before the canonical v1 Terra run."
+    },
+    "frozen_dev_v2": {
+      "path": "benchmarks/agent_e2e_frozen_dev_v2.json",
+      "dataset_id": "cst-agent-e2e-frozen-dev-v2",
+      "dataset_sha256": "05ff86697809e9ae9dbb87d5c06966462d145129e526ca791df42234b3487d80",
+      "manifest_path": "benchmarks/agent_e2e_frozen_dev_v2.manifest.json",
+      "manifest_sha256": "8f9ce7edcfdd2f2b3af8bfd7f86ab98374c1bc10de69d23ea65f9c535b96a1e6",
+      "case_count": 40,
+      "developer_visible": true,
+      "blinded": false,
+      "oracle_revision_boundary": "Explicit post-audit regression set; v1 Terra outputs were used to revise oracles."
+    },
+    "frozen_dev_v3": {
+      "path": "benchmarks/agent_e2e_frozen_dev_v3.json",
+      "dataset_id": "cst-agent-e2e-frozen-dev-v3",
+      "dataset_sha256": "df75e8e980f084fca946db659f2b775cc75cb9051ac3983a0b71df86415c1606",
+      "manifest_path": "benchmarks/agent_e2e_frozen_dev_v3.manifest.json",
+      "manifest_sha256": "d345c08ee04a528bd0c800a40944e65b715b6153afefd7ade61c86cf7bcbb6fa",
+      "case_count": 40,
+      "developer_visible": true,
+      "blinded": false,
+      "oracle_revision_boundary": "Post-approval regression derived from v2; eight raw-VBA recovery cases were migrated to typed save recovery."
+    }
+  },
+  "reports": {
+    "deterministic_40_case_ablation": {
+      "artifact_type": "agent_e2e_report",
+      "dataset_key": "frozen_dev_v1",
+      "path": "benchmarks/reports/agent_e2e_frozen_dev_v1_deterministic_ablation_v2.json",
+      "sha256": "4ccbb38af3ed2576863daef8d41f3b7c9650e2680c5bcf3a7206281775d69d0d",
+      "run_id": "b26b5e9f2bac",
+      "provider": "deterministic_proxy",
+      "evaluation_scope": "full_frozen_evaluation",
+      "claim_scope": "Production-path mechanism and ablation regression only; local runner release_eligible is not sealed release eligibility."
+    },
+    "terra_v1_representative_repeat3": {
+      "artifact_type": "agent_e2e_report",
+      "dataset_key": "frozen_dev_v1",
+      "path": "benchmarks/reports/agent_e2e_frozen_dev_v1_terra_representative_repeat3_v1.json",
+      "sha256": "86f224b554b5e2c35c6f3190884d0455c059cdbf9f1357668ece8d621eb45de5",
+      "run_id": "7c0133740418",
+      "provider": "openai_compatible",
+      "model": "gpt-5.6-terra",
+      "evaluation_scope": "filtered_debug",
+      "claim_scope": "Seven unique developer-visible cases with three correlated repeats; directional stability evidence only."
+    },
+    "terra_v1_repeat3_semantic_audit": {
+      "artifact_type": "semantic_audit",
+      "dataset_key": "frozen_dev_v1",
+      "path": "benchmarks/reports/agent_e2e_frozen_dev_v1_terra_representative_repeat3_semantic_audit_v2.json",
+      "sha256": "715791e873b5b007f3ca9baf607a63a2662d183b138b1b64fb37af05781900d8",
+      "source_report_key": "terra_v1_representative_repeat3",
+      "source_run_id": "7c0133740418",
+      "review_type": "single_model_reviewer_not_blinded_to_machine_scores",
+      "claim_scope": "Response-SHA-bound semantic development audit; not independent human calibration."
+    },
+    "terra_v2_post_audit_regression": {
+      "artifact_type": "agent_e2e_report",
+      "dataset_key": "frozen_dev_v2",
+      "path": "benchmarks/reports/agent_e2e_frozen_dev_v2_terra_regression_v1.json",
+      "sha256": "54392eb3226e6ecc90416de50b213169cb5e1f3cc14770cbcb1b2177b1b64f55",
+      "run_id": "1f2c3200ed74",
+      "provider": "openai_compatible",
+      "model": "gpt-5.6-terra",
+      "evaluation_scope": "filtered_debug",
+      "claim_scope": "Explicit post-audit regression; not unseen-model or blinded evidence."
+    },
+    "post_approval_v3_deterministic_full": {
+      "artifact_type": "agent_e2e_report",
+      "dataset_key": "frozen_dev_v3",
+      "path": "D:/cst_agent_rag_data/agent_eval/post_approval_v3/deterministic_full_20260812T191500/report.json",
+      "sha256": "4d152118460d08d2b9400efba621c040ddc623fcad827ae3da07cbd96f2c3d08",
+      "run_id": "5085afa52cce",
+      "provider": "deterministic_proxy",
+      "evaluation_scope": "full_frozen_evaluation",
+      "claim_scope": "Post-approval production-path mechanism regression; not model-quality, blinded, or sealed evidence."
+    },
+    "raw_vba_approval_control_plane": {
+      "artifact_type": "external_approval_e2e_report",
+      "dataset_key": null,
+      "path": "D:/cst_agent_rag_data/agent_eval/raw_vba_approval_e2e/final_20260812T203000/report.json",
+      "sha256": "1cb0a03bf5ed991fc996b57ebe15bb0c75f1e28acbdb246632c09c80a5adb52f",
+      "provider": "scripted-deterministic-v1",
+      "evaluation_scope": "chat_to_web_approval_control_plane",
+      "claim_scope": "Parameter-bound approval and server-owned exact execution; not suspended-turn resume or model-quality evidence."
+    }
+  },
+  "external_validation": {
+    "double_human_reviewer_calibration": "pending",
+    "sealed_external_custody_run": "pending"
+  },
+  "superseded": {
+    "legacy_dataset_id": "cst-agent-e2e-fake-cst-v2",
+    "legacy_registry_scope": "Ten-case development reports remain historical diagnostics and are not current resume evidence."
+  }
+}

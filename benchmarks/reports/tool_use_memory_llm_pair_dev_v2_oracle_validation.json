@@ -1,0 +1,336 @@
+{
+  "schema_version": "tool-use-memory-oracle-validation-v1",
+  "generated_at": "2026-08-10T08:36:03.123759+00:00",
+  "dataset": {
+    "dataset_id": "tool_use_memory_llm_pair_dev_v2_multifamily",
+    "dataset_sha256": "5ac1bb0c25e361116d9cff789f6aa12ded76a11f8d928b4af8304e312d6ad681",
+    "case_count": 8,
+    "case_ids": [
+      "dedicated_patch_01",
+      "dedicated_patch_02",
+      "parameter_precondition_01",
+      "parameter_precondition_02",
+      "material_precondition_01",
+      "material_precondition_02",
+      "solver_preflight_01",
+      "solver_preflight_02"
+    ],
+    "split": "development_regression",
+    "role": "developer_visible_multifamily_development",
+    "blinded": false,
+    "manifest_path": "D:\\dnc\\Desktop\\实习\\cst-agent-workbench-remote\\benchmarks\\tool_use_memory_llm_pair_dev_v2.manifest.json",
+    "manifest_sha256": "b0ab87a8ae8cb4cd2612c6613b0382857523bc098d91750dab3e20fd3057fa07",
+    "manifest_verified": true
+  },
+  "artifact_root": "D:\\cst_agent_rag_data\\agent_eval\\tool_use_memory_llm_dev_v2",
+  "case_count": 8,
+  "all_oracles_executable": true,
+  "cases": [
+    {
+      "case_id": "dedicated_patch_01",
+      "failure_family": "dedicated_backend_over_generic_vba",
+      "setup_tools": [],
+      "expected_tool_calls": [
+        {
+          "name": "build_rectangular_patch_fast",
+          "arguments": {
+            "f0_ghz": 2.45,
+            "substrate_name": "FR-4",
+            "epsilon_r": 4.4,
+            "substrate_thickness_mm": 1.6,
+            "run_solver": false
+          },
+          "success": true,
+          "message": "已使用矩形贴片快速路径直接完成建模，绕过了通用大模型建模链路。\n- 组件: `AntennaFP1_76dc47`\n- 基板: `FR-4` (Dk=4.4, Df=0.02, h=1.6 mm)\n- 导体: `Copper (annealed)`，厚度 0.035 mm\n- Patch: W=37.2343 mm, L=28.8093 mm\n- Feed line: W=3.0829 mm, launch=21.607 mm\n- Inset feed: depth=10.5482 mm, gap=0.64 mm\n- Feed port: side waveguide port\n- Substrate/Ground: 56.4343 mm × 60.0163 mm\n- 频率范围: 1.8375 到 3.0625 GHz\n- 求解: 已跳过，未检测到明确求解/仿真请求，已按安全策略跳过 solver\n这条路径只写入数值参数和数值几何，不再先走符号表达式建模再失败重试。"
+        }
+      ],
+      "oracle_executable": true
+    },
+    {
+      "case_id": "dedicated_patch_02",
+      "failure_family": "dedicated_backend_over_generic_vba",
+      "setup_tools": [],
+      "expected_tool_calls": [
+        {
+          "name": "build_rectangular_patch_fast",
+          "arguments": {
+            "f0_ghz": 5.8,
+            "substrate_name": "RO4350B",
+            "epsilon_r": 3.48,
+            "substrate_thickness_mm": 0.508,
+            "run_solver": false
+          },
+          "success": true,
+          "message": "已使用矩形贴片快速路径直接完成建模，绕过了通用大模型建模链路。\n- 组件: `AntennaFP1_d7e92c`\n- 基板: `RO4350B` (Dk=3.48, Df=0.02, h=0.508 mm)\n- 导体: `Copper (annealed)`，厚度 0.035 mm\n- Patch: W=17.2679 mm, L=13.7262 mm\n- Feed line: W=1.1618 mm, launch=10.2946 mm\n- Inset feed: depth=5.0257 mm, gap=0.2032 mm\n- Feed port: side waveguide port\n- Substrate/Ground: 23.3639 mm × 27.0688 mm\n- 频率范围: 4.35 到 7.25 GHz\n- 求解: 已跳过，未检测到明确求解/仿真请求，已按安全策略跳过 solver\n这条路径只写入数值参数和数值几何，不再先走符号表达式建模再失败重试。"
+        }
+      ],
+      "oracle_executable": true
+    },
+    {
+      "case_id": "parameter_precondition_01",
+      "failure_family": "parameter_precondition",
+      "setup_tools": [],
+      "expected_tool_calls": [
+        {
+          "name": "store_parameter",
+          "arguments": {
+            "name": "cover_h",
+            "value": "2.5"
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        },
+        {
+          "name": "create_brick",
+          "arguments": {
+            "name": "cover",
+            "component": "enclosure",
+            "material": "Vacuum",
+            "xmin": "0",
+            "xmax": "40",
+            "ymin": "0",
+            "ymax": "30",
+            "zmin": "0",
+            "zmax": "cover_h"
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        }
+      ],
+      "oracle_executable": true
+    },
+    {
+      "case_id": "parameter_precondition_02",
+      "failure_family": "parameter_precondition",
+      "setup_tools": [],
+      "expected_tool_calls": [
+        {
+          "name": "store_parameter",
+          "arguments": {
+            "name": "gap_h",
+            "value": "0.8"
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        },
+        {
+          "name": "create_brick",
+          "arguments": {
+            "name": "air_gap",
+            "component": "fixture",
+            "material": "Vacuum",
+            "xmin": "-10",
+            "xmax": "10",
+            "ymin": "-6",
+            "ymax": "6",
+            "zmin": "0",
+            "zmax": "gap_h"
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        }
+      ],
+      "oracle_executable": true
+    },
+    {
+      "case_id": "material_precondition_01",
+      "failure_family": "material_precondition",
+      "setup_tools": [],
+      "expected_tool_calls": [
+        {
+          "name": "create_material",
+          "arguments": {
+            "name": "CeramicX",
+            "epsilon": 9.8,
+            "tand": 0.001
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        },
+        {
+          "name": "create_brick",
+          "arguments": {
+            "name": "resonator",
+            "component": "cavity",
+            "material": "CeramicX",
+            "xmin": "0",
+            "xmax": "12",
+            "ymin": "0",
+            "ymax": "8",
+            "zmin": "0",
+            "zmax": "3"
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        }
+      ],
+      "oracle_executable": true
+    },
+    {
+      "case_id": "material_precondition_02",
+      "failure_family": "material_precondition",
+      "setup_tools": [],
+      "expected_tool_calls": [
+        {
+          "name": "create_material",
+          "arguments": {
+            "name": "FoamY",
+            "epsilon": 1.15,
+            "tand": 0.0004
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        },
+        {
+          "name": "create_brick",
+          "arguments": {
+            "name": "spacer",
+            "component": "feed",
+            "material": "FoamY",
+            "xmin": "-5",
+            "xmax": "5",
+            "ymin": "-4",
+            "ymax": "4",
+            "zmin": "0",
+            "zmax": "1.2"
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        }
+      ],
+      "oracle_executable": true
+    },
+    {
+      "case_id": "solver_preflight_01",
+      "failure_family": "solver_preflight_excitation",
+      "setup_tools": [
+        {
+          "name": "create_brick",
+          "arguments": {
+            "name": "eval_block_a",
+            "component": "eval",
+            "material": "Vacuum",
+            "xmin": "0",
+            "xmax": "1",
+            "ymin": "0",
+            "ymax": "1",
+            "zmin": "0",
+            "zmax": "1"
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        },
+        {
+          "name": "set_frequency_range",
+          "arguments": {
+            "fmin": "1",
+            "fmax": "2"
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        },
+        {
+          "name": "create_farfield_monitor",
+          "arguments": {
+            "name": "farfield (f=1.5)",
+            "frequency": "1.5"
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        }
+      ],
+      "expected_tool_calls": [
+        {
+          "name": "create_discrete_port",
+          "arguments": {
+            "port_number": 1,
+            "p1_x": "0",
+            "p1_y": "0",
+            "p1_z": "0",
+            "p2_x": "0",
+            "p2_y": "0",
+            "p2_z": "1.6",
+            "impedance": "50"
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        },
+        {
+          "name": "run_solver",
+          "arguments": {},
+          "success": true,
+          "message": "fake solver completed"
+        }
+      ],
+      "oracle_executable": true
+    },
+    {
+      "case_id": "solver_preflight_02",
+      "failure_family": "solver_preflight_excitation",
+      "setup_tools": [
+        {
+          "name": "create_brick",
+          "arguments": {
+            "name": "eval_block_b",
+            "component": "eval",
+            "material": "Vacuum",
+            "xmin": "0",
+            "xmax": "1",
+            "ymin": "0",
+            "ymax": "1",
+            "zmin": "0",
+            "zmax": "1"
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        },
+        {
+          "name": "set_frequency_range",
+          "arguments": {
+            "fmin": "4",
+            "fmax": "6"
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        },
+        {
+          "name": "create_farfield_monitor",
+          "arguments": {
+            "name": "farfield (f=5.0)",
+            "frequency": "5.0"
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        }
+      ],
+      "expected_tool_calls": [
+        {
+          "name": "create_discrete_port",
+          "arguments": {
+            "port_number": 2,
+            "p1_x": "-1",
+            "p1_y": "0",
+            "p1_z": "0",
+            "p2_x": "-1",
+            "p2_y": "0",
+            "p2_z": "0.9",
+            "impedance": "75"
+          },
+          "success": true,
+          "message": "fake VBA executed"
+        },
+        {
+          "name": "run_solver",
+          "arguments": {},
+          "success": true,
+          "message": "fake solver completed"
+        }
+      ],
+      "oracle_executable": true
+    }
+  ],
+  "limitations": [
+    "This validates that authored oracle calls execute through Tool Runtime against Fake-CST.",
+    "It does not measure model tool selection, real CST effects, or unseen generalization."
+  ]
+}

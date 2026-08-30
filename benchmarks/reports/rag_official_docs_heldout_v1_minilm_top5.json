@@ -1,0 +1,2331 @@
+{
+  "index": {
+    "available": true,
+    "healthy": true,
+    "count": 13242,
+    "error": "",
+    "persist_dir": "D:\\cst_agent_rag_data\\chromadb_v7_bge_base_en",
+    "collection": "cst_official_docs_bge_base_en_v1",
+    "schema_version": 4,
+    "embedding_provider": "local",
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "embedding_query_instruction": "Represent this sentence for searching relevant passages:",
+    "document_language": "en",
+    "query_expansion": "english_corpus_contract_v1",
+    "multi_query_fusion": "max_cosine",
+    "status": "ready",
+    "stored_schema_version": 4,
+    "stored_embedding_provider": "local",
+    "stored_embedding_model": "BAAI/bge-base-en-v1.5",
+    "stored_embedding_query_instruction": "Represent this sentence for searching relevant passages: ",
+    "stored_document_language": "en",
+    "stored_query_expansion": "english_corpus_contract_v1",
+    "stored_multi_query_fusion": "max_cosine"
+  },
+  "dataset_role": "held_out_v1",
+  "query_field": "reference_english_query",
+  "retrieval_mode": "production",
+  "warmup_ms": 4929.28,
+  "cases": 30,
+  "top_k": 5,
+  "recall_at_5": 0.9666666666666667,
+  "mrr": 0.7944444444444444,
+  "ndcg_at_5": 0.8170481229092295,
+  "provenance_completeness": 1.0,
+  "repeated_source_slot_rate": 0.0,
+  "repeated_family_slot_rate": 0.03333333333333333,
+  "hard_negative_cases": 1,
+  "hard_negative_top3_intrusion_rate": 0.0,
+  "rerank": {
+    "applied_slot_rate": 1.0,
+    "fallback_cases": 0,
+    "changed_top1_rate": 0.43333333333333335
+  },
+  "latency_ms": {
+    "mean": 596.1,
+    "p50": 585.54,
+    "p95": 754.73
+  },
+  "by_language": {
+    "en": {
+      "cases": 10,
+      "recall_at_5": 1.0,
+      "mrr": 0.8333333333333334,
+      "ndcg_at_5": 0.8504844699480067
+    },
+    "mixed": {
+      "cases": 10,
+      "recall_at_5": 1.0,
+      "mrr": 0.9,
+      "ndcg_at_5": 0.9051681328887243
+    },
+    "zh": {
+      "cases": 10,
+      "recall_at_5": 0.9,
+      "mrr": 0.65,
+      "ndcg_at_5": 0.6954917658909574
+    }
+  },
+  "results": [
+    {
+      "id": "ho01_floquet_boundary_settings",
+      "query": "Floquet 边界里如何设置扫描角度、模式数和极化？",
+      "reference_english_query": "How are scan angles, mode count and polarization configured for Floquet boundaries?",
+      "language": "zh",
+      "category": "boundary",
+      "difficulty": "hard",
+      "expected_sources": [
+        "3D/special_solvopt/special_solvopt_floquet_special.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_floquet_special.htm",
+          "relevance": 3,
+          "doc_family": "floquet_boundary_settings"
+        },
+        {
+          "source_path": "VBA_3D/special_vbaports/floquetport_object.htm",
+          "relevance": 1,
+          "doc_family": "floquet_port_api"
+        }
+      ],
+      "retrieval_query": "How are scan angles, mode count and polarization configured for Floquet boundaries?",
+      "hit": true,
+      "rank": 2,
+      "reciprocal_rank": 0.5,
+      "ndcg_at_5": 0.7098097413968655,
+      "latency_ms": 712.36,
+      "returned_sources": [
+        "VBA_3D/special_vbaports/floquetport_object.htm",
+        "3D/special_solvopt/special_solvopt_floquet_special.htm",
+        "3D/special_solvopt/special_solvopt_boundary_conditions_scanangles.htm",
+        "EXP_HF/examplesoverview/fss__simulation_of_resonator_array.htm",
+        "3D/special_solvopt/special_solvopt_w3d.htm"
+      ],
+      "scores": [
+        0.7676326036453247,
+        0.7814019322395325,
+        0.7684696912765503,
+        0.7364938855171204,
+        0.7248027324676514
+      ],
+      "dense_scores": [
+        0.7676326036453247,
+        0.7814019322395325,
+        0.7684696912765503,
+        0.7364938855171204,
+        0.7248027324676514
+      ],
+      "rerank_scores": [
+        4.330779075622559,
+        4.322364330291748,
+        2.2886946201324463,
+        2.1993460655212402,
+        0.9970425367355347
+      ],
+      "rank_before": [
+        3,
+        1,
+        2,
+        6,
+        10
+      ],
+      "rank_after": [
+        1,
+        2,
+        4,
+        5,
+        11
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho02_farfield_source",
+      "query": "How do I define a farfield source from imported radiation data?",
+      "reference_english_query": "How do I define a farfield source from imported radiation data?",
+      "language": "en",
+      "category": "source",
+      "difficulty": "medium",
+      "expected_sources": [
+        "3D/special_solvopt/special_solvopt_farfield_source.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_farfield_source.htm",
+          "relevance": 3,
+          "doc_family": "farfield_source_dialog"
+        }
+      ],
+      "retrieval_query": "How do I define a farfield source from imported radiation data?",
+      "hit": true,
+      "rank": 2,
+      "reciprocal_rank": 0.5,
+      "ndcg_at_5": 0.6309297535714575,
+      "latency_ms": 630.12,
+      "returned_sources": [
+        "VBA_3D/special_vbaports/farfieldsource_object.htm",
+        "3D/special_solvopt/special_solvopt_farfield_source.htm",
+        "3D/special_overview/special_overview_plane_wave_overview.htm",
+        "3D/special_solvopt/special_solvopt_currentdistribution.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_analytical_farfield_source.htm"
+      ],
+      "scores": [
+        0.737309455871582,
+        0.7524167895317078,
+        0.7550308704376221,
+        0.7204420566558838,
+        0.7564002275466919
+      ],
+      "dense_scores": [
+        0.737309455871582,
+        0.7524167895317078,
+        0.7550308704376221,
+        0.7204420566558838,
+        0.7564002275466919
+      ],
+      "rerank_scores": [
+        6.016885757446289,
+        4.030519485473633,
+        4.0048112869262695,
+        2.8640849590301514,
+        2.7977774143218994
+      ],
+      "rank_before": [
+        7,
+        4,
+        3,
+        18,
+        2
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho03_cylindrical_nearfield_scan",
+      "query": "cylindrical nearfield scan 要怎样设置采样圆柱和场计算？",
+      "reference_english_query": "How is a cylindrical nearfield scan configured for field calculation?",
+      "language": "mixed",
+      "category": "postprocess",
+      "difficulty": "medium",
+      "expected_sources": [
+        "3D/special_postpr/special_postpr_nearfieldscan.htm",
+        "VBA_3D/special_vbapostproc/special_vbapostproc_nearfieldscan_object.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/special_postpr/special_postpr_nearfieldscan.htm",
+          "relevance": 3,
+          "doc_family": "cylindrical_nearfield_scan"
+        },
+        {
+          "source_path": "VBA_3D/special_vbapostproc/special_vbapostproc_nearfieldscan_object.htm",
+          "relevance": 2,
+          "doc_family": "cylindrical_nearfield_scan"
+        }
+      ],
+      "retrieval_query": "How is a cylindrical nearfield scan configured for field calculation?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 0.95583058934618,
+      "latency_ms": 584.8,
+      "returned_sources": [
+        "3D/special_postpr/special_postpr_nearfieldscan.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_0d_nearfield_planar_scan.htm",
+        "VBA_3D/special_vbapostproc/special_vbapostproc_nearfieldscan_object.htm",
+        "3D/special_solvopt/special_solvopt_asymptotic_specials_nearfield.htm",
+        "3D/special_overview/special_overview_plane_wave_overview.htm"
+      ],
+      "scores": [
+        0.7776431441307068,
+        0.7867313623428345,
+        0.7772411704063416,
+        0.7100595235824585,
+        0.6927386522293091
+      ],
+      "dense_scores": [
+        0.7776431441307068,
+        0.7867313623428345,
+        0.7772411704063416,
+        0.7100595235824585,
+        0.6927386522293091
+      ],
+      "rerank_scores": [
+        5.11496639251709,
+        3.647649049758911,
+        2.8461129665374756,
+        0.866635799407959,
+        -0.4029370844364166
+      ],
+      "rank_before": [
+        3,
+        1,
+        4,
+        7,
+        12
+      ],
+      "rank_after": [
+        1,
+        2,
+        4,
+        6,
+        8
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho04_export_touchstone_3d",
+      "query": "三维仿真结果怎样导出成 Touchstone 或 MDIF 文件？",
+      "reference_english_query": "How are 3D simulation results exported as TOUCHSTONE or MDIF files?",
+      "language": "zh",
+      "category": "data_exchange",
+      "difficulty": "easy",
+      "expected_sources": [
+        "3D/special_tools/special_tools_exporttouchstone.htm",
+        "DES/userinterface/xyplot/exporttouchstone.htm",
+        "VBA_3D/special_vbaimpexp/special_vbaimp_exp_touchstone.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/special_tools/special_tools_exporttouchstone.htm",
+          "relevance": 3,
+          "doc_family": "touchstone_export"
+        },
+        {
+          "source_path": "DES/userinterface/xyplot/exporttouchstone.htm",
+          "relevance": 2,
+          "doc_family": "touchstone_export"
+        },
+        {
+          "source_path": "VBA_3D/special_vbaimpexp/special_vbaimp_exp_touchstone.htm",
+          "relevance": 2,
+          "doc_family": "touchstone_export"
+        }
+      ],
+      "retrieval_query": "How are 3D simulation results exported as TOUCHSTONE or MDIF files?",
+      "hit": true,
+      "rank": 2,
+      "reciprocal_rank": 0.5,
+      "ndcg_at_5": 0.5692897379691039,
+      "latency_ms": 586.27,
+      "returned_sources": [
+        "3D/special_overview/special_overview_resultexport.htm",
+        "3D/special_tools/special_tools_exporttouchstone.htm",
+        "DES/userinterface/xyplot/exporttouchstone.htm",
+        "EXP_DES/idem_builder/idem_builder_workflow.htm",
+        "DES/idem_builder/task_export_touchstone.htm"
+      ],
+      "scores": [
+        0.8035399317741394,
+        0.7831258773803711,
+        0.8003264665603638,
+        0.7161707878112793,
+        0.7207303047180176
+      ],
+      "dense_scores": [
+        0.8035399317741394,
+        0.7831258773803711,
+        0.8003264665603638,
+        0.7161707878112793,
+        0.7207303047180176
+      ],
+      "rerank_scores": [
+        7.126729965209961,
+        6.727696418762207,
+        4.628500461578369,
+        3.8595237731933594,
+        3.56248140335083
+      ],
+      "rank_before": [
+        1,
+        4,
+        2,
+        11,
+        10
+      ],
+      "rank_after": [
+        1,
+        2,
+        5,
+        6,
+        8
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho05_tdr_from_sparameters",
+      "query": "Which result template computes a TDR signal from simulated S-parameters?",
+      "reference_english_query": "Which result template computes a TDR signal from simulated S-parameters?",
+      "language": "en",
+      "category": "postprocess",
+      "difficulty": "medium",
+      "expected_sources": [
+        "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+          "relevance": 3,
+          "doc_family": "tdr_from_sparameters"
+        }
+      ],
+      "retrieval_query": "Which result template computes a TDR signal from simulated S-parameters?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0,
+      "latency_ms": 530.82,
+      "returned_sources": [
+        "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_s-parameter.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_tdr_from_time_signals.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_preloaded_macros_overview.htm",
+        "EXP_HF/examplesoverview/signal_integrity__simulation_of_via_model.htm"
+      ],
+      "scores": [
+        0.8107813000679016,
+        0.7655620574951172,
+        0.708195686340332,
+        0.701802134513855,
+        0.717664897441864
+      ],
+      "dense_scores": [
+        0.8107813000679016,
+        0.7655620574951172,
+        0.708195686340332,
+        0.701802134513855,
+        0.717664897441864
+      ],
+      "rerank_scores": [
+        7.488062381744385,
+        5.5930681228637695,
+        3.7797961235046387,
+        2.917102575302124,
+        2.754617691040039
+      ],
+      "rank_before": [
+        1,
+        2,
+        11,
+        17,
+        4
+      ],
+      "rank_after": [
+        1,
+        3,
+        4,
+        5,
+        6
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho06_extract_material_touchstone",
+      "query": "怎样用 2-port Touchstone 提取 complex permittivity 和 permeability？",
+      "reference_english_query": "How can complex permittivity and permeability be extracted from a two-port TOUCHSTONE file?",
+      "language": "mixed",
+      "category": "material",
+      "difficulty": "hard",
+      "expected_sources": [
+        "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+          "relevance": 3,
+          "doc_family": "material_extraction_touchstone"
+        }
+      ],
+      "retrieval_query": "How can complex permittivity and permeability be extracted from a two-port TOUCHSTONE file?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0,
+      "latency_ms": 631.27,
+      "returned_sources": [
+        "3D/common_preloadedmacro/common_preloadedmacro_extract_complex_material_properties_from_2port_touchstone.htm",
+        "3D/common_preloadedmacro/common_preloadedmacro_extract_material_properties_from_sparameters.htm",
+        "3D/special_solvopt/special_solvopt_lumpedelements.htm",
+        "PCB/4_editing_components/electrical_modelling_passive_component.htm",
+        "3D/special_tools/special_tools_exporttouchstone.htm"
+      ],
+      "scores": [
+        0.7737968564033508,
+        0.7271660566329956,
+        0.7210685014724731,
+        0.6780242919921875,
+        0.7203493118286133
+      ],
+      "dense_scores": [
+        0.7737968564033508,
+        0.7271660566329956,
+        0.7210685014724731,
+        0.6780242919921875,
+        0.7203493118286133
+      ],
+      "rerank_scores": [
+        7.011641502380371,
+        4.369919776916504,
+        1.2285034656524658,
+        0.7890807390213013,
+        0.5731167793273926
+      ],
+      "rank_before": [
+        1,
+        5,
+        8,
+        18,
+        9
+      ],
+      "rank_after": [
+        1,
+        8,
+        13,
+        14,
+        15
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho07_legacy_sparameter_goal",
+      "query": "旧工程里的 S-Parameter goal 为什么不能再新建，应该查看哪个设置说明？",
+      "reference_english_query": "Why can an S-Parameter goal no longer be created and how are legacy goals handled?",
+      "language": "zh",
+      "category": "optimization",
+      "difficulty": "hard",
+      "expected_sources": [
+        "3D/special_solvopt/special_solvopt_define_s-parameter_goal.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_define_s-parameter_goal.htm",
+          "relevance": 3,
+          "doc_family": "legacy_sparameter_goal"
+        }
+      ],
+      "retrieval_query": "Why can an S-Parameter goal no longer be created and how are legacy goals handled?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0,
+      "latency_ms": 553.01,
+      "returned_sources": [
+        "3D/special_solvopt/special_solvopt_define_s-parameter_goal.htm",
+        "3D/special_process/special_solvopt_optimizer_goals.htm",
+        "3D/special_process/special_solvopt_define_1d_resulttemplate_goal.htm",
+        "DES/analysis/optimization/special_solvopt_optimizer_goals.htm",
+        "VBA_DES/special_vbacommands/optimizerobject.htm"
+      ],
+      "scores": [
+        0.664007306098938,
+        0.6673572063446045,
+        0.6121090650558472,
+        0.6317256689071655,
+        0.6156546473503113
+      ],
+      "dense_scores": [
+        0.664007306098938,
+        0.6673572063446045,
+        0.6121090650558472,
+        0.6317256689071655,
+        0.6156546473503113
+      ],
+      "rerank_scores": [
+        -0.028008291497826576,
+        -0.04365087300539017,
+        -1.65704345703125,
+        -2.30601167678833,
+        -2.4974987506866455
+      ],
+      "rank_before": [
+        2,
+        1,
+        14,
+        4,
+        10
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho08_optimizer_goals",
+      "query": "Where are optimizer goals added, enabled, weighted and assigned to result values?",
+      "reference_english_query": "Where are optimizer goals added, enabled, weighted and assigned to result values?",
+      "language": "en",
+      "category": "optimization",
+      "difficulty": "medium",
+      "expected_sources": [
+        "3D/special_process/special_solvopt_optimizer_goals.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/special_process/special_solvopt_optimizer_goals.htm",
+          "relevance": 3,
+          "doc_family": "optimizer_goals"
+        }
+      ],
+      "retrieval_query": "Where are optimizer goals added, enabled, weighted and assigned to result values?",
+      "hit": true,
+      "rank": 2,
+      "reciprocal_rank": 0.5,
+      "ndcg_at_5": 0.6309297535714575,
+      "latency_ms": 606.53,
+      "returned_sources": [
+        "DES/analysis/optimization/define_template_result_goal.htm",
+        "3D/special_process/special_solvopt_optimizer_goals.htm",
+        "3D/special_process/special_solvopt_define_resulttemplate_goal.htm",
+        "DES/analysis/optimization/special_solvopt_define_resulttemplate_goal.htm",
+        "DES/analysis/optimization/special_solvopt_define_1d_resulttemplate_goal.htm"
+      ],
+      "scores": [
+        0.7024877071380615,
+        0.6948709487915039,
+        0.7216762900352478,
+        0.7040210962295532,
+        0.683564305305481
+      ],
+      "dense_scores": [
+        0.7024877071380615,
+        0.6948709487915039,
+        0.7216762900352478,
+        0.7040210962295532,
+        0.683564305305481
+      ],
+      "rerank_scores": [
+        4.217167854309082,
+        3.846980094909668,
+        3.5613515377044678,
+        3.389392614364624,
+        2.411311388015747
+      ],
+      "rank_before": [
+        6,
+        12,
+        2,
+        5,
+        14
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho09_optimizer_algorithm_settings",
+      "query": "optimizer 的 global algorithm、population 和 stopping settings 在哪里配置？",
+      "reference_english_query": "Where are the optimizer global algorithm, population and stopping settings configured?",
+      "language": "mixed",
+      "category": "optimization",
+      "difficulty": "medium",
+      "expected_sources": [
+        "3D/special_process/special_solvopt_optimizer_global_alg_settings.htm",
+        "DES/analysis/optimization/optimizer_global_algorithm_settings.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/special_process/special_solvopt_optimizer_global_alg_settings.htm",
+          "relevance": 3,
+          "doc_family": "optimizer_global_algorithm"
+        },
+        {
+          "source_path": "DES/analysis/optimization/optimizer_global_algorithm_settings.htm",
+          "relevance": 2,
+          "doc_family": "optimizer_global_algorithm"
+        }
+      ],
+      "retrieval_query": "Where are the optimizer global algorithm, population and stopping settings configured?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 0.8339912323981488,
+      "latency_ms": 475.42,
+      "returned_sources": [
+        "DES/analysis/optimization/optimizer_global_algorithm_settings.htm",
+        "3D/special_process/special_solvopt_optimizer_global_alg_settings.htm",
+        "3D/common_overview/common_overview_optimizer_overview.htm",
+        "DES/analysis/optimization/common_overview_optimizer_overview.htm",
+        "3D/special_process/special_solvopt_optimize.htm"
+      ],
+      "scores": [
+        0.717858076095581,
+        0.6865156888961792,
+        0.6820774078369141,
+        0.6899102926254272,
+        0.6602676510810852
+      ],
+      "dense_scores": [
+        0.717858076095581,
+        0.6865156888961792,
+        0.6820774078369141,
+        0.6899102926254272,
+        0.6602676510810852
+      ],
+      "rerank_scores": [
+        4.2999725341796875,
+        4.076396942138672,
+        3.505918502807617,
+        3.39219331741333,
+        1.489863634109497
+      ],
+      "rank_before": [
+        2,
+        9,
+        11,
+        8,
+        19
+      ],
+      "rank_after": [
+        1,
+        3,
+        8,
+        10,
+        17
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho10_hf_thermal_setup",
+      "query": "如何把高频电磁损耗耦合到热仿真并完成 HF-Thermal 工作流？",
+      "reference_english_query": "How is a coupled high-frequency electromagnetic and thermal simulation set up?",
+      "language": "zh",
+      "category": "multiphysics",
+      "difficulty": "hard",
+      "expected_sources": [
+        "3D/common_overview/common_overview_howto_coupled_hf-thermal.htm",
+        "DES/analysis/simulation/tasks/em_thermal_coupling_simulation_task.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/common_overview/common_overview_howto_coupled_hf-thermal.htm",
+          "relevance": 3,
+          "doc_family": "em_thermal_coupling"
+        },
+        {
+          "source_path": "DES/analysis/simulation/tasks/em_thermal_coupling_simulation_task.htm",
+          "relevance": 2,
+          "doc_family": "em_thermal_coupling"
+        }
+      ],
+      "retrieval_query": "How is a coupled high-frequency electromagnetic and thermal simulation set up?",
+      "hit": true,
+      "rank": 2,
+      "reciprocal_rank": 0.5,
+      "ndcg_at_5": 0.4966392596877323,
+      "latency_ms": 507.21,
+      "returned_sources": [
+        "3D/common_overview/common_overview_coupled_simulations.htm",
+        "3D/common_overview/common_overview_howto_coupled_hf-thermal.htm",
+        "EXP_MP/examplesoverview/coupled/electrical_and_thermal_analysis_of_a_microstrip_coupler_device.htm",
+        "3D/common_overview/common_overview_coupled_biased_ferrites.htm",
+        "DES/userinterface/simulationprojects/define_transient_em_thermal_coupling.htm"
+      ],
+      "scores": [
+        0.7715458869934082,
+        0.7429856657981873,
+        0.7321338653564453,
+        0.7300894260406494,
+        0.7005411982536316
+      ],
+      "dense_scores": [
+        0.7715458869934082,
+        0.7429856657981873,
+        0.7321338653564453,
+        0.7300894260406494,
+        0.7005411982536316
+      ],
+      "rerank_scores": [
+        6.411830902099609,
+        5.032661437988281,
+        4.099742889404297,
+        3.2545166015625,
+        2.7784852981567383
+      ],
+      "rank_before": [
+        1,
+        4,
+        6,
+        8,
+        19
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho11_import_thermal_losses",
+      "query": "How can thermal losses be imported from another CST project?",
+      "reference_english_query": "How can thermal losses be imported from another CST project?",
+      "language": "en",
+      "category": "multiphysics",
+      "difficulty": "easy",
+      "expected_sources": [
+        "3D/special_solvopt/special_solvopt_import_thermal_losses_from_project.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_import_thermal_losses_from_project.htm",
+          "relevance": 3,
+          "doc_family": "import_thermal_losses"
+        }
+      ],
+      "retrieval_query": "How can thermal losses be imported from another CST project?",
+      "hit": true,
+      "rank": 3,
+      "reciprocal_rank": 0.3333333333333333,
+      "ndcg_at_5": 0.5,
+      "latency_ms": 497.08,
+      "returned_sources": [
+        "3D/special_solvopt/special_solvopt_thermal_current_losses.htm",
+        "3D/special_overview/special_overview_sequential_workflows_overview.htm",
+        "3D/special_solvopt/special_solvopt_import_thermal_losses_from_project.htm",
+        "VBA_3D/special_vbathermalsolver/special_vbathermalsolver_thermallossimport.htm",
+        "3D/special_overview/special_overview_thermal_loss_distribution.htm"
+      ],
+      "scores": [
+        0.8090550899505615,
+        0.7591949701309204,
+        0.8394454717636108,
+        0.7422516942024231,
+        0.7502671480178833
+      ],
+      "dense_scores": [
+        0.8090550899505615,
+        0.7591949701309204,
+        0.8394454717636108,
+        0.7422516942024231,
+        0.7502671480178833
+      ],
+      "rerank_scores": [
+        8.764372825622559,
+        7.549274921417236,
+        6.957660675048828,
+        6.944818019866943,
+        6.46026611328125
+      ],
+      "rank_before": [
+        2,
+        7,
+        1,
+        13,
+        11
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho12_thermal_solver_parameters",
+      "query": "steady-state thermal solver 的 accuracy、iteration 和 convergence 参数怎么设？",
+      "reference_english_query": "How are accuracy, iteration and convergence parameters configured for the steady-state thermal solver?",
+      "language": "mixed",
+      "category": "solver",
+      "difficulty": "medium",
+      "expected_sources": [
+        "3D/special_solvopt/special_solvopt_thermal_solver_parameters.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_thermal_solver_parameters.htm",
+          "relevance": 3,
+          "doc_family": "steady_thermal_solver_parameters"
+        },
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_thermal_td_solver_parameters.htm",
+          "relevance": 0,
+          "hard_negative": true,
+          "doc_family": "transient_thermal_solver_parameters"
+        }
+      ],
+      "retrieval_query": "How are accuracy, iteration and convergence parameters configured for the steady-state thermal solver?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0,
+      "latency_ms": 702.54,
+      "returned_sources": [
+        "3D/special_solvopt/special_solvopt_thermal_solver_parameters.htm",
+        "3D/special_solvopt/special_solvopt_cht_solver_accuracy.htm",
+        "3D/special_solvopt/special_solvopt_thermal_solver_special_settings.htm",
+        "3D/special_overview/special_overview_thermal_stationary_result_overview.htm",
+        "3D/special_solvopt/special_solvopt_thermal_td_solver_parameters.htm"
+      ],
+      "scores": [
+        0.756386935710907,
+        0.7126564979553223,
+        0.7416574954986572,
+        0.7653912305831909,
+        0.721783459186554
+      ],
+      "dense_scores": [
+        0.756386935710907,
+        0.7126564979553223,
+        0.7416574954986572,
+        0.7653912305831909,
+        0.721783459186554
+      ],
+      "rerank_scores": [
+        6.2189764976501465,
+        5.848888874053955,
+        4.7474493980407715,
+        4.324071884155273,
+        3.0214266777038574
+      ],
+      "rank_before": [
+        2,
+        12,
+        6,
+        1,
+        7
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho13_tetrahedral_eigenmode_specials",
+      "query": "四面体网格下的经典无损本征模求解器有哪些特殊设置？",
+      "reference_english_query": "Which special settings are available for the classical lossless tetrahedral eigenmode solver?",
+      "language": "zh",
+      "category": "solver",
+      "difficulty": "hard",
+      "expected_sources": [
+        "3D/special_solvopt/special_solvopt_eigenmode_solver_specials_tetrahedral.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_eigenmode_solver_specials_tetrahedral.htm",
+          "relevance": 3,
+          "doc_family": "tetrahedral_eigenmode_specials"
+        }
+      ],
+      "retrieval_query": "Which special settings are available for the classical lossless tetrahedral eigenmode solver?",
+      "hit": true,
+      "rank": 2,
+      "reciprocal_rank": 0.5,
+      "ndcg_at_5": 0.6309297535714575,
+      "latency_ms": 576.23,
+      "returned_sources": [
+        "3D/special_solvopt/special_solvopt_sap3d.htm",
+        "3D/special_solvopt/special_solvopt_eigenmode_solver_specials_tetrahedral.htm",
+        "3D/special_overview/special_overview_eigenmodesolverover.htm",
+        "VBA_3D/special_vbasolver/special_vbasolver_eigenmodesolver_object.htm",
+        "3D/special_solvopt/special_solvopt_eigenmode_solver_specials_tetrahedral_preview.htm"
+      ],
+      "scores": [
+        0.824428141117096,
+        0.8131864070892334,
+        0.8144341707229614,
+        0.8087980151176453,
+        0.7721366882324219
+      ],
+      "dense_scores": [
+        0.824428141117096,
+        0.8131864070892334,
+        0.8144341707229614,
+        0.8087980151176453,
+        0.7721366882324219
+      ],
+      "rerank_scores": [
+        7.569459915161133,
+        6.753464221954346,
+        6.748898029327393,
+        6.719089984893799,
+        6.1609416007995605
+      ],
+      "rank_before": [
+        1,
+        4,
+        3,
+        5,
+        17
+      ],
+      "rank_after": [
+        1,
+        3,
+        4,
+        5,
+        7
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho14_adaptive_surface_mesh",
+      "query": "How are adaptive surface mesh properties configured for the integral equation solver?",
+      "reference_english_query": "How are adaptive surface mesh properties configured for the integral equation solver?",
+      "language": "en",
+      "category": "mesh",
+      "difficulty": "medium",
+      "expected_sources": [
+        "3D/special_solvopt/special_solvopt_adaptive_surface_mesh_refinement_properties.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_adaptive_surface_mesh_refinement_properties.htm",
+          "relevance": 3,
+          "doc_family": "adaptive_surface_mesh_ie"
+        }
+      ],
+      "retrieval_query": "How are adaptive surface mesh properties configured for the integral equation solver?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0,
+      "latency_ms": 772.34,
+      "returned_sources": [
+        "3D/special_solvopt/special_solvopt_adaptive_surface_mesh_refinement_properties.htm",
+        "3D/special_solvopt/special_solvopt_integral_equation_solver_parameters.htm",
+        "3D/special_overview/frequency_domain_solver_overview_-_meshtype__surface_mesh.htm",
+        "3D/special_overview/frequency_domain_solver_settings_-_meshtype__surface_mesh.htm",
+        "3D/special_solvopt/special_solvopt_mesh_adaption_properties_sap.htm"
+      ],
+      "scores": [
+        0.7426631450653076,
+        0.7239257097244263,
+        0.7495137453079224,
+        0.7654532194137573,
+        0.7248720526695251
+      ],
+      "dense_scores": [
+        0.7426631450653076,
+        0.7239257097244263,
+        0.7495137453079224,
+        0.7654532194137573,
+        0.7248720526695251
+      ],
+      "rerank_scores": [
+        6.881373882293701,
+        5.508148670196533,
+        4.795095443725586,
+        4.135530471801758,
+        4.01842737197876
+      ],
+      "rank_before": [
+        5,
+        9,
+        4,
+        1,
+        7
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho15_stationary_current_sources",
+      "query": "stationary current solver 支持哪些 source types，potential 和 current source 怎么选？",
+      "reference_english_query": "Which source types are supported by the stationary current solver and how are potential and current sources selected?",
+      "language": "mixed",
+      "category": "source",
+      "difficulty": "hard",
+      "expected_sources": [
+        "3D/special_solvopt/special_solvopt_stationary_current_sources.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_stationary_current_sources.htm",
+          "relevance": 3,
+          "doc_family": "stationary_current_sources"
+        }
+      ],
+      "retrieval_query": "Which source types are supported by the stationary current solver and how are potential and current sources selected?",
+      "hit": true,
+      "rank": 2,
+      "reciprocal_rank": 0.5,
+      "ndcg_at_5": 0.6309297535714575,
+      "latency_ms": 652.9,
+      "returned_sources": [
+        "3D/special_overview/special_overview_stationary_current_solver_overview.htm",
+        "3D/special_solvopt/special_solvopt_stationary_current_sources.htm",
+        "3D/special_overview/special_overview_whichsolver.htm",
+        "3D/special_overview/special_overview_magnetostatic_solver_overview.htm",
+        "EXP_LF/examplesoverview/tutorials/circuit_breaker.htm"
+      ],
+      "scores": [
+        0.8231395483016968,
+        0.7614978551864624,
+        0.782062292098999,
+        0.7347680330276489,
+        0.7255004644393921
+      ],
+      "dense_scores": [
+        0.8231395483016968,
+        0.7614978551864624,
+        0.782062292098999,
+        0.7347680330276489,
+        0.7255004644393921
+      ],
+      "rerank_scores": [
+        7.259706020355225,
+        6.820385932922363,
+        5.742969512939453,
+        4.784334182739258,
+        3.290771961212158
+      ],
+      "rank_before": [
+        1,
+        6,
+        2,
+        8,
+        10
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        7,
+        11
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho16_des_export_touchstone",
+      "query": "在 CST Design Environment 的曲线结果窗口怎样导出 Touchstone？",
+      "reference_english_query": "How is TOUCHSTONE exported from an XY plot in CST Design Environment?",
+      "language": "zh",
+      "category": "data_exchange",
+      "difficulty": "medium",
+      "expected_sources": [
+        "DES/userinterface/xyplot/exporttouchstone.htm",
+        "3D/special_tools/special_tools_exporttouchstone.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "DES/userinterface/xyplot/exporttouchstone.htm",
+          "relevance": 3,
+          "doc_family": "touchstone_export"
+        },
+        {
+          "source_path": "3D/special_tools/special_tools_exporttouchstone.htm",
+          "relevance": 2,
+          "doc_family": "touchstone_export"
+        }
+      ],
+      "retrieval_query": "How is TOUCHSTONE exported from an XY plot in CST Design Environment?",
+      "hit": false,
+      "rank": null,
+      "reciprocal_rank": 0.0,
+      "ndcg_at_5": 0.0,
+      "latency_ms": 623.56,
+      "returned_sources": [
+        "DES/idem_builder/task_export_touchstone.htm",
+        "DES/idem_studio/features_and_functionalities/home/export_touchstone.htm",
+        "DES/idem_studio/features_and_functionalities/data/data_export_touchstone.htm",
+        "EXP_DES/idem_builder/idem_builder_workflow.htm",
+        "EXP_DES/idem_studio/idem_studio_tutorial_2_advanced.htm"
+      ],
+      "scores": [
+        0.7757220268249512,
+        0.7202836275100708,
+        0.7260047793388367,
+        0.7419992685317993,
+        0.7301813364028931
+      ],
+      "dense_scores": [
+        0.7757220268249512,
+        0.7202836275100708,
+        0.7260047793388367,
+        0.7419992685317993,
+        0.7301813364028931
+      ],
+      "rerank_scores": [
+        4.954775333404541,
+        4.028303623199463,
+        3.902729034423828,
+        3.828103542327881,
+        3.775925636291504
+      ],
+      "rank_before": [
+        1,
+        20,
+        13,
+        11,
+        12
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho17_parameter_list_window",
+      "query": "What is the Parameter List docking window and how is it shown or hidden?",
+      "reference_english_query": "What is the Parameter List docking window and how is it shown or hidden?",
+      "language": "en",
+      "category": "ui",
+      "difficulty": "easy",
+      "expected_sources": [
+        "DES/userinterface/uielemente/parameterlist.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "DES/userinterface/uielemente/parameterlist.htm",
+          "relevance": 3,
+          "doc_family": "parameter_list_window"
+        }
+      ],
+      "retrieval_query": "What is the Parameter List docking window and how is it shown or hidden?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0,
+      "latency_ms": 528.46,
+      "returned_sources": [
+        "DES/userinterface/uielemente/parameterlist.htm",
+        "DES/components/block/parameterlist/properties.htm",
+        "DES/components/block/parameterlist/properties_solver.htm",
+        "DES/components/block/common/generalizedtransmissionlineblock.htm",
+        "DES/components/block/parameterlist/properties_settings_ibis.htm"
+      ],
+      "scores": [
+        0.7221656441688538,
+        0.7106500864028931,
+        0.6932958364486694,
+        0.6356537342071533,
+        0.6521772146224976
+      ],
+      "dense_scores": [
+        0.7221656441688538,
+        0.7106500864028931,
+        0.6932958364486694,
+        0.6356537342071533,
+        0.6521772146224976
+      ],
+      "rerank_scores": [
+        6.073911666870117,
+        4.6120147705078125,
+        3.9052090644836426,
+        3.7577881813049316,
+        3.603421926498413
+      ],
+      "rank_before": [
+        1,
+        2,
+        3,
+        13,
+        8
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho18_touchstone_format",
+      "query": "Touchstone file 的 extension、option line 和数据列格式是什么？",
+      "reference_english_query": "What are the file extensions, option line and data column syntax of the TOUCHSTONE format?",
+      "language": "mixed",
+      "category": "file_format",
+      "difficulty": "medium",
+      "expected_sources": [
+        "DES/theory/touchstone_format.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "DES/theory/touchstone_format.htm",
+          "relevance": 3,
+          "doc_family": "touchstone_format"
+        }
+      ],
+      "retrieval_query": "What are the file extensions, option line and data column syntax of the TOUCHSTONE format?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0,
+      "latency_ms": 559.67,
+      "returned_sources": [
+        "DES/theory/touchstone_format.htm",
+        "VBA_3D/special_vbaimpexp/special_vbaimp_exp_touchstone.htm",
+        "DES/idem_studio/features_and_functionalities/home/import_data.htm",
+        "3D/special_tools/special_tools_exporttouchstone.htm",
+        "DES/idem_studio/features_and_functionalities/batch_mode/io_files/xml_file__touchstone_options.htm"
+      ],
+      "scores": [
+        0.7388617396354675,
+        0.7271419763565063,
+        0.726667582988739,
+        0.7080810070037842,
+        0.7358380556106567
+      ],
+      "dense_scores": [
+        0.7388617396354675,
+        0.7271419763565063,
+        0.726667582988739,
+        0.7080810070037842,
+        0.7358380556106567
+      ],
+      "rerank_scores": [
+        3.585066556930542,
+        2.4967308044433594,
+        2.4399209022521973,
+        2.301815986633301,
+        2.276498794555664
+      ],
+      "rank_before": [
+        1,
+        3,
+        4,
+        9,
+        2
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho19_sparameter_task_excitations",
+      "query": "S 参数仿真任务的 Excitation 选项卡怎样选择激励端口和模式？",
+      "reference_english_query": "How are ports and modes selected in the Excitation tab of an S-Parameter simulation task?",
+      "language": "zh",
+      "category": "excitation",
+      "difficulty": "medium",
+      "expected_sources": [
+        "DES/analysis/simulation/tasks/s-parameter_simulation_task_excitations.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "DES/analysis/simulation/tasks/s-parameter_simulation_task_excitations.htm",
+          "relevance": 3,
+          "doc_family": "des_sparameter_task_excitations"
+        }
+      ],
+      "retrieval_query": "How are ports and modes selected in the Excitation tab of an S-Parameter simulation task?",
+      "hit": true,
+      "rank": 2,
+      "reciprocal_rank": 0.5,
+      "ndcg_at_5": 0.6309297535714575,
+      "latency_ms": 533.99,
+      "returned_sources": [
+        "3D/special_solvopt/special_solvopt_solver.htm",
+        "DES/analysis/simulation/tasks/s-parameter_simulation_task_excitations.htm",
+        "3D/special_solvopt/special_solvopt_multilayer_solver_parameters.htm",
+        "DES/analysis/simulation/tasks/ac_simulation_task_excitation.htm",
+        "DES/analysis/simulation/tasks/sparametersimulationtask.htm"
+      ],
+      "scores": [
+        0.7579593658447266,
+        0.7909609079360962,
+        0.7414168119430542,
+        0.7651544809341431,
+        0.751282811164856
+      ],
+      "dense_scores": [
+        0.7579593658447266,
+        0.7909609079360962,
+        0.7414168119430542,
+        0.7651544809341431,
+        0.751282811164856
+      ],
+      "rerank_scores": [
+        6.074836254119873,
+        6.007015228271484,
+        5.625002861022949,
+        5.01511287689209,
+        4.9217915534973145
+      ],
+      "rank_before": [
+        6,
+        1,
+        15,
+        4,
+        9
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho20_em_thermal_task",
+      "query": "How is an EM-Thermal Coupling Simulation Task configured in a simulation project?",
+      "reference_english_query": "How is an EM-Thermal Coupling Simulation Task configured in a simulation project?",
+      "language": "en",
+      "category": "multiphysics",
+      "difficulty": "medium",
+      "expected_sources": [
+        "DES/analysis/simulation/tasks/em_thermal_coupling_simulation_task.htm",
+        "3D/common_overview/common_overview_howto_coupled_hf-thermal.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "DES/analysis/simulation/tasks/em_thermal_coupling_simulation_task.htm",
+          "relevance": 3,
+          "doc_family": "em_thermal_coupling"
+        },
+        {
+          "source_path": "3D/common_overview/common_overview_howto_coupled_hf-thermal.htm",
+          "relevance": 2,
+          "doc_family": "em_thermal_coupling"
+        }
+      ],
+      "retrieval_query": "How is an EM-Thermal Coupling Simulation Task configured in a simulation project?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 0.7871546029909718,
+      "latency_ms": 511.26,
+      "returned_sources": [
+        "DES/analysis/simulation/tasks/em_thermal_coupling_simulation_task.htm",
+        "DES/userinterface/simulationprojects/define_transient_em_thermal_coupling.htm",
+        "DES/userinterface/simulationprojects/define_stationary_em_thermal_coupling.htm",
+        "EXP_MP/examplesoverview/coupled/electrical_and_thermal_analysis_of_a_microstrip_coupler_device.htm",
+        "DES/analysis/simulation/simulationtask.htm"
+      ],
+      "scores": [
+        0.8573670387268066,
+        0.8055919408798218,
+        0.8039519786834717,
+        0.7848089337348938,
+        0.7951739430427551
+      ],
+      "dense_scores": [
+        0.8573670387268066,
+        0.8055919408798218,
+        0.8039519786834717,
+        0.7848089337348938,
+        0.7951739430427551
+      ],
+      "rerank_scores": [
+        8.500614166259766,
+        8.254439353942871,
+        7.533420085906982,
+        7.1388115882873535,
+        6.124661445617676
+      ],
+      "rank_before": [
+        1,
+        5,
+        6,
+        9,
+        8
+      ],
+      "rank_after": [
+        1,
+        3,
+        4,
+        6,
+        10
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho21_des_optimizer_algorithm",
+      "query": "Design Studio optimizer 的 global algorithm settings 和 3D optimizer 有什么配置入口？",
+      "reference_english_query": "Where are global algorithm settings configured for the Design Studio optimizer?",
+      "language": "mixed",
+      "category": "optimization",
+      "difficulty": "hard",
+      "expected_sources": [
+        "DES/analysis/optimization/optimizer_global_algorithm_settings.htm",
+        "3D/special_process/special_solvopt_optimizer_global_alg_settings.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "DES/analysis/optimization/optimizer_global_algorithm_settings.htm",
+          "relevance": 3,
+          "doc_family": "optimizer_global_algorithm"
+        },
+        {
+          "source_path": "3D/special_process/special_solvopt_optimizer_global_alg_settings.htm",
+          "relevance": 2,
+          "doc_family": "optimizer_global_algorithm"
+        }
+      ],
+      "retrieval_query": "Where are global algorithm settings configured for the Design Studio optimizer?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0,
+      "latency_ms": 458.98,
+      "returned_sources": [
+        "DES/analysis/optimization/optimizer_global_algorithm_settings.htm",
+        "3D/special_process/special_solvopt_optimizer_global_alg_settings.htm",
+        "DES/analysis/optimization/special_solvopt_optimize.htm",
+        "DES/analysis/optimization/common_overview_optimizer_overview.htm",
+        "3D/common_overview/common_overview_optimizer_overview.htm"
+      ],
+      "scores": [
+        0.7153526544570923,
+        0.7284078001976013,
+        0.6740124821662903,
+        0.6849349141120911,
+        0.6992329359054565
+      ],
+      "dense_scores": [
+        0.7153526544570923,
+        0.7284078001976013,
+        0.6740124821662903,
+        0.6849349141120911,
+        0.6992329359054565
+      ],
+      "rerank_scores": [
+        5.153414726257324,
+        4.9332709312438965,
+        4.534060001373291,
+        4.376801490783691,
+        4.358098030090332
+      ],
+      "rank_before": [
+        3,
+        1,
+        14,
+        10,
+        6
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho22_vba_brick",
+      "query": "用 VBA 创建 Brick 时需要设置哪些名称、组件、材料和坐标参数？",
+      "reference_english_query": "Which name, component, material and coordinate methods are needed to create a Brick with VBA?",
+      "language": "zh",
+      "category": "vba_modeling",
+      "difficulty": "medium",
+      "expected_sources": [
+        "VBA_3D/common_vbabasicsolids/common_vbabrick_object.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "VBA_3D/common_vbabasicsolids/common_vbabrick_object.htm",
+          "relevance": 3,
+          "doc_family": "vba_brick_object"
+        }
+      ],
+      "retrieval_query": "Which name, component, material and coordinate methods are needed to create a Brick with VBA?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0,
+      "latency_ms": 538.02,
+      "returned_sources": [
+        "VBA_3D/common_vbabasicsolids/common_vbabrick_object.htm",
+        "VBA_3D/common_vbasolido/common_vbasolido_solid_object.htm",
+        "3D/common_struct/common_struct_brick.htm",
+        "EXP_HF/examplesoverview/magic_t.htm",
+        "VBA_3D/common_vbabasicsolids/common_vbacylinder_object.htm"
+      ],
+      "scores": [
+        0.8227106332778931,
+        0.7795291543006897,
+        0.7030342817306519,
+        0.7051133513450623,
+        0.705759584903717
+      ],
+      "dense_scores": [
+        0.8227106332778931,
+        0.7795291543006897,
+        0.7030342817306519,
+        0.7051133513450623,
+        0.705759584903717
+      ],
+      "rerank_scores": [
+        6.543612480163574,
+        4.820479393005371,
+        4.525091171264648,
+        1.8570088148117065,
+        0.9654527306556702
+      ],
+      "rank_before": [
+        1,
+        2,
+        14,
+        13,
+        12
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho23_vba_cylinder",
+      "query": "Which VBA object and methods create a cylinder with an axis and outer radius?",
+      "reference_english_query": "Which VBA object and methods create a cylinder with an axis and outer radius?",
+      "language": "en",
+      "category": "vba_modeling",
+      "difficulty": "medium",
+      "expected_sources": [
+        "VBA_3D/common_vbabasicsolids/common_vbacylinder_object.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "VBA_3D/common_vbabasicsolids/common_vbacylinder_object.htm",
+          "relevance": 3,
+          "doc_family": "vba_cylinder_object"
+        }
+      ],
+      "retrieval_query": "Which VBA object and methods create a cylinder with an axis and outer radius?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0,
+      "latency_ms": 598.66,
+      "returned_sources": [
+        "VBA_3D/common_vbabasicsolids/common_vbacylinder_object.htm",
+        "EXP_HF/examplesoverview/sdm_cylinder.htm",
+        "VBA_3D/common_vbabasicsolids/common_vbaecylinder_object.htm",
+        "VBA_3D/special_vbamesh/special_vbamesho.htm",
+        "VBA_3D/common_vbabending/common_vbabending_object.htm"
+      ],
+      "scores": [
+        0.7709107398986816,
+        0.7418074607849121,
+        0.7474675178527832,
+        0.6933317184448242,
+        0.7056737542152405
+      ],
+      "dense_scores": [
+        0.7709107398986816,
+        0.7418074607849121,
+        0.7474675178527832,
+        0.6933317184448242,
+        0.7056737542152405
+      ],
+      "rerank_scores": [
+        5.749157905578613,
+        3.831880569458008,
+        3.60670804977417,
+        0.7464115619659424,
+        0.7432621121406555
+      ],
+      "rank_before": [
+        1,
+        3,
+        2,
+        11,
+        8
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        9,
+        10
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho24_vba_transform",
+      "query": "Transform VBA object 怎样完成 translate、rotate、scale 和 multiple copy？",
+      "reference_english_query": "How does the Transform VBA object perform translation, rotation, scaling and multiple copies?",
+      "language": "mixed",
+      "category": "vba_modeling",
+      "difficulty": "hard",
+      "expected_sources": [
+        "VBA_3D/special_vbatransformo/special_vbatransformo_transform_object.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "VBA_3D/special_vbatransformo/special_vbatransformo_transform_object.htm",
+          "relevance": 3,
+          "doc_family": "vba_transform_object"
+        }
+      ],
+      "retrieval_query": "How does the Transform VBA object perform translation, rotation, scaling and multiple copies?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0,
+      "latency_ms": 658.12,
+      "returned_sources": [
+        "VBA_3D/special_vbatransformo/special_vbatransformo_transform_object.htm",
+        "3D/common_struct/common_struct_transform.htm",
+        "VBA_3D/special_vbatransformo/special_vbatransformo_align_object.htm",
+        "VBA_3D/special_vbarigidbodymotion/rigidbodymotion_object.htm",
+        "VBA_3D/common_vbarotateo/common_vbarotateo_rotate_object.htm"
+      ],
+      "scores": [
+        0.7787295579910278,
+        0.7286537885665894,
+        0.7682681083679199,
+        0.6905162334442139,
+        0.6974514722824097
+      ],
+      "dense_scores": [
+        0.7787295579910278,
+        0.7286537885665894,
+        0.7682681083679199,
+        0.6905162334442139,
+        0.6974514722824097
+      ],
+      "rerank_scores": [
+        4.863656044006348,
+        4.529790878295898,
+        1.2198939323425293,
+        -1.8089313507080078,
+        -1.9737449884414673
+      ],
+      "rank_before": [
+        2,
+        10,
+        4,
+        18,
+        14
+      ],
+      "rank_after": [
+        1,
+        3,
+        9,
+        12,
+        13
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho25_vba_fdsolver",
+      "query": "VBA 中哪个对象控制频域高频求解器和积分方程求解器？",
+      "reference_english_query": "Which VBA object controls the frequency-domain high-frequency and integral-equation solvers?",
+      "language": "zh",
+      "category": "vba_solver",
+      "difficulty": "medium",
+      "expected_sources": [
+        "VBA_3D/special_vbasolver/special_vbasolver_fdsolver_object.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "VBA_3D/special_vbasolver/special_vbasolver_fdsolver_object.htm",
+          "relevance": 3,
+          "doc_family": "vba_fdsolver_object"
+        }
+      ],
+      "retrieval_query": "Which VBA object controls the frequency-domain high-frequency and integral-equation solvers?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0,
+      "latency_ms": 667.99,
+      "returned_sources": [
+        "VBA_3D/special_vbasolver/special_vbasolver_fdsolver_object.htm",
+        "VBA_3D/special_vbasolver/special_vbasolver_solver_object.htm",
+        "VBA_3D/special_vbasolver/special_vbasolver_asymptoticsolver_object.htm",
+        "VBA_3D/special_vbasolver/special_vbasolver_iesolver_object.htm",
+        "VBA_3D/special_vbasolver/special_vbasolver_solver_parameter_object.htm"
+      ],
+      "scores": [
+        0.8084414005279541,
+        0.7724899649620056,
+        0.7048032879829407,
+        0.7609812021255493,
+        0.7102042436599731
+      ],
+      "dense_scores": [
+        0.8084414005279541,
+        0.7724899649620056,
+        0.7048032879829407,
+        0.7609812021255493,
+        0.7102042436599731
+      ],
+      "rerank_scores": [
+        9.1309232711792,
+        8.49524211883545,
+        6.234757900238037,
+        5.658780097961426,
+        5.128501892089844
+      ],
+      "rank_before": [
+        1,
+        2,
+        11,
+        3,
+        8
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho26_vba_eigenmodesolver",
+      "query": "Which VBA methods configure and start the eigenmode solver?",
+      "reference_english_query": "Which VBA methods configure and start the eigenmode solver?",
+      "language": "en",
+      "category": "vba_solver",
+      "difficulty": "medium",
+      "expected_sources": [
+        "VBA_3D/special_vbasolver/special_vbasolver_eigenmodesolver_object.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "VBA_3D/special_vbasolver/special_vbasolver_eigenmodesolver_object.htm",
+          "relevance": 3,
+          "doc_family": "vba_eigenmodesolver_object"
+        }
+      ],
+      "retrieval_query": "Which VBA methods configure and start the eigenmode solver?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0,
+      "latency_ms": 597.72,
+      "returned_sources": [
+        "VBA_3D/special_vbasolver/special_vbasolver_eigenmodesolver_object.htm",
+        "VBA_3D/special_vbasolver/special_vbasolver_solver_object.htm",
+        "VBA_3D/special_vbastaticsolver/special_vbasolver_trackingsolver_object.htm",
+        "3D/special_overview/special_overview_esolver.htm",
+        "VBA_3D/special_vbasolver/special_vbasolver_fdsolver_object.htm"
+      ],
+      "scores": [
+        0.8433347940444946,
+        0.7720561623573303,
+        0.7626751661300659,
+        0.7424390316009521,
+        0.720877468585968
+      ],
+      "dense_scores": [
+        0.8433347940444946,
+        0.7720561623573303,
+        0.7626751661300659,
+        0.7424390316009521,
+        0.720877468585968
+      ],
+      "rerank_scores": [
+        6.997030258178711,
+        5.587879657745361,
+        5.3597211837768555,
+        5.355379104614258,
+        2.4000115394592285
+      ],
+      "rank_before": [
+        1,
+        2,
+        3,
+        7,
+        15
+      ],
+      "rank_after": [
+        1,
+        3,
+        4,
+        5,
+        16
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho27_vba_monitor",
+      "query": "Monitor object 如何定义 frequency field monitor 和 time monitor？",
+      "reference_english_query": "How does the Monitor VBA object define frequency-domain field monitors and time monitors?",
+      "language": "mixed",
+      "category": "vba_monitor",
+      "difficulty": "medium",
+      "expected_sources": [
+        "VBA_3D/special_vbamonitors/special_vbamonitors_monitor_object.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "VBA_3D/special_vbamonitors/special_vbamonitors_monitor_object.htm",
+          "relevance": 3,
+          "doc_family": "vba_monitor_object"
+        }
+      ],
+      "retrieval_query": "How does the Monitor VBA object define frequency-domain field monitors and time monitors?",
+      "hit": true,
+      "rank": 2,
+      "reciprocal_rank": 0.5,
+      "ndcg_at_5": 0.6309297535714575,
+      "latency_ms": 754.73,
+      "returned_sources": [
+        "VBA_3D/special_vbapostproc/special_vbapostproc_combineresults_object.htm",
+        "VBA_3D/special_vbamonitors/special_vbamonitors_monitor_object.htm",
+        "VBA_3D/special_vbamonitors/special_vbamonitors_timemonitor_object.htm",
+        "EXP_HF/examplesoverview/microstrip_phase_bridge.htm",
+        "3D/special_solvopt/special_solvopt_time_monitor.htm"
+      ],
+      "scores": [
+        0.742160975933075,
+        0.7839611172676086,
+        0.7950155735015869,
+        0.7466244697570801,
+        0.7393340468406677
+      ],
+      "dense_scores": [
+        0.742160975933075,
+        0.7839611172676086,
+        0.7950155735015869,
+        0.7466244697570801,
+        0.7393340468406677
+      ],
+      "rerank_scores": [
+        6.2072529792785645,
+        5.994533061981201,
+        5.161647796630859,
+        4.353105068206787,
+        4.177024841308594
+      ],
+      "rank_before": [
+        16,
+        6,
+        3,
+        12,
+        19
+      ],
+      "rank_after": [
+        1,
+        2,
+        6,
+        11,
+        12
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho28_vba_floquetport",
+      "query": "怎样用 VBA 配置无限周期单元的 Floquet ports 和 modes？",
+      "reference_english_query": "How are Floquet ports and modes configured for an infinite periodic unit cell with VBA?",
+      "language": "zh",
+      "category": "vba_port",
+      "difficulty": "hard",
+      "expected_sources": [
+        "VBA_3D/special_vbaports/floquetport_object.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "VBA_3D/special_vbaports/floquetport_object.htm",
+          "relevance": 3,
+          "doc_family": "floquet_port_api"
+        },
+        {
+          "source_path": "3D/special_solvopt/special_solvopt_floquet_special.htm",
+          "relevance": 1,
+          "doc_family": "floquet_boundary_settings"
+        }
+      ],
+      "retrieval_query": "How are Floquet ports and modes configured for an infinite periodic unit cell with VBA?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 0.9173194127129571,
+      "latency_ms": 725.2,
+      "returned_sources": [
+        "VBA_3D/special_vbaports/floquetport_object.htm",
+        "VBA_3D/special_vbasolver/special_vbasolver_fdsolver_object.htm",
+        "EXP_HF/examplesoverview/fss__simulation_of_resonator_array.htm",
+        "3D/special_overview/special_overview_frequency_domain_solver_overview.htm",
+        "3D/special_solvopt/special_solvopt_solver.htm"
+      ],
+      "scores": [
+        0.8357086181640625,
+        0.7552722096443176,
+        0.7414228320121765,
+        0.7357051372528076,
+        0.7172832489013672
+      ],
+      "dense_scores": [
+        0.8357086181640625,
+        0.7552722096443176,
+        0.7414228320121765,
+        0.7357051372528076,
+        0.7172832489013672
+      ],
+      "rerank_scores": [
+        8.38970947265625,
+        5.229585647583008,
+        4.466672420501709,
+        3.2480499744415283,
+        2.3436026573181152
+      ],
+      "rank_before": [
+        1,
+        8,
+        13,
+        16,
+        20
+      ],
+      "rank_after": [
+        1,
+        2,
+        4,
+        11,
+        15
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho29_vba_touchstone_export",
+      "query": "Which VBA command exports S-parameters to a TOUCHSTONE-compatible file?",
+      "reference_english_query": "Which VBA command exports S-parameters to a TOUCHSTONE-compatible file?",
+      "language": "en",
+      "category": "vba_data_exchange",
+      "difficulty": "easy",
+      "expected_sources": [
+        "VBA_3D/special_vbaimpexp/special_vbaimp_exp_touchstone.htm",
+        "3D/special_tools/special_tools_exporttouchstone.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "VBA_3D/special_vbaimpexp/special_vbaimp_exp_touchstone.htm",
+          "relevance": 3,
+          "doc_family": "touchstone_export"
+        },
+        {
+          "source_path": "3D/special_tools/special_tools_exporttouchstone.htm",
+          "relevance": 2,
+          "doc_family": "touchstone_export"
+        }
+      ],
+      "retrieval_query": "Which VBA command exports S-parameters to a TOUCHSTONE-compatible file?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 0.95583058934618,
+      "latency_ms": 540.85,
+      "returned_sources": [
+        "VBA_3D/special_vbaimpexp/special_vbaimp_exp_touchstone.htm",
+        "VBA_DES/special_vbacommands/projectobject.htm",
+        "3D/special_tools/special_tools_exporttouchstone.htm",
+        "Filter_Designer_3D/dialogs/s-parameter_export_dialog.htm",
+        "DES/userinterface/xyplot/exporttouchstone.htm"
+      ],
+      "scores": [
+        0.8618661165237427,
+        0.797998309135437,
+        0.7651965618133545,
+        0.7627296447753906,
+        0.7782805562019348
+      ],
+      "dense_scores": [
+        0.8618661165237427,
+        0.797998309135437,
+        0.7651965618133545,
+        0.7627296447753906,
+        0.7782805562019348
+      ],
+      "rerank_scores": [
+        8.485921859741211,
+        5.967556953430176,
+        5.370499134063721,
+        4.882968902587891,
+        4.830691814422607
+      ],
+      "rank_before": [
+        1,
+        2,
+        4,
+        5,
+        3
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        5,
+        7
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "ho30_filter_eigenmode_analysis",
+      "query": "Filter Designer 3D 里 eigenmode analysis 怎样预测 assembly 的 design parameters？",
+      "reference_english_query": "How does eigenmode analysis predict design parameters for an assembly in Filter Designer 3D?",
+      "language": "mixed",
+      "category": "filter_designer",
+      "difficulty": "medium",
+      "expected_sources": [
+        "Filter_Designer_3D/example/eigenmode_analysis.htm"
+      ],
+      "qrels": [
+        {
+          "source_path": "Filter_Designer_3D/example/eigenmode_analysis.htm",
+          "relevance": 3,
+          "doc_family": "filter_designer_eigenmode_analysis"
+        }
+      ],
+      "retrieval_query": "How does eigenmode analysis predict design parameters for an assembly in Filter Designer 3D?",
+      "hit": true,
+      "rank": 1,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0,
+      "latency_ms": 566.86,
+      "returned_sources": [
+        "Filter_Designer_3D/example/eigenmode_analysis.htm",
+        "Filter_Designer_3D/example/partial_rlc_analysis.htm",
+        "Filter_Designer_3D/windows/component_window.htm",
+        "Filter_Designer_3D/example/space_mapping.htm",
+        "Filter_Designer_3D/example/port_mode_analysis.htm"
+      ],
+      "scores": [
+        0.8692654967308044,
+        0.7530406713485718,
+        0.756385326385498,
+        0.7558505535125732,
+        0.7330965399742126
+      ],
+      "dense_scores": [
+        0.8692654967308044,
+        0.7530406713485718,
+        0.756385326385498,
+        0.7558505535125732,
+        0.7330965399742126
+      ],
+      "rerank_scores": [
+        8.53526782989502,
+        7.664548873901367,
+        7.39603853225708,
+        6.767199516296387,
+        6.149296760559082
+      ],
+      "rank_before": [
+        1,
+        6,
+        3,
+        4,
+        11
+      ],
+      "rank_after": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "rerank_applied": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    }
+  ]
+}
