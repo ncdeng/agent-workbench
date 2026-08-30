@@ -1,6 +1,6 @@
-# CST-Agent Workbench
+# Agent Workbench
 
-**CST-Agent** is a vertical engineering Agent runtime that operates CST Studio Suite 2025 — a real, stateful desktop CAE application — through a Windows COM bridge. It turns a natural-language antenna requirement into a traceable closed loop:
+**Agent Workbench** is a vertical engineering Agent runtime that operates CST Studio Suite 2025 — a real, stateful desktop CAE application — through a Windows COM bridge. It turns a natural-language engineering requirement into a traceable closed loop:
 
 `User request -> Planner -> Tool Runtime -> CST modeling/solver -> Result reading -> Diagnosis/optimization -> Reflection -> Trace/report evidence`
 

@@ -1,4 +1,4 @@
-# CST-Agent Architecture Story
+# Agent Workbench Architecture Story
 
 This document is the architecture story of the project: how the system works and why it is built this way, told as an Agent application rather than a collection of CST utilities.
 
