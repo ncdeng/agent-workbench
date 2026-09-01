@@ -243,7 +243,7 @@ def update_plan_after_turn(
         active_step.status = "completed"
         current.final_action = final_action
         current.status = "completed"
-    elif had_tool_calls and active_step.kind in {"analyze", "tool"}:
+    elif had_tool_calls:
         if active_step.completion_contract == "required_tools_all":
             completed = list(active_step.completed_tools)
             for name in tool_names or []:

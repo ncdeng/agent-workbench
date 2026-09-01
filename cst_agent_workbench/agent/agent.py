@@ -24,7 +24,11 @@ from cst_agent_workbench.agent.runtime import (
     sync_plan_to_memory,
     update_plan_after_turn,
 )
-from cst_agent_workbench.agent.planner import build_plan_context_text, summarize_plan
+from cst_agent_workbench.agent.planner import (
+    build_initial_plan as build_heuristic_plan,
+    build_plan_context_text,
+    summarize_plan,
+)
 from cst_agent_workbench.agent.runtime_state import (
     append_llm_turn,
     build_runtime_snapshot,
@@ -526,9 +530,13 @@ class CSTAgent(FastPathMixin, PatchFastExecutorMixin, PatchOptimizerMixin):
             return None
 
         mode = self._get_last_action_mode()
+        # 短路探测排在 LLM planner 之前，命中 fast path 的一轮改用启发式 plan，
+        # 整轮零模型调用，所以这句话是可验证为真的；
+        # test_chat_fast_path_short_circuit_never_calls_the_llm_planner 守住这个前提，
+        # 顺序一旦被改回去该测试会立刻失败。
         if mode == "fast_path":
             return (
-                "对，上一条没有调用大模型，走的是 fast path。"
+                "对，上一条没有调用大模型：规划用的是启发式计划，尺寸计算和建模脚本都由确定性 fast path 生成。"
                 "\n\n这类追问现在应该只做解释，不会重建模型，也不会再次求解。"
             )
         if mode == "llm_routed_fast_path":
@@ -538,7 +546,8 @@ class CSTAgent(FastPathMixin, PatchFastExecutorMixin, PatchOptimizerMixin):
             )
         if mode == "programmatic_optimizer":
             return (
-                "上一条没有调用通用大模型，走的是程序化优化后端。"
+                "上一条的调参与求解走的是程序化优化后端，不是通用大模型在决定参数；"
+                "但任务规划环节仍可能调用了大模型。"
                 "\n\n这类追问现在应该只做解释，不会重建模型，也不会再次求解。"
             )
         if mode == "llm_path":
@@ -1164,9 +1173,26 @@ class CSTAgent(FastPathMixin, PatchFastExecutorMixin, PatchOptimizerMixin):
 
         user_entry = self._build_user_entry(user_message, images)
         pending_history: List[Dict] = [user_entry]
-        if not skip_plan:
-            self._ensure_active_plan_for_message(user_message)
         self._update_patch_feed_strategy_from_message(user_message)
+
+        # 短路探测必须在 LLM planner 之前：命中 fast path 的一轮不需要规划器，
+        # 旧顺序先跑一次 planner LLM + 整套 RAG 检索再把结果丢掉，既拖慢确定性
+        # 快路径，也让「fast path 不过大模型」的说法不成立。
+        # 但短路轮仍要有 plan 供 Trace 投影，所以先落一个纯启发式 plan（无模型
+        # 调用、无检索）。这里不写 active_plan_user_message，因此本轮若没有短路，
+        # 下面的 _ensure_active_plan_for_message 仍会重建成 LLM plan；只有当既有
+        # plan 已经对应同一条消息时才保留它，避免重复提问把 LLM plan 降级掉。
+        session_metadata = getattr(self.session, "metadata", None) or {}
+        planned_message = str(session_metadata.get("active_plan_user_message") or "").strip()
+        if not skip_plan and (
+            self.session.active_plan is None or planned_message != str(user_message or "").strip()
+        ):
+            self.session.active_plan = build_heuristic_plan(
+                user_message=user_message,
+                session_memory=getattr(self.session, "memory", None),
+                optimization_state=self.opt_state,
+                optimization_mode=self._optimization_mode,
+            )
 
         short_circuit_response = self._try_short_circuit_response(
             user_entry=user_entry,
@@ -1177,6 +1203,9 @@ class CSTAgent(FastPathMixin, PatchFastExecutorMixin, PatchOptimizerMixin):
         )
         if short_circuit_response is not None:
             return short_circuit_response
+
+        if not skip_plan:
+            self._ensure_active_plan_for_message(user_message)
 
         offline_notice = self._build_offline_notice()
         llm_unavailable_response = self._try_llm_unavailable_response(

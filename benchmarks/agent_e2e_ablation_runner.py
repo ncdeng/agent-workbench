@@ -149,6 +149,20 @@ def _load_dataset(path: Path) -> tuple[dict[str, Any], str]:
     return data, hashlib.sha256(raw).hexdigest()
 
 
+def _portable_path(path: Path) -> str:
+    """Record repository-relative paths so reports stay machine-independent.
+
+    Absolute paths embed the developer's Windows user name and directory layout,
+    which then ship inside published evidence artifacts. Anything outside the
+    repository is still recorded verbatim because it carries no portable form.
+    """
+    resolved = Path(path).resolve()
+    try:
+        return resolved.relative_to(ROOT).as_posix()
+    except ValueError:
+        return str(resolved)
+
+
 def _verify_dataset_manifest(
     *,
     dataset_path: Path,
@@ -182,7 +196,7 @@ def _verify_dataset_manifest(
             f"{dataset_path.resolve()}: {', '.join(mismatches)}"
         )
     return {
-        "path": str(manifest_path.resolve()),
+        "path": _portable_path(manifest_path),
         "sha256": hashlib.sha256(manifest_path.read_bytes()).hexdigest(),
         "verified": True,
         "case_ids": list(expected["case_ids"]),
@@ -1429,7 +1443,7 @@ def run_ablation(
             "dataset_frozen_at": dataset.get("frozen_at"),
             "annotation_policy": dataset.get("annotation_policy"),
             "generation_provenance": dataset.get("generation_provenance"),
-            "dataset_path": str(dataset_path.resolve()),
+            "dataset_path": _portable_path(dataset_path),
             "dataset_sha256": dataset_sha,
             "manifest_path": manifest_identity["path"],
             "manifest_sha256": manifest_identity["sha256"],

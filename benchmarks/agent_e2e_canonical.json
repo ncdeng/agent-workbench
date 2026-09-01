@@ -46,7 +46,10 @@
       "run_id": "b26b5e9f2bac",
       "provider": "deterministic_proxy",
       "evaluation_scope": "full_frozen_evaluation",
-      "claim_scope": "Production-path mechanism and ablation regression only; local runner release_eligible is not sealed release eligibility."
+      "status": "historical_pre_approval",
+      "superseded_by": "post_approval_v3_deterministic_full",
+      "reproducibility_note": "Does not reproduce on current code and must not be cited as current evidence. After ADR-011 put raw VBA behind parameter-bound approval, the eight raw-VBA recovery cases in v1 can no longer execute, so rerunning this dataset now yields full 32/40 with recovery_rate 0.0 and three failed thresholds. Retained as a historical artifact of the pre-approval runtime; cite post_approval_v3_deterministic_full instead.",
+      "claim_scope": "Historical pre-approval mechanism regression only; superseded, not current evidence."
     },
     "terra_v1_representative_repeat3": {
       "artifact_type": "agent_e2e_report",
@@ -83,17 +86,21 @@
     "post_approval_v3_deterministic_full": {
       "artifact_type": "agent_e2e_report",
       "dataset_key": "frozen_dev_v3",
-      "path": "D:/cst_agent_rag_data/agent_eval/post_approval_v3/deterministic_full_20260812T191500/report.json",
-      "sha256": "4d152118460d08d2b9400efba621c040ddc623fcad827ae3da07cbd96f2c3d08",
-      "run_id": "5085afa52cce",
+      "path": "benchmarks/reports/agent_e2e_frozen_dev_v3_deterministic_ablation_v1.json",
+      "sha256": "dfd777ef698d89568fbbfdc208aaee64740a998db5411aa81f5fff6c22c75667",
+      "run_id": "919da31e557f",
       "provider": "deterministic_proxy",
       "evaluation_scope": "full_frozen_evaluation",
-      "claim_scope": "Post-approval production-path mechanism regression; not model-quality, blinded, or sealed evidence."
+      "status": "current_deterministic_evidence",
+      "code_revision": "2d1457ce3ee8b9e6befbf22e7d2ef61dd7518f31",
+      "headline_results": "full 40/40, no_recovery 32/40, no_planner 0/40, no_memory 40/40, no_context 40/40, no_tool_use_memory 40/40; 16/16 thresholds passed.",
+      "reproducibility_note": "Regenerated in-repo on the recorded code_revision, so a fresh clone can rerun the documented command and recompute these bytes. no_planner 0/40 is dominated by the context-budget guard refusing to call the model once plan-scoped tool filtering is removed; it demonstrates that plan-scoped tool catalogs are required for prompt budget, not that planning raises model quality.",
+      "claim_scope": "Post-approval production-path mechanism regression with a deterministic scripted provider; not model-quality, blinded, or sealed evidence."
     },
     "raw_vba_approval_control_plane": {
       "artifact_type": "external_approval_e2e_report",
       "dataset_key": null,
-      "path": "D:/cst_agent_rag_data/agent_eval/raw_vba_approval_e2e/final_20260812T203000/report.json",
+      "path": "benchmarks/reports/raw_vba_approval_control_plane_e2e_v1.json",
       "sha256": "1cb0a03bf5ed991fc996b57ebe15bb0c75f1e28acbdb246632c09c80a5adb52f",
       "provider": "scripted-deterministic-v1",
       "evaluation_scope": "chat_to_web_approval_control_plane",

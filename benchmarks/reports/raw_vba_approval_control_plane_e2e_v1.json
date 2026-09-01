@@ -1,0 +1,296 @@
+{
+  "schema_version": "raw-vba-approval-e2e-report-v1",
+  "generated_at": "2026-08-12T10:51:16+00:00",
+  "scope": "Agent chat creates the approval request; the Web approval endpoint replays server-owned exact arguments. This does not resume the original model turn.",
+  "environment": {
+    "provider": "scripted-deterministic-v1",
+    "cst_boundary": "fake-controller",
+    "project_path": "D:\\cst_agent_rag_data\\agent_eval\\raw_vba_approval_e2e\\fake_project.cst"
+  },
+  "bindings": {
+    "runner_path": "benchmarks/raw_vba_approval_e2e.py",
+    "runner_sha256": "c170253909f2a171fe757c91bbaac14d7a9f7a5d203d64bc8375eb5469213cb7",
+    "tool_name": "execute_vba_script",
+    "normalized_arguments_sha256": "48fa6ddff00c5e045ef7f62eea1161407fa4e53bd3ec1e61e418b93298bf2808"
+  },
+  "summary": {
+    "checks_passed": 9,
+    "checks_total": 9,
+    "all_passed": true
+  },
+  "checks": [
+    {
+      "name": "chat_route_returned",
+      "passed": true,
+      "evidence": {
+        "ok": true,
+        "reply": "已按要求完成。上下文：执行一段无副作用 VBA 连通性脚本；高风险操作必须先请求审批。。工具依据：{\"success\": false, \"message\": \"工具 execute_vba_script 需要人工批准；批准只绑定当前规范化参数且仅可使用一次\", \"display_summary\": \"工具 execute_vba_script 需要人工批准；批准只绑定当前规范化参数且仅可使用一次\", \"tool_event_id\": \"e2e-call-1\", \"full_payload_ref\": \"session.artifacts.tool_results.e2e-call-1\", \"metadata\": {}, \"error_type\": \"approval_required\", \"approval_request\": {\"request_id\": \"2b49262c89e74001\", \"tool_name\": \"execute_vba_script\", \"arguments_sha256\": \"48fa6ddff00c5e045ef7f62eea1161407fa4e53bd3ec1e61e418b93298bf2808\", \"created_at\": \"2026-08-12T10:51:16.344417+00:00\", \"expires_at\": \"2026-08-12T11:01:16.344417+00:00\", \"status\": \"pending\", \"preview\": \"Sub Main()\\nEnd Sub\"}}",
+        "error": "",
+        "hadToolFailure": false,
+        "mode": "llm_path",
+        "toolEvents": 1
+      }
+    },
+    {
+      "name": "chat_created_parameter_bound_request",
+      "passed": true,
+      "evidence": {
+        "request_id": "2b49262c89e74001",
+        "tool_name": "execute_vba_script",
+        "arguments_sha256": "48fa6ddff00c5e045ef7f62eea1161407fa4e53bd3ec1e61e418b93298bf2808",
+        "created_at": "2026-08-12T10:51:16.344417+00:00",
+        "expires_at": "2026-08-12T11:01:16.344417+00:00",
+        "status": "pending",
+        "preview": "Sub Main()\nEnd Sub"
+      }
+    },
+    {
+      "name": "unapproved_call_not_dispatched",
+      "passed": true,
+      "evidence": {
+        "calls_before_approval": 0
+      }
+    },
+    {
+      "name": "pending_projection_hides_arguments",
+      "passed": true,
+      "evidence": {
+        "request_id": "2b49262c89e74001",
+        "tool_name": "execute_vba_script",
+        "arguments_sha256": "48fa6ddff00c5e045ef7f62eea1161407fa4e53bd3ec1e61e418b93298bf2808",
+        "created_at": "2026-08-12T10:51:16.344417+00:00",
+        "expires_at": "2026-08-12T11:01:16.344417+00:00",
+        "status": "pending",
+        "preview": "Sub Main()\nEnd Sub"
+      }
+    },
+    {
+      "name": "approval_executed_server_owned_call",
+      "passed": true,
+      "evidence": {
+        "approved": true,
+        "executed": true,
+        "request": {
+          "request_id": "2b49262c89e74001",
+          "tool_name": "execute_vba_script",
+          "arguments_sha256": "48fa6ddff00c5e045ef7f62eea1161407fa4e53bd3ec1e61e418b93298bf2808",
+          "created_at": "2026-08-12T10:51:16.344417+00:00",
+          "expires_at": "2026-08-12T11:01:16.344417+00:00",
+          "status": "consumed",
+          "preview": "Sub Main()\nEnd Sub"
+        },
+        "grant": {
+          "approval_id": "2c9e4468e774466e",
+          "request_id": "2b49262c89e74001",
+          "tool_name": "execute_vba_script",
+          "arguments_sha256": "48fa6ddff00c5e045ef7f62eea1161407fa4e53bd3ec1e61e418b93298bf2808",
+          "issued_at": "2026-08-12T10:51:16.360622+00:00",
+          "expires_at": "2026-08-12T10:53:16.360622+00:00",
+          "consumed_at": "2026-08-12T10:51:16.360723+00:00",
+          "consumed": true
+        },
+        "result": {
+          "success": true,
+          "message": "fake VBA executed",
+          "display_summary": "fake VBA executed",
+          "tool_event_id": "approval-2b49262c89e74001",
+          "full_payload_ref": "session.artifacts.tool_results.approval-2b49262c89e74001",
+          "metadata": {
+            "project_file": "D:\\cst_agent_rag_data\\agent_eval\\raw_vba_approval_e2e\\fake_project.cst"
+          },
+          "project_file": "D:\\cst_agent_rag_data\\agent_eval\\raw_vba_approval_e2e\\fake_project.cst"
+        }
+      }
+    },
+    {
+      "name": "exact_normalized_arguments_dispatched_once",
+      "passed": true,
+      "evidence": [
+        {
+          "vba_code": "Sub Main()\nEnd Sub",
+          "label": "cst_agent",
+          "timeout": 60
+        }
+      ]
+    },
+    {
+      "name": "grant_consumed_before_handler_return",
+      "passed": true,
+      "evidence": {
+        "approval_id": "2c9e4468e774466e",
+        "request_id": "2b49262c89e74001",
+        "tool_name": "execute_vba_script",
+        "arguments_sha256": "48fa6ddff00c5e045ef7f62eea1161407fa4e53bd3ec1e61e418b93298bf2808",
+        "issued_at": "2026-08-12T10:51:16.360622+00:00",
+        "expires_at": "2026-08-12T10:53:16.360622+00:00",
+        "consumed_at": "2026-08-12T10:51:16.360723+00:00",
+        "consumed": true
+      }
+    },
+    {
+      "name": "same_arguments_require_new_approval",
+      "passed": true,
+      "evidence": {
+        "success": false,
+        "message": "工具 execute_vba_script 需要人工批准；批准只绑定当前规范化参数且仅可使用一次",
+        "display_summary": "工具 execute_vba_script 需要人工批准；批准只绑定当前规范化参数且仅可使用一次",
+        "tool_event_id": "tool_3",
+        "full_payload_ref": "session.artifacts.tool_results.tool_3",
+        "metadata": {},
+        "error_type": "approval_required",
+        "approval_request": {
+          "request_id": "4963b55cf7c44104",
+          "tool_name": "execute_vba_script",
+          "arguments_sha256": "48fa6ddff00c5e045ef7f62eea1161407fa4e53bd3ec1e61e418b93298bf2808",
+          "created_at": "2026-08-12T10:51:16.362484+00:00",
+          "expires_at": "2026-08-12T11:01:16.362484+00:00",
+          "status": "pending",
+          "preview": "Sub Main()\nEnd Sub"
+        }
+      }
+    },
+    {
+      "name": "changed_arguments_get_distinct_binding",
+      "passed": true,
+      "evidence": {
+        "request_id": "a7a0919fde77421a",
+        "tool_name": "execute_vba_script",
+        "arguments_sha256": "4f85d51662389cea32185451ad52fb0b481848e891685d02625a4c3d881d9fe9",
+        "created_at": "2026-08-12T10:51:16.364326+00:00",
+        "expires_at": "2026-08-12T11:01:16.364326+00:00",
+        "status": "pending",
+        "preview": "Sub Main()\n' changed\nEnd Sub"
+      }
+    }
+  ],
+  "raw": {
+    "chat_response": {
+      "ok": true,
+      "reply": "已按要求完成。上下文：执行一段无副作用 VBA 连通性脚本；高风险操作必须先请求审批。。工具依据：{\"success\": false, \"message\": \"工具 execute_vba_script 需要人工批准；批准只绑定当前规范化参数且仅可使用一次\", \"display_summary\": \"工具 execute_vba_script 需要人工批准；批准只绑定当前规范化参数且仅可使用一次\", \"tool_event_id\": \"e2e-call-1\", \"full_payload_ref\": \"session.artifacts.tool_results.e2e-call-1\", \"metadata\": {}, \"error_type\": \"approval_required\", \"approval_request\": {\"request_id\": \"2b49262c89e74001\", \"tool_name\": \"execute_vba_script\", \"arguments_sha256\": \"48fa6ddff00c5e045ef7f62eea1161407fa4e53bd3ec1e61e418b93298bf2808\", \"created_at\": \"2026-08-12T10:51:16.344417+00:00\", \"expires_at\": \"2026-08-12T11:01:16.344417+00:00\", \"status\": \"pending\", \"preview\": \"Sub Main()\\nEnd Sub\"}}",
+      "error": "",
+      "hadToolFailure": false,
+      "mode": "llm_path",
+      "toolEvents": 1
+    },
+    "first_tool_event": {
+      "phase": "0_通用脚本",
+      "tool_name": "execute_vba_script",
+      "arguments": {
+        "vba_code": "Sub Main()\nEnd Sub",
+        "description": "raw VBA approval E2E"
+      },
+      "success": false,
+      "message": "工具 execute_vba_script 需要人工批准；批准只绑定当前规范化参数且仅可使用一次",
+      "description": "工具 execute_vba_script 需要人工批准；批准只绑定当前规范化参数且仅可使用一次",
+      "approval_request": {
+        "request_id": "2b49262c89e74001",
+        "tool_name": "execute_vba_script",
+        "arguments_sha256": "48fa6ddff00c5e045ef7f62eea1161407fa4e53bd3ec1e61e418b93298bf2808",
+        "created_at": "2026-08-12T10:51:16.344417+00:00",
+        "expires_at": "2026-08-12T11:01:16.344417+00:00",
+        "status": "pending",
+        "preview": "Sub Main()\nEnd Sub"
+      },
+      "error_type": "approval_required",
+      "recovery_result": {
+        "attempted": false,
+        "reason": "approval_required"
+      }
+    },
+    "pending_response": {
+      "requests": [
+        {
+          "request_id": "2b49262c89e74001",
+          "tool_name": "execute_vba_script",
+          "arguments_sha256": "48fa6ddff00c5e045ef7f62eea1161407fa4e53bd3ec1e61e418b93298bf2808",
+          "created_at": "2026-08-12T10:51:16.344417+00:00",
+          "expires_at": "2026-08-12T11:01:16.344417+00:00",
+          "status": "pending",
+          "preview": "Sub Main()\nEnd Sub"
+        }
+      ]
+    },
+    "approve_response": {
+      "approved": true,
+      "executed": true,
+      "request": {
+        "request_id": "2b49262c89e74001",
+        "tool_name": "execute_vba_script",
+        "arguments_sha256": "48fa6ddff00c5e045ef7f62eea1161407fa4e53bd3ec1e61e418b93298bf2808",
+        "created_at": "2026-08-12T10:51:16.344417+00:00",
+        "expires_at": "2026-08-12T11:01:16.344417+00:00",
+        "status": "consumed",
+        "preview": "Sub Main()\nEnd Sub"
+      },
+      "grant": {
+        "approval_id": "2c9e4468e774466e",
+        "request_id": "2b49262c89e74001",
+        "tool_name": "execute_vba_script",
+        "arguments_sha256": "48fa6ddff00c5e045ef7f62eea1161407fa4e53bd3ec1e61e418b93298bf2808",
+        "issued_at": "2026-08-12T10:51:16.360622+00:00",
+        "expires_at": "2026-08-12T10:53:16.360622+00:00",
+        "consumed_at": "2026-08-12T10:51:16.360723+00:00",
+        "consumed": true
+      },
+      "result": {
+        "success": true,
+        "message": "fake VBA executed",
+        "display_summary": "fake VBA executed",
+        "tool_event_id": "approval-2b49262c89e74001",
+        "full_payload_ref": "session.artifacts.tool_results.approval-2b49262c89e74001",
+        "metadata": {
+          "project_file": "D:\\cst_agent_rag_data\\agent_eval\\raw_vba_approval_e2e\\fake_project.cst"
+        },
+        "project_file": "D:\\cst_agent_rag_data\\agent_eval\\raw_vba_approval_e2e\\fake_project.cst"
+      }
+    },
+    "controller_calls": [
+      {
+        "vba_code": "Sub Main()\nEnd Sub",
+        "label": "cst_agent",
+        "timeout": 60
+      }
+    ],
+    "same_argument_replay": {
+      "success": false,
+      "message": "工具 execute_vba_script 需要人工批准；批准只绑定当前规范化参数且仅可使用一次",
+      "display_summary": "工具 execute_vba_script 需要人工批准；批准只绑定当前规范化参数且仅可使用一次",
+      "tool_event_id": "tool_3",
+      "full_payload_ref": "session.artifacts.tool_results.tool_3",
+      "metadata": {},
+      "error_type": "approval_required",
+      "approval_request": {
+        "request_id": "4963b55cf7c44104",
+        "tool_name": "execute_vba_script",
+        "arguments_sha256": "48fa6ddff00c5e045ef7f62eea1161407fa4e53bd3ec1e61e418b93298bf2808",
+        "created_at": "2026-08-12T10:51:16.362484+00:00",
+        "expires_at": "2026-08-12T11:01:16.362484+00:00",
+        "status": "pending",
+        "preview": "Sub Main()\nEnd Sub"
+      }
+    },
+    "changed_argument_replay": {
+      "success": false,
+      "message": "工具 execute_vba_script 需要人工批准；批准只绑定当前规范化参数且仅可使用一次",
+      "display_summary": "工具 execute_vba_script 需要人工批准；批准只绑定当前规范化参数且仅可使用一次",
+      "tool_event_id": "tool_4",
+      "full_payload_ref": "session.artifacts.tool_results.tool_4",
+      "metadata": {},
+      "error_type": "approval_required",
+      "approval_request": {
+        "request_id": "a7a0919fde77421a",
+        "tool_name": "execute_vba_script",
+        "arguments_sha256": "4f85d51662389cea32185451ad52fb0b481848e891685d02625a4c3d881d9fe9",
+        "created_at": "2026-08-12T10:51:16.364326+00:00",
+        "expires_at": "2026-08-12T11:01:16.364326+00:00",
+        "status": "pending",
+        "preview": "Sub Main()\n' changed\nEnd Sub"
+      }
+    }
+  },
+  "limitations": [
+    "The provider and CST controller are deterministic test doubles.",
+    "Approval execution is a Web control-plane replay, not suspended-turn resume.",
+    "This evaluates safety/control-flow mechanics, not model reasoning quality."
+  ]
+}

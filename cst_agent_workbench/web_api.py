@@ -59,6 +59,11 @@ def _serialize_chat_history(history: list[dict]) -> list[dict]:
 
 
 def _serialize_tool_event(event: dict[str, Any]) -> dict[str, Any]:
+    # Idempotent: tolerate both raw tool events (snake_case source keys) and
+    # already-serialized events (camelCase). The SSE path stashes serialized
+    # events onto the assistant message, and /api/chat/history serializes again;
+    # reading both key styles keeps approvalRequest/errorType alive across the
+    # history round-trip so the approval card survives a page refresh.
     message = event.get("message", "")
     description = event.get("description", "") or message
     payload = {
@@ -67,10 +72,12 @@ def _serialize_tool_event(event: dict[str, Any]) -> dict[str, Any]:
         "success": coerce_success(event.get("success", False)),
         "description": description,
     }
-    if event.get("error_type"):
-        payload["errorType"] = event["error_type"]
-    if event.get("approval_request"):
-        payload["approvalRequest"] = event["approval_request"]
+    error_type = event.get("error_type") or event.get("errorType")
+    if error_type:
+        payload["errorType"] = error_type
+    approval_request = event.get("approval_request") or event.get("approvalRequest")
+    if approval_request:
+        payload["approvalRequest"] = approval_request
     return payload
 
 
@@ -450,6 +457,7 @@ def create_app(dry_run: bool = False):
         run_exclusive=_run_exclusive,
         stream_produced_frames=_stream_produced_frames,
         result_success=_result_success,
+        record_direct_event=_record_direct_event,
     )
     register_state_routes(
         app,

@@ -25,6 +25,7 @@ def register_optimization_routes(
     run_exclusive: Callable[[asyncio.Lock, Callable[[], Any]], Any],
     stream_produced_frames: Callable[..., Any],
     result_success: Callable[[dict[str, Any]], bool],
+    record_direct_event: Callable[..., None],
 ) -> None:
     stop_continuous = {"stop": False}
 
@@ -163,6 +164,15 @@ def register_optimization_routes(
                 if result_success(result):
                     for name, value in param_snapshot.items():
                         register_parameter(name, str(value))
+                # 回滚会真实改写工程参数，必须和其它直接操作端点一样留下可审计事件，
+                # 否则 Trace 上会出现一次没有来源的参数变化。
+                record_direct_event(
+                    state.session,
+                    phase="6_优化调参",
+                    tool_name="rollback_parameters_direct",
+                    result=result,
+                    description=f"回滚到第 {target_round} 轮参数（{len(param_snapshot)} 个）",
+                )
                 return {"ok": result_success(result), "message": result.get("message", ""), "round": target_round}
             except Exception as exc:
                 return {"ok": False, "error": str(exc)}

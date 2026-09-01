@@ -1,6 +1,7 @@
 import json
 from types import SimpleNamespace
 
+from cst_agent_workbench.agent import agent as agent_module
 from cst_agent_workbench.agent.agent import CSTAgent
 from cst_agent_workbench.agent.memory import StructuredMemory
 from cst_agent_workbench.agent.session import AgentSession
@@ -1005,6 +1006,65 @@ def test_chat_fast_path_short_circuit_still_records_trace_and_plan(monkeypatch):
     assert trace["decision_summary"]["final_action"] == "answer_only"
     assert trace["decision_summary"]["plan_summary"]["intent_kind"] == "chat_task"
     assert agent.last_execution_mode == "fast_path"
+
+
+def _build_short_circuit_agent():
+    agent = CSTAgent.__new__(CSTAgent)
+    agent.session = _FakeSession()
+    agent.cst = _FakeCST()
+    agent.history = []
+    agent.last_chat_status = {"ok": True, "error": "", "had_tool_failure": False, "mode": "fast_path"}
+    agent.opt_state = _FakeOptState()
+    agent.last_tool_message = ""
+    agent.last_vba = ""
+    agent.last_results = {}
+    agent.last_farfield_results = {}
+    agent.tool_events = []
+    agent._optimization_mode = False
+    agent._patch_feed_strategy = "microstrip"
+    agent._fast_path_counter = 0
+    agent.trace_enabled = True
+    agent.trace_retention_limit = 10
+    agent.trace_history = []
+    agent.current_trace = None
+    agent.current_run_id = None
+    agent.selected_trace_run_id = None
+    agent._active_tool_call_id = None
+    agent.token_stats = {"prompt": 0, "completion": 0, "calls": 0}
+    agent.tools = []
+    agent.client = object()
+    agent.model = "demo-model"
+    agent.last_execution_mode = ""
+    agent.last_patch_request = None
+    return agent
+
+
+def test_chat_fast_path_short_circuit_never_calls_the_llm_planner(monkeypatch):
+    """A fast-path turn must cost zero model calls.
+
+    The short-circuit probe runs before the LLM planner and the turn falls back to
+    a heuristic plan, so the agent's own "no model was called" answer stays true.
+    Without this guard the planner would silently run and be thrown away.
+    """
+    agent = _build_short_circuit_agent()
+
+    planner_calls = []
+
+    def _fail_if_planner_runs(**kwargs):
+        planner_calls.append(kwargs)
+        raise AssertionError("fast path must not invoke the LLM planner")
+
+    monkeypatch.setattr(agent_module, "build_initial_plan_with_usage", _fail_if_planner_runs)
+    monkeypatch.setattr(CSTAgent, "_build_meta_llm_query_response", lambda self, message: None)
+    monkeypatch.setattr(CSTAgent, "_run_rectangular_patch_fast_path", lambda self, message: "fast path 已完成建模")
+
+    result = agent.chat("帮我创建一个中心频率为7GHz的矩形微带贴片天线")
+
+    assert result == "fast path 已完成建模"
+    assert planner_calls == []
+    assert agent.token_stats["calls"] == 0
+    # The Trace projection still needs plan state even though no planner ran.
+    assert agent.trace_history[-1]["decision_summary"]["plan_summary"]["intent_kind"] == "chat_task"
 
 
 def test_get_selected_trace_returns_latest_when_selected_missing():

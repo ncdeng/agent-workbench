@@ -297,12 +297,15 @@ def _turn_decision_summary(turn: Dict[str, Any]) -> Dict[str, Any]:
     response = turn.get("response") or {}
     tool_calls = turn.get("tool_calls") or []
     successful = sum(1 for call in tool_calls if call.get("success") is True)
-    failed = sum(1 for call in tool_calls if call.get("success") is False)
+    failed = sum(1 for call in tool_calls if call.get("success") is False and not call.get("approval_pending"))
+    awaiting_approval = sum(1 for call in tool_calls if call.get("approval_pending"))
     action = _assistant_action(response.get("assistant_content_preview", ""), response.get("tool_calls_raw") or [])
     if failed > 0:
         decision_result = "tool_failed"
     elif successful > 0:
         decision_result = "tool_succeeded"
+    elif awaiting_approval > 0:
+        decision_result = "awaiting_approval"
     elif action == "final_answer":
         decision_result = "answered"
     elif action == "empty":
@@ -318,6 +321,7 @@ def _turn_decision_summary(turn: Dict[str, Any]) -> Dict[str, Any]:
         "tool_call_count": len(tool_calls) or len(response.get("tool_calls_raw") or []),
         "successful_tool_call_count": successful,
         "failed_tool_call_count": failed,
+        "approval_pending_tool_call_count": awaiting_approval,
         "phase_summary": _phase_summary(tool_calls),
         "observation_summary": _observation_summary(tool_calls),
         "decision_result": decision_result,
@@ -349,7 +353,8 @@ def _run_decision_summary(trace: Dict[str, Any]) -> Dict[str, Any]:
     turns = trace.get("turns", [])
     tool_calls = [call for turn in turns for call in (turn.get("tool_calls") or [])]
     successful = sum(1 for call in tool_calls if call.get("success") is True)
-    failed = sum(1 for call in tool_calls if call.get("success") is False)
+    failed = sum(1 for call in tool_calls if call.get("success") is False and not call.get("approval_pending"))
+    awaiting_approval = sum(1 for call in tool_calls if call.get("approval_pending"))
     key_tools = _dedupe_keep_order([call.get("tool_name", "") for call in tool_calls])[:6]
     phases = _dedupe_keep_order([call.get("phase", "") for call in tool_calls])
     status = str(trace.get("status", ""))
@@ -364,6 +369,8 @@ def _run_decision_summary(trace: Dict[str, Any]) -> Dict[str, Any]:
         run_outcome = status or "unknown"
     if failed > 0:
         final_action = "tool_failure"
+    elif awaiting_approval > 0:
+        final_action = "awaiting_approval"
     elif successful > 0 and final_answer_preview:
         final_action = "tool_then_answer"
     elif successful > 0:
@@ -383,6 +390,7 @@ def _run_decision_summary(trace: Dict[str, Any]) -> Dict[str, Any]:
         "round_count": round_count,
         "successful_tool_call_count": successful,
         "failed_tool_call_count": failed,
+        "approval_pending_tool_call_count": awaiting_approval,
         "dominant_phases": phases[:4],
         "key_tools": key_tools,
         "final_answer_preview": final_answer_preview,
@@ -710,6 +718,7 @@ def finish_tool_call_trace(
 
     sanitized_result = _sanitize_for_trace(result)
     normalized_success = coerce_success(success)
+    result_error_type = str(result.get("error_type") or "") if isinstance(result, dict) else ""
     tool_trace.update(
         {
             "finished_at": finished_at,
@@ -720,6 +729,10 @@ def finish_tool_call_trace(
             "result_preview": _content_preview(sanitized_result),
             "result_full": sanitized_result,
             "error": _truncate_text(error, 1000) if error else "",
+            "error_type": result_error_type,
+            # ADR-013：审批挂起是被暂缓的副作用，既不是工具失败也不是步骤完成，
+            # 因此不能进入失败统计，否则 Trace 与 Dashboard 会把等待审批显示成故障。
+            "approval_pending": result_error_type == "approval_required",
         }
     )
     parent_turn = tool_trace.get("_parent_turn")

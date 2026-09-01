@@ -35,11 +35,14 @@ def register_chat_routes(
     stream_produced_frames: Callable[..., Any],
 ) -> None:
     def _run_turn(agent: Any, message: str, images: list[str] | None) -> str:
-        """生产 chat 路径：直接调 agent.chat，内部走 planner → tool loop → reflection 闭环。
+        """生产 chat 路径：直接调 agent.chat，内部走 planner → tool loop。
 
         agent.chat 内部依次：build_initial_plan_with_usage（planner）→
-        run_agent_turn（tool loop + plan 更新 + replan 评估）→
-        可选的 reflect_on_round（优化轮反思）。期间往 session.tool_events 追加事件。
+        run_agent_turn（tool loop + plan 更新 + replan 评估）。
+        期间往 session.tool_events 追加事件。
+
+        注意：普通对话轮不触发 reflection。反思只绑定在程序化优化轮
+        （optimization/optimizer.py 调 reflect_on_round），chat 路径没有调用点。
         """
         return agent.chat(message, images=images)
 

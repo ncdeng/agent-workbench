@@ -67,3 +67,6 @@ ocr_power_save.ps1
 # Local agent CLI session data
 .zcode/
 .mimosa/
+
+# AI coding tool cost/telemetry exports (not product artifacts)
+tokscale-export-*.json
