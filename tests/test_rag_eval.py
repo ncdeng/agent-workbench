@@ -727,6 +727,24 @@ class TestEmbeddingRetrievalWithMockClient:
         _rewrite_query("cached-query", client, "gpt-x", n=1)
         assert client.chat.completions.create.call_count == 1
 
+    def test_query_rewrite_cache_is_bounded(self):
+        """rewrite 缓存按 FIFO 淘汰，长会话不会无界增长。"""
+        from unittest.mock import MagicMock
+        import cst_agent_workbench.rag.knowledge_base as kb_module
+        kb_module._query_rewrite_cache.clear()
+        client = MagicMock()
+        resp = MagicMock()
+        resp.choices = [MagicMock(message=MagicMock(content='["x"]'))]
+        client.chat.completions.create.return_value = resp
+        limit = kb_module._QUERY_REWRITE_CACHE_LIMIT
+        for index in range(limit + 25):
+            kb_module._rewrite_query(f"query-{index}", client, "gpt-x", n=1)
+        assert len(kb_module._query_rewrite_cache) == limit
+        # 最老的条目被淘汰，最新的仍在
+        assert ("query-0", "gpt-x", 1) not in kb_module._query_rewrite_cache
+        assert (f"query-{limit + 24}", "gpt-x", 1) in kb_module._query_rewrite_cache
+        kb_module._query_rewrite_cache.clear()
+
     def test_confidence_weighting_promotes_high_confidence(self):
         """两个相似度相近的条目，高 confidence 应排在前面。"""
         import numpy as np

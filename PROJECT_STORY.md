@@ -2,11 +2,11 @@
 
 This document is the architecture story of the project: how the system works and why it is built this way, told as an Agent application rather than a collection of CST utilities.
 
-## 1-Minute Pitch
+## Overview
 
-我做的是一个面向 CST Studio Suite 的垂直工程 Agent，核心目标不是聊天，而是打通电磁仿真的闭环：用户用自然语言提出天线设计需求，Agent 先规划任务，再通过受控工具调用生成 CST 模型、运行或读取仿真结果、诊断 S11/远场指标，并在优化过程中记录 trace、memory、reflection 和 benchmark evidence。
+这是一个面向 CST Studio Suite 的垂直工程 Agent，核心目标不是聊天，而是打通电磁仿真的闭环：用户用自然语言提出天线设计需求，Agent 先规划任务，再通过受控工具调用生成 CST 模型、运行或读取仿真结果、诊断 S11/远场指标，并在优化过程中记录 trace、memory、reflection 和 benchmark evidence。
 
-这个项目的重点是 Agent 工程化：Planner/Executor 分离、统一 Tool Runtime、真实外部工具集成、状态与记忆管理、失败可观测、结果可评估。它和普通 RAG chatbot 最大的区别是：RAG 只是知识来源之一，真正的主线是“Agent 控制真实工程软件并形成可验证闭环”。
+项目的重点是 Agent 工程化：Planner/Executor 分离、统一 Tool Runtime、真实外部工具集成、状态与记忆管理、失败可观测、结果可评估。它和普通 RAG chatbot 最大的区别是：RAG 只是知识来源之一，主线是 Agent 控制真实工程软件并形成可验证闭环。
 
 ## Architecture Story
 

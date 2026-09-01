@@ -208,6 +208,13 @@ _dynamic_entry_lock = threading.Lock()
 # avoid repeated LLM calls within a session.
 # ---------------------------------------------------------------------------
 _query_rewrite_cache: dict = {}
+_QUERY_REWRITE_CACHE_LIMIT = 256
+
+
+def _trim_query_rewrite_cache() -> None:
+    """FIFO-bound the rewrite cache; it was the only unbounded store on the context path."""
+    while len(_query_rewrite_cache) > _QUERY_REWRITE_CACHE_LIMIT:
+        _query_rewrite_cache.pop(next(iter(_query_rewrite_cache)))
 _QUERY_REWRITE_PROMPT = """You are a search-query rewriter for a Chinese antenna design knowledge base.
 Given the user's query, output {n} alternate phrasings as a JSON array of strings.
 Each phrasing should:
@@ -266,6 +273,7 @@ def _rewrite_query(query: str, client, model: str, n: int = 2, timeout: int = 6)
         rewrites = [str(s).strip() for s in arr if isinstance(s, str) and str(s).strip()]
         rewrites = [r for r in rewrites if r != query][:n]
         _query_rewrite_cache[key] = list(rewrites)
+        _trim_query_rewrite_cache()
         return rewrites
     except Exception as exc:
         logger.debug("query rewrite failed (non-critical): %s", exc)
@@ -316,6 +324,7 @@ def _translate_document_query(
             if isinstance(item, str) and str(item).strip()
         ][:n]
         _query_rewrite_cache[key] = list(translations)
+        _trim_query_rewrite_cache()
         return translations
     except Exception as exc:
         logger.debug("official-document query translation failed (non-critical): %s", exc)

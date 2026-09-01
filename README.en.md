@@ -4,15 +4,11 @@
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
-Repository: [github.com/ncdeng/agent-workbench](https://github.com/ncdeng/agent-workbench)
+CST-Agent is an engineering agent that operates CST Studio Suite 2025, a stateful desktop CAE application, over a Windows COM bridge. A natural-language antenna request runs as a closed loop:
 
-**The hard part is not calling an LLM API. It is what surrounds the call**: managing side effects in a live desktop application the agent does not own, recovering from external-process failures without pretending otherwise, gating high-risk operations behind parameter-bound approval, and producing evaluation evidence that can be recomputed byte-for-byte.
+`User request -> Planner -> Tool Runtime -> CST modeling/solver -> Result reading -> Diagnosis/optimization -> Trace/report`
 
-**CST-Agent** is a vertical engineering Agent runtime that operates CST Studio Suite 2025 — a real, stateful desktop CAE application — through a Windows COM bridge. It turns a natural-language antenna requirement into a traceable closed loop:
-
-`User request -> Planner -> Tool Runtime -> CST modeling/solver -> Result reading -> Diagnosis/optimization -> Trace/report evidence`
-
-This repository is best understood as an **Agent application for a real engineering tool**, not as a generic RAG chatbot or a thin UI wrapper. Architecture story: [PROJECT_STORY.md](PROJECT_STORY.md).
+Software like CST is stateful and has real side effects: a solve takes minutes, a wrong parameter ruins the model, and a hung external process cannot always be killed. Most of the work here is not the LLM call itself but everything around it — tool permissions, human approval, failure recovery, tracing, reproducible evaluation. The design history, including decisions that were later reverted, is in [PROJECT_STORY.md](PROJECT_STORY.md).
 
 ---
 
@@ -34,15 +30,13 @@ This repository is best understood as an **Agent application for a real engineer
   <em>Left: dark theme dashboard | Right: agent chat with result viewer</em>
 </p>
 
-## Why This Is Hard
+## How this differs from a stateless API
 
-The tool surface is a stateful desktop engineering application, not a stateless web API. Three consequences drive most of the design:
+- A CST project is a single stateful resource, and modeling/solver calls change it irreversibly. Tools run sequentially, the active plan decides which tools each step can see, and a failed step leaves real state behind that recovery has to work from — not an HTTP error code to retry.
+- CST's COM interface has Windows STA thread affinity and a pinned Python version, so all COM/VBA work runs in a dedicated subprocess and handles are released with the process. The cost is one extra subprocess hop per command.
+- On a bridge timeout, Python can kill its own subprocess but not the CST process, which may still be running the previous solve; CST has no reliable cross-process abort API. The runtime marks the connection dead, returns `timeout: True`, and tells the user CST may still be solving (ADR-006). It does not pretend to abort.
 
-- **A single mutable resource.** A CST project is shared, stateful, and changed irreversibly by modeling and solver calls. Tool execution is therefore sequential, the active plan constrains which tools are visible at each step, and a failed step leaves real state behind that recovery has to reason about — not just an HTTP error code.
-- **COM subprocess isolation.** CST's COM interface has Windows STA thread affinity and a locked Python version, so all COM/VBA work runs in a dedicated subprocess bridge; COM handles are released with the process instead of living inside the agent. The accepted cost is a subprocess hop on every command.
-- **No fake aborts (ADR-006).** On a bridge timeout, Python can kill its own subprocess — but the CST Design Environment is a separate OS process that may still be running the previous solve, and CST exposes no reliable cross-process abort API. The runtime degrades honestly: it marks the connection dead so the next command reconnects, returns `timeout: True`, and tells the user that CST may still be executing the previous solve. It does not claim an abort it cannot perform.
-
-## Agent Architecture
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -82,80 +76,72 @@ The tool surface is a stateful desktop engineering application, not a stateless 
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
-## Tool Runtime Control Plane
+## Tool Runtime
 
-All 42 canonical tools execute through one entry point, `tool_runtime.execute_tool`; no harness gets a second dispatch path. Every call — normal or recovery — passes the same pipeline:
+All 42 tools go through one entry point, `tool_runtime.execute_tool`; there is no second dispatch path. Normal calls and recovery retries share the same pipeline:
 
 `active-step allowlist -> schema normalize/validate -> approval gate -> dispatch -> typed result`
 
-- **Permission vs. completion (ADR-010).** The planner's `allowed_tools` is only a whitelist; a separate `required_tools` subset is an all-of completion contract. The runtime accumulates `completed_tools` across batches and injects `remaining_required_tools` back into plan context, so a step no longer completes just because any single call happened.
-- **Schema-driven calling.** Arguments are validated against canonical JSON Schemas; optional defaults are applied before validation, hashing, and evaluation, so an omitted flag and an explicit `false` are the same call at every layer.
-- **Error classification and recovery.** Failures are typed, and a `FailureRecoveryEngine` registers bounded actions — reconnect, timeout retry, farfield-monitor auto-repair, parameter repair, dry-run fallback. Recovery itself goes back through the allowlist/schema/approval gate, and every recovery and retry outcome is attached to the tool event and the trace, forming an auditable chain.
-- **Large results.** Oversized payloads are summarized with full-payload recall (`recall_tool_result`) instead of flooding the context; 1D/S-parameter curves can be deterministically downsampled with endpoints and global extrema preserved, and scalar summaries are always computed on the full raw curve (ADR-012).
-- **Trace hooks.** Tool calls, token usage, recovery, and approvals land in one run-level trace shared by chat and programmatic optimization rounds (ADR-008).
+- Permission and completion are separate concerns (ADR-010). `allowed_tools` is only a whitelist; its subset `required_tools` is the completion contract. Progress accumulates across batches and unfinished tools are injected back into plan context, so a step no longer completes just because some call happened.
+- Arguments are validated against canonical JSON Schemas, with optional defaults applied before validation, hashing, and evaluation. Omitting a flag and passing its default are the same call at every layer.
+- Failures are typed. The recovery engine registers bounded actions only: reconnect, timeout retry, farfield-monitor repair, argument repair, dry-run fallback. Recovery goes back through the allowlist and approval gate, and every retry outcome lands on the tool event and the trace.
+- Large results are summarized; the full payload stays in the session and comes back through `recall_tool_result`. Curves may be deterministically downsampled with endpoints and global extrema preserved, and scalar summaries are always computed on the full raw curve (ADR-012).
 
-## Tiered Autonomy: Typed Tools Run, Raw VBA Asks
+## Approval
 
 Autonomy is tiered by what a call can bypass:
 
-- **Typed tools are autonomous.** Canonical modeling, solver, and result-reading tools execute without human approval because their arguments are bounded by the canonical schema and the controller's own guards.
-- **Raw VBA is approval-gated (ADR-011).** `execute_vba_script` can bypass both, so it requires a grant bound to `(tool_name, SHA-256 of canonical normalized arguments, actor, expiry)`. Schema defaults are normalized before hashing and object key order does not affect the hash. A grant is consumed before the handler runs and works exactly once: a CST-side failure still requires re-approval, and any argument change produces a new request.
-- **No stale grants.** The approval endpoint holds the exact arguments server-side (the UI sees a preview of at most 500 characters), re-runs the side-effect-free allowlist/schema/hash preflight before issuing, and clearing the session or opening/closing a project revokes all pending requests and active grants.
-- **Pending is neither failure nor completion (ADR-013).** `approval_pending` keeps the plan step `in_progress`, and only successfully executed tools count toward `completed_tools`. The approve endpoint replays the exact bound call in the same HTTP request; the honest description is "parameter-bound approval with exact-replay execution", not "pause/resume reasoning".
-- **Single-user scope.** This is a local single-user desktop application: the actor is fixed to `local-desktop-user`, there is no multi-tenant authentication, and nothing here should be read as RBAC or enterprise authorization.
+- Typed modeling, solver, and result-reading tools run without approval; their arguments are already constrained by the schema and the controller's guards.
+- `execute_vba_script` can bypass both, so it needs a human grant (ADR-011). A grant binds the tool name, the SHA-256 of the normalized arguments, the actor, and an expiry, and works exactly once: a CST-side failure needs re-approval, and changing one byte of the arguments creates a new request. The server keeps the exact arguments (the UI sees a preview of at most 500 characters) and re-runs a side-effect-free preflight before issuing.
+- A pending approval is neither a failure nor a completion (ADR-013). The plan stays on the current step, only successfully executed tools count toward completion, and approval replays the exact bound call in the same HTTP request.
+- Clearing the session or opening/closing a project revokes pending requests and active grants. This is a single-user desktop tool with no multi-tenant authentication; do not read it as RBAC.
 
-## Pluggable Harness: Native and Pi
+## Harnesses: Native and Pi
 
-The tool loop inside `run_agent_turn()` is a replaceable component (ADR-009). `AGENT_BRAIN=native` (default) keeps the self-authored Python loop; `AGENT_BRAIN=pi` delegates model turns and tool-loop continuation to a restricted Node sidecar running the MIT-licensed pi-agent-core. Planner, session state, recovery, trace, and the CST COM boundary stay in Python under both. See [`integrations/pi_agent_core/README.md`](integrations/pi_agent_core/README.md).
+The tool loop inside `run_agent_turn()` is replaceable (ADR-009). `AGENT_BRAIN=native` (default) keeps the hand-written Python loop; `AGENT_BRAIN=pi` hands model turns to a restricted Node sidecar running the MIT-licensed pi-agent-core. Planner, session state, recovery, trace, and the COM boundary stay in Python either way. See [`integrations/pi_agent_core/README.md`](integrations/pi_agent_core/README.md).
 
-- **Restricted sidecar.** Pi does not load pi-coding-agent and exposes no Bash/Read/Write/Edit/Web/MCP built-ins; it sees only the current active-step subset of the canonical tool catalog, re-filtered by Python after every batch. Each tool call returns to `execute_tool`, so allowlists, approval, recovery, trace, and COM isolation apply identically — and Pi never holds a mutable session or a COM handle. Because a CST project is a single stateful resource, tool execution is forced sequential.
-- **Versioned control protocol.** `hello/health/run/result/error` envelopes, request/session dual correlation, capability negotiation, a long-lived sidecar session registry with heartbeat/generation, ordered harness events, and correlated cancel/steer/follow-up.
-- **Failure semantics.** A missing sidecar, timeout, malformed JSONL, or model error all fail explicitly — there is no silent fallback to Native, so evaluations and traces never mis-attribute the harness. After a crash the sidecar restarts before the next task; a possibly half-executed CST turn is never auto-replayed.
-- **Measured so far, with boundaries.** The latest real-model pairing (`gpt-5.6-terra`, 12 unique cases x 3 repeats, developer-visible and post-audit) gives task-majority Pi 12/12 vs Native 10/12 and strict-majority 10/12 vs 7/12, concentrated in two solver workflow families — but exact McNemar is p=0.5 / 0.25, the all-repeats endpoints are identical (9/12 and 5/12), and mean tokens are flat (Pi +1%). Repeats are correlated, so the statistical unit is 12 cases. This is directional improvement on complex tasks, not a significant or general quality claim; Pi's certain value today is the protocol, isolation, recovery, observability, and control plane. SHA-bound detail: [docs/PI_HARNESS_EVALUATION.md](docs/PI_HARNESS_EVALUATION.md).
+- Pi does not load pi-coding-agent and gets no Bash/Read/Write/Edit/Web/MCP built-ins. It sees only the active-step subset of the tool catalog, re-filtered by Python after every batch. Every call still returns to `execute_tool`, so allowlists, approval, recovery, and COM isolation apply unchanged, and Pi never holds a mutable session or a COM handle.
+- The control protocol is versioned: hello/health/run/result/error envelopes, request/session correlation, capability negotiation, heartbeats, ordered events, and correlated cancel/steer/follow-up.
+- A missing sidecar, a timeout, malformed JSONL, or a model error fails explicitly. There is no silent fallback to Native, so evaluations and traces never mis-attribute the harness. After a crash the sidecar restarts before the next task; a possibly half-executed CST turn is never replayed automatically.
+- Real-model pairing (gpt-5.6-terra, 12 unique cases x 3 repeats, developer-visible and post-audit): task-majority Pi 12/12 vs Native 10/12, strict-majority 10/12 vs 7/12, concentrated in two solver workflow families — but exact McNemar is p=0.5 / 0.25 and mean tokens are flat, so this is directional improvement, not a significant claim. SHA-bound detail: [docs/PI_HARNESS_EVALUATION.md](docs/PI_HARNESS_EVALUATION.md).
 
-## Evaluation Discipline
+## Evaluation
 
-Numbers in this repository are evidence, and the rules around them are part of the work:
+House rules for numbers in this repository: recomputable, boundaries stated, null results kept.
 
-- **SHA-bound evidence chain.** The Agent evidence registry, [benchmarks/agent_e2e_canonical.json](benchmarks/agent_e2e_canonical.json), byte-binds the frozen v1/v2 datasets and manifests, the 40-case deterministic run, the Terra repeat-3 run, semantic-audit v2, and the post-audit v2 report. Older ten-case development reports are marked historical diagnostics, not evidence.
-- **Frozen sets and ablations.** The full-Agent harness enters through `CSTAgent.chat()` and replaces only the CST boundary. On the manifest/SHA-bound 40-case developer-visible deterministic v1: full 40/40, no-context execution 40/40 but strict-lexical 32/40, no-recovery 32/40, no-planner 0/40. The no-memory and no-ToolUseMemory arms are both 40/40 — so this run demonstrates the mechanism and the planner/recovery contributions, and explicitly does not show a memory gain.
-- **Real-model audits with the corrections on record.** The first Terra v1 audit (7 representative cases) exposed lexical/argument false negatives and one under-specified solver failure; the post-audit v2 regression — which records that v1 outputs informed oracle revisions — scores execution 7/7, exact sequence 7/7, invalid calls 0, strict lexical 6/7. A response-SHA-bound semantic review of the 3-repeat run scores execution 19/21 and grounded task 16/21. Three repeats are correlated, not 21 independent tasks, and none of these sets is blinded.
-- **Null results are kept, not deleted.** The real-model ToolUseMemory A/B (four failure families, 8 cases x 2 arms x 3 repeats) injected memory in 24/24 learned-arm samples and changed first-turn tool ordering — yet both arms finished 24/24 with paired delta 0, zero invalid calls, and roughly 220 extra learned-arm tokens. It stays in the repository as a preserved null result; its tail latency is excluded from causal comparison for documented reasons.
-- **Sealed evaluation is a protocol, not a result.** The v2 sealed-eval verifier binds an external trust policy to the real bytes of the public cases, fixtures, runner, prompts, and tool catalog, and grants only execution eligibility; release eligibility requires a separately trusted promotion receipt over the response trace. The repository contains no real external issuer, no private oracle custody, and no completed sealed run — the claim is "protocol implemented and negative-tested", never "blinded or sealed evidence obtained". See [docs/SEALED_EVALUATION_PROTOCOL.md](docs/SEALED_EVALUATION_PROTOCOL.md).
-- **Human calibration is pending.** The exporters produce source-bound, verdict-blind A/B packs (21 Agent samples, 55 RAG claims) with a common `pack_id`, SHA-bound permutations, and rubric bytes for dual-reviewer calibration; natural sample/case/claim IDs are retained, so the packs are not described as fully provenance-blind. Until independent labeling completes, LLM-judge scores (e.g. RAG macro groundedness 0.766 with 17/55 unsupported claims) remain development diagnostics, not effect claims. Runbook: [docs/HUMAN_EVALUATION_RUNBOOK.md](docs/HUMAN_EVALUATION_RUNBOOK.md).
+- The evidence registry [benchmarks/agent_e2e_canonical.json](benchmarks/agent_e2e_canonical.json) byte-binds the frozen datasets, manifests, and reports; the early ten-case development reports are marked historical diagnostics.
+- 40-case deterministic ablation (manifest/SHA-bound, developer-visible): full 40/40, no-context execution 40/40 but strict-lexical 32/40, no-recovery 32/40, no-planner 0/40; no-memory and no-ToolUseMemory both 40/40. The planner and recovery contributions hold up; a memory gain does not show, and that is stated as is.
+- Real-model audit corrections stay on record: the first Terra audit (7 representative cases) exposed lexical/argument false negatives and one under-specified solver oracle. The post-audit v2 regression scores execution 7/7, exact sequence 7/7, strict lexical 6/7, and records that v1 outputs informed the oracle revisions. A response-SHA-bound semantic review of the 3-repeat run scores execution 19/21 and grounded task 16/21. Repeats are correlated, not 21 independent tasks, and none of this is blinded.
+- The real-model ToolUseMemory A/B (four failure families, 8 cases x 2 arms x 3 repeats) injected memory in 24/24 learned samples and changed first-turn tool ordering, yet both arms finished 24/24 with paired delta 0 and roughly 220 extra learned-arm tokens. The null result stays in the repository.
+- Sealed evaluation is a protocol, not a result: the v2 verifier binds an external trust policy to the real bytes of the public cases, fixtures, runner, prompts, and tool catalog, and passes negative tests — but there is no real external issuer and no completed sealed run. See [docs/SEALED_EVALUATION_PROTOCOL.md](docs/SEALED_EVALUATION_PROTOCOL.md).
+- Until independent human labeling completes, LLM-judge scores (for example RAG macro groundedness 0.766 with 17/55 unsupported claims) are development diagnostics, not effect claims. Dual-reviewer packs are exported; the process is in [docs/HUMAN_EVALUATION_RUNBOOK.md](docs/HUMAN_EVALUATION_RUNBOOK.md).
 
-## The Engineering Substrate: CST Studio Suite
+## The CST side
 
-CST is the substrate that makes the agent engineering real — a live desktop solver with genuine side effects — not the research goal itself. On top of the COM/VBA bridge, the project ships deterministic fast-path builders for standard antennas (rectangular patch, half-wave dipole, pixel patch) so routine requests skip LLM drift, with tool calling available for open-ended tasks. The closed loop is solver execution, S11/farfield reading with a fallback chain, `diagnose_s11` triage, and physics-guided tuning: f∝1/L secant step sizing, direction memory, rollback validated by a real re-solve, and stagnation detection that restores the best-so-far point. Where the CST Native Optimizer is used, the split of labor is explicit: the agent interprets the physical goal, diagnoses results, configures objectives, and owns rollback; the native optimizer does numerical search; the solver remains the physical ground truth (ADR-014). The full loop — modeling -> solve -> S11 diagnosis -> tuning with rollback -> evidence on disk — exists as evidence for the control plane above, and the CLI report commands below exercise it end to end.
+CST is the substrate that makes the control plane above necessary. On top of the COM/VBA bridge there are deterministic builders for common antennas (rectangular patch, half-wave dipole, pixel patch), so routine requests skip the LLM entirely; open-ended tasks use tool calling. The optimization loop: solve, read S11/farfield through a fallback chain, triage with `diagnose_s11`, then physics-guided tuning — f∝1/L secant step sizing, direction memory, rollback validated by a real re-solve, and stagnation detection that restores the best-so-far point. When the CST Native Optimizer is used, the split is fixed: the agent interprets the goal, diagnoses results, configures objectives, and owns rollback; the optimizer does numerical search; the solver stays the physical ground truth (ADR-014).
 
-## RAG and Memory
+## RAG and memory
 
-Two retrieval channels exist, and they are not the same system; their numbers should not be merged.
+Two retrieval channels, two systems; their numbers are not merged.
 
-### Official-document RAG
+Official-document RAG: CST Online Help is chunked into 13,242 English chunks embedded with `bge-base-en-v1.5` in Chroma. Retrieval is dense Top-20 -> `ms-marco-MiniLM-L6-v2` cross-encoder rerank -> source dedup to Top-3, with full rank/provenance kept. On the frozen 30-query held-out set, Recall@3 goes 0.900 -> 0.967 and MRR 0.750 -> 0.794; the orthogonal ablation shows dedup alone reaches 0.900 and the cross-encoder is needed for 0.967. Only 2/30 queries actually change outcome, and the paired-bootstrap 95% CI on the Recall delta is [0.000, 0.167] — directional, not significant. Warm p95 latency rises 63.29 -> 1019.50 ms as a same-machine observation. Details: [docs/RAG_DESIGN.md](docs/RAG_DESIGN.md).
 
-CST Online Help HTML is chunked into 13,242 English schema-v4 chunks embedded with `bge-base-en-v1.5` in Chroma. Retrieval is dense Top-20 -> `ms-marco-MiniLM-L6-v2` cross-encoder rerank -> source dedup to Top-3, with full rank/provenance tracing. On the frozen 30-query held-out v1 set, reranking improves Recall@3 0.900 -> 0.967, MRR 0.750 -> 0.794, and nDCG@3 0.754 -> 0.817; the orthogonal ablation shows dedup alone moves 0.800 -> 0.900, with the cross-encoder needed for 0.967. Only 2/30 queries actually changed outcome, and the paired-bootstrap 95% CI for the Recall delta is [0.000, 0.167] — the cross-encoder gain is directional, not statistically significant. Warm p95 latency rises 63.29 -> 1019.50 ms as a same-machine observation. Design and full numbers: [docs/RAG_DESIGN.md](docs/RAG_DESIGN.md).
+Memory comes in three parts:
 
-### Agent memory
+- StructuredMemory keeps optimization lessons and failures, scoped by project and design signature. Confidence does not trust the LLM's self-score: a measured improvement keeps it, no improvement halves it, a rollback caps it at 0.2.
+- ToolUseMemory records tool failures and corrections, and only reorders the active-step allowlist; it never adds or removes permissions. The mechanism loop is proven end to end; a behavioral gain is not — that is the null result above.
+- Conversation-level goals, constraints, and pending questions survive follow-up turns. Constraints are extracted deterministically with regex and stored in the user's own words; planner paraphrases are a fallback only.
 
-- **StructuredMemory** is the single production store for reflection lessons and failures, scoped by project and design signature, gated by confidence/evidence with a `min_score` and a keyword fallback; rollback rounds are written at reduced confidence (0.2). The legacy dynamic JSON is read only through an explicit migration switch; new reflections are never double-written there.
-- **ToolUseMemory** recalls past tool failures and corrections and safely reorders only the active-step allowlist — it never expands permissions. The production write/persist/scoped-recall/safe-rerank loop is proven end to end; a real-model behavioral lift is not (see the preserved null result above).
-- **Conversation context.** Explicit goals, constraints, and pending questions survive follow-up turns; token budgeting counts messages and tool schemas together.
+## Boundaries
 
-## Engineering Boundaries
-
-These are intentional constraints of integrating with a real desktop engineering tool:
-
-- Real CST solver and COM tests require a local Windows workstation with CST Studio Suite; GitHub CI runs offline tests only.
-- Farfield post-processing may require CST result templates because some live VBA plot paths have COM context restrictions.
-- Real CST optimization is observable and rollback-safe, but some 9.4 GHz Rogers5880 microstrip cases still need stronger diagnosis-driven tuning before reliably meeting `S11@f0 <= -10 dB`.
-- LangGraph has been withdrawn (ADR-001): the graph nodes were thin pass-throughs of runtime functions, the checkpointer was unusable because the agent holds non-serializable COM handles, and the replan edge was unreachable on the production path — so the agent uses self-authored control flow (planner -> tool loop -> reflection). Step-level single-tool driving is future work.
-- The Native-vs-Pi real-model pairing exists but is small: 12 unique cases x 3 repeats, developer-visible, post-audit, with correlated repeats. It shows directional improvement on solver workflows (exact McNemar p=0.5 / 0.25) — not statistically significant, not blinded or sealed, and not release-eligible. Native remains the default and the rollback baseline.
-- Chat SSE reports tool events by polling session state every 0.5s; it is not token-level streaming.
-- The FastAPI backend is a single-user desktop tool: one global agent/session guarded by one operation lock, and no authentication. Keep it bound to `127.0.0.1`; do not expose `--host 0.0.0.0` on untrusted networks.
-- The deterministic provider is a mechanism regression, not LLM-quality evidence. The 40-case Agent sets are developer-visible; v2 explicitly records that Terra v1 outputs informed oracle revisions. The seven-case Terra runs are directional, not statistically powered or blinded. ToolUseMemory has a production write/persist/scoped-recall/safe-rerank mechanism pair, but no real-model held-out success-rate lift has been demonstrated.
-- The BO/PSO/DE module is a bounded sampler used as a last-resort fallback when LLM proposals are unavailable; it is not a full optimization-loop replacement and should not be presented as one.
-- The Gradio implementation has been removed from the production tree. Some old scripts and optional dependency declarations remain cleanup candidates; the supported UI is React + FastAPI.
+- Real CST solves and COM tests need a local Windows machine with CST Studio Suite; CI runs offline tests only.
+- Some 9.4 GHz Rogers5880 microstrip cases still miss a stable -10 dB; diagnosis-driven tuning needs more work.
+- LangGraph was adopted and then withdrawn (ADR-001): the graph nodes were thin pass-throughs, the checkpointer could not work with non-serializable COM handles, and the replan edge was unreachable in production. Control flow is hand-written; step-level single-tool driving is future work.
+- Chat SSE polls session state every 0.5 s; it is not token-level streaming.
+- The backend is a single-user desktop tool: one global session, one operation lock, no authentication. Keep it bound to `127.0.0.1`.
+- The BO/PSO/DE module is a bounded fallback sampler for when LLM proposals are unavailable, not a full optimization-loop replacement.
+- Some farfield post-processing VBA paths have COM context restrictions and may need CST result templates.
+- The old Gradio implementation is gone; React + FastAPI is the only supported UI path.
 
 ## Quick Start
 
@@ -200,7 +186,7 @@ New-Item -ItemType Directory -Force $env:PIP_CACHE_DIR,$env:HF_HOME,$env:HF_HUB_
 
 These settings are an execution prerequisite, not evidence metadata by themselves. Formal RAG runs still verify the canonical dataset/index/model contract recorded in their manifest.
 
-Useful CLI evidence commands (datasets, manifests, and reports are SHA-bound per the evaluation discipline above; human-calibration pack exports follow [docs/HUMAN_EVALUATION_RUNBOOK.md](docs/HUMAN_EVALUATION_RUNBOOK.md)):
+Useful CLI commands (datasets, manifests, and reports are SHA-bound; human-calibration pack exports follow [docs/HUMAN_EVALUATION_RUNBOOK.md](docs/HUMAN_EVALUATION_RUNBOOK.md)):
 
 ```bash
 # Generate deterministic patch VBA without CST
@@ -302,10 +288,9 @@ python benchmarks/cst_batch_solver_runner.py --project-copy $env:CST_LIVE_PROJEC
   --output D:\cst_agent_rag_data\cst_batch_evidence\latest.json
 ```
 
-The layered standard is documented in [docs/TESTING.md](docs/TESTING.md). By default these checks do not connect to real CST. Live CST solver/API checks remain explicit local opt-in and are not part of `--level all` because hosted runners do not have CST Studio Suite or a license. All live paths require an existing D-drive project copy; pytest temporary data is rooted at the repository's ignored `tmp/pytest` directory instead of the Windows C-drive temp directory.
-The legacy `--include-cst` switch is rejected for default gates; use `--level live-cst` with `RUN_LIVE_CST=1` for connection checks, and `--level live-cst-solver` with `RUN_LIVE_CST=1`, `RUN_LIVE_CST_MUTATING=1`, and `RUN_LIVE_CST_SOLVER=1` for real solver smoke.
+The layered standard is documented in [docs/TESTING.md](docs/TESTING.md). By default these checks do not connect to real CST; live solver/API checks stay explicit local opt-in and are not part of `--level all`, because hosted runners have no CST Studio Suite or license. All live paths require an existing D-drive project copy; pytest temporary data is rooted at the repository's ignored `tmp/pytest` directory instead of the Windows C-drive temp directory.
 
-CI runs lint, offline Python tests on multiple Python versions, fake-CST smoke benchmarks, TypeScript checks, frontend build, and Vitest. Live CST checks stay local because hosted runners do not have CST Studio Suite or Windows COM access.
+CI runs lint, offline Python tests on multiple Python versions, fake-CST smoke benchmarks, TypeScript checks, frontend build, and Vitest.
 
 ## Project Layout
 
@@ -332,5 +317,3 @@ tests/              # Python unit/integration/eval tests
 benchmarks/         # Fake-CST ablation and reproducible evidence reports
 docs/               # Setup, audit, handoff, archived history
 ```
-
-Legacy note: the old Gradio implementation, its `ui` dependency extra, and the manual HTTP scripts are gone; React + FastAPI is the only supported UI path.
