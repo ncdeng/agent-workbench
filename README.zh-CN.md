@@ -1,6 +1,6 @@
-# CST-Agent Workbench
+# Agent 工作台
 
-[English](README.md) | **中文**
+**中文** | [English](README.en.md)
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
@@ -8,7 +8,7 @@
 
 **难点不在调用一次 LLM API，而在调用周围的一切**：在一个 Agent 并不拥有的桌面应用里管理真实副作用，在外部进程失败时如实恢复而不是假装 abort，把高风险操作挡在参数绑定审批后面，并产出可以按字节复算的评测证据。
 
-**CST-Agent** 是一套面向真实工程工具的垂直 Agent 运行时。它通过 Windows COM 桥接操作 CST Studio Suite 2025，把自然语言天线需求变成可追溯闭环：
+**Agent 工作台**（CST-Agent）是一套面向真实工程工具的垂直 Agent 运行时。它通过 Windows COM 桥接操作 CST Studio Suite 2025，把自然语言天线需求变成可追溯闭环：
 
 `用户请求 -> Planner -> Tool Runtime -> CST 建模/求解 -> 结果读取 -> 诊断/优化 -> Trace/报告证据`
 
@@ -208,9 +208,18 @@ python -m cst_agent_workbench.cli build-patch --dry-run --f0 9.4 --er 2.2 --h 1.
 
 # 真实 CST 闭环报告
 python -m cst_agent_workbench.cli optimize-patch-report --f0 9.4 --er 2.2 --h 1.6 --loss 0.0009 --material Rogers5880 --max-rounds 3 --output runs/demo/patch_optimization_report.md
+
+# 真实 CST 评测矩阵
+python -m cst_agent_workbench.cli patch-matrix --microstrip-rounds 3 --output-dir runs/patch_matrix --summary runs/patch_matrix/summary.md --json-output runs/patch_matrix/summary.json
+
+# 优化提案消融（不跑完整 Agent runtime）
+python benchmarks/agent_ablation_runner.py --cases 20 --max-rounds 6 --assert-thresholds --output benchmarks/reports/agent_ablation_fake_cst.json --summary-md benchmarks/reports/agent_ablation_fake_cst.md
+
+# 完整 40-case Agent 机制评测，带 manifest/SHA 与 release 门
+python -m benchmarks.agent_e2e_ablation_runner --dataset benchmarks/agent_e2e_frozen_dev_v1.json --manifest benchmarks/agent_e2e_frozen_dev_v1.manifest.json --full-frozen-eval --provider deterministic_proxy --artifact-root D:/cst_agent_rag_data/agent_e2e_frozen_artifacts --output benchmarks/reports/agent_e2e_frozen_dev_v1_deterministic_ablation_v2.json --summary-md benchmarks/reports/agent_e2e_frozen_dev_v1_deterministic_ablation_v2.md
 ```
 
-完整命令列表见英文 [README.md](README.md) 的 Quick Start 一节。公开命令只授予 execution eligibility。私有核验、promotion 命令、外部托管要求和 fail-closed 发布规则写在 [docs/SEALED_EVALUATION_PROTOCOL.md](docs/SEALED_EVALUATION_PROTOCOL.md)。仓库不包含真实外部签发的密封包。
+公开命令只授予 execution eligibility。私有核验、promotion 命令、外部托管要求和 fail-closed 发布规则写在 [docs/SEALED_EVALUATION_PROTOCOL.md](docs/SEALED_EVALUATION_PROTOCOL.md)。仓库不包含真实外部签发的密封包。
 
 ## 验证
 
@@ -227,8 +236,26 @@ python scripts/check.py --level eval
 # 完整离线 Python 套件，排除真实 CST 测试
 python scripts/check.py --level offline
 
+# 前端 Vitest
+python scripts/check.py --level frontend
+
+# 浏览器 E2E（mock API）
+npm.cmd --prefix frontend exec playwright install chromium  # 仅首次
+python scripts/check.py --level e2e
+
+# TypeScript + Vite 构建
+python scripts/check.py --level build
+
 # 合并门禁：smoke + core + offline + ruff + frontend + e2e + build
 python scripts/check.py --level all
+
+# 仅本机 Windows + CST：对 D 盘工程副本做连接冒烟
+$env:CST_LIVE_PROJECT_COPY="D:\cst_agent_rag_data\projects\status_copy.cst"
+$env:RUN_LIVE_CST="1"; python scripts/check.py --level live-cst
+
+# 仅本机 Windows + CST：Python API 构建 + 真实求解冒烟
+$env:RUN_LIVE_CST_MUTATING="1"; $env:RUN_LIVE_CST_SOLVER="1"
+python scripts/check.py --level live-cst-solver
 ```
 
 分层标准见 [docs/TESTING.md](docs/TESTING.md)。默认这些检查不连接真实 CST。真实 CST solver/API 检查仍是本机显式 opt-in，不是 `--level all` 的一部分，因为托管 runner 没有 CST Studio Suite 或许可证。
