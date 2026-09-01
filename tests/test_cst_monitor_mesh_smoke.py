@@ -1,6 +1,10 @@
 from pathlib import Path
 
+import pytest
+
 from benchmarks.cst_monitor_mesh_smoke import run_smoke
+
+pytestmark = pytest.mark.windows_d_drive
 
 
 class _FakeController:

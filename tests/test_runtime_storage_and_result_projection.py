@@ -47,6 +47,7 @@ def _dashboard_state(*, target_freq=0.0, mode="at_f0", chat_mode="fast_path", br
     )
 
 
+@pytest.mark.windows_d_drive
 def test_fast_path_runtime_root_defaults_to_d_drive():
     assert Path(config.CST_RUNTIME_ROOT).drive.upper() == "D:"
     assert Path(config.CST_FAST_PATH_DIR).drive.upper() == "D:"
@@ -154,6 +155,7 @@ def test_fast_path_farfield_export_is_promoted_to_session_cut(monkeypatch, tmp_p
     assert agent.tool_events[-1]["success"] is True
 
 
+@pytest.mark.windows_d_drive
 def test_probe_farfield_vba_uses_configured_d_drive_temp(monkeypatch, tmp_path):
     temp_root = tmp_path / "bridge"
     output = tmp_path / "farfield-tree.txt"

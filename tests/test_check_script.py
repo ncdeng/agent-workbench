@@ -181,7 +181,8 @@ def test_check_script_live_cst_gate_requires_env(monkeypatch, tmp_path):
     project_copy = tmp_path / "live_status_copy.cst"
     project_copy.write_bytes(b"test project fixture")
     monkeypatch.setenv("CST_LIVE_PROJECT_COPY", str(project_copy))
-    assert check.validate_requested_checks(args, checks) == 0
+    expected = 0 if (sys.platform == "win32" and project_copy.resolve().drive.upper() == "D:") else 2
+    assert check.validate_requested_checks(args, checks) == expected
 
 
 def test_check_script_live_cst_solver_gate_requires_explicit_copy_and_mutation_gates(monkeypatch, tmp_path):
@@ -204,7 +205,8 @@ def test_check_script_live_cst_solver_gate_requires_explicit_copy_and_mutation_g
     assert check.validate_requested_checks(args, checks) == 2
 
     monkeypatch.setenv("RUN_LIVE_CST_MUTATING", "1")
-    assert check.validate_requested_checks(args, checks) == 0
+    expected = 0 if (sys.platform == "win32" and project_copy.resolve().drive.upper() == "D:") else 2
+    assert check.validate_requested_checks(args, checks) == expected
 
 
 def test_check_script_rejects_deprecated_include_cst():

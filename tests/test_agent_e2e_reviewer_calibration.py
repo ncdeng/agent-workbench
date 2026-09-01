@@ -255,6 +255,8 @@ def test_canonical_repeat3_export_has_21_blank_verdict_blind_samples():
         manifest=json.loads(manifest_bytes),
         manifest_sha256=hashlib.sha256(manifest_bytes).hexdigest(),
         reviewer_id="assigned-reviewer",
+        dataset_bytes=dataset_bytes,
+        manifest_bytes=manifest_bytes,
     )
 
     assert len(template["judgments"]) == 21

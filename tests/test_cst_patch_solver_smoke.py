@@ -3,7 +3,11 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from benchmarks.cst_patch_solver_smoke import run_smoke
+
+pytestmark = pytest.mark.windows_d_drive
 
 
 class _FakeController:

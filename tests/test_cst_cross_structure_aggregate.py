@@ -6,6 +6,8 @@ from pathlib import Path
 import pytest
 
 from benchmarks import cst_cross_structure_aggregate as aggregate_mod
+
+pytestmark = pytest.mark.windows_d_drive
 from benchmarks.cst_solver_evidence import sha256_path
 
 

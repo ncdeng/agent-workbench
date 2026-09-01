@@ -60,6 +60,7 @@ testpaths = ["tests"]
 addopts = "--basetemp=.pytest-tmp"
 markers = [
     "cst: opt-in tests that require CST Studio Suite, Windows COM, or live solver access",
+    "windows_d_drive: tests that require a Windows D: volume for path policy",
     "slow: slower benchmark or integration tests",
     "frontend: frontend-related tests invoked from Python",
     "real_embeddings: opt out of the fake-embedding fixture and load the real local model",

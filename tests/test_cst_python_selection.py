@@ -3,6 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 from types import SimpleNamespace
 
+import pytest
+
 from cst_agent_workbench.cst import controller as controller_mod
 
 
@@ -46,6 +48,7 @@ def test_resolve_cst_python_command_returns_empty_when_no_candidate_works(monkey
     assert controller_mod._resolve_cst_python_command() == []
 
 
+@pytest.mark.windows_d_drive
 def test_run_com_script_uses_resolved_cst_python_command(monkeypatch):
     calls = []
 

@@ -2,6 +2,9 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+
+import pytest
+
 from cst_agent_workbench.agent.memory import StructuredMemory
 from cst_agent_workbench.agent.project_lifecycle import validate_cst_project_path
 from cst_agent_workbench.agent.session import AgentSession
@@ -77,6 +80,7 @@ def test_output_path_policy_rejects_relative_non_cst_and_c_drive(tmp_path):
             raise AssertionError(f"expected path rejection: {value}")
 
 
+@pytest.mark.windows_d_drive
 def test_create_project_switches_project_scoped_state(monkeypatch):
     target = "D:\\cst_agent_rag_data\\projects\\new_agent_project.cst"
     monkeypatch.setattr(Path, "exists", lambda self: False)

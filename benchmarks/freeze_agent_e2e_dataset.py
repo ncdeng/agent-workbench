@@ -23,6 +23,27 @@ if str(ROOT) not in sys.path:
 from benchmarks.agent_e2e_ablation_runner import validate_dataset_schema  # noqa: E402
 
 
+def sha256_aliases(raw: bytes) -> set[str]:
+    """Return SHA-256 hex digests for raw, LF, and CRLF encodings of the same text.
+
+    Windows working trees often expand LF blobs to CRLF. Dataset identity is the
+    JSON text, not the checkout's newline bytes, so Linux CI and Windows checkout
+    must accept one another.
+    """
+
+    lf = raw.replace(b"\r\n", b"\n")
+    crlf = lf.replace(b"\n", b"\r\n")
+    return {
+        hashlib.sha256(raw).hexdigest(),
+        hashlib.sha256(lf).hexdigest(),
+        hashlib.sha256(crlf).hexdigest(),
+    }
+
+
+def recorded_sha_matches(recorded: str, raw: bytes) -> bool:
+    return bool(recorded) and recorded in sha256_aliases(raw)
+
+
 def _git_revision() -> str:
     try:
         return subprocess.check_output(
@@ -86,11 +107,16 @@ def verify_manifest(dataset_path: Path, manifest_path: Path) -> list[str]:
         "annotation_policy",
         "generation_provenance",
     )
-    return [
-        field
-        for field in stable_fields
-        if actual.get(field) != expected.get(field)
-    ]
+    mismatches = []
+    dataset_bytes = dataset_path.read_bytes()
+    for field in stable_fields:
+        if field == "dataset_sha256":
+            if not recorded_sha_matches(str(actual.get(field) or ""), dataset_bytes):
+                mismatches.append(field)
+            continue
+        if actual.get(field) != expected.get(field):
+            mismatches.append(field)
+    return mismatches
 
 
 def main() -> int:

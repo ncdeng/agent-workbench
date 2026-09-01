@@ -7,6 +7,8 @@ import pytest
 
 from benchmarks import cst_dipole_solver_aggregate as aggregate_mod
 
+pytestmark = pytest.mark.windows_d_drive
+
 
 def _write_case(
     root: Path,

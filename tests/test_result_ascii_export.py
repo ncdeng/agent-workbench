@@ -31,6 +31,7 @@ def test_ascii_export_path_rejects_unsafe_target(path):
         validate_ascii_export_path(path)
 
 
+@pytest.mark.windows_d_drive
 def test_ascii_export_path_refuses_overwrite(monkeypatch, tmp_path):
     target = Path("D:/cst_agent_rag_data/tmp/result-contract-existing.txt")
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -42,6 +43,7 @@ def test_ascii_export_path_refuses_overwrite(monkeypatch, tmp_path):
         target.unlink(missing_ok=True)
 
 
+@pytest.mark.windows_d_drive
 def test_export_project_result_ascii_returns_artifact_metadata():
     target = Path("D:/cst_agent_rag_data/tmp/result-contract-new.txt")
     target.unlink(missing_ok=True)

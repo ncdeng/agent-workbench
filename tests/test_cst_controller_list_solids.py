@@ -6,6 +6,8 @@ import pytest
 
 from cst_agent_workbench.cst import controller as controller_mod
 
+pytestmark = pytest.mark.windows_d_drive
+
 
 def _make_controller() -> controller_mod.CSTController:
     controller = controller_mod.CSTController.__new__(controller_mod.CSTController)

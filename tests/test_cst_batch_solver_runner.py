@@ -5,6 +5,8 @@ from pathlib import Path
 
 import pytest
 
+pytestmark = pytest.mark.windows_d_drive
+
 from benchmarks.cst_batch_solver_runner import (
     build_batch_command,
     run_cst_batch,

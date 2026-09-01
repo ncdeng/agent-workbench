@@ -1,7 +1,11 @@
 import os
 from pathlib import Path
 
+import pytest
+
 from benchmarks.cst_waveguide_port_smoke import run_smoke
+
+pytestmark = pytest.mark.windows_d_drive
 from cst_agent_workbench import config
 
 

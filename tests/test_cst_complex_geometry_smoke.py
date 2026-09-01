@@ -2,7 +2,11 @@ import os
 import tempfile
 from pathlib import Path
 
+import pytest
+
 from benchmarks.cst_complex_geometry_smoke import EXPECTED_FINAL_SOLIDS, run_smoke
+
+pytestmark = pytest.mark.windows_d_drive
 from cst_agent_workbench.agent.tools import TOOLS
 
 

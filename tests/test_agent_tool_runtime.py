@@ -692,6 +692,7 @@ def test_execute_tool_recalls_full_tool_result_payload():
     assert recalled["payload"]["plot_data"][0]["freq"] == 9.3
 
 
+@pytest.mark.windows_d_drive
 def test_execute_tool_exports_result_through_canonical_runtime():
     from pathlib import Path
 

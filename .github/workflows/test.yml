@@ -35,6 +35,16 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: integrations/pi_agent_core/package-lock.json
+
+      - name: Install Pi sidecar
+        working-directory: integrations/pi_agent_core
+        run: npm ci
+
       - name: Install package and test dependencies
         run: |
           python -m pip install --upgrade pip

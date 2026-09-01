@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from benchmarks.agent_e2e_semantic_audit import score_semantic_review
+from benchmarks.freeze_agent_e2e_dataset import recorded_sha_matches
 
 
 REVIEW_SCHEMA = Path(__file__).with_name("agent_e2e_semantic_review.schema.json")
@@ -57,14 +58,31 @@ def export_review_template(
     manifest: dict[str, Any],
     manifest_sha256: str,
     reviewer_id: str,
+    dataset_bytes: bytes | None = None,
+    manifest_bytes: bytes | None = None,
 ) -> dict[str, Any]:
     """Create a fill-in-place review file with machine verdicts and model identity removed."""
     run = report["run"]
-    if run.get("dataset_sha256") != dataset_sha256:
+    dataset_ok = run.get("dataset_sha256") == dataset_sha256
+    if dataset_bytes is not None:
+        dataset_ok = recorded_sha_matches(str(run.get("dataset_sha256") or ""), dataset_bytes) and (
+            recorded_sha_matches(dataset_sha256, dataset_bytes)
+        )
+    if not dataset_ok:
         raise ValueError("dataset SHA does not match source report")
-    if run.get("manifest_sha256") != manifest_sha256 or run.get("manifest_verified") is not True:
+    manifest_ok = run.get("manifest_sha256") == manifest_sha256
+    if manifest_bytes is not None:
+        manifest_ok = recorded_sha_matches(str(run.get("manifest_sha256") or ""), manifest_bytes) and (
+            recorded_sha_matches(manifest_sha256, manifest_bytes)
+        )
+    if not manifest_ok or run.get("manifest_verified") is not True:
         raise ValueError("manifest identity is not verified by source report")
-    if manifest.get("dataset_sha256") != dataset_sha256:
+    manifest_dataset_ok = manifest.get("dataset_sha256") == dataset_sha256
+    if dataset_bytes is not None:
+        manifest_dataset_ok = recorded_sha_matches(
+            str(manifest.get("dataset_sha256") or ""), dataset_bytes
+        ) and recorded_sha_matches(dataset_sha256, dataset_bytes)
+    if not manifest_dataset_ok:
         raise ValueError("manifest dataset SHA does not match dataset bytes")
     if dataset.get("dataset_id") != run.get("dataset_id") or manifest.get("dataset_id") != run.get("dataset_id"):
         raise ValueError("dataset identity does not match source report")
@@ -473,6 +491,8 @@ def main() -> int:
             manifest=manifest,
             manifest_sha256=manifest_identity["sha256"],
             reviewer_id=args.reviewer_id,
+            dataset_bytes=args.dataset.read_bytes(),
+            manifest_bytes=args.manifest.read_bytes(),
         )
     else:
         reviewer_a, reviewer_a_identity = _read_json_with_identity(args.reviewer_a)

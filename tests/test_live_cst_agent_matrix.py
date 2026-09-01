@@ -5,6 +5,8 @@ import pytest
 
 from benchmarks.live_cst_agent_matrix import CASES, _score_live_case, validate_live_request
 
+pytestmark = pytest.mark.windows_d_drive
+
 
 ROOT = Path(__file__).resolve().parents[1]
 ARTIFACT_ROOT = Path("D:/cst_agent_rag_data/live_cst_agent_evidence")

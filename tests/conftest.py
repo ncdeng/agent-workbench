@@ -23,14 +23,20 @@ def pytest_addoption(parser):
     )
 
 
+def _windows_d_drive_available() -> bool:
+    return os.name == "nt" and pathlib.Path("D:/").exists()
+
+
 def pytest_collection_modifyitems(config, items):
     run_live_cst = config.getoption("--run-live-cst") or os.environ.get("RUN_LIVE_CST") == "1"
-    if run_live_cst:
-        return
     skip_live_cst = pytest.mark.skip(reason="requires explicit --run-live-cst or RUN_LIVE_CST=1")
+    skip_d_drive = pytest.mark.skip(reason="requires Windows D: drive")
+    d_drive_ready = _windows_d_drive_available()
     for item in items:
-        if "cst" in item.keywords:
+        if not run_live_cst and "cst" in item.keywords:
             item.add_marker(skip_live_cst)
+        if not d_drive_ready and "windows_d_drive" in item.keywords:
+            item.add_marker(skip_d_drive)
 
 
 @pytest.fixture(autouse=True)

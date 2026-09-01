@@ -1,4 +1,6 @@
-# Agent Workbench
+# CST-Agent Workbench
+
+**English** | [中文](README.zh-CN.md)
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
@@ -6,13 +8,11 @@ Repository: [github.com/ncdeng/agent-workbench](https://github.com/ncdeng/agent-
 
 **The hard part is not calling an LLM API. It is what surrounds the call**: managing side effects in a live desktop application the agent does not own, recovering from external-process failures without pretending otherwise, gating high-risk operations behind parameter-bound approval, and producing evaluation evidence that can be recomputed byte-for-byte.
 
-**Agent Workbench** is a vertical engineering Agent runtime that operates CST Studio Suite 2025 — a real, stateful desktop CAE application — through a Windows COM bridge. It turns a natural-language engineering requirement into a traceable closed loop:
+**CST-Agent** is a vertical engineering Agent runtime that operates CST Studio Suite 2025 — a real, stateful desktop CAE application — through a Windows COM bridge. It turns a natural-language antenna requirement into a traceable closed loop:
 
 `User request -> Planner -> Tool Runtime -> CST modeling/solver -> Result reading -> Diagnosis/optimization -> Trace/report evidence`
 
-This repository is best understood as an **Agent application for a real engineering tool**, not as a generic RAG chatbot or a thin UI wrapper.
-
-> The architecture story is in [PROJECT_STORY.md](PROJECT_STORY.md); the double-review workflow is in [docs/HUMAN_EVALUATION_RUNBOOK.md](docs/HUMAN_EVALUATION_RUNBOOK.md).
+This repository is best understood as an **Agent application for a real engineering tool**, not as a generic RAG chatbot or a thin UI wrapper. Architecture story: [PROJECT_STORY.md](PROJECT_STORY.md).
 
 ---
 

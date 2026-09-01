@@ -16,7 +16,11 @@ from benchmarks.agent_e2e_ablation_runner import (
     validate_dataset_schema,
     validate_report_schema,
 )
-from benchmarks.freeze_agent_e2e_dataset import build_manifest, verify_manifest
+from benchmarks.freeze_agent_e2e_dataset import (
+    build_manifest,
+    recorded_sha_matches,
+    verify_manifest,
+)
 from benchmarks.agent_e2e_claim_review import apply_claim_review, export_review_template
 from benchmarks.build_agent_e2e_frozen_dev_v1 import build_dataset as build_frozen_dataset
 from benchmarks.build_agent_e2e_frozen_dev_v2 import build_dataset as build_frozen_dataset_v2
@@ -91,6 +95,18 @@ def test_frozen_agent_e2e_dataset_has_machine_checkable_oracles():
                 assert fact["label"]
                 assert fact["all_of"]
         assert oracle["max_tool_calls"] >= 0
+
+
+def test_sha256_aliases_treat_lf_and_crlf_as_the_same_dataset():
+    from benchmarks.freeze_agent_e2e_dataset import recorded_sha_matches, sha256_aliases
+
+    lf = b'{"dataset_id":"x"}\n'
+    crlf = b'{"dataset_id":"x"}\r\n'
+    aliases = sha256_aliases(lf)
+    assert hashlib.sha256(lf).hexdigest() in aliases
+    assert hashlib.sha256(crlf).hexdigest() in aliases
+    assert recorded_sha_matches(hashlib.sha256(crlf).hexdigest(), lf)
+    assert recorded_sha_matches(hashlib.sha256(lf).hexdigest(), crlf)
 
 
 def test_40_case_frozen_dataset_is_generator_reproducible_and_manifest_verified():
@@ -465,17 +481,17 @@ def test_canonical_registry_matches_dataset_and_report_provenance():
         "sealed_external_custody_run": "pending",
     }
 
-    def file_sha256(path: Path) -> str:
-        return hashlib.sha256(path.read_bytes()).hexdigest()
+    def file_sha_matches(path: Path, recorded: str) -> bool:
+        return recorded_sha_matches(recorded, path.read_bytes())
 
     for dataset in canonical["datasets"].values():
         dataset_path = ROOT / dataset["path"]
         manifest_path = ROOT / dataset["manifest_path"]
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-        assert file_sha256(dataset_path) == dataset["dataset_sha256"]
-        assert file_sha256(manifest_path) == dataset["manifest_sha256"]
+        assert file_sha_matches(dataset_path, dataset["dataset_sha256"])
+        assert file_sha_matches(manifest_path, dataset["manifest_sha256"])
         assert manifest["dataset_id"] == dataset["dataset_id"]
-        assert manifest["dataset_sha256"] == dataset["dataset_sha256"]
+        assert recorded_sha_matches(manifest["dataset_sha256"], dataset_path.read_bytes())
         assert manifest["case_count"] == dataset["case_count"]
         assert dataset["developer_visible"] is True
         assert dataset["blinded"] is False
@@ -485,7 +501,7 @@ def test_canonical_registry_matches_dataset_and_report_provenance():
         if not artifact_path.is_absolute():
             artifact_path = ROOT / artifact_path
         artifact = json.loads(artifact_path.read_text(encoding="utf-8"))
-        assert file_sha256(artifact_path) == item["sha256"]
+        assert file_sha_matches(artifact_path, item["sha256"])
         dataset_key = item.get("dataset_key")
         dataset = canonical["datasets"].get(dataset_key) if dataset_key else None
         if item["artifact_type"] == "agent_e2e_report":

@@ -2,7 +2,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from cst_agent_workbench.cst.controller import CSTController, _COM_SCRIPT
+
+pytestmark = pytest.mark.windows_d_drive
 from cst_agent_workbench.cst import controller as controller_mod
 
 
