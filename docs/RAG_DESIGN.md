@@ -328,13 +328,13 @@ python -m benchmarks.rag_official_eval --preset heldout_v1_bge_reranker_base_top
 preset 会在检索前校验数据集逐字节 SHA 和 collection/chunk/model/query-instruction identity。该集合由开发者
 可见，`blinded=false`；“frozen”表示字节身份固定，不代表人工双盲。
 
-### Agent groundedness
+### Agent 有据性
 
 `benchmarks/agent_rag_groundedness_eval.py` 使用真实 `CSTAgent.chat()`、真实 Planner/translation/RAG/Executor/Trace，
 只把 CST controller 置为无副作用离线模式。它同时测确定性 citation/provenance/trace 指标，并用“只允许依据
 检索片段”的 LLM judge 统计 claim support。全部 session、模型和临时文件重定向到 D 盘。
 
-development 3 条首先暴露 Executor 会在正确证据外补常识：groundedness 0.697、unsupported claim rate 30.8%。
+development 3 条首先暴露 Executor 会在正确证据外补常识：有据性 0.697、unsupported claim rate 30.8%。
 收紧“只陈述片段直接支持内容、证据不足明说、逐句引用”契约后，复测为 0.900 和 7.7%。冻结后的 held-out
 Agent 子集按数据顺序取每种语言前 2 条，共 6 条，不按结果挑题：
 
@@ -344,27 +344,27 @@ Agent 子集按数据顺序取每种语言前 2 条，共 6 条，不按结果�
 | qrel retrieval Recall@3 | 0.833（5/6） |
 | citation presence / precision | 1.000 / 1.000 |
 | provenance / Trace completeness | 1.000 / 1.000 |
-| groundedness / answer relevance | 0.863 / 0.883 |
+| 有据性 / answer relevance | 0.863 / 0.883 |
 | unsupported claim rate | 0.172 |
 | Agent E2E latency mean / p95 | 37.0 s / 60.8 s |
 
 这组 `0.863/0.172` 是旧 v1 报告的**单次、未校准 LLM judge 开发诊断**，不是人工金标准，也不作为
 对外的定量效果主张。v2 runner 已把 judge 输出升级为逐条原子 claim，并对 claim 数量、支持标签、Top-3
-证据引用和 groundedness 比例做 fail-closed 校验；报告同时绑定 dataset/code/execution-contract、answer、evidence、
+证据引用和有据性比例做 fail-closed 校验；报告同时绑定 dataset/code/execution-contract、answer、evidence、
 judge prompt/raw response 的 SHA。真实 Terra v2 连续 6-case run 中 Agent 完成 6/6，但 judge schema 仅 5/6
-有效；有效的 55 claims 上 macro groundedness=0.766、unsupported=17/55（30.9%）。citation presence/precision
+有效；有效的 55 claims 上 宏平均有据性=0.766、unsupported=17/55（30.9%）。citation presence/precision
 可在 6/6 保存的 answer/evidence 上复算为 1.000；旧失败行未保存完整 qrel/provenance/Trace 布尔值，所以这三项
 只能报告 2 条可验证 denominator，不能沿用旧版“6/6 都为 1.000”的宽泛表述。
 
 `benchmarks/agent_rag_claim_review.py` 可从 offline-revalidated 报告导出隐藏机器 verdict/reason 与实验字段的
 review pack，并在两名独立 reviewer + adjudicator 完成标注后计算 claim-level Cohen's kappa、
-precision/recall/F1 和逐回答 groundedness 误差。当前 D 盘 A/B pack 均含 55 个空白 judgment，绑定同一
+precision/recall/F1 和逐回答有据性误差。当前 D 盘 A/B pack 均含 55 个空白 judgment，绑定同一
 `pack_id`、`rubric_sha256` 并用 SHA-bound permutation 打散源报告顺序；自然 case/claim ID 与源身份仍可见，所以准确口径是
 verdict-blind 而不是完全 provenance-blind。尚无真实双人独立标注产物，因此只能说“校准基础设施已完成”，
 不能说 judge 已校准。完整流程见 `docs/HUMAN_EVALUATION_RUNBOOK.md`。
 
 注意：未命中 qrel 的 farfield-source case 实际召回了 analytical-farfield macro 与 VBA FarfieldSource 文档，
-答案也得到 0.87 groundedness；这提示单一正例 qrel 可能不够穷尽替代相关文档。正式报告不因此回改 qrels。
+答案也得到 0.87 有据性；这提示单一正例 qrel 可能不够穷尽替代相关文档。正式报告不因此回改 qrels。
 
 ---
 

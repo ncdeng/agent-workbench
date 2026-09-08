@@ -147,7 +147,7 @@ python -m benchmarks.rag_official_ablation_matrix `
 
 这两条命令使用开发者可见的 30-case 冻结集；`heldout` 表示与旧开发集分离，不表示 blinded 或外部 custody。
 
-### Agent E2E 与生成层 groundedness
+### Agent E2E 与生成层有据性
 
 确定性 full-Agent 门禁使用 Fake-CST 和 scripted provider，不需要模型 key，也不会启动 CST GUI：
 
@@ -186,7 +186,7 @@ python -m benchmarks.agent_e2e_reviewer_calibration export-template `
   --output D:\cst_agent_rag_data\human_review\agent_e2e_repeat3\reviewer_b.json
 ```
 
-Groundedness 的在线 runner 会调用真实 Agent provider 和 judge provider，但仍使用离线 controller，不启动 CST。已有报告可以零模型复算：
+有据性的在线 runner 会调用真实 Agent provider 和 judge provider，但仍使用离线 controller，不启动 CST。已有报告可以零模型复算：
 
 ```powershell
 python -m benchmarks.agent_rag_groundedness_revalidate `

@@ -52,8 +52,12 @@ Native 和 Pi 两种执行引擎都只经由 Python Host 的 `execute_tool`，�
 - 代价：`_STEP_ALLOWED_TOOL_NAMES` 是硬编码的步类型→工具映射，新增工具必须同步维护这张表，漏加的表现是「工具存在但永远调不到」。
 - 40-case 确定性消融的 grader 会显式检查空白名单与零工具上限这两种边界，防止「白名单形同虚设」被测试放过。
 
-## 适用范围
+## 适用范围与一个必须说清的边界
 
 本 ADR 描述的是**存在活动 plan 时**的工具权限语义——也就是 `/api/chat` 走 Planner 产生 plan 之后的那条路径。
 
-CLI、程序化入口和内部直接调用不经由 Planner，调用方自己选定要执行的工具，不落在本决策的范围内。这两类入口的边界应当分开讨论，本文不对它们作任何主张。
+**没有活动 plan 时，这道门不生效。** `allowed_tool_names_for_active_step` 在 `session` 为空或没有 `active_plan` 时返回 `None`，而执行侧的判断是 `if allowed is None or tool_name in allowed`——`None` 意味着放行，不是拒绝。CLI、程序化入口和内部直接调用不经由 Planner，由调用方自己负责选定工具。
+
+这是单机单用户桌面应用的一个有意边界，不是 default-deny。对外只能说「**计划步内的工具权限收敛**」，**不能说「无计划即无授权」**，也不能把这道门描述成覆盖所有入口的 fail-closed 授权层。真正 fail-closed 的只有一种情形：权限解析本身抛异常时拒绝执行。
+
+同理，40-case 消融里 `no_planner` 臂的 0/40 **不是这道安全门的产物**。按 `benchmarks/agent_e2e_canonical.json` 的记录，它由 context-budget guard 拒绝调用模型主导——去掉计划域的工具过滤后，全部工具目录进入 prompt 撑破预算。它证明的是「计划域工具目录对 prompt 预算是必需的」，不是「规划提升了模型质量」，更不是「无计划就无权限」。

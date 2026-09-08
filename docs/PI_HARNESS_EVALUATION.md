@@ -189,7 +189,7 @@ Pi 在本批复杂多步工具流上更容易完成，但 12 个独立样本不�
   `recall_tool_result`，违反动态 allowlist 与 exact sequence；
 - **Grader 边界**：task-pass 但 strict-fail 的多数样本实际表达了“已连接/在线”或
   “恢复连接并自动重试成功”，只是 case-authored lexical alternatives 没覆盖这些中文词形。
-  所以 strict 是词面事实召回，不是已校准的语义 groundedness，`claim_precision=null`。
+  所以 strict 是词面事实召回，不是已校准的语义有据性，`claim_precision=null`。
 
 两臂各有 1/36 terminal provider timeout。端到端 endpoint 保留这些失败；另行排除 terminal
 provider failure 后，agent-eligible task 为 Native `31/35=88.6%`、Pi `33/35=94.3%`，
@@ -236,7 +236,7 @@ strict 为 `24/35=68.6%`、`27/35=77.1%`。这组 conditioned 指标只用于归
 
 - “Pi 显著提高成功率或降低延迟”；
 - “36 repeats 是 36 个独立任务”；
-- “strict 指标等价于经过人工校准的语义 groundedness”；
+- “strict 指标等价于经过人工校准的语义有据性”；
 - “1-case post-fix 证明 Pi 优于 Native”；
 - “Pi 接管了整个 Agent”；
 - “Pi 自带上下文、权限、Recovery 和 Trace，因此 Python 控制面可以删除”；
