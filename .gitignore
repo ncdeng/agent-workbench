@@ -33,7 +33,6 @@ tmp/
 .cache/
 .coverage
 coverage/
-.reasonix/
 playwright-report/
 test-results/
 
@@ -42,7 +41,6 @@ rag_index/
 .chromadb_fresh/
 
 # Codex run checkpoints / caches (transient, not source)
-.codex-checkpoints/
 .codex-latest-checkpoint.txt
 .codex-rag-memory-quality-checkpoint.txt
 benchmarks/reports/.checkpoints/
@@ -51,22 +49,3 @@ integrations/pi_agent_core/node_modules/
 
 # Local CST/pytest artifacts (never source-controlled)
 cst_agent_rag_datatmppytest-*/
-
-# Personal resume/OCR material belongs outside the product repository
-resume.pdf
-resume_*.txt
-resume_pages/
-extract_resume.py
-extract_pdfplumber.py
-render_pdf_pages.py
-check_pdf.py
-check_ocr.py
-ocr_power.ps1
-ocr_power_save.ps1
-
-# Local agent CLI session data
-.zcode/
-.mimosa/
-
-# AI coding tool cost/telemetry exports (not product artifacts)
-tokscale-export-*.json

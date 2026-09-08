@@ -10,6 +10,8 @@ CST-Agent is an engineering agent that operates CST Studio Suite 2025, a statefu
 
 Software like CST is stateful and has real side effects: a solve takes minutes, a wrong parameter ruins the model, and a hung external process cannot always be killed. Most of the work here is not the LLM call itself but everything around it — tool permissions, human approval, failure recovery, tracing, reproducible evaluation. The design history, including decisions that were later reverted, is in [PROJECT_STORY.md](PROJECT_STORY.md).
 
+> **On how this was built**: much of the implementation work here was done with AI coding tools. The architectural decisions, the evaluation design, and the safety boundaries are mine; the decision records are in [`docs/adr/`](docs/adr/). The evaluation results are reproducible — datasets, manifests, and reports are byte-bound in the evidence registry [benchmarks/agent_e2e_canonical.json](benchmarks/agent_e2e_canonical.json), raw reports are under [benchmarks/reports/](benchmarks/reports/), and the commands are in the Evaluation and Verification sections below. The boundaries around every number, and the null results, are documented rather than dropped.
+
 ---
 
 <p align="center">
@@ -34,7 +36,7 @@ Software like CST is stateful and has real side effects: a solve takes minutes, 
 
 - A CST project is a single stateful resource, and modeling/solver calls change it irreversibly. Tools run sequentially, the active plan decides which tools each step can see, and a failed step leaves real state behind that recovery has to work from — not an HTTP error code to retry.
 - CST's COM interface has Windows STA thread affinity and a pinned Python version, so all COM/VBA work runs in a dedicated subprocess and handles are released with the process. The cost is one extra subprocess hop per command.
-- On a bridge timeout, Python can kill its own subprocess but not the CST process, which may still be running the previous solve; CST has no reliable cross-process abort API. The runtime marks the connection dead, returns `timeout: True`, and tells the user CST may still be solving (ADR-006). It does not pretend to abort.
+- On a bridge timeout, Python can kill its own subprocess but not the CST process, which may still be running the previous solve; CST has no reliable cross-process abort API. The runtime marks the connection dead, returns `timeout: True`, and tells the user CST may still be solving ([ADR-006](docs/adr/adr-006-cst-timeout-honest-degradation.md)). It does not pretend to abort.
 
 ## Architecture
 
@@ -82,23 +84,23 @@ All 42 tools go through one entry point, `tool_runtime.execute_tool`; there is n
 
 `active-step allowlist -> schema normalize/validate -> approval gate -> dispatch -> typed result`
 
-- Permission and completion are separate concerns (ADR-010). `allowed_tools` is only a whitelist; its subset `required_tools` is the completion contract. Progress accumulates across batches and unfinished tools are injected back into plan context, so a step no longer completes just because some call happened.
+- Permission and completion are separate concerns ([ADR-010](docs/adr/adr-010-plan-step-tool-allowlist.md)). `allowed_tools` is only a whitelist; its subset `required_tools` is the completion contract. Progress accumulates across batches and unfinished tools are injected back into plan context, so a step no longer completes just because some call happened.
 - Arguments are validated against canonical JSON Schemas, with optional defaults applied before validation, hashing, and evaluation. Omitting a flag and passing its default are the same call at every layer.
 - Failures are typed. The recovery engine registers bounded actions only: reconnect, timeout retry, farfield-monitor repair, argument repair, dry-run fallback. Recovery goes back through the allowlist and approval gate, and every retry outcome lands on the tool event and the trace.
-- Large results are summarized; the full payload stays in the session and comes back through `recall_tool_result`. Curves may be deterministically downsampled with endpoints and global extrema preserved, and scalar summaries are always computed on the full raw curve (ADR-012).
+- Large results are summarized; the full payload stays in the session and comes back through `recall_tool_result`. Curves may be deterministically downsampled with endpoints and global extrema preserved, and scalar summaries are always computed on the full raw curve.
 
 ## Approval
 
 Autonomy is tiered by what a call can bypass:
 
 - Typed modeling, solver, and result-reading tools run without approval; their arguments are already constrained by the schema and the controller's guards.
-- `execute_vba_script` can bypass both, so it needs a human grant (ADR-011). A grant binds the tool name, the SHA-256 of the normalized arguments, the actor, and an expiry, and works exactly once: a CST-side failure needs re-approval, and changing one byte of the arguments creates a new request. The server keeps the exact arguments (the UI sees a preview of at most 500 characters) and re-runs a side-effect-free preflight before issuing.
-- A pending approval is neither a failure nor a completion (ADR-013). The plan stays on the current step, only successfully executed tools count toward completion, and approval replays the exact bound call in the same HTTP request.
+- `execute_vba_script` can bypass both, so it needs a human grant ([ADR-011](docs/adr/adr-011-parameter-bound-tool-approval.md)). A grant binds the tool name, the SHA-256 of the normalized arguments, the actor, and an expiry, and works exactly once: a CST-side failure needs re-approval, and changing one byte of the arguments creates a new request. The server keeps the exact arguments (the UI sees a preview of at most 500 characters) and re-runs a side-effect-free preflight before issuing.
+- A pending approval is neither a failure nor a completion. The plan stays on the current step, only successfully executed tools count toward completion, and approval replays the exact bound call in the same HTTP request.
 - Clearing the session or opening/closing a project revokes pending requests and active grants. This is a single-user desktop tool with no multi-tenant authentication; do not read it as RBAC.
 
 ## Harnesses: Native and Pi
 
-The tool loop inside `run_agent_turn()` is replaceable (ADR-009). `AGENT_BRAIN=native` (default) keeps the hand-written Python loop; `AGENT_BRAIN=pi` hands model turns to a restricted Node sidecar running the MIT-licensed pi-agent-core. Planner, session state, recovery, trace, and the COM boundary stay in Python either way. See [`integrations/pi_agent_core/README.md`](integrations/pi_agent_core/README.md).
+The tool loop inside `run_agent_turn()` is replaceable. `AGENT_BRAIN=native` (default) keeps the hand-written Python loop; `AGENT_BRAIN=pi` hands model turns to a restricted Node sidecar running the MIT-licensed pi-agent-core. Planner, session state, recovery, trace, and the COM boundary stay in Python either way. See [`integrations/pi_agent_core/README.md`](integrations/pi_agent_core/README.md).
 
 - Pi does not load pi-coding-agent and gets no Bash/Read/Write/Edit/Web/MCP built-ins. It sees only the active-step subset of the tool catalog, re-filtered by Python after every batch. Every call still returns to `execute_tool`, so allowlists, approval, recovery, and COM isolation apply unchanged, and Pi never holds a mutable session or a COM handle.
 - The control protocol is versioned: hello/health/run/result/error envelopes, request/session correlation, capability negotiation, heartbeats, ordered events, and correlated cancel/steer/follow-up.
@@ -118,7 +120,7 @@ House rules for numbers in this repository: recomputable, boundaries stated, nul
 
 ## The CST side
 
-CST is the substrate that makes the control plane above necessary. On top of the COM/VBA bridge there are deterministic builders for common antennas (rectangular patch, half-wave dipole, pixel patch), so routine requests skip the LLM entirely; open-ended tasks use tool calling. The optimization loop: solve, read S11/farfield through a fallback chain, triage with `diagnose_s11`, then physics-guided tuning — f∝1/L secant step sizing, direction memory, rollback validated by a real re-solve, and stagnation detection that restores the best-so-far point. When the CST Native Optimizer is used, the split is fixed: the agent interprets the goal, diagnoses results, configures objectives, and owns rollback; the optimizer does numerical search; the solver stays the physical ground truth (ADR-014).
+CST is the substrate that makes the control plane above necessary. On top of the COM/VBA bridge there are deterministic builders for common antennas (rectangular patch, half-wave dipole, pixel patch), so routine requests skip the LLM entirely; open-ended tasks use tool calling. The optimization loop: solve, read S11/farfield through a fallback chain, triage with `diagnose_s11`, then physics-guided tuning — f∝1/L secant step sizing, direction memory, rollback validated by a real re-solve, and stagnation detection that restores the best-so-far point. When the CST Native Optimizer is used, the split is fixed: the agent interprets the goal, diagnoses results, configures objectives, and owns rollback; the optimizer does numerical search; the solver stays the physical ground truth.
 
 ## RAG and memory
 
@@ -136,7 +138,7 @@ Memory comes in three parts:
 
 - Real CST solves and COM tests need a local Windows machine with CST Studio Suite; CI runs offline tests only.
 - Some 9.4 GHz Rogers5880 microstrip cases still miss a stable -10 dB; diagnosis-driven tuning needs more work.
-- LangGraph was adopted and then withdrawn (ADR-001): the graph nodes were thin pass-throughs, the checkpointer could not work with non-serializable COM handles, and the replan edge was unreachable in production. Control flow is hand-written; step-level single-tool driving is future work.
+- LangGraph was adopted and then withdrawn: the graph nodes were thin pass-throughs, the checkpointer could not work with non-serializable COM handles, and the replan edge was unreachable in production. Control flow is hand-written; step-level single-tool driving is future work.
 - Chat SSE polls session state every 0.5 s; it is not token-level streaming.
 - The backend is a single-user desktop tool: one global session, one operation lock, no authentication. Keep it bound to `127.0.0.1`.
 - The BO/PSO/DE module is a bounded fallback sampler for when LLM proposals are unavailable, not a full optimization-loop replacement.

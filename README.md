@@ -10,6 +10,8 @@ CST-Agent 是一个操作 CST Studio Suite 2025 的工程 Agent：通过 Windows
 
 CST 这类软件有状态、有真实副作用：一次求解几分钟起步，参数改错模型就废，外部进程卡死也不一定杀得掉。所以这个项目的工作量大头不在调 LLM，而在调用外面那一圈——工具权限、人工审批、失败恢复、trace、评测可复现。为什么这么设计、中途撤销过哪些方案，记录在 [PROJECT_STORY.md](PROJECT_STORY.md)。
 
+> **关于协作方式**：本项目的大量实现工作在 AI 编码工具辅助下完成。架构决策、评测设计与安全边界由我确定，决策记录见 [`docs/adr/`](docs/adr/)。评测结论可复现——数据集、manifest 与报告按字节绑定在证据登记表 [benchmarks/agent_e2e_canonical.json](benchmarks/agent_e2e_canonical.json)，原始报告在 [benchmarks/reports/](benchmarks/reports/)，复现命令见下面的「评测」与「验证」两节。数字的边界和 null result 都写在文档里，没有删。
+
 ---
 
 <p align="center">
@@ -34,7 +36,7 @@ CST 这类软件有状态、有真实副作用：一次求解几分钟起步，�
 
 - CST 工程是单一有状态资源，建模和求解不可逆，所以工具串行执行，当前 Plan 决定每一步能用哪些工具。一步失败会留下真实状态，恢复逻辑要从这个状态接着走，不能当成 HTTP 错误码直接重试。
 - CST 的 COM 接口有 Windows STA 线程亲和，还锁 Python 版本。所有 COM/VBA 调用放在独立子进程里跑，句柄随进程释放，代价是每条命令多一跳子进程。
-- 桥接超时时 Python 只能杀自己的子进程；CST 主进程可能还在算上一次求解，而 CST 没有可靠的跨进程 abort API。运行时的做法是标记连接失效、返回 `timeout: True`、明说 CST 可能还在算（ADR-006），不假装 abort 成功。
+- 桥接超时时 Python 只能杀自己的子进程；CST 主进程可能还在算上一次求解，而 CST 没有可靠的跨进程 abort API。运行时的做法是标记连接失效、返回 `timeout: True`、明说 CST 可能还在算（[ADR-006](docs/adr/adr-006-cst-timeout-honest-degradation.md)），不假装 abort 成功。
 
 ## 架构
 
@@ -82,23 +84,23 @@ CST 这类软件有状态、有真实副作用：一次求解几分钟起步，�
 
 `当前步白名单 -> schema 规范化/校验 -> 审批门 -> 分发 -> 类型化结果`
 
-- 权限和完成条件分开（ADR-010）。`allowed_tools` 只是白名单，完成契约是它的子集 `required_tools`：跨 batch 累计完成度，没做完的工具注回 Plan 上下文，一步不会因为随便发生过一次调用就算完。
+- 权限和完成条件分开（[ADR-010](docs/adr/adr-010-plan-step-tool-allowlist.md)）。`allowed_tools` 只是白名单，完成契约是它的子集 `required_tools`：跨 batch 累计完成度，没做完的工具注回 Plan 上下文，一步不会因为随便发生过一次调用就算完。
 - 参数按 JSON Schema 校验，可选默认值在校验、哈希、评测之前统一填充。省略一个参数和显式传默认值，在每一层都是同一次调用。
 - 失败带类型。恢复引擎只注册有界动作：重连、超时重试、远场监视器补建、参数修复、dry-run 回退。恢复本身也要重新过白名单和审批门，每次恢复的结果挂在 tool event 和 trace 上。
-- 大结果先摘要，完整载荷存在 session 里，要用时通过 `recall_tool_result` 召回。曲线可以确定性降采样，端点和全局极值必须保留，标量统计一律按完整原始曲线算（ADR-012）。
+- 大结果先摘要，完整载荷存在 session 里，要用时通过 `recall_tool_result` 召回。曲线可以确定性降采样，端点和全局极值必须保留，标量统计一律按完整原始曲线算。
 
 ## 审批
 
 按一次调用能绕过什么来分级：
 
 - 类型化的建模、求解、读结果工具自主执行，参数已经被 schema 和 controller 的护栏框住。
-- `execute_vba_script` 能绕过这两层，所以要人批（ADR-011）。授权绑定工具名、规范化参数的 SHA-256、actor 和有效期，单次消费：CST 侧失败要重新批，参数改一个字节就是新请求。服务端保存精确参数（UI 只看到 500 字符预览），签发前重跑一遍无副作用的预检。
-- 审批挂起不算失败也不算完成（ADR-013）。Plan 停在当前步，只有真正执行成功的工具计入完成度；批准后在同一个 HTTP 请求里按服务端保存的参数精确重放。
+- `execute_vba_script` 能绕过这两层，所以要人批（[ADR-011](docs/adr/adr-011-parameter-bound-tool-approval.md)）。授权绑定工具名、规范化参数的 SHA-256、actor 和有效期，单次消费：CST 侧失败要重新批，参数改一个字节就是新请求。服务端保存精确参数（UI 只看到 500 字符预览），签发前重跑一遍无副作用的预检。
+- 审批挂起不算失败也不算完成。Plan 停在当前步，只有真正执行成功的工具计入完成度；批准后在同一个 HTTP 请求里按服务端保存的参数精确重放。
 - 清会话、打开或关闭工程都会撤销 pending 请求和已发授权。这是单机单用户工具，没有多租户认证，不要理解成 RBAC。
 
 ## 执行引擎：Native 和 Pi
 
-`run_agent_turn()` 里的 tool loop 可以整体替换（ADR-009）。默认 `AGENT_BRAIN=native` 用手写 Python loop；`AGENT_BRAIN=pi` 把模型轮次交给受限 Node sidecar，跑 MIT 许可的 pi-agent-core。两种模式下 Planner、会话状态、恢复、trace 和 COM 边界都留在 Python。细节见 [`integrations/pi_agent_core/README.md`](integrations/pi_agent_core/README.md)。
+`run_agent_turn()` 里的 tool loop 可以整体替换。默认 `AGENT_BRAIN=native` 用手写 Python loop；`AGENT_BRAIN=pi` 把模型轮次交给受限 Node sidecar，跑 MIT 许可的 pi-agent-core。两种模式下 Planner、会话状态、恢复、trace 和 COM 边界都留在 Python。细节见 [`integrations/pi_agent_core/README.md`](integrations/pi_agent_core/README.md)。
 
 - Pi 不加载 pi-coding-agent，没有 Bash/Read/Write/Web/MCP 内置工具，只能看到当前步过滤后的工具目录，每个 batch 结束由 Python 重新过滤。每次调用照样回到 `execute_tool`，白名单、审批、恢复、COM 隔离同样生效。
 - 控制协议带版本：hello/health/run/result/error 信封、request/session 双相关、能力协商、心跳、有序事件、cancel/steer/follow-up。
@@ -118,7 +120,7 @@ CST 这类软件有状态、有真实副作用：一次求解几分钟起步，�
 
 ## CST 这一侧
 
-CST 是让上面这些控制面变得必要的底座。COM/VBA 桥之上给常见天线（矩形贴片、半波偶极子、像素贴片）做了确定性构建器，常规请求不经过 LLM 直接出模型，开放任务走 tool calling。优化闭环是：求解、带回退链的 S11/远场读取、`diagnose_s11` 分诊，然后物理引导调参——f∝1/L 割线步长、方向记忆、经真实重求解验证的回滚、停滞时恢复 best-so-far。用 CST 自带优化器时分工写死：Agent 管目标解释、诊断、objective 配置和回滚，优化器管数值搜索，求解器始终是物理真值（ADR-014）。
+CST 是让上面这些控制面变得必要的底座。COM/VBA 桥之上给常见天线（矩形贴片、半波偶极子、像素贴片）做了确定性构建器，常规请求不经过 LLM 直接出模型，开放任务走 tool calling。优化闭环是：求解、带回退链的 S11/远场读取、`diagnose_s11` 分诊，然后物理引导调参——f∝1/L 割线步长、方向记忆、经真实重求解验证的回滚、停滞时恢复 best-so-far。用 CST 自带优化器时分工写死：Agent 管目标解释、诊断、objective 配置和回滚，优化器管数值搜索，求解器始终是物理真值。
 
 ## RAG 和记忆
 
@@ -136,7 +138,7 @@ CST 是让上面这些控制面变得必要的底座。COM/VBA 桥之上给常�
 
 - 真实 CST 求解和 COM 测试要本机 Windows 加 CST Studio Suite，CI 只跑离线测试。
 - 部分 9.4 GHz Rogers5880 微带案例还压不稳 -10 dB，诊断驱动的调参有待加强。
-- LangGraph 用过又撤了（ADR-001）：graph 节点是 runtime 函数的薄透传，checkpointer 因 COM 句柄没法序列化用不了，replan 边在生产路径走不到，所以改回手写控制流。步级单工具驱动还没做。
+- LangGraph 用过又撤了：graph 节点是 runtime 函数的薄透传，checkpointer 因 COM 句柄没法序列化用不了，replan 边在生产路径走不到，所以改回手写控制流。步级单工具驱动还没做。
 - Chat SSE 每 0.5 秒轮询会话状态上报工具事件，不是 token 级流式。
 - 后端是单用户桌面工具：一个全局 session、一把操作锁、没有认证，只应绑定 `127.0.0.1`。
 - BO/PSO/DE 是 LLM 提案不可用时的兜底采样器，不是完整优化环。
