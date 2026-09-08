@@ -1,0 +1,10 @@
+# Frozen evaluation evidence is bound by the SHA-256 of its raw bytes:
+# datasets, manifests, reports, and the runners that hash their own source.
+# Any end-of-line translation changes those bytes, so a default Windows
+# checkout (core.autocrlf=true) would rewrite LF to CRLF and every identity
+# check would fail with a SHA mismatch. Pin the working tree to LF here so
+# the evidence chain reproduces on every platform.
+#
+# `text eol=lf` rather than `-text`: bytes stay identical to the blob, and
+# the files remain diffable instead of being treated as binary.
+benchmarks/** text eol=lf

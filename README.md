@@ -212,8 +212,24 @@ python -m benchmarks.agent_e2e_ablation_runner --dataset benchmarks/agent_e2e_fr
 
 ## 验证
 
+跑 `--level eval` / `offline` / `all` 之前，有三个前提要先备齐，否则会看到成片的失败而不是跳过：
+
 ```bash
-# 快速冒烟：错误、摘要、planner 路由、FastAPI chat/API
+# 1. Pi sidecar 的 Node 依赖（test_pi_brain 需要，node_modules 不入库）
+npm install --prefix integrations/pi_agent_core
+
+# 2. 一个 MODEL_API_KEY 占位值。确定性代理不真正调模型，但执行器会先检查
+#    key 是否存在，缺了就直接拒绝、整组归零。
+copy .env.example .env    # 里面填任意占位值即可
+
+# 3. LF 检出。冻结数据集/manifest/报告按原始字节绑定 SHA-256，行尾被改写
+#    就永远对不上。仓库已用 .gitattributes 把 benchmarks/ 钉成 LF；如果你在
+#    加 .gitattributes 之前就克隆过，跑一次：
+git rm --cached -r benchmarks && git checkout HEAD -- benchmarks
+```
+
+```bash
+# 快速冒烟：错误、摘要、planner 路由、FastAPI chat/API（无需上面的前提）
 python scripts/check.py --level smoke
 
 # 核心后端门禁：agent runtime、tool runtime、UI 接线、web API

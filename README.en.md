@@ -251,8 +251,25 @@ The public command above grants execution eligibility only. The private-verifica
 
 ## Verification
 
+Three things must be provisioned before `--level eval` / `offline` / `all`, or you get a wall
+of failures instead of skips:
+
 ```bash
-# Fast smoke gate: errors, summaries, planner routing, FastAPI chat/API
+# 1. Node dependencies for the Pi sidecar (test_pi_brain needs them; node_modules is not vendored)
+npm install --prefix integrations/pi_agent_core
+
+# 2. A placeholder MODEL_API_KEY. The deterministic proxy never calls a model, but the
+#    executor checks that a key exists and refuses the whole run when it is missing.
+copy .env.example .env    # any placeholder value works
+
+# 3. An LF checkout. Frozen datasets, manifests and reports are bound by the SHA-256 of
+#    their raw bytes, so end-of-line rewriting breaks every identity check. The repository
+#    pins benchmarks/ to LF via .gitattributes; if you cloned before that file existed, run:
+git rm --cached -r benchmarks && git checkout HEAD -- benchmarks
+```
+
+```bash
+# Fast smoke gate: errors, summaries, planner routing, FastAPI chat/API (no setup needed)
 python scripts/check.py --level smoke
 
 # Core backend gate: agent runtime, tool runtime, UI wiring, web API

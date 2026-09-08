@@ -162,7 +162,10 @@ CST Studio Suite and its COM interface require a licensed Windows desktop enviro
 
 - 42 canonical agent tools.
 - Modular FastAPI REST + SSE endpoints.
-- 1,156 offline tests passing, 2 live-CST tests deselected.
+- 1,159 offline tests passing, 2 live-CST tests deselected. The offline gate needs three
+  things provisioned first — the Pi sidecar's Node dependencies, a placeholder
+  `MODEL_API_KEY`, and an LF checkout of the byte-bound evidence files — all listed in the
+  README's Verification section.
 - React Dashboard / Chat / Trace UI.
 - Fake-CST ablation runner and reports.
 - CLI real-CST matrix and optimization report path.
