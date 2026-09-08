@@ -730,7 +730,7 @@ def finish_tool_call_trace(
             "result_full": sanitized_result,
             "error": _truncate_text(error, 1000) if error else "",
             "error_type": result_error_type,
-            # ADR-013：审批挂起是被暂缓的副作用，既不是工具失败也不是步骤完成，
+            # 审批挂起是被暂缓的副作用，既不是工具失败也不是步骤完成，
             # 因此不能进入失败统计，否则 Trace 与 Dashboard 会把等待审批显示成故障。
             "approval_pending": result_error_type == "approval_required",
         }

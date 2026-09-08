@@ -450,7 +450,7 @@ def test_chat_endpoint_propagates_agent_failure_status():
 
 def test_chat_endpoint_routes_through_runtime_control_flow(monkeypatch):
     """生产 chat 路径直接调 agent.chat()（内部走 planner → tool loop → reflection 闭环），
-    不再经过 LangGraph 图层。这把 ADR-001（LangGraph 撤销）的叙事与代码绑定。"""
+    不再经过 LangGraph 图层。这把「LangGraph 已撤销」的叙事与代码绑定。"""
     reset_app_state()
     app = create_app(dry_run=True)
     state = get_app_state(dry_run=True)

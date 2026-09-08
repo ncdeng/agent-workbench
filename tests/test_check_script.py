@@ -111,7 +111,7 @@ def test_check_script_privacy_gate_tests_and_scans_the_worktree():
 def test_check_script_referenced_test_files_exist():
     """check.py 里写死的测试文件路径必须真实存在。
 
-    ADR-001 删掉 agent/nodes.py 时，tests/test_agent_nodes.py 一并消失，但
+    撤销 LangGraph 删掉 agent/nodes.py 时，tests/test_agent_nodes.py 一并消失，但
     PYTHON_SMOKE_FILES / PYTHON_CORE_FILES 仍引用它，导致 README 里记录的
     `--level smoke` / `core` / `all` 三个门禁长期直接报错退出（exit code 4），
     而本测试文件当时只断言 check 的名字，没人发现。

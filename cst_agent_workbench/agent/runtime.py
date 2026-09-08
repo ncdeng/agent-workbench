@@ -376,7 +376,7 @@ def evaluate_optimization_next_action(
     """评估下一步动作。
 
     replan_with_llm=False 时只返回 needs_replan 信号、不在本函数内静默重建 plan——
-    图路由路径（已撤销，见 ADR-001）曾用它把重规划决策上交给图；
+    图路由路径（已撤销）曾用它把重规划决策上交给图；
     当前生产路径直接调用时保持默认 True 的原地重建行为，False 保留给等价编排层或测试。
     """
     evaluation = evaluate_replan_or_stop(
@@ -896,8 +896,8 @@ def run_chat_completion_loop(
                     tool_result_dict = json.loads(tool_result)
                 except Exception as _json_exc:
                     logger.warning("tool result JSON parse failed: %s", _json_exc)
-                    # 按 ADR-008 的标准：这条降级会驱动 had_tool_failure 与 plan
-                    # 状态，必须留下观测记录，不能只有 warning。
+                    # 这条降级会驱动 had_tool_failure 与 plan 状态，
+                    # 必须留下观测记录，不能只有 warning。
                     record_observability_degradation(
                         session,
                         component="tool_result_parse",
@@ -1274,7 +1274,7 @@ def run_agent_turn(
 
     消息组装由调用方（agent.py）负责，本函数只做执行闭环。
     trace 相关（start_trace_run / finish_trace_run）保留在 agent.py。
-    replan_with_llm=False（图路径已撤销，见 ADR-001）时只返回 needs_replan 信号、不在本函数内静默重建 plan——
+    replan_with_llm=False（图路径已撤销）时只返回 needs_replan 信号、不在本函数内静默重建 plan——
     """
     effective_context_tokens = int(max_context_tokens or config.AGENT_CONTEXT_MAX_TOKENS)
     effective_loop_runner = loop_runner or run_chat_completion_loop

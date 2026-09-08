@@ -113,10 +113,10 @@ CST 这类软件有状态、有真实副作用：一次求解几分钟起步，�
 
 - 证据登记表 [benchmarks/agent_e2e_canonical.json](benchmarks/agent_e2e_canonical.json) 按字节绑定冻结数据集、manifest 和各报告；早期 10-case 开发报告降级成历史诊断。
 - 40-case 确定性消融（manifest/SHA 绑定，developer-visible；现行证据是登记表里的 `post_approval_v3_deterministic_full`）：full 40/40（严格词面 36/40），no-context 执行 40/40 但严格词面 28/40，no-recovery 32/40（严格词面 28/40），no-planner 0/40；no-memory 和 no-ToolUseMemory 都是 40/40。planner 和 recovery 的贡献成立，memory 增益没测出来。
-- 真实模型审计的修正留在记录里：第一轮 Terra 审计（7 个代表 case）暴露了词面/参数假阴性和一个欠指定的 solver oracle；post-audit v2 回归 execution 7/7、exact sequence 7/7、strict lexical 6/7，并写明 v1 输出参与了 oracle 修订。3-repeat 的语义审阅（response-SHA 绑定）execution 19/21、grounded 16/21。重复样本相关，不是 21 个独立任务，也都不是 blinded。
+- 真实模型审计的修正留在记录里：第一轮 Terra 审计（7 个代表 case）暴露了词面/参数假阴性和一个欠指定的 solver oracle；post-audit v2 回归 execution 7/7、exact sequence 7/7、strict lexical 6/7，并写明 v1 输出参与了 oracle 修订。3-repeat 的语义审阅（response-SHA 绑定）execution 19/21、有据性 16/21。重复样本相关，不是 21 个独立任务，也都不是 blinded。
 - ToolUseMemory 真实模型 A/B（四个失败族，8 case × 2 臂 × 3 repeats）：learned 臂 24/24 注入了记忆、确实改变了首轮工具排序，但两臂都 24/24、paired delta=0，learned 平均多约 220 token。这个 null result 保留在仓库里。
 - 密封评测是协议不是结果：v2 verifier 把外置信任策略绑定到公开 case、fixture、runner、prompt 和工具目录的真实字节，负例测试通过；但没有真实外部 issuer，也没跑过完整 sealed run。见 [docs/SEALED_EVALUATION_PROTOCOL.md](docs/SEALED_EVALUATION_PROTOCOL.md)。
-- 人工校准没完成之前，LLM judge 分数（如 RAG macro groundedness 0.766、17/55 条 unsupported）只当开发诊断。双 reviewer 标注包已导出，流程在 [docs/HUMAN_EVALUATION_RUNBOOK.md](docs/HUMAN_EVALUATION_RUNBOOK.md)。
+- 人工校准没完成之前，LLM judge 分数（如 RAG 宏平均有据性 0.766、17/55 条 unsupported）只当开发诊断。双 reviewer 标注包已导出，流程在 [docs/HUMAN_EVALUATION_RUNBOOK.md](docs/HUMAN_EVALUATION_RUNBOOK.md)。
 
 ## CST 这一侧
 

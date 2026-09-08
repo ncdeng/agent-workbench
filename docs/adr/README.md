@@ -5,7 +5,7 @@
 | 编号 | 决策 | 状态 |
 | --- | --- | --- |
 | [ADR-006](adr-006-cst-timeout-honest-degradation.md) | CST 超时/断连的限次恢复与诚实降级 | 已定稿 |
-| [ADR-010](adr-010-plan-step-tool-allowlist.md) | 工具白名单按计划步动态开放 | 已定稿（含一处待确认） |
+| [ADR-010](adr-010-plan-step-tool-allowlist.md) | 工具白名单按计划步动态开放 | 已定稿 |
 | [ADR-011](adr-011-parameter-bound-tool-approval.md) | raw VBA 的参数绑定、单次消费人工审批 | 已定稿 |
 
 每篇的结构是：背景 / 备选方案 / 决策 / 后果与代价。

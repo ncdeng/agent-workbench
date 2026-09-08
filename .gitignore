@@ -40,9 +40,7 @@ test-results/
 rag_index/
 .chromadb_fresh/
 
-# Codex run checkpoints / caches (transient, not source)
-.codex-latest-checkpoint.txt
-.codex-rag-memory-quality-checkpoint.txt
+# Generated benchmark artifacts and vendored deps (transient, not source)
 benchmarks/reports/.checkpoints/
 benchmarks/reports/.agent_e2e_artifacts/
 integrations/pi_agent_core/node_modules/

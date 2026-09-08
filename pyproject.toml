@@ -14,7 +14,7 @@ dependencies = [
     "anthropic>=0.69",
     "pandas>=1.5",
     "numpy>=1.24",
-    # langgraph / langchain-core removed per ADR-001: the graph layer was withdrawn
+    # langgraph / langchain-core removed: the graph layer was evaluated, withdrawn,
     # and no source file imports them.
     "typing_extensions>=4.8",
     "pywin32; platform_system == 'Windows'",
