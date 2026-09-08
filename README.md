@@ -138,7 +138,7 @@ CST 是让上面这些控制面变得必要的底座。COM/VBA 桥之上给常�
 
 - 真实 CST 求解和 COM 测试要本机 Windows 加 CST Studio Suite，CI 只跑离线测试。
 - 部分 9.4 GHz Rogers5880 微带案例还压不稳 -10 dB，诊断驱动的调参有待加强。
-- LangGraph 用过又撤了：graph 节点是 runtime 函数的薄透传，checkpointer 因 COM 句柄没法序列化用不了，replan 边在生产路径走不到，所以改回手写控制流。步级单工具驱动还没做。
+- LangGraph 用过又撤了（[ADR-001](docs/adr/adr-001-langgraph-withdrawn.md)）：graph 节点是 runtime 函数的薄透传，checkpointer 因 COM 句柄没法序列化用不了，replan 边在生产路径走不到，所以改回手写控制流。步级单工具驱动还没做。
 - Chat SSE 每 0.5 秒轮询会话状态上报工具事件，不是 token 级流式。
 - 后端是单用户桌面工具：一个全局 session、一把操作锁、没有认证，只应绑定 `127.0.0.1`。
 - BO/PSO/DE 是 LLM 提案不可用时的兜底采样器，不是完整优化环。

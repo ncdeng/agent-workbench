@@ -128,7 +128,7 @@ The hardest part was controlling uncertainty across three boundaries at once: LL
 
 ### Why not use LangGraph?
 
-LangGraph was evaluated for the orchestrator but withdrawn. The graph nodes became thin pass-throughs to runtime functions; checkpointer/thread_id were unusable because the agent contains COM handles and locks that cannot be serialized; the replan edge's set/clear conditions were mutually exclusive, making it unreachable in production. Self-authored control flow (planner → tool loop → reflection in `runtime.py`) does the same job with less indirection. It shows engineering judgment about when a framework adds cost without capability.
+LangGraph was evaluated for the orchestrator but withdrawn ([ADR-001](docs/adr/adr-001-langgraph-withdrawn.md)). The graph nodes became thin pass-throughs to runtime functions; checkpointer/thread_id were unusable because the agent contains COM handles and locks that cannot be serialized; the replan edge's set/clear conditions were mutually exclusive, making it unreachable in production. Self-authored control flow (planner → tool loop → reflection in `runtime.py`) does the same job with less indirection. The record is in [ADR-001](docs/adr/adr-001-langgraph-withdrawn.md), including the motives for adopting it in the first place — it shows engineering judgment about when a framework adds cost without capability.
 
 ### Why Pi Agent Core is a different decision
 
@@ -198,7 +198,7 @@ CST Studio Suite and its COM interface require a licensed Windows desktop enviro
   independent human annotations have not yet been collected.
 - Some real CST optimization cases still need stronger diagnosis-driven tuning before consistently reaching target S11.
 - Farfield extraction has CST template/COM context limitations, so the implementation uses a fallback chain.
-- LangGraph has been withdrawn; the agent uses self-authored control flow. Step-level single-tool driving is future work.
+- LangGraph has been withdrawn ([ADR-001](docs/adr/adr-001-langgraph-withdrawn.md)); the agent uses self-authored control flow. Step-level single-tool driving is future work.
 - The default ablation runs use a deterministic proposal proxy (mechanism smoke, no real LLM). The fake-CST 20-case report shows heuristic_only 70% vs **llm_no_memory 100% vs llm_with_memory 100%**, with `memory_enforced_rate = 0.0` — so the 70%→100% delta is the LLM-shaped proposer, **not** memory. In the real-LLM 20-case deepseek run memory is recalled and enforced (hit/enforced rate 1.0) but all groups still reach 100%, i.e. memory's value is not demonstrated by these benchmarks. The fake-CST harness also injects domain-prior lessons that match the simulator's `f ∝ 1/L` law by construction, so with-memory wins there would be near-tautological. The 10-pair keyword-fallback test remains only a regression check; official-document claims must use the frozen 30-case retrieval reports and fixed 6-case Agent-groundedness report above.
 - The full-Agent deterministic 40-case run is a production-path mechanism regression, not model-quality evidence. Both Agent sets are developer-visible; v2 explicitly used v1 Terra outputs to revise oracles. The seven-case Terra runs are too small for statistical claims, and ToolUseMemory currently shows safe integration rather than measured success-rate improvement.
 - Sealed verifier implementation does not itself prove independent custody. Until an external issuer owns the oracle and promotion key and supplies a one-shot pack, do not call any current result blinded or sealed.

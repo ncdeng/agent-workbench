@@ -138,7 +138,7 @@ Memory comes in three parts:
 
 - Real CST solves and COM tests need a local Windows machine with CST Studio Suite; CI runs offline tests only.
 - Some 9.4 GHz Rogers5880 microstrip cases still miss a stable -10 dB; diagnosis-driven tuning needs more work.
-- LangGraph was adopted and then withdrawn: the graph nodes were thin pass-throughs, the checkpointer could not work with non-serializable COM handles, and the replan edge was unreachable in production. Control flow is hand-written; step-level single-tool driving is future work.
+- LangGraph was adopted and then withdrawn ([ADR-001](docs/adr/adr-001-langgraph-withdrawn.md)): the graph nodes were thin pass-throughs, the checkpointer could not work with non-serializable COM handles, and the replan edge was unreachable in production. Control flow is hand-written; step-level single-tool driving is future work.
 - Chat SSE polls session state every 0.5 s; it is not token-level streaming.
 - The backend is a single-user desktop tool: one global session, one operation lock, no authentication. Keep it bound to `127.0.0.1`.
 - The BO/PSO/DE module is a bounded fallback sampler for when LLM proposals are unavailable, not a full optimization-loop replacement.

@@ -4,6 +4,7 @@
 
 | 编号 | 决策 | 状态 |
 | --- | --- | --- |
+| [ADR-001](adr-001-langgraph-withdrawn.md) | 评估 LangGraph 后撤销，回归自研 Planning→Execution 控制流 | 已定稿 |
 | [ADR-006](adr-006-cst-timeout-honest-degradation.md) | CST 超时/断连的限次恢复与诚实降级 | 已定稿 |
 | [ADR-010](adr-010-plan-step-tool-allowlist.md) | 工具白名单按计划步动态开放 | 已定稿 |
 | [ADR-011](adr-011-parameter-bound-tool-approval.md) | raw VBA 的参数绑定、单次消费人工审批 | 已定稿 |
