@@ -110,7 +110,7 @@ CST 这类软件有状态、有真实副作用：一次求解几分钟起步，�
 这个仓库对数字的规矩：能复算、边界写清楚、null result 不删。
 
 - 证据登记表 [benchmarks/agent_e2e_canonical.json](benchmarks/agent_e2e_canonical.json) 按字节绑定冻结数据集、manifest 和各报告；早期 10-case 开发报告降级成历史诊断。
-- 40-case 确定性消融（manifest/SHA 绑定，developer-visible）：full 40/40，no-context 执行 40/40 但严格词面 32/40，no-recovery 32/40，no-planner 0/40；no-memory 和 no-ToolUseMemory 都是 40/40。planner 和 recovery 的贡献成立，memory 增益没测出来。
+- 40-case 确定性消融（manifest/SHA 绑定，developer-visible；现行证据是登记表里的 `post_approval_v3_deterministic_full`）：full 40/40（严格词面 36/40），no-context 执行 40/40 但严格词面 28/40，no-recovery 32/40（严格词面 28/40），no-planner 0/40；no-memory 和 no-ToolUseMemory 都是 40/40。planner 和 recovery 的贡献成立，memory 增益没测出来。
 - 真实模型审计的修正留在记录里：第一轮 Terra 审计（7 个代表 case）暴露了词面/参数假阴性和一个欠指定的 solver oracle；post-audit v2 回归 execution 7/7、exact sequence 7/7、strict lexical 6/7，并写明 v1 输出参与了 oracle 修订。3-repeat 的语义审阅（response-SHA 绑定）execution 19/21、grounded 16/21。重复样本相关，不是 21 个独立任务，也都不是 blinded。
 - ToolUseMemory 真实模型 A/B（四个失败族，8 case × 2 臂 × 3 repeats）：learned 臂 24/24 注入了记忆、确实改变了首轮工具排序，但两臂都 24/24、paired delta=0，learned 平均多约 220 token。这个 null result 保留在仓库里。
 - 密封评测是协议不是结果：v2 verifier 把外置信任策略绑定到公开 case、fixture、runner、prompt 和工具目录的真实字节，负例测试通过；但没有真实外部 issuer，也没跑过完整 sealed run。见 [docs/SEALED_EVALUATION_PROTOCOL.md](docs/SEALED_EVALUATION_PROTOCOL.md)。
@@ -201,8 +201,9 @@ python -m cst_agent_workbench.cli patch-matrix --microstrip-rounds 3 --output-di
 # 优化提案消融（不跑完整 Agent runtime）
 python benchmarks/agent_ablation_runner.py --cases 20 --max-rounds 6 --assert-thresholds --output benchmarks/reports/agent_ablation_fake_cst.json --summary-md benchmarks/reports/agent_ablation_fake_cst.md
 
-# 完整 40-case Agent 机制评测，带 manifest/SHA 与 release 门
-python -m benchmarks.agent_e2e_ablation_runner --dataset benchmarks/agent_e2e_frozen_dev_v1.json --manifest benchmarks/agent_e2e_frozen_dev_v1.manifest.json --full-frozen-eval --provider deterministic_proxy --artifact-root D:/cst_agent_rag_data/agent_e2e_frozen_artifacts --output benchmarks/reports/agent_e2e_frozen_dev_v1_deterministic_ablation_v2.json --summary-md benchmarks/reports/agent_e2e_frozen_dev_v1_deterministic_ablation_v2.md
+# 完整 40-case Agent 机制评测，带 manifest/SHA 与 release 门（复现上面"评测"节的 v3 消融数字；
+# 确定性代理不真正调模型，但 .env 里仍需有一个 MODEL_API_KEY 占位值，否则执行器会直接拒绝、全组 0/40）
+python -m benchmarks.agent_e2e_ablation_runner --dataset benchmarks/agent_e2e_frozen_dev_v3.json --manifest benchmarks/agent_e2e_frozen_dev_v3.manifest.json --full-frozen-eval --provider deterministic_proxy --artifact-root D:/cst_agent_rag_data/agent_e2e_frozen_artifacts --output benchmarks/reports/agent_e2e_frozen_dev_v3_deterministic_ablation_v1.json --summary-md benchmarks/reports/agent_e2e_frozen_dev_v3_deterministic_ablation_v1.md
 ```
 
 公开命令只授予 execution eligibility。私有核验、promotion 命令、外部托管要求和 fail-closed 发布规则写在 [docs/SEALED_EVALUATION_PROTOCOL.md](docs/SEALED_EVALUATION_PROTOCOL.md)。仓库不包含真实外部签发的密封包。完整命令列表（Terra 回归、repeat 稳定性、记忆配对、语义复验）见英文版 [README.en.md](README.en.md)。
